@@ -1,0 +1,10 @@
+# chore files
+node_modules
+.nuxt
+public
+
+
+# submodule folders
+web
+server
+admin
