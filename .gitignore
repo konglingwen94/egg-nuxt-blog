@@ -3,6 +3,9 @@ node_modules
 .nuxt
 public
 
+# config files
+
+package-lock.json
 
 # submodule folders
 web
