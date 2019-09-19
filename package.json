@@ -8,7 +8,8 @@
     "stop": "egg-scripts stop --title=egg-server-myblog",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
-    "admin:dev": "cd admin && npm run dev"
+    "admin:dev": "cd admin && npm run dev",
+    "web:dev": "cd web && npm run dev"
   },
   "repository": {
     "type": "git",
