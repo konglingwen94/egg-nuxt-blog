@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose')
-const ArticleCategoryModel = require('./articleCategory')
+const ArticleCategoryModel = require('./category')
 const TagModel = require('./tag')
 
 const { ObjectId } = Schema.Types

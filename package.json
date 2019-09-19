@@ -7,7 +7,8 @@
     "start": "egg-scripts start --daemon --title=egg-server-myblog",
     "stop": "egg-scripts stop --title=egg-server-myblog",
     "dev": "egg-bin dev",
-    "debug": "egg-bin debug"
+    "debug": "egg-bin debug",
+    "admin:dev": "cd admin && npm run dev"
   },
   "repository": {
     "type": "git",
@@ -26,9 +27,15 @@
     "jsonwebtoken": "^8.5.1",
     "module-alias": "^2.2.1",
     "mongoose": "^5.7.1",
-    "nuxt": "^2.9.2"
+    "nuxt": "^2.9.2",
+    "element-ui": "^2.11.1"
   },
   "devDependencies": {
-    "egg-bin": "^4.13.0"
+    "egg-bin": "^4.13.0",
+    "@vue/cli-plugin-babel": "^3.11.0",
+    "@vue/cli-service": "^3.11.0",
+    "less": "^3.10.3",
+    "less-loader": "^5.0.0",
+    "vue-template-compiler": "^2.6.10"
   }
 }

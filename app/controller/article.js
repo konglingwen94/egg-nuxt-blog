@@ -1,3 +1,4 @@
+const { Controller } = require('egg')
 const _ = require('lodash')
 
 const {
@@ -7,12 +8,15 @@ const {
 const { article: properties } = require('../types/request')
 const { ParameterException } = require('../utils/httpExceptions')
 
-module.exports = {
-  async queryList(ctx, next) {
-    return Service.queryList()
-  },
+module.exports = class ArticleController extends Controller {
+  async queryList() {
+    const { service, ctx } = this
 
-  async querySuggestionList(ctx) {
+    ctx.body = await service.article.queryList()
+  }
+
+  async querySuggestionList() {
+    const { ctx } = this
     let { categoryIdList } = ctx.query
     if (typeof categoryIdList === 'string') {
       categoryIdList = [categoryIdList].map(id => ObjectId(id))
@@ -20,7 +24,7 @@ module.exports = {
       categoryIdList = categoryIdList.map(id => ObjectId(id))
     }
 
-    return await ArticleModel.aggregate([
+    ctx.body = await ArticleModel.aggregate([
       {
         $match: {
           categoryIds: {
@@ -32,28 +36,30 @@ module.exports = {
         $project: articleFields,
       },
     ])
-  },
-  async queryListByCategoryId(ctx) {
+  }
+  async queryListByCategoryId() {
+    const { ctx } = this
+
     const { id } = ctx.params
 
     const result = await ArticleModel.find({
       categoryIds: { $all: [id] },
     }).sort({ createdAt: -1 })
-    return result.map(item => {
+    ctx.body = result.map(item => {
       return _.pick(item, responseFields)
     })
-  },
+  }
   async queryPublishedList(ctx) {
     const result = await ArticleModel.find({ isPublished: true })
       .populate('categoryIds')
       .sort({ createdAt: -1 })
 
-    return result.map(item => {
+    ctx.body = result.map(item => {
       item.categories = item.categoryIds
       item.categoryIds = item.categories.map(item => item._id)
       return _.pick(item, responseFields)
     })
-  },
+  }
 
   async queryListByOptions(ctx) {
     const payload = _.pick(ctx.query, _.keys(properties))
@@ -68,19 +74,19 @@ module.exports = {
       .populate('categoryIds')
       .sort({ createdAt: -1 })
 
-    return result.map(item => {
+    ctx.body = result.map(item => {
       item.categories = item.categoryIds
       item.categoryIds = item.categories.map(item => item._id)
       return _.pick(item, responseFields)
     })
-  },
+  }
 
   async queryOne(ctx) {
     const { id } = ctx.params
     const result = await ArticleModel.findById(id)
 
-    return _.pick(result, responseFields)
-  },
+    ctx.body = _.pick(result, responseFields)
+  }
   async createOne(ctx) {
     const required = ['title', 'content', 'categoryID']
 
@@ -101,8 +107,8 @@ module.exports = {
     }
 
     ctx.state.status = 201
-    return _.pick(result, responseFields)
-  },
+    ctx.body = _.pick(result, responseFields)
+  }
   async updateOne(ctx) {
     const data = _.pick(ctx.request.body, _.keys(properties))
     const { id } = ctx.params
@@ -120,7 +126,7 @@ module.exports = {
       throw err
     }
     ctx.status = 204
-  },
+  }
   async delete(ctx) {
     const { idList } = ctx.request.body
     const schema = { properties, required: ['idList'] }
@@ -159,7 +165,7 @@ module.exports = {
     }
 
     ctx.state.status = 204
-  },
+  }
   async deleteOne(ctx) {
     const { id } = ctx.params
     try {
@@ -169,7 +175,7 @@ module.exports = {
     }
 
     ctx.status = 204
-  },
+  }
   async updatePublishStatus(ctx) {
     const required = ['isPublished']
 
@@ -195,7 +201,7 @@ module.exports = {
     }
 
     ctx.status = 204
-  },
+  }
   async incrementPv(ctx) {
     try {
       var result = await ArticleModel.findByIdAndUpdate(ctx.params.id, {
@@ -206,7 +212,7 @@ module.exports = {
     }
 
     ctx.status = 204
-  },
+  }
   async starOne(ctx) {
     const { id } = ctx.params
     const isValid = ctx.ajv.validate({ required: ['id'], properties }, { id })
@@ -218,5 +224,5 @@ module.exports = {
     await ArticleModel.findByIdAndUpdate(id, { $inc: { starCount: 1 } })
 
     ctx.status = 204
-  },
+  }
 }

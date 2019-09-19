@@ -1,3 +1,4 @@
+const { Controller } = require('egg')
 const _ = require('lodash')
 const TagModel = require('../model/tag')
 const { ParameterException } = require('../utils/httpExceptions')
@@ -5,7 +6,7 @@ const request = require('../types/request')
 const projection = require('../types/projectFields')
 const response = require('../types/response')
 
-module.exports = {
+module.exports = class TagController extends Controller {
   async createOne(ctx) {
     const required = ['name']
     const { name } = ctx.request.body
@@ -32,9 +33,8 @@ module.exports = {
     }
 
     return _.pick(result, response.tag)
-  },
+  }
   async queryList(ctx) {
-
     const result = await TagModel.aggregate([
       {
         $project: projection.tag,
@@ -42,7 +42,7 @@ module.exports = {
     ])
 
     return result
-  },
+  }
 
   async updateOne(ctx) {
     const { id } = ctx.params
@@ -67,7 +67,7 @@ module.exports = {
     }
 
     ctx.status = 204
-  },
+  }
 
   async deleteOne(ctx) {
     const { id } = ctx.params
@@ -84,5 +84,5 @@ module.exports = {
     await TagModel.findByIdAndRemove(id)
 
     ctx.status = 204
-  },
+  }
 }

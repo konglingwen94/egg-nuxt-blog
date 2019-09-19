@@ -1,3 +1,4 @@
+const { Controller } = require('egg')
 const { ObjectId } = require('mongoose').Types
 const { ParameterException } = require('../utils/httpExceptions')
 const GuestbookModel = require('../model/guestbook')
@@ -6,7 +7,7 @@ const { guestbook: $project } = require('../types/projectFields')
 const { guestbook: responseFields } = require('../types/response')
 const _ = require('lodash')
 
-module.exports = {
+module.exports = class GuestbookController extends Controller {
   async queryList(ctx) {
     const result = await GuestbookModel.aggregate([
       {
@@ -36,7 +37,7 @@ module.exports = {
     })
 
     return result
-  },
+  }
   async createOne(ctx) {
     const { content, nickname } = ctx.request.body
     const payload = { content, nickname }
@@ -51,7 +52,7 @@ module.exports = {
     const result = await GuestbookModel.create(payload)
 
     return _.pick(result, responseFields)
-  },
+  }
   async deleteOne(ctx) {
     const { id } = ctx.params
 
@@ -67,7 +68,7 @@ module.exports = {
     await GuestbookModel.findByIdAndRemove(id)
 
     ctx.status = 204
-  },
+  }
   async responseToUser(ctx) {
     const { id } = ctx.params
     const { content, responseTo, nickname } = ctx.request.body
@@ -109,7 +110,7 @@ module.exports = {
     })
 
     return _.pick(doc, responseFields)
-  },
+  }
   async deleteOneResponse(ctx) {
     const { id, responseID } = ctx.params
 
@@ -127,7 +128,7 @@ module.exports = {
     await result.save()
 
     ctx.status = 204
-  },
+  }
   async deleteMany(ctx) {
     const { idList } = ctx.request.body
 
@@ -152,7 +153,7 @@ module.exports = {
 
     await GuestbookModel.deleteMany({ _id: { $in: idList } })
     ctx.status = 204
-  },
+  }
 
   async deleteManyResponse(ctx) {
     let { idList } = ctx.request.body
@@ -172,7 +173,7 @@ module.exports = {
     )
 
     return res
-  },
+  }
 
   async diggOneResponse(ctx) {
     const { id, responseID } = ctx.params
@@ -191,7 +192,7 @@ module.exports = {
 
     const result = await parent.save()
     ctx.status = 204
-  },
+  }
 
   async diggGuestbook(ctx) {
     const { id } = ctx.params
@@ -207,5 +208,5 @@ module.exports = {
     })
 
     ctx.status = 204
-  },
+  }
 }
