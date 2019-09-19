@@ -8,7 +8,9 @@ const { guestbook: responseFields } = require('../types/response')
 const _ = require('lodash')
 
 module.exports = class GuestbookController extends Controller {
-  async queryList(ctx) {
+  async queryList() {
+    const { ctx } = this
+
     const result = await GuestbookModel.aggregate([
       {
         $project,
@@ -36,9 +38,11 @@ module.exports = class GuestbookController extends Controller {
       })
     })
 
-    return result
+    ctx.body = result
   }
-  async createOne(ctx) {
+  async createOne() {
+    const { ctx } = this
+
     const { content, nickname } = ctx.request.body
     const payload = { content, nickname }
     const schema = { required: ['content', 'nickname'], properties }
@@ -51,9 +55,11 @@ module.exports = class GuestbookController extends Controller {
 
     const result = await GuestbookModel.create(payload)
 
-    return _.pick(result, responseFields)
+    ctx.body = _.pick(result, responseFields)
   }
-  async deleteOne(ctx) {
+  async deleteOne() {
+    const { ctx } = this
+
     const { id } = ctx.params
 
     const validResult = ctx.ajv.validate(
@@ -69,7 +75,9 @@ module.exports = class GuestbookController extends Controller {
 
     ctx.status = 204
   }
-  async responseToUser(ctx) {
+  async responseToUser() {
+    const { ctx } = this
+
     const { id } = ctx.params
     const { content, responseTo, nickname } = ctx.request.body
     const payload = { id, responseTo, content, nickname }
@@ -109,9 +117,11 @@ module.exports = class GuestbookController extends Controller {
       return new Date(b.createdAt) - new Date(a.createdAt)
     })
 
-    return _.pick(doc, responseFields)
+    ctx.body = _.pick(doc, responseFields)
   }
-  async deleteOneResponse(ctx) {
+  async deleteOneResponse() {
+    const { ctx } = this
+
     const { id, responseID } = ctx.params
 
     const schema = { properties, required: ['id', 'responseID'] }
@@ -129,7 +139,9 @@ module.exports = class GuestbookController extends Controller {
 
     ctx.status = 204
   }
-  async deleteMany(ctx) {
+  async deleteMany() {
+    const { ctx } = this
+
     const { idList } = ctx.request.body
 
     const schema = {
@@ -155,7 +167,9 @@ module.exports = class GuestbookController extends Controller {
     ctx.status = 204
   }
 
-  async deleteManyResponse(ctx) {
+  async deleteManyResponse() {
+    const { ctx } = this
+
     let { idList } = ctx.request.body
     idList = idList.map(id => ObjectId(id))
     let result = await GuestbookModel.aggregate([
@@ -175,7 +189,9 @@ module.exports = class GuestbookController extends Controller {
     return res
   }
 
-  async diggOneResponse(ctx) {
+  async diggOneResponse() {
+    const { ctx } = this
+
     const { id, responseID } = ctx.params
     const schema = { required: ['id', 'responseID'], properties }
     const data = { id, responseID }
@@ -194,7 +210,9 @@ module.exports = class GuestbookController extends Controller {
     ctx.status = 204
   }
 
-  async diggGuestbook(ctx) {
+  async diggGuestbook() {
+    const { ctx } = this
+
     const { id } = ctx.params
 
     const isValid = ctx.ajv.validate({ required: ['id'], properties }, { id })

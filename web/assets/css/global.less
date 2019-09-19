@@ -1,0 +1,24 @@
+@r: red;
+
+.text-overflow-hidden (@line-num:3) {
+  line-height: 1.5;
+  text-align: justify;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  -webkit-line-clamp: @line-num !important;
+  display: -webkit-box !important;
+}
+
+.nowrap-ellipsis(@width) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: @width;
+}
+.nowrap-overflow-clip(@width) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+  width: @width;
+}

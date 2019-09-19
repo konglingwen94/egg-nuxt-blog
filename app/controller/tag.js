@@ -7,7 +7,9 @@ const projection = require('../types/projectFields')
 const response = require('../types/response')
 
 module.exports = class TagController extends Controller {
-  async createOne(ctx) {
+  async createOne() {
+    const { ctx } = this
+
     const required = ['name']
     const { name } = ctx.request.body
 
@@ -34,17 +36,21 @@ module.exports = class TagController extends Controller {
 
     return _.pick(result, response.tag)
   }
-  async queryList(ctx) {
+  async queryList() {
+    const { ctx } = this
+
     const result = await TagModel.aggregate([
       {
         $project: projection.tag,
       },
     ])
 
-    return result
+    ctx.body = result
   }
 
-  async updateOne(ctx) {
+  async updateOne() {
+    const { ctx } = this
+
     const { id } = ctx.params
     const { name } = ctx.request.body
     const schema = { required: ['id', 'name'], properties: request.tag }
@@ -69,7 +75,9 @@ module.exports = class TagController extends Controller {
     ctx.status = 204
   }
 
-  async deleteOne(ctx) {
+  async deleteOne() {
+    const { ctx } = this
+
     const { id } = ctx.params
 
     const isValid = ctx.ajv.validate(

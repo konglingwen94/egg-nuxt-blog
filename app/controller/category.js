@@ -10,7 +10,8 @@ const { article: articleFields } = require('../types/projectFields')
 const { articleCategories: responseFields } = require('../types/response')
 
 class CategoryController extends Controller {
-  async createOne(ctx) {
+  async createOne() {
+    const { ctx, service } = this
     const required = ['name']
 
     const payload = _.pick(ctx.request.body, required)
@@ -32,11 +33,12 @@ class CategoryController extends Controller {
     } catch (error) {
       throw error
     }
-    ctx.state.status = 201
+    ctx.status = 201
 
-    return _.pick(data, responseFields)
+    ctx.body = _.pick(data, responseFields)
   }
-  async queryList(ctx) {
+  async queryList() {
+    const { ctx } = this
     var result = await ArticleCategoryModel.aggregate([
       {
         $project: categoryProjectFields,
@@ -51,19 +53,21 @@ class CategoryController extends Controller {
     ctx.body = result
   }
 
-  async queryOne(ctx) {
+  async queryOne() {
+    const { ctx } = this
     const { id } = ctx.params
 
     var result = await ArticleCategoryModel.findById(id)
 
     ctx.body = _.pick(result, responseFields)
   }
-  async deleteOne(ctx) {
+  async deleteOne() {
+    const { ctx } = this
     const { id } = ctx.params
 
     const result = await ArticleCategoryModel.findById(id)
 
-    if (result.articleIdList.length) {
+    if (result && result.articleIdList.length) {
       return ctx.throw(400, '此分类下有文章，不能删除此分类')
     }
     await ArticleCategoryModel.findById(id)
@@ -74,10 +78,11 @@ class CategoryController extends Controller {
       throw error
     }
 
-    ctx.state.status = 204
+    ctx.status = 204
   }
 
-  async updateOne(ctx) {
+  async updateOne() {
+    const { ctx } = this
     const { id } = ctx.params
     let schema = { properties }
     const required = ['name']

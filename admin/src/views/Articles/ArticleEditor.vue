@@ -42,7 +42,7 @@
 
 <script>
 import ArticleApi from '@/api/articles'
-import CategoryApi from '@/api/article-categories'
+import CategoryApi from '@/api/categories'
 import TagApi from '@/api/tags'
 
 export default {

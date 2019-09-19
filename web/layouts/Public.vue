@@ -1,0 +1,25 @@
+<template>
+  <div>
+    <header>
+      <Header></Header>
+    </header>
+
+    <main class="body">
+      <nuxt></nuxt>
+    </main>
+    <footer>
+      <Footer></Footer>
+    </footer>
+    <el-backtop :right="20"></el-backtop>
+  </div>
+</template>
+<script>
+export default {}
+</script>
+
+<style lang="less" scoped>
+main {
+  max-width: 1200px;
+  margin: auto;
+}
+</style>

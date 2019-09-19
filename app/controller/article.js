@@ -1,6 +1,6 @@
 const { Controller } = require('egg')
 const _ = require('lodash')
-
+const ArticleModel = require('../model/article')
 const {
   article: responseFields,
   articleCategories: categoryFields,
@@ -49,7 +49,8 @@ module.exports = class ArticleController extends Controller {
       return _.pick(item, responseFields)
     })
   }
-  async queryPublishedList(ctx) {
+  async queryPublishedList() {
+    const { ctx } = this
     const result = await ArticleModel.find({ isPublished: true })
       .populate('categoryIds')
       .sort({ createdAt: -1 })
@@ -61,7 +62,8 @@ module.exports = class ArticleController extends Controller {
     })
   }
 
-  async queryListByOptions(ctx) {
+  async queryListByOptions() {
+    const { ctx } = this
     const payload = _.pick(ctx.query, _.keys(properties))
 
     const valid = ctx.ajv.validate({ properties }, payload)
@@ -81,13 +83,15 @@ module.exports = class ArticleController extends Controller {
     })
   }
 
-  async queryOne(ctx) {
+  async queryOne() {
+    const { ctx } = this
     const { id } = ctx.params
     const result = await ArticleModel.findById(id)
 
     ctx.body = _.pick(result, responseFields)
   }
-  async createOne(ctx) {
+  async createOne() {
+    const { ctx } = this
     const required = ['title', 'content', 'categoryID']
 
     const data = _.pick(ctx.request.body, required.concat('tagIdList'))
@@ -109,7 +113,8 @@ module.exports = class ArticleController extends Controller {
     ctx.state.status = 201
     ctx.body = _.pick(result, responseFields)
   }
-  async updateOne(ctx) {
+  async updateOne() {
+    const { ctx } = this
     const data = _.pick(ctx.request.body, _.keys(properties))
     const { id } = ctx.params
 
@@ -127,7 +132,9 @@ module.exports = class ArticleController extends Controller {
     }
     ctx.status = 204
   }
-  async delete(ctx) {
+  async delete() {
+    const { ctx } = this
+
     const { idList } = ctx.request.body
     const schema = { properties, required: ['idList'] }
     const data = { idList }
@@ -166,17 +173,18 @@ module.exports = class ArticleController extends Controller {
 
     ctx.state.status = 204
   }
-  async deleteOne(ctx) {
+  async deleteOne() {
+    const { ctx } = this
     const { id } = ctx.params
     try {
       await ArticleModel.findByIdAndRemove(id)
     } catch (error) {
       throw error
     }
-
     ctx.status = 204
   }
-  async updatePublishStatus(ctx) {
+  async updatePublishStatus() {
+    const { ctx } = this
     const required = ['isPublished']
 
     const { isPublished } = ctx.request.body
@@ -202,7 +210,8 @@ module.exports = class ArticleController extends Controller {
 
     ctx.status = 204
   }
-  async incrementPv(ctx) {
+  async incrementPv() {
+    const { ctx } = this
     try {
       var result = await ArticleModel.findByIdAndUpdate(ctx.params.id, {
         $inc: { pv: 1 },
@@ -213,7 +222,8 @@ module.exports = class ArticleController extends Controller {
 
     ctx.status = 204
   }
-  async starOne(ctx) {
+  async starOne() {
+    const { ctx } = this
     const { id } = ctx.params
     const isValid = ctx.ajv.validate({ required: ['id'], properties }, { id })
 

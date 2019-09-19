@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import ArticleCategoryService from '@/api/article-categories'
+import ArticleCategoryService from '@/api/categories'
 
 export default {
   data() {

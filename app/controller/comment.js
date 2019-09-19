@@ -9,9 +9,10 @@ const { comment: properties } = require('../types/request')
 const { comment: commentResponseFields } = require('../types/response')
 
 module.exports = class CommentController extends Controller {
-  async queryList(ctx) {
-    return await CommentModel.aggregate([
-      { $match: ctx.state.filter },
+  async queryList() {
+    const { ctx } = this
+    ctx.body = await CommentModel.aggregate([
+      // { $match: ctx.state.filter },
       {
         $lookup: {
           from: 'articles',
@@ -30,7 +31,9 @@ module.exports = class CommentController extends Controller {
       },
     ])
   }
-  async createOne(ctx) {
+  async createOne() {
+    const { ctx } = this
+
     const required = ['content', 'nickname', 'articleID']
     const { articleID } = ctx.params
     const schema = { required, properties }
@@ -48,7 +51,9 @@ module.exports = class CommentController extends Controller {
 
     return _.pick(result, commentResponseFields)
   }
-  async deleteOne(ctx) {
+  async deleteOne() {
+    const { ctx } = this
+
     const { id } = ctx.params
 
     const validResult = ctx.ajv.validate(
@@ -64,7 +69,9 @@ module.exports = class CommentController extends Controller {
     ctx.status = 204
   }
 
-  async deleteList(ctx) {
+  async deleteList() {
+    const { ctx } = this
+
     const { idList } = ctx.request.body
 
     const validResult = ctx.ajv.validate(
@@ -86,7 +93,9 @@ module.exports = class CommentController extends Controller {
 
     ctx.status = 204
   }
-  async thumbup(ctx) {
+  async thumbup() {
+    const { ctx } = this
+
     const { id } = ctx.params
     const validResult = ctx.ajv.validate(
       { required: ['id'], properties },
