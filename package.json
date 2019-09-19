@@ -1,0 +1,34 @@
+{
+  "name": "egg-nuxt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "postcss.config.js",
+  "scripts": {
+    "start": "egg-scripts start --daemon --title=egg-server-myblog",
+    "stop": "egg-scripts stop --title=egg-server-myblog",
+    "dev": "egg-bin dev",
+    "debug": "egg-bin debug"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/konglingwen94/my-blog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/konglingwen94/my-blog/issues"
+  },
+  "homepage": "https://github.com/konglingwen94/my-blog#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "egg": "^2.23.0",
+    "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.1",
+    "mongoose": "^5.7.1",
+    "nuxt": "^2.9.2"
+  },
+  "devDependencies": {
+    "egg-bin": "^4.13.0"
+  }
+}

@@ -3,6 +3,9 @@ node_modules
 .nuxt
 public
 .vscode
+run 
+logs
+
 
 # config files
 
