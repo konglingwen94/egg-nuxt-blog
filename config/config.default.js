@@ -1,5 +1,9 @@
 module.exports = {
   keys: 'my-blog',
+  middleware: ['errorHandler'],
+  cors: {
+    origin: '*',
+  },
   security: {
     csrf: {
       enable: false,

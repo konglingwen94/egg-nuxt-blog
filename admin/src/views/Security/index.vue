@@ -60,15 +60,15 @@ export default {
         return
       }
       AuthApi.changeNickname({ nickname: this.nickname })
-        .then(({ data }) => {
+        .then(() => {
           this.$message.success('修改昵称成功')
-          document.getElementById('nickname').innerHTML = data.nickname
+          document.getElementById('nickname').innerHTML = this.nickname
           try {
             var adminInfo = JSON.parse(localStorage.adminInfo)
           } catch (error) {
             return
           }
-          adminInfo.nickname = data.nickname
+          adminInfo.nickname = this.nickname
 
           localStorage.setItem('adminInfo', JSON.stringify(adminInfo))
         })

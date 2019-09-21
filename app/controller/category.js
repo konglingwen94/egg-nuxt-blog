@@ -1,7 +1,7 @@
 const { Controller } = require('egg')
 const _ = require('lodash')
 const { ParameterException } = require('../utils/httpExceptions')
-const ArticleCategoryModel = require('../model/category')
+const CategoryModel = require('../model/category')
 const { articleCategory: properties } = require('../types/request')
 const {
   articleCategory: categoryProjectFields,
@@ -20,16 +20,23 @@ class CategoryController extends Controller {
     const valid = ctx.ajv.validate(schema, payload)
 
     if (!valid) {
-      throw ParameterException(ctx.ajv.errors)
+      throw ctx.helper.ParameterException(ctx.ajv.errors)
     }
-    const result = await ArticleCategoryModel.findOne({ name: payload.name })
+    var data = await service.category.queryOneByOptions({ name: payload.name })
+
+    // console.log(data instanceof CategoryModel,data)
+    console.dir(require('mongoose'))
+    console.dir(new CategoryModel({}))
+    const result = await service.category.queryOneByOptions({
+      name: payload.name,
+    })
 
     if (result) {
       return ctx.throw(400, '重复的分类名称')
     }
 
     try {
-      var data = await ArticleCategoryModel.create(payload)
+      var data = await CategoryModel.create(payload)
     } catch (error) {
       throw error
     }
@@ -39,7 +46,7 @@ class CategoryController extends Controller {
   }
   async queryList() {
     const { ctx } = this
-    var result = await ArticleCategoryModel.aggregate([
+    var result = await CategoryModel.aggregate([
       {
         $project: categoryProjectFields,
       },
@@ -57,7 +64,7 @@ class CategoryController extends Controller {
     const { ctx } = this
     const { id } = ctx.params
 
-    var result = await ArticleCategoryModel.findById(id)
+    var result = await CategoryModel.findById(id)
 
     ctx.body = _.pick(result, responseFields)
   }
@@ -65,15 +72,15 @@ class CategoryController extends Controller {
     const { ctx } = this
     const { id } = ctx.params
 
-    const result = await ArticleCategoryModel.findById(id)
+    const result = await CategoryModel.findById(id)
 
     if (result && result.articleIdList.length) {
       return ctx.throw(400, '此分类下有文章，不能删除此分类')
     }
-    await ArticleCategoryModel.findById(id)
+    await CategoryModel.findById(id)
 
     try {
-      await ArticleCategoryModel.findByIdAndRemove(id)
+      await CategoryModel.findByIdAndRemove(id)
     } catch (error) {
       throw error
     }
@@ -93,22 +100,22 @@ class CategoryController extends Controller {
 
     const valid = ctx.ajv.validate(schema, payload)
     if (!valid) {
-      throw new ParameterException(ctx.ajv.errors)
+      throw new ctx.helper.ParameterException(ctx.ajv.errors)
     }
 
-    const hasOne = await ArticleCategoryModel.findOne({ name: payload.name })
+    const hasOne = await CategoryModel.findOne({ name: payload.name })
     if (hasOne) {
       return ctx.throw(400, '重复的分类名称')
     }
 
     try {
       var result = await (id
-        ? ArticleCategoryModel.findByIdAndUpdate(
+        ? CategoryModel.findByIdAndUpdate(
             id,
             { $set: payload },
             { new: true }
           ).select(categoryProjectFields)
-        : ArticleCategoryModel.create(payload))
+        : CategoryModel.create(payload))
     } catch (error) {
       throw error
     }

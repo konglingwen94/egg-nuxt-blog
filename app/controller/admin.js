@@ -1,8 +1,8 @@
 const { Controller } = require('egg')
 const _ = require('lodash')
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
 const { ParameterException } = require('../utils/httpExceptions')
+const jwt = require('jsonwebtoken')
 const AdminModel = require('../model/admin')
 const { admin: properties } = require('../types/request')
 const { admin: fields } = require('../types/response')
@@ -65,14 +65,14 @@ class AdminController extends Controller {
 
     const data = _.pick(ctx.request.body, required)
 
-    const valid = ctx.ajv.validate(schema, data)
+    const isValid = ctx.ajv.validate(schema, data)
 
-    if (!valid) {
+    if (!isValid) {
       throw new ParameterException(ctx.ajv.errors)
     }
     const { oldPassword, newPassword } = data
 
-    const { id } = ctx.state.ownData
+    const { id } = ctx.state.adminInfo
     try {
       var { password } = await AdminModel.findById(id)
     } catch (error) {
@@ -96,13 +96,12 @@ class AdminController extends Controller {
       throw error
     }
     ctx.status = 204
-
-    
   }
   async changeAccount() {
     const { ctx } = this
 
     const required = ['nickname']
+    
     const { nickname } = ctx.request.body
 
     const valid = ctx.ajv.validate(
@@ -116,15 +115,15 @@ class AdminController extends Controller {
     )
 
     if (!valid) {
-      throw new ctx.HttpExceptions.ParameterException(ctx.ajv.errors)
+      throw new ParameterException(ctx.ajv.errors)
     }
 
-    const { id } = ctx.state.ownData
+    const { id } = ctx.state.adminInfo
 
     try {
-      return await AdminModel.findByIdAndUpdate(
+      await AdminModel.findByIdAndUpdate(
         id,
-        { $set: ctx.state.body },
+        { $set: { nickname } },
         {
           new: true,
         }

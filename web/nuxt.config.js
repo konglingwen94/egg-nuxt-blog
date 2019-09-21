@@ -61,8 +61,8 @@ export default {
     '@nuxtjs/proxy',
   ],
   proxy: {
-    '^/api/': { target: 'http://localhost:8000' },
-    '/uploads/': { target: 'http://localhost:8000' },
+    '^/api/': { target: 'http://localhost:7001' },
+    '/uploads/': { target: 'http://localhost:7001' },
   },
 
   /*

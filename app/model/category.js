@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose')
 const { ObjectId } = Schema.Types
 
-const ArticleCategorySchema = new Schema(
+const CategorySchema = new Schema(
   {
     name: {
       type: String,
@@ -15,4 +15,4 @@ const ArticleCategorySchema = new Schema(
   }
 )
 
-module.exports = model('ArticleCategory', ArticleCategorySchema)
+module.exports = model('Category', CategorySchema)

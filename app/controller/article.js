@@ -1,6 +1,7 @@
 const { Controller } = require('egg')
 const _ = require('lodash')
 const ArticleModel = require('../model/article')
+const CategoryModel = require('../model/category')
 const {
   article: responseFields,
   articleCategories: categoryFields,
@@ -154,7 +155,7 @@ module.exports = class ArticleController extends Controller {
 
       await Promise.all(
         idList.map((id, index) => {
-          return ArticleCategoryModel.updateMany(
+          return CategoryModel.updateMany(
             { articleIdList: id },
             {
               $pull: {
@@ -171,7 +172,7 @@ module.exports = class ArticleController extends Controller {
       throw error
     }
 
-    ctx.state.status = 204
+    ctx.status = 204
   }
   async deleteOne() {
     const { ctx } = this
@@ -199,7 +200,7 @@ module.exports = class ArticleController extends Controller {
     try {
       await Promise.all([
         ArticleModel.findByIdAndUpdate(id, { $set: { isPublished } }),
-        ArticleCategoryModel.updateMany(
+        CategoryModel.updateMany(
           { articleIdList: id },
           { $inc: { publishedArticleCount: isPublished ? 1 : -1 } }
         ),

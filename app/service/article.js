@@ -89,5 +89,7 @@ module.exports = class ArticleService extends Service {
 
     return result
   }
-  async createOne(ctx) {}
+  async createOne(ctx) {
+    
+  }
 }
