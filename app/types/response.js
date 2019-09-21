@@ -14,7 +14,7 @@ const fields = {
     'content',
     'cover',
   ],
-  articleCategories: [
+  category: [
     'name',
     'starCount',
     'articleIdList',

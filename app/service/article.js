@@ -2,28 +2,35 @@ const { Service } = require('egg')
 const mongoose = require('mongoose')
 const { ObjectId } = mongoose.Types
 const ArticleModel = require('../model/article')
-const ArticleCategoryModel = require('../model/category')
+const CategoryModel = require('../model/category')
 const TagModel = require('../model/tag')
 const {
   article: articleFields,
   comment: commentProjectFields,
-  articleCategory: categoryProjectionFields,
+  category: categoryProjectionFields,
   tag: tagProjectionFields,
-} = require('../types/projectFields')
+} = require('../types/projectField')
 
 const {
   articleCategory: articleCategoryFields,
-} = require('../types/projectFields')
+} = require('../types/projectField')
 
 module.exports = class ArticleService extends Service {
-  async queryList(ctx) {
+  async queryList() {
+    const {
+      article: articleProject,
+      comment: commentProject,
+      tag: tagProject,
+      category: categoryProject,
+    } = this.ctx.projectFields
+
     const result = await ArticleModel.aggregate([
       // {
       //   $match: ctx.state.filter,
       // },
       {
         $lookup: {
-          from: 'articlecategories',
+          from: 'categories',
           let: { categoryID: '$categoryID' },
 
           as: 'category',
@@ -37,7 +44,7 @@ module.exports = class ArticleService extends Service {
         $unwind: '$category',
       },
       {
-        $project: articleFields,
+        $project: this.ctx.projectFields.article,
       },
       {
         $lookup: {
@@ -86,10 +93,11 @@ module.exports = class ArticleService extends Service {
         },
       },
     ])
-
+     
     return result
   }
-  async createOne(ctx) {
-    
+  async create() {}
+  async queryByCategoryID(categoryID) {
+    return ArticleModel.find({ categoryID })
   }
 }

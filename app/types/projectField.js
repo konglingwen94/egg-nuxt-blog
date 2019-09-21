@@ -14,7 +14,7 @@ module.exports = {
     createdAt: 1,
     updatedAt: 1,
   },
-  articleCategory: {
+  category: {
     _id: 0,
     id: '$_id',
     name: 1,

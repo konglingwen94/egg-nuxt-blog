@@ -4,7 +4,7 @@ const { ObjectId } = require('mongoose').Types
 const _ = require('lodash')
 const CommentModel = require('../model/comment')
 const { ParameterException } = require('../utils/httpExceptions')
-const { comment: commentProjectFields } = require('../types/projectFields')
+const { comment: commentProjectFields } = require('../types/projectField')
 const { comment: properties } = require('../types/request')
 const { comment: commentResponseFields } = require('../types/response')
 

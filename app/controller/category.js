@@ -5,58 +5,46 @@ const CategoryModel = require('../model/category')
 const { articleCategory: properties } = require('../types/request')
 const {
   articleCategory: categoryProjectFields,
-} = require('../types/projectFields')
-const { article: articleFields } = require('../types/projectFields')
+} = require('../types/projectField')
+const { article: articleFields } = require('../types/projectField')
 const { articleCategories: responseFields } = require('../types/response')
 
 class CategoryController extends Controller {
   async createOne() {
     const { ctx, service } = this
-    const required = ['name']
 
+    const required = ['name']
+    console.log(ctx.requestParams)
     const payload = _.pick(ctx.request.body, required)
 
-    const schema = { properties, required }
+    const schema = { properties: ctx.requestParams.category, required }
     const valid = ctx.ajv.validate(schema, payload)
 
     if (!valid) {
-      throw ctx.helper.ParameterException(ctx.ajv.errors)
+      throw new ctx.helper.ParameterException(ctx.ajv.errors)
     }
-    var data = await service.category.queryOneByOptions({ name: payload.name })
 
-    // console.log(data instanceof CategoryModel,data)
-    console.dir(require('mongoose'))
-    console.dir(new CategoryModel({}))
-    const result = await service.category.queryOneByOptions({
-      name: payload.name,
-    })
+    const result = await service.category.queryOneByName(payload.name)
 
     if (result) {
       return ctx.throw(400, '重复的分类名称')
     }
 
     try {
-      var data = await CategoryModel.create(payload)
+      var data = await service.category.create(payload)
     } catch (error) {
       throw error
     }
     ctx.status = 201
 
-    ctx.body = _.pick(data, responseFields)
+    ctx.body = _.pick(data, ctx.responseFields.category)
   }
   async queryList() {
-    const { ctx } = this
-    var result = await CategoryModel.aggregate([
-      {
-        $project: categoryProjectFields,
-      },
-      {
-        $sort: {
-          createdAt: -1,
-        },
-      },
-    ])
+    const { ctx, service } = this
 
+    // const result = await service.category.List()
+    const result = await service.category.aggregateList()
+    
     ctx.body = result
   }
 
@@ -69,15 +57,16 @@ class CategoryController extends Controller {
     ctx.body = _.pick(result, responseFields)
   }
   async deleteOne() {
-    const { ctx } = this
+    const { ctx, service } = this
     const { id } = ctx.params
 
-    const result = await CategoryModel.findById(id)
-
-    if (result && result.articleIdList.length) {
+    const result = await service.article.queryByCategoryID(id)
+     
+     
+    if (result) {
       return ctx.throw(400, '此分类下有文章，不能删除此分类')
     }
-    await CategoryModel.findById(id)
+   
 
     try {
       await CategoryModel.findByIdAndRemove(id)

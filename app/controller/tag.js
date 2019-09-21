@@ -3,7 +3,7 @@ const _ = require('lodash')
 const TagModel = require('../model/tag')
 const { ParameterException } = require('../utils/httpExceptions')
 const request = require('../types/request')
-const projection = require('../types/projectFields')
+const projection = require('../types/projectField')
 const response = require('../types/response')
 
 module.exports = class TagController extends Controller {

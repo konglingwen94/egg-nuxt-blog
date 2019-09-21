@@ -7,8 +7,6 @@ const CategorySchema = new Schema(
       type: String,
       default: '',
     },
-   
-    articleIdList: [{ type: ObjectId, ref: 'Article' }],
   },
   {
     timestamps: true,

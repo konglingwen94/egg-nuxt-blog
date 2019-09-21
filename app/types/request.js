@@ -76,7 +76,7 @@ module.exports = {
       type: 'boolean',
     },
   },
-  articleCategory: {
+  category: {
     name: {
       type: 'string',
       minLength: 1,

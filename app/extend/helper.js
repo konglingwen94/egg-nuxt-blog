@@ -12,6 +12,7 @@ class DuplicatingFields extends Error {
   }
 }
 
+
 module.exports = {
   ParameterException,
   DuplicatingFields,

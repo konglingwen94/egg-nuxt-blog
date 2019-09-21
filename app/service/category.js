@@ -5,13 +5,31 @@ class CategoryService extends Service {
   async create(payload) {
     return await CategoryModel.create(payload)
   }
-  async findById(id) {
+   
+  async aggregateList() {
+    const { ctx } = this
+
+    return CategoryModel.aggregate([
+      {
+        $project: ctx.projectFields.category,
+      },
+      {
+        $sort: {
+          createdAt: -1,
+        },
+      },
+    ])
+  }
+  async queryById(id) {
     return CategoryModel.findById(id).exec()
   }
-  async queryOneByOptions(options) {
-    return await CategoryModel.findOne(options)
+  async count() {
+    return CategoryModel.countDocuments()
   }
-  async update(id, payload) {
+  async queryOneByName(name) {
+    return CategoryModel.findOne({ name })
+  }
+  async queryByIdAndUpdate(id, payload) {
     return await CategoryModel.findByIdAndUpdate(id, { $set: payload }).exec()
   }
 }

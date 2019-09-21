@@ -15,8 +15,7 @@ const ArticleSchema = new Schema(
     },
     content: {
       type: Object,
-      html: String,
-      text: String,
+
       default: {
         html: '',
         text: '',
@@ -50,65 +49,5 @@ const ArticleSchema = new Schema(
     timestamps: true,
   }
 )
-
-ArticleSchema.post('save', async function() {
-  const p1 = ArticleCategoryModel.findByIdAndUpdate(this.categoryID, {
-    $addToSet: { articleIdList: this.id },
-  })
-
-  const p2 = TagModel.updateMany(
-    { _id: { $in: this.tagIdList } },
-    {
-      $addToSet: { articleIdList: this.id },
-    }
-  )
-  await Promise.all([p1, p2])
-})
-
-ArticleSchema.post('findOneAndRemove', async function(doc) {
-  const categoryUpdate = ArticleCategoryModel.updateOne(
-    { articleIdList: doc.id },
-    { $pull: { articleIdList: doc.id } }
-  )
-
-  const tagUpdate = TagModel.updateMany(
-    { _id: { $in: doc.tagIdList } },
-    {
-      $pull: { articleIdList: doc.id },
-    }
-  )
-
-  await Promise.all([categoryUpdate, tagUpdate])
-})
-
-ArticleSchema.post('findOneAndUpdate', async function(doc) {
-  const { categoryID, id, tagIdList } = await this.findOne()
-  const categoryUpdatePull = ArticleCategoryModel.findByIdAndUpdate(
-    doc.categoryID,
-    {
-      $pull: { articleIdList: id },
-    }
-  )
-  const categoryUpdateAdd = ArticleCategoryModel.findByIdAndUpdate(categoryID, {
-    $addToSet: { articleIdList: id },
-  })
-
-  const tagUpdatePull = TagModel.updateMany(
-    { _id: { $in: doc.tagIdList } },
-    { $pull: { articleIdList: id } }
-  )
-  const tagUpdateAdd = TagModel.updateMany(
-    { _id: { $in: tagIdList } },
-    { $addToSet: { articleIdList: id } }
-  )
-
-
-  await Promise.all([
-    categoryUpdatePull,
-    categoryUpdateAdd,
-    tagUpdatePull,
-    tagUpdateAdd,
-  ])
-})
 
 module.exports = model('Article', ArticleSchema)

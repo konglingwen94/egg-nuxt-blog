@@ -3,7 +3,7 @@ const { ObjectId } = require('mongoose').Types
 const { ParameterException } = require('../utils/httpExceptions')
 const GuestbookModel = require('../model/guestbook')
 const { guestbook: properties } = require('../types/request')
-const { guestbook: $project } = require('../types/projectFields')
+const { guestbook: $project } = require('../types/projectField')
 const { guestbook: responseFields } = require('../types/response')
 const _ = require('lodash')
 
