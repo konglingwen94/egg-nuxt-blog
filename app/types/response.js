@@ -22,7 +22,7 @@ const fields = {
   ],
   comment: ['content', 'nickname', 'thumbupCount'],
   guestbook: ['content', 'diggCount', 'nickname', 'dialogues'],
-  tag: ['name', 'articleIdList'],
+  tag: ['name'],
 }
 
 for (let key in fields) {

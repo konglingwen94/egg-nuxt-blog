@@ -18,8 +18,9 @@ module.exports = {
     _id: 0,
     id: '$_id',
     name: 1,
+   
     // publishedArticleCount: 1,
-    articleIdList: 1,
+    articles: 1,
     createdAt: 1,
     updatedAt: 1,
   },
@@ -54,7 +55,7 @@ module.exports = {
     id: '$_id',
     _id: 0,
     name: 1,
-    articleIdList: 1,
+   
     createdAt: 1,
     updatedAt: 1,
   },

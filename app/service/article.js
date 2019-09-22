@@ -40,9 +40,7 @@ module.exports = class ArticleService extends Service {
           ],
         },
       },
-      {
-        $unwind: '$category',
-      },
+      { $unwind: '$category' },
       {
         $project: this.ctx.projectFields.article,
       },
@@ -71,12 +69,12 @@ module.exports = class ArticleService extends Service {
       {
         $lookup: {
           from: 'tags',
-          let: { id: '$id' },
+          let: { tagIdList: '$tagIdList' },
           pipeline: [
             {
               $match: {
                 $expr: {
-                  $in: ['$$id', '$articleIdList'],
+                  $in: ['$_id', '$$tagIdList'],
                 },
               },
             },
@@ -93,11 +91,32 @@ module.exports = class ArticleService extends Service {
         },
       },
     ])
-     
+
     return result
   }
+  async publishedCount() {
+    return ArticleModel.count({ isPublished: true })
+  }
+  async ownCategoryCount(categoryID) {
+    const articleCount = await ArticleModel.countDocuments({ categoryID })
+    const articlePublishedCount = await ArticleModel.countDocuments({
+      categoryID,
+      isPublished: true,
+    })
+    return { articleCount, articlePublishedCount }
+  }
+  async countOwnTagArticle(tagID) {
+    const articleCount = await ArticleModel.countDocuments({ tagIdList: tagID })
+    const articlePublishedCount = await ArticleModel.countDocuments({
+      tagIdList: tagID,
+      isPublished: true,
+    })
+
+    return { articleCount, articlePublishedCount }
+  }
+
   async create() {}
   async queryByCategoryID(categoryID) {
-    return ArticleModel.find({ categoryID })
+    return ArticleModel.findOne({ categoryID })
   }
 }

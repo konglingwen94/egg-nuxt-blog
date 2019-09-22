@@ -4,7 +4,8 @@
       <el-tab-pane name="list" label="标签列表">
         <el-table :data="dataList" border>
           <el-table-column prop="name" label="名称"></el-table-column>
-          <el-table-column prop="articleIdList" label="文章"></el-table-column>
+          <el-table-column prop="articleCount" label="文章数量"></el-table-column>
+          <el-table-column prop="articlePublishedCount" label="已发布文章数量"></el-table-column>
           <el-table-column label="更新时间">
             <template v-slot="{row}">{{new Date(row.updatedAt).toLocaleTimeString()}}</template>
           </el-table-column>

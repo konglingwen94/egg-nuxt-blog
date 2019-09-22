@@ -5,20 +5,39 @@ class CategoryService extends Service {
   async create(payload) {
     return await CategoryModel.create(payload)
   }
-   
+
   async aggregateList() {
     const { ctx } = this
 
-    return CategoryModel.aggregate([
+    const result = CategoryModel.aggregate([
+      {
+        $lookup: {
+          from: 'articles',
+          let: { id: '$_id' },
+          pipeline: [
+            {
+              $match: { $expr: { $eq: ['$$id', '$categoryID'] } },
+            },
+            {
+              $project: ctx.projectFields.article,
+            },
+          ],
+          as: 'articles',
+        },
+      },
+
       {
         $project: ctx.projectFields.category,
       },
+
       {
         $sort: {
           createdAt: -1,
         },
       },
     ])
+
+    return result
   }
   async queryById(id) {
     return CategoryModel.findById(id).exec()

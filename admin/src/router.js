@@ -9,8 +9,8 @@ import Dashboard from '@/views/Dashboard'
 import Login from '@/views/Login'
 import Security from '@/views/Security'
 import ArticleList from '@/views/Articles/ArticleList.vue'
-import ArticleCategories from '@/views/Articles/CategoryList'
 import ArticleEditor from '@/views/Articles/ArticleEditor'
+import Categories from '@/views/Categories/List'
 import Comment from '@/views/Comments/List'
 import Guestbook from '@/views/Guestbooks/List'
 
@@ -86,7 +86,7 @@ const router = new Router({
         {
           name: 'article-categories',
           path: 'article-categories',
-          component: ArticleCategories,
+          component: Categories,
           meta: {
             title: '文章分类列表',
             activedMenuItem: 'article-categories',

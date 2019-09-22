@@ -7,8 +7,8 @@
     <el-table :data="dataList" border>
       <el-table-column label="ID" prop="id"></el-table-column>
       <el-table-column label="分类名称" prop="name"></el-table-column>
-      <el-table-column label="文章数量" prop="articleIdList.length"></el-table-column>
-      <el-table-column label="已发布文章数量" prop="publishedArticleCount"></el-table-column>
+      <el-table-column label="文章数量" prop="articleCount"></el-table-column>
+      <el-table-column label="已发布文章数量" prop="articlePublishedCount"></el-table-column>
       <el-table-column label="创建时间">
         <template v-slot="{row}">{{new Date(row.createdAt).toLocaleString()}}</template>
       </el-table-column>

@@ -8,11 +8,7 @@ const TagSchema = new Schema(
       type: String,
       default: '',
       unique: true,
-    },
-    articleIdList: {
-      type: [ObjectId],
-      default: [],
-    },
+    } 
   },
   {
     timestamps: true,

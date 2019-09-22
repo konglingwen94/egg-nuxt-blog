@@ -34,17 +34,20 @@ module.exports = class TagController extends Controller {
       throw error
     }
 
-    return _.pick(result, response.tag)
+    result = _.pick(result, response.tag)
+    ctx.body = _.defaults(result, { articleCount: 0, publishedArticleCount: 0 })
   }
   async queryList() {
-    const { ctx } = this
+    const { ctx, service } = this
 
-    const result = await TagModel.aggregate([
-      {
-        $project: projection.tag,
-      },
-    ])
-
+    const result = await service.tag.aggretageList()
+     
+    await Promise.all(
+      result.map(async item => {
+        const count = await service.article.countOwnTagArticle(item.id)
+        _.assign(item, count)
+      })
+    )
     ctx.body = result
   }
 

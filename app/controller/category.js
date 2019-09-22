@@ -14,7 +14,7 @@ class CategoryController extends Controller {
     const { ctx, service } = this
 
     const required = ['name']
-    console.log(ctx.requestParams)
+
     const payload = _.pick(ctx.request.body, required)
 
     const schema = { properties: ctx.requestParams.category, required }
@@ -37,14 +37,24 @@ class CategoryController extends Controller {
     }
     ctx.status = 201
 
-    ctx.body = _.pick(data, ctx.responseFields.category)
+    ctx.body = _.defaults(_.pick(data, ctx.responseFields.category), {
+      articleCount: 0,
+      articlePublishedCount: 0,
+    })
   }
   async queryList() {
     const { ctx, service } = this
 
-    // const result = await service.category.List()
-    const result = await service.category.aggregateList()
-    
+  
+    let result = await service.category.aggregateList()
+
+    await Promise.all(
+      result.map(async item => {
+        const articleCount = await service.article.ownCategoryCount(item.id)
+        _.assign(item, articleCount)
+      })
+    )
+
     ctx.body = result
   }
 
@@ -61,12 +71,10 @@ class CategoryController extends Controller {
     const { id } = ctx.params
 
     const result = await service.article.queryByCategoryID(id)
-     
-     
+
     if (result) {
       return ctx.throw(400, '此分类下有文章，不能删除此分类')
     }
-   
 
     try {
       await CategoryModel.findByIdAndRemove(id)
@@ -78,7 +86,7 @@ class CategoryController extends Controller {
   }
 
   async updateOne() {
-    const { ctx } = this
+    const { ctx, service } = this
     const { id } = ctx.params
     let schema = { properties }
     const required = ['name']
@@ -92,7 +100,7 @@ class CategoryController extends Controller {
       throw new ctx.helper.ParameterException(ctx.ajv.errors)
     }
 
-    const hasOne = await CategoryModel.findOne({ name: payload.name })
+    const hasOne = await service.category.queryOneByName(payload.name)
     if (hasOne) {
       return ctx.throw(400, '重复的分类名称')
     }
