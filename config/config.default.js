@@ -10,7 +10,17 @@ module.exports = {
   adminRequired: {
     match: '/api/admin',
   },
-  middleware: ['errorHandler', 'adminRequired', 'upload'],
+ 
+  webFilter: {
+    match: '/api/articles',
+  },
+  middleware: [
+    'errorHandler',
+    'adminRequired',
+    'upload',
+    'webFilter',
+    'articleFilter',
+  ],
   cors: {
     origin: '*',
   },

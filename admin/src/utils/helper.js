@@ -1,29 +1,34 @@
 export const invokeDeepObject = (...args) => {
-  console.log(args)
-  if (typeof object !== 'object') {
-    return
-  }
-
-  if (Array.isArray(object)) {
-    object = []
-  }
-
-  for (let key in object) {
-    if (Array.isArray(object[key])) {
-      object[key] = []
-      continue
+  args.forEach(object => {
+    if (typeof object !== 'object') {
+      return
     }
-    switch (typeof object[key]) {
-      case 'string':
-        object[key] = ''
-        break
 
-      case 'number':
-        object[key] = -1
-        break
-
-      case 'object':
-        invokeDeepObject(object[key])
+    if (Array.isArray(object)) {
+      object.splice(0)
+      return 
     }
-  }
+
+    for (let key in object) {
+      if (Array.isArray(object[key])) {
+        object[key].splice(0)
+        continue
+      }
+      switch (typeof object[key]) {
+        case 'string':
+          object[key] = ''
+          break
+
+        case 'number':
+          object[key] = -1
+          break
+        case 'boolean':
+          object[key] = false
+          break
+
+        case 'object':
+          invokeDeepObject(object[key])
+      }
+    }
+  })
 }

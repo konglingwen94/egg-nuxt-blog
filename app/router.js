@@ -98,10 +98,7 @@ module.exports = app => {
 
   router.get('/articles/suggestion', controller.article.querySuggestionList)
 
-  router.get(
-    '/categories/:id/articles',
-    controller.article.queryListByCategoryId
-  )
+  
   router.get('/articles/:id', controller.article.queryOne)
 
   router.put('/articles/:id/visit', controller.article.incrementPv)

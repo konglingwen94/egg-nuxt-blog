@@ -2,14 +2,12 @@
   <div class="suggestion">
     <dl>
       <dt v-for="item in dataList" :key="item.id" class="suggestion-item">
-        
-          <nuxt-link
-            :title="item.title"
-            :to="{name:'articles-id',params:{id:item.id},query:{categoryIdList:item.categoryIds}}"
-          >
-          <el-link  type="primary">{{item.title}}</el-link>
-          </nuxt-link>
-        
+        <nuxt-link
+          :title="item.title"
+          :to="{name:'articles-id',params:{id:item.id},query:{tagIdList:item.tagIdList}}"
+        >
+          <el-link type="primary">{{item.title}}</el-link>
+        </nuxt-link>
       </dt>
     </dl>
   </div>

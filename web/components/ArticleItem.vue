@@ -3,7 +3,7 @@
     <div class="content">
       <nuxt-link
         class="nuxt-link"
-        :to="{name:'articles-id',params:{id:data.id},query:{categoryIdList:data.categoryIds}}"
+        :to="{name:'articles-id',params:{id:data.id},query:{tagIdList:data.tagIdList}}"
       >{{data.title}}</nuxt-link>
 
       <div class="text" v-html="data.content.text "></div>

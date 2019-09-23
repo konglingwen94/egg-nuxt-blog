@@ -6,13 +6,16 @@ const { ObjectId } = Schema.Types
 
 const ArticleSchema = new Schema(
   {
-    categoryID: { type: ObjectId, ref: 'ArticleCategory' },
+    categoryID: { type: ObjectId, ref: 'Category' },
     commentIdList: [{ type: ObjectId, ref: 'Comment' }],
     title: String,
-    tagIdList: {
-      type: [ObjectId],
-      default: [],
-    },
+    tagIdList: [
+      {
+        type: [ObjectId],
+
+        ref: 'Tag',
+      },
+    ],
     content: {
       type: Object,
 

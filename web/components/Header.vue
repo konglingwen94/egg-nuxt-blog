@@ -13,7 +13,7 @@
           <nuxt-link to="/about">关于</nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/categories">分类</nuxt-link>
+          <nuxt-link to="/archives">归档</nuxt-link>
         </li>
         <li>
           <nuxt-link to="/guestbooks">留言墙</nuxt-link>

@@ -2,8 +2,6 @@ const { Service } = require('egg')
 const mongoose = require('mongoose')
 const { ObjectId } = mongoose.Types
 const ArticleModel = require('../model/article')
-const CategoryModel = require('../model/category')
-const TagModel = require('../model/tag')
 const {
   article: articleFields,
   comment: commentProjectFields,
@@ -17,17 +15,18 @@ const {
 
 module.exports = class ArticleService extends Service {
   async queryList() {
+    const { ctx } = this
     const {
       article: articleProject,
       comment: commentProject,
       tag: tagProject,
       category: categoryProject,
     } = this.ctx.projectFields
-
+    console.log(ctx.state.filter)
     const result = await ArticleModel.aggregate([
-      // {
-      //   $match: ctx.state.filter,
-      // },
+      {
+        $match: ctx.state.filter,
+      },
       {
         $lookup: {
           from: 'categories',
@@ -125,5 +124,38 @@ module.exports = class ArticleService extends Service {
   }
   async queryOneByTagID(tagID) {
     return ArticleModel.findOne({ tagIdList: tagID })
+  }
+  async queryByTagIdList(tagIdList) {
+    const { ctx } = this
+    return ArticleModel.aggregate()
+      .match({
+        $and: [
+          {
+            tagIdList: {
+              $in: tagIdList,
+            },
+          },
+          { isPublished: true },
+        ],
+      })
+      .project(ctx.projectFields.article)
+  }
+  async queryOneById(id) {
+    const { ctx } = this
+
+    const result = await ArticleModel.aggregate()
+      .match({ _id: ObjectId(id) })
+      .lookup({
+        from: 'tags',
+        as: 'tagList',
+        foreignField: '_id',
+        localField: 'tagIdList',
+      })
+      .project({
+        ...ctx.projectFields.article,
+        tagList: { name: 1, updatedAt: 1, createdAt: 1, id: '$_id' },
+      })
+
+    return result[0]
   }
 }

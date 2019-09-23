@@ -25,7 +25,7 @@ class TagService extends Service {
     await doc.save()
     return doc
   }
-  
+ 
 }
 
 module.exports = TagService

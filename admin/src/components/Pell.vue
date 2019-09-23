@@ -21,7 +21,7 @@ export default {
       default() {
         return {
           html: '',
-          content: ''
+          text: ''
         }
       }
     }
@@ -29,15 +29,19 @@ export default {
   data() {
     return {
       html: '',
-      content: ''
+      text: ''
     }
   },
   watch: {
-    initialMarkdown(value) {
-      this.html = value.html
-      this.content = value.content
+    initialMarkdown: {
+      deep: true,
+       
+      handler(value) {
+        this.html = value.html
+        this.text = value.text
 
-      this.editor.content.innerHTML = value.html
+        this.editor.content.innerHTML = value.html
+      }
     }
   },
   mounted() {
@@ -73,8 +77,6 @@ export default {
         self.$emit('change', { html, text: getTextFromHtml(html) })
       }
     })
-
-    this.editor.content.innerHTML = this.initialMarkdown.html
   },
   methods: {
     onSuccess(file) {

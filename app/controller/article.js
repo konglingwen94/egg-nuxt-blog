@@ -1,4 +1,5 @@
 const { Controller } = require('egg')
+const { ObjectId } = require('mongoose').Types
 const _ = require('lodash')
 const ArticleModel = require('../model/article')
 const CategoryModel = require('../model/category')
@@ -17,79 +18,22 @@ module.exports = class ArticleController extends Controller {
   }
 
   async querySuggestionList() {
-    const { ctx } = this
-    let { categoryIdList } = ctx.query
-    if (typeof categoryIdList === 'string') {
-      categoryIdList = [categoryIdList].map(id => ObjectId(id))
-    } else {
-      categoryIdList = categoryIdList.map(id => ObjectId(id))
-    }
-
-    ctx.body = await ArticleModel.aggregate([
-      {
-        $match: {
-          categoryIds: {
-            $in: categoryIdList,
-          },
-        },
-      },
-      {
-        $project: articleFields,
-      },
-    ])
+    const { ctx, service } = this
+    let { tagIdList } = ctx.query
+    tagIdList =
+      typeof tagIdList === 'string'
+        ? [ObjectId(tagIdList)]
+        : tagIdList.map(id => ObjectId(id))
+    ctx.body = await service.article.queryByTagIdList(tagIdList)
   }
-  async queryListByCategoryId() {
-    const { ctx } = this
-
-    const { id } = ctx.params
-
-    const result = await ArticleModel.find({
-      categoryIds: { $all: [id] },
-    }).sort({ createdAt: -1 })
-    ctx.body = result.map(item => {
-      return _.pick(item, responseFields)
-    })
-  }
-  async queryPublishedList() {
-    const { ctx } = this
-    const result = await ArticleModel.find({ isPublished: true })
-      .populate('categoryIds')
-      .sort({ createdAt: -1 })
-
-    ctx.body = result.map(item => {
-      item.categories = item.categoryIds
-      item.categoryIds = item.categories.map(item => item._id)
-      return _.pick(item, responseFields)
-    })
-  }
-
-  async queryListByOptions() {
-    const { ctx } = this
-    const payload = _.pick(ctx.query, _.keys(properties))
-
-    const valid = ctx.ajv.validate({ properties }, payload)
-
-    if (!valid) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
-
-    const result = await ArticleModel.find(payload)
-      .populate('categoryIds')
-      .sort({ createdAt: -1 })
-
-    ctx.body = result.map(item => {
-      item.categories = item.categoryIds
-      item.categoryIds = item.categories.map(item => item._id)
-      return _.pick(item, responseFields)
-    })
-  }
+  
 
   async queryOne() {
-    const { ctx } = this
+    const { ctx, service } = this
     const { id } = ctx.params
-    const result = await ArticleModel.findById(id)
+    const result = await service.article.queryOneById(id)
 
-    ctx.body = _.pick(result, responseFields)
+    ctx.body = result
   }
   async createOne() {
     const { ctx, service } = this

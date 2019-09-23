@@ -5,7 +5,7 @@
       v-if="data.cover.path"
       class="banner"
       :style="bannerStyle"
-    >{{data.categories.map(item=>item.name).join(' ')}}</div>
+    >{{data.tagList.map(item=>item.name).join(' ')}}</div>
 
     <div class="main">
       <section class="content-wrapper">
@@ -101,6 +101,7 @@ import CommentService from '@/services/comments'
 
 export default {
   layout: 'Article',
+  name: 'ArticleDetail',
   head() {
     const { title } = this.data
 
@@ -108,16 +109,22 @@ export default {
       title
     }
   },
-  asyncData({ params, query }) {
+  async asyncData({ params, query }) {
     const { id } = params
-    const { categoryIdList } = query
+    const { tagIdList } = query
 
-    return Promise.all([
-      ArticleService.fetchSuggestionList({ categoryIdList }),
-      ArticleService.fetchOne(id)
-    ])
-      .then(([suggestionList, data]) => ({ suggestionList, data }))
-      .catch(err => ({ suggestionList: [], data: {} }))
+    try {
+      var [suggestionList = [], data = {}] = await Promise.all([
+        ArticleService.fetchSuggestionList({ tagIdList }),
+        ArticleService.fetchOne(id)
+      ])
+    } catch (error) {
+      return { suggestionList: [], data: {} }
+    }
+    const index = suggestionList.findIndex(item => item.id === id)
+    suggestionList.splice(index, 1)
+
+    return { suggestionList, data }
   },
   data() {
     return {
@@ -129,6 +136,7 @@ export default {
       commentList: []
     }
   },
+  
   computed: {
     diggCommentIdList() {
       return this.$store.state.article.diggCommentIdList
@@ -140,7 +148,7 @@ export default {
       return {
         background: `url(${this.data.cover.path})no-repeat top/100%`,
         height: '300px',
-        color: 'white',
+        color: 'red',
         fontSize: '50px',
         textAlign: 'center',
         lineHeight: 3
