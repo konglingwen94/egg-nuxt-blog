@@ -1,8 +1,14 @@
 module.exports = app => {
   const { router, controller, middleware } = app
-  const adminRequired = middleware.adminRequired()
-  
+
   router.prefix('/api')
+
+  /***
+   *
+   * upload
+   */
+  router.post('/upload', controller.upload.uploadFile)
+
   /**
    *
    * auth
@@ -16,13 +22,12 @@ module.exports = app => {
 
   router.patch(
     '/admin/auth/change-password',
-    adminRequired,
+
     controller.admin.changePass
   )
 
   router.patch(
     '/admin/auth/change-account',
-    adminRequired,
 
     controller.admin.changeAccount
   )
@@ -30,25 +35,25 @@ module.exports = app => {
   /**
    * categories
    */
-  router.get('/admin/categories', adminRequired, controller.category.queryList)
+  router.get('/admin/categories', controller.category.queryList)
 
   router.get(
     '/admin/categories/:id',
-    adminRequired,
+
     controller.category.queryOne
   )
 
-  router.post('/admin/categories', adminRequired, controller.category.createOne)
+  router.post('/admin/categories', controller.category.createOne)
 
   router.patch(
     '/admin/categories/:id',
-    adminRequired,
+
     controller.category.updateOne
   )
 
   router.delete(
     '/admin/categories/:id',
-    adminRequired,
+
     controller.category.deleteOne
   )
 
@@ -60,32 +65,32 @@ module.exports = app => {
    * articles
    */
 
-  router.post('/admin/articles', adminRequired, controller.article.createOne)
+  router.post('/admin/articles', controller.article.createOne)
 
-  router.get('/admin/articles', adminRequired, controller.article.queryList)
+  router.get('/admin/articles', controller.article.queryList)
 
-  router.get('/admin/articles/:id', adminRequired, controller.article.queryOne)
+  router.get('/admin/articles/:id', controller.article.queryOne)
 
   router.delete(
     '/admin/articles/:id',
-    adminRequired,
+
     controller.article.deleteOne
   )
 
   router.post(
     '/admin/articles/delete',
-    adminRequired,
+
     controller.article.delete
   )
 
   router.patch(
     '/admin/articles/:id',
-    adminRequired,
+
     controller.article.updateOne
   )
   router.patch(
     '/admin/articles/:id/status',
-    adminRequired,
+
     controller.article.updatePublishStatus
   )
 
@@ -106,30 +111,29 @@ module.exports = app => {
   /**
    * tags
    *  */
-  router.get('/admin/tags', adminRequired, controller.tag.queryList)
-  router.post('/admin/tags', adminRequired, controller.tag.createOne)
-  router.put('/admin/tags/:id', adminRequired, controller.tag.updateOne)
-  router.delete('/admin/tags/:id', adminRequired, controller.tag.deleteOne)
+  router.get('/admin/tags', controller.tag.queryList)
+  router.post('/admin/tags', controller.tag.createOne)
+  router.put('/admin/tags/:id', controller.tag.updateOne)
+  router.delete('/admin/tags/:id', controller.tag.deleteOne)
 
   router.get('/tags', controller.tag.queryList)
   /**
    * comments
    */
 
-  router.get('/admin/comments', adminRequired, controller.comment.queryList)
+  router.get('/admin/comments', controller.comment.queryList)
 
   router.delete(
     '/admin/comments/:id',
-    adminRequired,
+
     controller.comment.deleteOne
   )
 
-  router.post('/admin/comments', adminRequired, controller.comment.deleteList)
+  router.post('/admin/comments', controller.comment.deleteList)
 
   router.get(
     '/admin/articles/:articleID/comments',
 
-    adminRequired,
     controller.comment.queryList
   )
 
@@ -146,26 +150,26 @@ module.exports = app => {
    * guestbooks
    *  */
 
-  router.get('/admin/guestbooks', adminRequired, controller.guestbook.queryList)
+  router.get('/admin/guestbooks', controller.guestbook.queryList)
   router.delete(
     '/admin/guestbooks/:id',
-    adminRequired,
+
     controller.guestbook.deleteOne
   )
   router.delete(
     '/admin/guestbooks/:id/dialogues/:responseID',
-    adminRequired,
+
     controller.guestbook.deleteOneResponse
   )
 
   router.delete(
     '/admin/guestbooks',
-    adminRequired,
+
     controller.guestbook.deleteMany
   )
   router.delete(
     '/admin/responses',
-    adminRequired,
+
     controller.guestbook.deleteManyResponse
   )
 

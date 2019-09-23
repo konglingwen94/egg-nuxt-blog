@@ -8,7 +8,7 @@ const response = require('../types/response')
 
 module.exports = class TagController extends Controller {
   async createOne() {
-    const { ctx } = this
+    const { ctx, service } = this
 
     const required = ['name']
     const { name } = ctx.request.body
@@ -33,15 +33,14 @@ module.exports = class TagController extends Controller {
     } catch (error) {
       throw error
     }
-
-    result = _.pick(result, response.tag)
-    ctx.body = _.defaults(result, { articleCount: 0, publishedArticleCount: 0 })
+    const count = await service.article.countOwnTagArticle(result.id)
+    ctx.body = _.defaults(_.pick(result, response.tag), count)
   }
   async queryList() {
     const { ctx, service } = this
 
     const result = await service.tag.aggretageList()
-     
+
     await Promise.all(
       result.map(async item => {
         const count = await service.article.countOwnTagArticle(item.id)
@@ -79,7 +78,7 @@ module.exports = class TagController extends Controller {
   }
 
   async deleteOne() {
-    const { ctx } = this
+    const { ctx, service } = this
 
     const { id } = ctx.params
 
@@ -87,7 +86,12 @@ module.exports = class TagController extends Controller {
       { required: ['id'], properties: request.tag },
       { id }
     )
-
+    const result = await service.article.queryOneByTagID(id)
+    
+    if (result) {
+      
+      return ctx.throw(403, '此标签下有文章')
+    }
     if (!isValid) {
       throw new ParameterException(ctx.ajv.errors)
     }

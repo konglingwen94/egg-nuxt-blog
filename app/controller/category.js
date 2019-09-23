@@ -36,21 +36,19 @@ class CategoryController extends Controller {
       throw error
     }
     ctx.status = 201
-
-    ctx.body = _.defaults(_.pick(data, ctx.responseFields.category), {
-      articleCount: 0,
-      articlePublishedCount: 0,
-    })
+    const count = await service.article.countOwnCategoryArticle(data.id)
+    ctx.body = _.defaults(_.pick(data, ctx.responseFields.category), count)
   }
   async queryList() {
     const { ctx, service } = this
 
-  
     let result = await service.category.aggregateList()
 
     await Promise.all(
       result.map(async item => {
-        const articleCount = await service.article.ownCategoryCount(item.id)
+        const articleCount = await service.article.countOwnCategoryArticle(
+          item.id
+        )
         _.assign(item, articleCount)
       })
     )
@@ -73,7 +71,7 @@ class CategoryController extends Controller {
     const result = await service.article.queryByCategoryID(id)
 
     if (result) {
-      return ctx.throw(400, '此分类下有文章，不能删除此分类')
+      return ctx.throw(403, '此分类下有文章，不能删除此分类')
     }
 
     try {
@@ -105,17 +103,15 @@ class CategoryController extends Controller {
       return ctx.throw(400, '重复的分类名称')
     }
 
-    try {
-      var result = await (id
+    
+      const result = await (id
         ? CategoryModel.findByIdAndUpdate(
             id,
             { $set: payload },
             { new: true }
           ).select(categoryProjectFields)
         : CategoryModel.create(payload))
-    } catch (error) {
-      throw error
-    }
+     
     ctx.body = _.pick(result, responseFields)
   }
 }

@@ -92,21 +92,20 @@ module.exports = class ArticleController extends Controller {
     ctx.body = _.pick(result, responseFields)
   }
   async createOne() {
-    const { ctx } = this
-    const required = ['title', 'content', 'categoryID']
+    const { ctx, service } = this
+    const required = ['title', 'content', 'categoryID', 'isPublished']
 
     const data = _.pick(ctx.request.body, required.concat('tagIdList'))
 
     const { tagIdList } = data
 
     const valid = ctx.ajv.validate({ required, properties }, data)
-
     if (!valid) {
       throw new ParameterException(ctx.ajv.errors)
     }
 
     try {
-      var result = await ArticleModel.create(data)
+      var result = await service.article.create(data)
     } catch (error) {
       throw error
     }

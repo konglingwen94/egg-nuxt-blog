@@ -97,7 +97,7 @@ module.exports = class ArticleService extends Service {
   async publishedCount() {
     return ArticleModel.count({ isPublished: true })
   }
-  async ownCategoryCount(categoryID) {
+  async countOwnCategoryArticle(categoryID) {
     const articleCount = await ArticleModel.countDocuments({ categoryID })
     const articlePublishedCount = await ArticleModel.countDocuments({
       categoryID,
@@ -115,8 +115,15 @@ module.exports = class ArticleService extends Service {
     return { articleCount, articlePublishedCount }
   }
 
-  async create() {}
+  async create(payload) {
+    const doc = new ArticleModel(payload)
+    await doc.save()
+    return doc
+  }
   async queryByCategoryID(categoryID) {
     return ArticleModel.findOne({ categoryID })
+  }
+  async queryOneByTagID(tagID) {
+    return ArticleModel.findOne({ tagIdList: tagID })
   }
 }

@@ -1,13 +1,10 @@
 <template>
   <div class>
     <Panel>
-      <div class slot="header">
-        <el-button @click="addOne" type="primary">添加</el-button>
-        <el-button v-if="selection.length" @click="batchDelete" type="danger">批量删除</el-button>
-      </div>
+       
 
       <el-table :data="dataList" border @selection-change="handleSelectionChange">
-        <el-table-column type="selection"></el-table-column>
+        <!-- <el-table-column type="selection"></el-table-column> -->
         <el-table-column type="expand">
           <template v-slot="{row}">
             <el-row :gutter="40" type="flex" justify="space-between">

@@ -1,6 +1,16 @@
 module.exports = {
   keys: 'my-blog',
-  middleware: ['errorHandler'],
+  static: {
+    prefix: '/',
+  },
+  upload: {
+    match: '/api/upload',
+    dir: 'app/public/uploads/',
+  },
+  adminRequired: {
+    match: '/api/admin',
+  },
+  middleware: ['errorHandler', 'adminRequired', 'upload'],
   cors: {
     origin: '*',
   },

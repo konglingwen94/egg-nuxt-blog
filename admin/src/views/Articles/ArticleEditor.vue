@@ -33,6 +33,9 @@
           :file-list="fileList"
         ></upload>
       </el-form-item>
+      <el-form-item label="是否发布">
+        <el-switch v-model="form.isPublished"></el-switch>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="handleSubmit">确定</el-button>
       </el-form-item>
@@ -44,6 +47,7 @@
 import ArticleApi from '@/api/articles'
 import CategoryApi from '@/api/categories'
 import TagApi from '@/api/tags'
+import { invokeDeepObject } from '@/utils/helper'
 
 export default {
   data() {
@@ -56,7 +60,8 @@ export default {
         },
         cover: { name: '', path: '' },
         categoryID: '',
-        tagIdList: []
+        tagIdList: [],
+        isPublished: false
       },
 
       categoryList: [],
@@ -72,9 +77,29 @@ export default {
       return this.$route.params.id
     }
   },
+  watch: {
+    $route: {
+      immediate: true,
+      handler(newRoute) {
+        
+        invokeDeepObject(this.form, this.fileList)
+        if (!this.currentId) {
+          return
+        }
+        this.mapDataToForm()
+      }
+    }
+  },
   methods: {
     handleSubmit() {
-      const { tagIdList, categoryID, title, content, cover } = this.form
+      const {
+        isPublished,
+        tagIdList,
+        categoryID,
+        title,
+        content,
+        cover
+      } = this.form
 
       if (!categoryID) {
         this.$message.error('请选择文章分类')
@@ -96,7 +121,8 @@ export default {
         content,
         cover,
         categoryID,
-        tagIdList
+        tagIdList,
+        isPublished
       }
 
       const action =
@@ -117,8 +143,26 @@ export default {
         .catch(err => {
           this.$message.error(err.message)
         })
+    },
+    mapDataToForm() {
+      ArticleApi.fetchOne(this.currentId)
+        .then(response => {
+          _.assign(this.form, _.pick(response, _.keys(this.form)))
+
+          if (!response.cover.path) {
+            return
+          }
+          this.fileList.push({
+            name: response.cover.name,
+            url: response.cover.path
+          })
+        })
+        .catch(err => {
+          this.$message.error(err.message)
+        })
     }
   },
+
   created() {
     CategoryApi.fetchList()
       .then(response => {
@@ -134,26 +178,6 @@ export default {
       .catch(err => {
         this.$message.error(err.message)
       })
-
-    if (!this.currentId) {
-      return
-    }
-
-    ArticleApi.fetchOne(this.currentId)
-      .then(response => {
-        _.assign(this.form, _.pick(response, _.keys(this.form)))
-
-        if (!response.cover.path) {
-          return
-        }
-        this.fileList.push({
-          name: response.cover.name,
-          url: response.cover.path
-        })
-      })
-      .catch(err => {
-        this.$message.error(err.message)
-      })
   }
 }
 </script>
@@ -164,20 +188,6 @@ export default {
 }
 /deep/.el-select {
   width: 100%;
-}
-
-.tag-wrapper {
-  .input-tag {
-    width: 100px;
-  }
-
-  .el-tag + .el-tag {
-    margin-left: 8px;
-  }
-
-  .el-tag:last-of-type {
-    margin-right: 9px;
-  }
 }
 </style>
 

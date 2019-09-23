@@ -20,10 +20,10 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog :visible="dialogVisible" @close="closeDialog" :title="dialogTitle">
+    <el-dialog @opened="onDialogOpen" :visible="dialogVisible" @close="closeDialog" :title="dialogTitle">
       <el-form label-width="auto">
         <el-form-item label="分类名称">
-          <el-input v-model="form.name" clearable></el-input>
+          <el-input ref="input" v-model="form.name" clearable></el-input>
         </el-form-item>
       </el-form>
       <el-button slot="footer" @click="handleSubmit">确定</el-button>
@@ -60,6 +60,9 @@ export default {
     }
   },
   methods: {
+    onDialogOpen() {
+      this.$refs.input.focus()
+    },
     openDialog() {
       this.dialogVisible = true
     },

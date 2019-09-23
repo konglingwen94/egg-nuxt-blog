@@ -20,7 +20,7 @@
       <el-tab-pane name="action" :label="tagAction">
         <el-form>
           <el-form-item label="名称">
-            <el-input v-model="form.name"></el-input>
+            <el-input ref="input" v-model="form.name"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleSubmit">确定</el-button>
@@ -48,6 +48,11 @@ export default {
   computed: {
     tagAction() {
       return this.action === 'edit' ? '编辑标签' : '添加标签'
+    }
+  },
+  watch: {
+    activeName() {
+      setTimeout(this.$refs.input.focus)
     }
   },
   created() {
@@ -113,7 +118,6 @@ export default {
       this.editingItem = row
       this.activeName = 'action'
       this.action = 'edit'
-
       _.assign(this.form, _.pick(row, ['name']))
     }
   }
