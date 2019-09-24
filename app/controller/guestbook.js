@@ -100,7 +100,7 @@ module.exports = class GuestbookController extends Controller {
 
     await parentTarget.save()
 
-    doc = parentTarget.toObject()
+    let doc = parentTarget.toObject()
     doc.dialogues.forEach((item, index, array) => {
       item.responseToUser = array.find(response => {
         if (response._id && item.responseTo) {

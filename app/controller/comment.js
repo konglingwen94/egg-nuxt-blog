@@ -49,7 +49,7 @@ module.exports = class CommentController extends Controller {
 
     const result = await CommentModel.create(payload)
 
-    return _.pick(result, commentResponseFields)
+    ctx.body = _.pick(result, commentResponseFields)
   }
   async deleteOne() {
     const { ctx } = this

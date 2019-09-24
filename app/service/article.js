@@ -21,78 +21,64 @@ module.exports = class ArticleService extends Service {
       comment: commentProject,
       tag: tagProject,
       category: categoryProject,
-    } = this.ctx.projectFields
-    console.log(ctx.state.filter)
-    const result = await ArticleModel.aggregate([
-      {
-        $match: ctx.state.filter,
-      },
-      {
-        $lookup: {
-          from: 'categories',
-          let: { categoryID: '$categoryID' },
+    } = ctx.projectFields
 
-          as: 'category',
-          pipeline: [
-            { $match: { $expr: { $eq: ['$$categoryID', '$_id'] } } },
-            { $project: categoryProjectionFields },
-          ],
-        },
-      },
-      { $unwind: '$category' },
-      {
-        $project: this.ctx.projectFields.article,
-      },
-      {
-        $lookup: {
-          from: 'comments',
-          let: { id: '$id' },
-          pipeline: [
-            {
-              $match: {
-                $expr: {
-                  $eq: ['$$id', '$articleID'],
-                },
+    const result = ArticleModel.aggregate()
+      .match(ctx.state.filter)
+      .lookup({
+        from: 'categories',
+        let: { categoryID: '$categoryID' },
+
+        as: 'category',
+        pipeline: [
+          { $match: { $expr: { $eq: ['$$categoryID', '$_id'] } } },
+          { $project: categoryProjectionFields },
+        ],
+      })
+      .unwind('$category')
+      .project(ctx.projectFields.article)
+      .lookup({
+        from: 'comments',
+        let: { id: '$id' },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $eq: ['$$id', '$articleID'],
               },
             },
-            {
-              $project: commentProjectFields,
-            },
-            {
-              $sort: { createdAt: -1 },
-            },
-          ],
-          as: 'comments',
-        },
-      },
-      {
-        $lookup: {
-          from: 'tags',
-          let: { tagIdList: '$tagIdList' },
-          pipeline: [
-            {
-              $match: {
-                $expr: {
-                  $in: ['$_id', '$$tagIdList'],
-                },
+          },
+          {
+            $project: commentProjectFields,
+          },
+          {
+            $sort: { createdAt: -1 },
+          },
+        ],
+        as: 'comments',
+      })
+      .lookup({
+        from: 'tags',
+        let: { tagIdList: '$tagIdList' },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $in: ['$_id', '$$tagIdList'],
               },
             },
-            {
-              $project: tagProjectionFields,
-            },
-          ],
-          as: 'tagList',
-        },
-      },
-      {
-        $sort: {
-          createdAt: -1,
-        },
-      },
-    ])
-
+          },
+          {
+            $project: tagProjectionFields,
+          },
+        ],
+        as: 'tagList',
+      })
+      .sort({ createdAt: -1 })
+     
     return result
   }
+
   async publishedCount() {
     return ArticleModel.count({ isPublished: true })
   }

@@ -12,6 +12,11 @@ import {
   Tag,
   Badge,
   Avatar,
+  Menu,
+  MenuItem,
+  Carousel,
+  CarouselItem,
+  Image
 } from 'element-ui'
 import Vue from 'vue'
 
@@ -26,8 +31,12 @@ export default () => {
   Vue.use(Link)
   Vue.use(Alert)
   Vue.use(Tag)
+  Vue.use(Image)
   Vue.use(Badge)
   Vue.use(Avatar)
-
+  Vue.use(Menu)
+  Vue.use(MenuItem)
+  Vue.use(Carousel)
+  Vue.use(CarouselItem)
   Vue.prototype.$message = Message
 }

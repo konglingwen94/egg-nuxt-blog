@@ -11,14 +11,14 @@ module.exports = {
     match: '/api/admin',
   },
  
-  webFilter: {
+  webArticleFilter: {
     match: '/api/articles',
   },
   middleware: [
     'errorHandler',
     'adminRequired',
     'upload',
-    'webFilter',
+    'webArticleFilter',
     'articleFilter',
   ],
   cors: {

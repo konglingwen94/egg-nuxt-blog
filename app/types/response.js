@@ -2,6 +2,7 @@ const commonFields = ['id', 'createdAt', 'updatedAt']
 
 const fields = {
   admin: ['level', 'username', 'nickname', 'role'],
+  about: ['profile', 'platform'],
   article: [
     'starCount',
     'tagIdList',
@@ -14,12 +15,7 @@ const fields = {
     'content',
     'cover',
   ],
-  category: [
-    'name',
-    'starCount',
-    'articleIdList',
-    'publishedArticleCount',
-  ],
+  category: ['name', 'starCount', 'articleIdList', 'publishedArticleCount'],
   comment: ['content', 'nickname', 'thumbupCount'],
   guestbook: ['content', 'diggCount', 'nickname', 'dialogues'],
   tag: ['name'],

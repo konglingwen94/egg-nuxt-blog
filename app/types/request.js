@@ -1,4 +1,31 @@
 module.exports = {
+  about: {
+    id: {
+      tyep: 'string',
+      minLength: 24,
+      maxLength: 24,
+    },
+    profile: {
+      type: 'object',
+      required: ['description'],
+      properties: {
+        description: {
+          type: 'string',
+          minLength: 1,
+        },
+      },
+    },
+    platform: {
+      type: 'object',
+      required: ['description'],
+      properties: {
+        description: {
+          type: 'string',
+          minLength: 1,
+        },
+      },
+    },
+  },
   admin: {
     username: {
       type: 'string',

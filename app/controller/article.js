@@ -16,7 +16,16 @@ module.exports = class ArticleController extends Controller {
 
     ctx.body = await service.article.queryList()
   }
+  async queryCarouselList() {
+    const { service, ctx } = this
 
+    
+    const result = service.article
+      .queryList()
+      .sort({ pv: 1 })
+      .limit(4)
+    ctx.body = await result
+  }
   async querySuggestionList() {
     const { ctx, service } = this
     let { tagIdList } = ctx.query
@@ -26,7 +35,6 @@ module.exports = class ArticleController extends Controller {
         : tagIdList.map(id => ObjectId(id))
     ctx.body = await service.article.queryByTagIdList(tagIdList)
   }
-  
 
   async queryOne() {
     const { ctx, service } = this

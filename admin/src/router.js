@@ -13,6 +13,7 @@ import ArticleEditor from '@/views/Articles/ArticleEditor'
 import Categories from '@/views/Categories/List'
 import Comment from '@/views/Comments/List'
 import Guestbook from '@/views/Guestbooks/List'
+import About from '@/views/About'
 
 import Tag from '@/views/Tags'
 
@@ -42,11 +43,11 @@ const router = new Router({
           redirect: 'dashboard',
         },
         {
-          name: 'dashboard',
-          path: 'dashboard',
-          component: Dashboard,
+          name: 'abouts',
+          path: 'abouts',
+          component: About,
           meta: {
-            activedMenuItem: 'dashboard',
+            activedMenuItem: 'about',
           },
         },
         {

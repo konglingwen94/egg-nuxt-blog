@@ -1,12 +1,10 @@
 <template>
   <div class="menu-container">
-    <el-menu :default-active="defaultActive" router background-color="#304156" text-color="#f2f6fc">
-      <el-menu-item index="/"></el-menu-item>
+    <el-menu :default-active="$route.path" router background-color="#304156" text-color="#f2f6fc">
+      <el-menu-item index="/abouts">平台管理</el-menu-item>
       <el-submenu index="/articles">
         <template slot="title">文章管理</template>
-        <el-menu-item
-          index="/articles/new"
-        >添加文章</el-menu-item>
+        <el-menu-item index="/articles/new">添加文章</el-menu-item>
         <el-menu-item index="/articles">文章列表</el-menu-item>
       </el-submenu>
       <el-menu-item index="/article-categories">文章分类</el-menu-item>

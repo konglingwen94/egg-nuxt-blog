@@ -4,6 +4,9 @@ export default {
   fetchList(params) {
     return request.get('/articles', { params })
   },
+  fetchCarouselList(params) {
+    return request.get('/carousels/', { params })
+  },
   fetchSuggestionList(params) {
     return request.get('/articles/suggestion', { params })
   },

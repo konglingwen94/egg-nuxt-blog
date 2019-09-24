@@ -9,6 +9,16 @@ module.exports = app => {
    */
   router.post('/upload', controller.upload.uploadFile)
 
+  /***
+   *
+   * about
+   */
+  router.post('/admin/abouts', controller.about.createOne)
+  router.put('/admin/abouts/:id', controller.about.updateOne)
+  router.get('/admin/about', controller.about.getOne)
+  router.delete('/admin/abouts/:id', controller.about.deleteOne)
+
+  router.get('/about', controller.about.getOne)
   /**
    *
    * auth
@@ -94,11 +104,11 @@ module.exports = app => {
     controller.article.updatePublishStatus
   )
 
+  router.get('/carousels', controller.article.queryCarouselList)
   router.get('/articles', controller.article.queryList)
 
   router.get('/articles/suggestion', controller.article.querySuggestionList)
 
-  
   router.get('/articles/:id', controller.article.queryOne)
 
   router.put('/articles/:id/visit', controller.article.incrementPv)

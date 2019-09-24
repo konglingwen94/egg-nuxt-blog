@@ -1,6 +1,11 @@
 <template>
   <div class="home">
-    <article-list :dataList="dataList"></article-list>
+    <el-carousel height="300px">
+      <el-carousel-item v-for="item in carouselList" :key="item.id">
+        <img :src="item.cover.path" width="100%" />
+      </el-carousel-item>
+    </el-carousel>
+    <article-list :dataList="articleList"></article-list>
   </div>
 </template>
 
@@ -11,10 +16,17 @@ export default {
   layout: 'Public',
   async asyncData() {
     try {
-      var dataList = await ArticleService.fetchList()
-    } catch (error) {}
-
-    return { dataList }
+      var [articleList, carouselList] = await Promise.all([
+        ArticleService.fetchList(),
+        ArticleService.fetchCarouselList()
+      ])
+    } catch (error) {
+      return { articleList: [], carouselList: [] }
+    }
+    return { articleList, carouselList }
+  },
+  data() {
+    return {}
   },
   head() {
     return {
@@ -30,7 +42,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
 .article-list {
   // display:flex;
   .article-item {

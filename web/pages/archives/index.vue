@@ -70,6 +70,7 @@ export default {
   display: flex;
   .category-item {
     margin-right: 20px;
+    cursor: pointer;
   }
 }
 </style>

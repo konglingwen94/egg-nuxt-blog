@@ -1,7 +1,7 @@
 <template>
   <div class="editor-wrapper">
     <el-form label-width="auto">
-      <el-form-item label="文章分类">
+      <el-form-item label="文章分类" required>
         <el-select clearable placeholder="请选择文章分类" v-model="form.categoryID">
           <el-option
             :value="item.id"
@@ -16,10 +16,10 @@
           <el-option :value="item.id" :label="item.name" v-for="item in tagList" :key="item.id"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="文章标题">
+      <el-form-item label="文章标题" required>
         <el-input v-model="form.title" clearable></el-input>
       </el-form-item>
-      <el-form-item label="文章内容">
+      <el-form-item label="文章内容" required>
         <pell
           @change="content=>Object.assign(form.content,content)"
           :initialMarkdown="form.content"
