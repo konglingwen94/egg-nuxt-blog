@@ -21,7 +21,6 @@ module.exports = {
   },
   siteTraffic: {
     match(ctx) {
-      console.log(ctx.type)
       if (ctx.type === 'text/html') {
         return true
       }

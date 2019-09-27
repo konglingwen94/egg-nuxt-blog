@@ -3,7 +3,6 @@ module.exports = (opt, app) => {
     ctx.state.filter = {
       $and: [{ isPublished: true }],
     }
-
     await next()
   }
 }

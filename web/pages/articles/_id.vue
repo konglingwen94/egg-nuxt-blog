@@ -31,7 +31,6 @@
               :cols="30"
               placeholder="请输入评论内容"
               :rows="7"
-              autofocus
               v-model="commentForm.content"
               :autosize="{ minRows: 5, maxRows: 5}"
               :maxlength="200"
@@ -136,7 +135,7 @@ export default {
       commentList: []
     }
   },
-  
+
   computed: {
     diggCommentIdList() {
       return this.$store.state.article.diggCommentIdList

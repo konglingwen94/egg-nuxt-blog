@@ -1,6 +1,5 @@
 const mongodb = require('./app/db/mongodb')
 
-const nuxt = require('./app/nuxt')
 
 class AppBootHook {
   constructor(app) {
@@ -11,9 +10,6 @@ class AppBootHook {
     await mongodb.connect(this.app)
   }
 
-  async serverDidReady() {
-    await nuxt.init(this.app)
-  }
 }
 
 module.exports = AppBootHook

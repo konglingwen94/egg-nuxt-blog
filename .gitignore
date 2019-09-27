@@ -1,6 +1,10 @@
+# boundle files
+
+nuxt-dist
+.nuxt
+
 # chore files
 node_modules
-.nuxt
 public
 .vscode
 run 

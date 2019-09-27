@@ -1,9 +1,13 @@
+const { resolve } = require('path')
+
 module.exports = appInfo => {
- 
   return {
+    logger: {
+      dir: resolve(appInfo.baseDir, `logs/${appInfo.name}`),
+    },
     keys: appInfo.name,
     static: {
-      prefix: '/',
+      prefix: '',
     },
     upload: {
       match: '/api/upload',
@@ -21,12 +25,12 @@ module.exports = appInfo => {
         }
       },
     },
-   
+    nuxtRender: {
+      nuxtConfig: { buildDir: resolve(__dirname, '../app/public/web') },
+      ignore: ['/api', '/admin'],
+    },
     webArticleFilter: {
       match: '/api/articles',
-    },
-    articleFilter: {
-      match: [ '/api/articles'],
     },
     middleware: [
       'errorHandler',

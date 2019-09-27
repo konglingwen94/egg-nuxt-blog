@@ -11,9 +11,9 @@
         <template v-for="item in categoryList">
           <li v-if="item.articlePublishedCount" class="category-item" :key="item.id">
             <el-badge :value="item.articlePublishedCount">
-              <el-tag type="info">
-                <nuxt-link :to="{name:'articles',query:{ categoryID:item.id}}">{{item.name}}</nuxt-link>
-              </el-tag>
+              <nuxt-link :to="{name:'articles',query:{ categoryID:item.id}}">
+                <el-tag type="info">{{item.name}}</el-tag>
+              </nuxt-link>
             </el-badge>
           </li>
         </template>
@@ -29,9 +29,9 @@
         <template v-for="item in tagList">
           <li v-if="item.articlePublishedCount" class="category-item" :key="item.id">
             <el-badge :value="item.articlePublishedCount">
-              <el-tag type="info">
-                <nuxt-link :to="{name:'articles',query:{ tagID:item.id}}">{{item.name}}</nuxt-link>
-              </el-tag>
+              <nuxt-link :to="{name:'articles',query:{ tagID:item.id}}">
+                <el-tag type="info">{{item.name}}</el-tag>
+              </nuxt-link>
             </el-badge>
           </li>
         </template>

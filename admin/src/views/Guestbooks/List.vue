@@ -167,7 +167,6 @@ export default {
         .catch(err => this.$message.error(err.message))
     },
     async deleteOneResponse(id, responseID, dialogues, index) {
-      console.log(arguments)
       try {
         await this.$confirm('此条回复以经删除将无法恢复,是否删除?', '提示', {
           type: 'warning'

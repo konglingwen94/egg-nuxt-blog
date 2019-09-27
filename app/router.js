@@ -3,6 +3,18 @@ module.exports = app => {
 
   router.prefix('/api')
 
+  /**
+   *
+   * static admin
+   *  */
+
+  // router.get('/admin/*', ctx => {
+  //   console.log(__dirname)
+
+  //   ctx.body = 'hello admin index'
+  //   // ctx.body = fs.createReadStream('.')
+  // })
+
   /***
    *
    * upload
@@ -104,7 +116,7 @@ module.exports = app => {
     controller.article.updatePublishStatus
   )
 
-  router.get('/carousels', controller.article.queryCarouselList)
+  router.get('/articles/carousels', controller.article.queryCarouselList)
   router.get('/articles', controller.article.queryList)
 
   router.get('/articles/suggestion', controller.article.querySuggestionList)

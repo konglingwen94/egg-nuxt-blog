@@ -22,9 +22,9 @@ module.exports = class ArticleService extends Service {
       tag: tagProject,
       category: categoryProject,
     } = ctx.projectFields
-
+    
     const result = ArticleModel.aggregate()
-      .match(ctx.state.filter)
+      .match(ctx.state.filter || {})
       .lookup({
         from: 'categories',
         let: { categoryID: '$categoryID' },
@@ -75,7 +75,7 @@ module.exports = class ArticleService extends Service {
         as: 'tagList',
       })
       .sort({ createdAt: -1 })
-     
+
     return result
   }
 

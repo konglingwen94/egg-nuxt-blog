@@ -1,8 +1,11 @@
+const { Nuxt } = require('nuxt')
+
 module.exports = (option, app) => {
+  const { nuxtConfig } = option
+  const nuxt = new Nuxt(nuxtConfig)
   return async ctx => {
     ctx.status = 200
     ctx.respond = false
-    // console.dir(ctx.render)
-    ctx.render(ctx.req, ctx.res)
+    nuxt.render(ctx.req, ctx.res)
   }
 }

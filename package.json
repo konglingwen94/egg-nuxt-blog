@@ -4,12 +4,14 @@
   "description": "",
   "main": "postcss.config.js",
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-myblog",
+    "start": "egg-scripts start --title=egg-server-myblog --stdout=./logs/master-stdout.log --stderr=./logs/master-stderr.log",
     "stop": "egg-scripts stop --title=egg-server-myblog",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
     "admin:dev": "cd admin && npm run dev",
-    "web:dev": "cd web && npm run dev"
+    "admin:build": "cd admin && npm run build",
+    "web:dev": "cd web && npm run dev",
+    "web:build": "cd web && npm run build"
   },
   "repository": {
     "type": "git",

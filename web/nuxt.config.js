@@ -1,12 +1,14 @@
-import { resolve } from 'path'
+const { resolve } = require('path')
 
-export default {
+console.log(resolve(__dirname, '../'))
+console.log(resolve(__dirname, '../app/public/web'))
+module.exports = {
   mode: 'universal',
-  rootDir: process.env.NODE_ENV === 'integrate' ? '../' : './',
-  srcDir: process.env.NODE_ENV === 'integrate' ? 'web/' : './',
   /*
    ** Headers of the page
    */
+  rootDir: resolve(__dirname, '../'),
+  srcDir: resolve(__dirname, '../web'),
   head: {
     title: process.env.npm_package_name || '',
     meta: [
@@ -21,8 +23,19 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
   /*
-   ** Customize the router
+   ** Customize the vue-config
    */
+  vue: {
+    config: {
+      silent: true,
+      warnHandler(info, vm, trace) {
+        console.warn(info)
+      },
+      errorHandler(err, vm, info) {
+        console.error(info)
+      },
+    },
+  },
 
   /*
    ** Customize the progress-bar color
@@ -73,6 +86,11 @@ export default {
   /*
    ** Build configuration
    */
+
+  buildDir:
+    process.env.NODE_ENV === 'production'
+      ? resolve(__dirname, '../app/public/web')
+      : './.nuxt',
   build: {
     babel: {
       plugins: [
