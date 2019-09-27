@@ -19,12 +19,9 @@ module.exports = class ArticleController extends Controller {
   async queryCarouselList() {
     const { service, ctx } = this
 
-    
-    const result = service.article
-      .queryList()
-      .sort({ pv: 1 })
-      .limit(4)
-    ctx.body = await result
+    const result = await service.article.queryList()
+
+    ctx.body = result.sort((b, a) => a.pv - b.pv).slice(0, 4)
   }
   async querySuggestionList() {
     const { ctx, service } = this

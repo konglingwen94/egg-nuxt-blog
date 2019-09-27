@@ -5,6 +5,7 @@
 import AboutService from '@/services/abouts'
 export default {
   name: 'About',
+
   layout: 'Public',
   async asyncData() {
     try {

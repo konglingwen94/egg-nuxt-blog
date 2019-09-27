@@ -14,8 +14,8 @@ import Categories from '@/views/Categories/List'
 import Comment from '@/views/Comments/List'
 import Guestbook from '@/views/Guestbooks/List'
 import About from '@/views/About'
-
 import Tag from '@/views/Tags'
+
 
 Vue.use(Router)
 
@@ -41,6 +41,14 @@ const router = new Router({
         {
           path: '',
           redirect: 'dashboard',
+        },
+        {
+          name: 'dashboard',
+          path: 'dashboard',
+          component: Dashboard,
+          meta: {
+            activedMenuItem: 'dashboard',
+          },
         },
         {
           name: 'abouts',

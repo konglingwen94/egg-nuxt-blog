@@ -1,7 +1,19 @@
 const mongodb = require('./app/db/mongodb')
 
-module.exports = app => {
-  app.beforeStart(async () => {
-    await mongodb.connect(app)
-  })
+const nuxt = require('./app/nuxt')
+
+class AppBootHook {
+  constructor(app) {
+    this.app = app
+  }
+
+  async willReady() {
+    await mongodb.connect(this.app)
+  }
+
+  async serverDidReady() {
+    await nuxt.init(this.app)
+  }
 }
+
+module.exports = AppBootHook
