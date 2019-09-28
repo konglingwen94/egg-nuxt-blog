@@ -7,7 +7,7 @@ module.exports = opt => {
    
   var storage = multer.diskStorage({
     //文件保存路径
-    destination: 'app/public/uploads',
+    destination: 'public/uploads',
 
     //修改文件名称
     filename: function(req, file, cb) {

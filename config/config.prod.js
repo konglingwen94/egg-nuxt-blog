@@ -8,10 +8,11 @@ module.exports = appInfo => {
     keys: appInfo.name,
     static: {
       prefix: '',
+      dir: resolve(appInfo.baseDir, 'public'),
     },
     upload: {
       match: '/api/upload',
-      dir: 'app/public/uploads/',
+      dir: '/public/uploads/',
     },
     adminRequired: {
       match(ctx) {
@@ -26,7 +27,7 @@ module.exports = appInfo => {
       },
     },
     nuxtRender: {
-      nuxtConfig: { buildDir: resolve(__dirname, '../app/public/web') },
+      nuxtConfig: { buildDir: resolve(__dirname, '../public/web') },
       ignore: ['/api', '/admin'],
     },
     webArticleFilter: {

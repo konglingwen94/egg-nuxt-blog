@@ -1,16 +1,22 @@
 # boundle files
 
-nuxt-dist
-.nuxt
+/public
+
+# editor files
+.vscode
 
 # chore files
 node_modules
 app/public
-.vscode
+.nuxt
 run 
-logs
-demo
 
+#logs files
+logs
+
+#test files
+/test
+/demo
 # config files
 
 package-lock.json

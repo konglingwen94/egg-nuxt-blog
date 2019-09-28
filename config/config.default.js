@@ -7,7 +7,7 @@ module.exports = appInfo => {
     },
     upload: {
       match: '/api/upload',
-      dir: 'app/public/uploads/',
+      dir: 'public/uploads/',
     },
     adminRequired: {
       match(ctx) {
