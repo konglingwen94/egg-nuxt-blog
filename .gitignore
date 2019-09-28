@@ -14,8 +14,8 @@ run
 #logs files
 logs
 
-#test files
-/test
+#demo files
+
 /demo
 # config files
 
