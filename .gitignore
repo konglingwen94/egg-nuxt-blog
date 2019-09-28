@@ -5,7 +5,7 @@ nuxt-dist
 
 # chore files
 node_modules
-public
+app/public
 .vscode
 run 
 logs
