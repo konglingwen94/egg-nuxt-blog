@@ -1,8 +1,8 @@
 {
-  "name": "egg-nuxt",
+  "name": "egg-nuxt-blog",
   "version": "1.0.0",
   "description": "",
-  "main": "postcss.config.js",
+  "main": "app.js",
   "scripts": {
     "start": "egg-scripts start --title=egg-server-myblog --stdout=./logs/master-stdout.log --stderr=./logs/master-stderr.log",
     "stop": "egg-scripts stop --title=egg-server-myblog",
@@ -15,15 +15,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/konglingwen94/my-blog.git"
+    "url": "git+https://github.com/konglingwen94/egg-nuxt-blog.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/konglingwen94/my-blog/issues"
+    "url": "https://github.com/konglingwen94/egg-nuxt-blog/issues"
   },
-  "homepage": "https://github.com/konglingwen94/my-blog#readme",
+  "homepage": "https://github.com/konglingwen94/egg-nuxt-blog#readme",
   "dependencies": {
     "ajv": "^6.10.2",
     "axios": "^0.19.0",
