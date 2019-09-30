@@ -1,4 +1,5 @@
 const { resolve } = require('path')
+
 module.exports = appInfo => {
   return {
     keys: appInfo.name,
