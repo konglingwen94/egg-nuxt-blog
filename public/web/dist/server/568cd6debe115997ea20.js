@@ -1,0 +1,2 @@
+exports.ids=[4],exports.modules={135:function(t,r,e){"use strict";e.r(r);var c=e(47),l={layout:"Public",async asyncData({query:t,params:r}){const{categoryID:e,tagID:l}=t,n=e?{categoryID:e}:l?{tagID:l}:{};try{var o=await c.a.fetchList(n)}catch(t){return{dataList:[]}}return{dataList:o}}},n=e(3),component=Object(n.a)(l,(function(){var t=this.$createElement,r=this._self._c||t;return r("div",{staticClass:"article"},[r("article-list",{attrs:{dataList:this.dataList}})],1)}),[],!1,null,null,"95751ec2");r.default=component.exports}};
+//# sourceMappingURL=568cd6debe115997ea20.js.map
