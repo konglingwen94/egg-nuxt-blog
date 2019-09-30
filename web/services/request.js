@@ -2,7 +2,7 @@ import axios from 'axios'
 import qs from 'qs'
 
 const instance = axios.create({
-  baseURL: 'http://localhost:7001/api',
+  baseURL: process.env.BASE_URL + '/api',
 })
 
 instance.interceptors.request.use(

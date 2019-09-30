@@ -5,7 +5,7 @@ const prodConfig = require('../config/config.prod.js')({ baseDir: '/' })
 
 const AdminModel = require('../app/model/admin.js')
 const argv = process.argv.slice(2)
-console.log(argv)
+
 if (argv.length !== 3) {
   console.error('NODE_ENV and username and password is required')
   console.log('Please use following command')

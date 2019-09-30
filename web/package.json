@@ -5,8 +5,8 @@
   "author": "konglingwen94",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
+    "dev": "cross-env BASE_URL=http://localhost:7001 nuxt",
+    "build": "cross-env BASE_URL=http://106.54.230.205:7001 nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"
   },
