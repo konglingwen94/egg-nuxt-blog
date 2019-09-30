@@ -10,7 +10,7 @@ exports.connect = async app => {
       mongodbURI += `${username}:${password}@`
     }
 
-    mongodbURI += `${host}:${port}/${database}`
+    mongodbURI += `${host}:${port}/${database}?authSource=admin`
 
     mongoose
       .connect(mongodbURI, {
