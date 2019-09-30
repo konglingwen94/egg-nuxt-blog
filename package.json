@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "egg-scripts start --daemon --title=egg-server-myblog --stdout=./logs/master-stdout.log --stderr=./logs/master-stderr.log",
-    "stop": "egg-scripts stop --title=egg-server-myblog",
+    "stop": "egg-scripts stop",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
     "admin:dev": "cd admin && npm run dev",
