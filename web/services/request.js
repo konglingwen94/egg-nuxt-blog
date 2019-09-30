@@ -1,8 +1,12 @@
 import axios from 'axios'
 import qs from 'qs'
 
+const baseURL = process.env.BASE_URL + '/api'
+
+console.log(process.env.BASE_URL)
+
 const instance = axios.create({
-  baseURL: process.env.BASE_URL + '/api',
+  baseURL,
 })
 
 instance.interceptors.request.use(
