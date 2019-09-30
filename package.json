@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-myblog --stdout=./logs/master-stdout.log --stderr=./logs/master-stderr.log",
+    "start": "egg-scripts start --title=egg-server-myblog --stdout=./logs/master-stdout.log --stderr=./logs/master-stderr.log",
     "stop": "egg-scripts stop --title=egg-server-myblog",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
