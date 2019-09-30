@@ -55,11 +55,11 @@ module.exports = appInfo => {
       expiresIn: '100h',
     },
     mongodb: {
-      database: 'my-blog',
-      host: '127.0.0.1',
+      database: 'egg-nuxt-blog',
+      host: '172.17.0.4',
       port: '27017',
-      username: '',
-      password: '',
+      username: 'konglingwen',
+      password: 'klw3402926',
     },
   }
 }
