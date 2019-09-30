@@ -1,5 +1,5 @@
+const { resolve } = require('path')
 module.exports = appInfo => {
- 
   return {
     keys: appInfo.name,
     static: {
@@ -21,12 +21,16 @@ module.exports = appInfo => {
         }
       },
     },
-   
+
     webArticleFilter: {
       match: '/api/articles',
     },
     articleFilter: {
-      match: [ '/api/articles'],
+      match: ['/api/articles'],
+    },
+    nuxtRender: {
+      nuxtConfig: { buildDir: resolve(__dirname, '../public/web') },
+      ignore: ['/api', '/admin'],
     },
     middleware: [
       'errorHandler',

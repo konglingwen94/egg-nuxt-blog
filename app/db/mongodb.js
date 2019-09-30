@@ -10,14 +10,17 @@ exports.connect = async app => {
       mongodbURI += `${username}:${password}@`
     }
 
-    mongodbURI += `${host}:${port}/${database}?authSource=admin`
+    mongodbURI += `${host}:${port}/${database}`
+    if (username && password) {
+      mongodbURI += '?authSource=admin'
+    }
 
     mongoose
       .connect(mongodbURI, {
         useNewUrlParser: true,
         useFindAndModify: false,
-        useCreateIndex:true,
-        useUnifiedTopology:true
+        useCreateIndex: true,
+        useUnifiedTopology: true,
       })
 
       .catch(err => {
