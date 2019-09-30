@@ -1,7 +1,8 @@
 import axios from 'axios'
 import qs from 'qs'
 
-const baseURL = process.env.BASE_URL + '/api'
+// const baseURL = process.env.BASE_URL + '/api'
+const baseURL = 'http://106.54.230.205:7001' + '/api'
 
 console.log(process.env.BASE_URL)
 
