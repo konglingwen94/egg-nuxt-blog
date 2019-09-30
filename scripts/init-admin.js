@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const defaultConfig = require('../config/config.default.js')({ baseDir: '/' })
 const prodConfig = require('../config/config.prod.js')({ baseDir: '/' })
-const localConfig = require('../config/config.local.js')({ baseDir: '/' })
 
 const AdminModel = require('../app/model/admin.js')
 const argv = process.argv.slice(2)
@@ -21,6 +20,7 @@ let config = {}
 if (env === 'production') {
   config = Object.assign(defaultConfig, prodConfig)
 } else if (env === 'local') {
+  const localConfig = require('../config/config.local.js')({ baseDir: '/' })
   config = Object.assign(defaultConfig, localConfig)
 } else {
   config = defaultConfig
