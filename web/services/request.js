@@ -1,10 +1,10 @@
 import axios from 'axios'
 import qs from 'qs'
 
-// const baseURL = process.env.BASE_URL + '/api'
-const baseURL = 'http://106.54.230.205:7001' + '/api'
+const baseURL = process.env.BASE_URL + '/api'
+// const baseURL = 'http://106.54.230.205:7001' + '/api'
 
-console.log(process.env.BASE_URL)
+// console.log('process.env.BASE_URL\t', process.env.BASE_URL)
 
 const instance = axios.create({
   baseURL,

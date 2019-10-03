@@ -1,7 +1,6 @@
 const { resolve } = require('path')
 
-console.log(resolve(__dirname, '../'))
-console.log(resolve(__dirname, '../app/public/web'))
+
 module.exports = {
   mode: 'universal',
   /*
@@ -71,7 +70,7 @@ module.exports = {
   modules: [
     '@nuxtjs/style-resources',
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/proxy',
+    // '@nuxtjs/proxy',
   ],
   proxy: {
     '^/api/': { target: 'http://localhost:7001' },

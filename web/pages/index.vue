@@ -33,6 +33,11 @@ export default {
       title: 'home'
     }
   },
+  watch: {
+    $route() {
+      console.log('process.env.BASE_URL', process.env.BASE_URL)
+    }
+  },
   methods: {
     jumpDetail(params) {
       this.$router.push({ name: 'articles-id', params })

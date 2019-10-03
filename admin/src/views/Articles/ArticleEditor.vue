@@ -138,7 +138,7 @@ export default {
             this.$message.success('更新文章成功')
           }
 
-          this.$router.back()
+          this.$router.push('/articles')
         })
         .catch(err => {
           this.$message.error(err.message)
