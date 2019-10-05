@@ -1,54 +1,54 @@
 module.exports = app => {
   const { router, controller, middleware } = app
 
-  router.prefix('/api')
-
   /**
    *
    * static admin
    *  */
+  const adminRouter = router.namespace('/admin')
 
-  // router.get('/admin/*', ctx => {
-  //   console.log(__dirname)
+  adminRouter.redirect('/*', '/admin/index.html', 302)
 
-  //   ctx.body = 'hello admin index'
-  //   // ctx.body = fs.createReadStream('.')
-  // })
+  /**
+   * api router
+   *
+   *  */
 
+  const apiRouter = router.namespace('/api')
   /***
    *
    * upload
    */
-  router.post('/upload', controller.upload.uploadFile)
+  apiRouter.post('/upload', controller.upload.uploadFile)
 
   /***
    *
    * about
    */
-  router.post('/admin/abouts', controller.about.createOne)
-  router.put('/admin/abouts/:id', controller.about.updateOne)
-  router.get('/admin/about', controller.about.getOne)
-  router.delete('/admin/abouts/:id', controller.about.deleteOne)
+  apiRouter.post('/admin/abouts', controller.about.createOne)
+  apiRouter.put('/admin/abouts/:id', controller.about.updateOne)
+  apiRouter.get('/admin/about', controller.about.getOne)
+  apiRouter.delete('/admin/abouts/:id', controller.about.deleteOne)
 
-  router.get('/about', controller.about.getOne)
+  apiRouter.get('/about', controller.about.getOne)
   /**
    *
    * auth
    */
 
-  router.post(
+  apiRouter.post(
     '/admin/auth/login',
 
     controller.admin.login
   )
 
-  router.patch(
+  apiRouter.patch(
     '/admin/auth/change-password',
 
     controller.admin.changePass
   )
 
-  router.patch(
+  apiRouter.patch(
     '/admin/auth/change-account',
 
     controller.admin.changeAccount
@@ -57,152 +57,155 @@ module.exports = app => {
   /**
    * categories
    */
-  router.get('/admin/categories', controller.category.queryList)
+  apiRouter.get('/admin/categories', controller.category.queryList)
 
-  router.get(
+  apiRouter.get(
     '/admin/categories/:id',
 
     controller.category.queryOne
   )
 
-  router.post('/admin/categories', controller.category.createOne)
+  apiRouter.post('/admin/categories', controller.category.createOne)
 
-  router.patch(
+  apiRouter.patch(
     '/admin/categories/:id',
 
     controller.category.updateOne
   )
 
-  router.delete(
+  apiRouter.delete(
     '/admin/categories/:id',
 
     controller.category.deleteOne
   )
 
-  router.get('/categories', controller.category.queryList)
+  apiRouter.get('/categories', controller.category.queryList)
 
-  router.get('/categories/:id', controller.category.queryOne)
+  apiRouter.get('/categories/:id', controller.category.queryOne)
   /***
    *
    * articles
    */
 
-  router.post('/admin/articles', controller.article.createOne)
+  apiRouter.post('/admin/articles', controller.article.createOne)
 
-  router.get('/admin/articles', controller.article.queryList)
+  apiRouter.get('/admin/articles', controller.article.queryList)
 
-  router.get('/admin/articles/:id', controller.article.queryOne)
+  apiRouter.get('/admin/articles/:id', controller.article.queryOne)
 
-  router.delete(
+  apiRouter.delete(
     '/admin/articles/:id',
 
     controller.article.deleteOne
   )
 
-  router.post(
+  apiRouter.post(
     '/admin/articles/delete',
 
     controller.article.delete
   )
 
-  router.patch(
+  apiRouter.patch(
     '/admin/articles/:id',
 
     controller.article.updateOne
   )
-  router.patch(
+  apiRouter.patch(
     '/admin/articles/:id/status',
 
     controller.article.updatePublishStatus
   )
 
-  router.get('/articles/carousels', controller.article.queryCarouselList)
-  router.get('/articles', controller.article.queryList)
+  apiRouter.get('/articles/carousels', controller.article.queryCarouselList)
+  apiRouter.get('/articles', controller.article.queryList)
 
-  router.get('/articles/suggestion', controller.article.querySuggestionList)
+  apiRouter.get('/articles/suggestion', controller.article.querySuggestionList)
 
-  router.get('/articles/:id', controller.article.queryOne)
+  apiRouter.get('/articles/:id', controller.article.queryOne)
 
-  router.put('/articles/:id/visit', controller.article.incrementPv)
+  apiRouter.put('/articles/:id/visit', controller.article.incrementPv)
 
-  router.patch('/articles/:id/star', controller.article.starOne)
+  apiRouter.patch('/articles/:id/star', controller.article.starOne)
 
   /**
    * tags
    *  */
-  router.get('/admin/tags', controller.tag.queryList)
-  router.post('/admin/tags', controller.tag.createOne)
-  router.put('/admin/tags/:id', controller.tag.updateOne)
-  router.delete('/admin/tags/:id', controller.tag.deleteOne)
+  apiRouter.get('/admin/tags', controller.tag.queryList)
+  apiRouter.post('/admin/tags', controller.tag.createOne)
+  apiRouter.put('/admin/tags/:id', controller.tag.updateOne)
+  apiRouter.delete('/admin/tags/:id', controller.tag.deleteOne)
 
-  router.get('/tags', controller.tag.queryList)
+  apiRouter.get('/tags', controller.tag.queryList)
   /**
    * comments
    */
 
-  router.get('/admin/comments', controller.comment.queryList)
+  apiRouter.get('/admin/comments', controller.comment.queryList)
 
-  router.delete(
+  apiRouter.delete(
     '/admin/comments/:id',
 
     controller.comment.deleteOne
   )
 
-  router.post('/admin/comments', controller.comment.deleteList)
+  apiRouter.post('/admin/comments', controller.comment.deleteList)
 
-  router.get(
+  apiRouter.get(
     '/admin/articles/:articleID/comments',
 
     controller.comment.queryList
   )
 
-  router.get(
+  apiRouter.get(
     '/articles/:articleID/comments',
 
     controller.comment.queryList
   )
-  router.post('/articles/:articleID/comments', controller.comment.createOne)
+  apiRouter.post('/articles/:articleID/comments', controller.comment.createOne)
 
-  router.post('/comments/:id/like', controller.comment.thumbup)
+  apiRouter.post('/comments/:id/like', controller.comment.thumbup)
 
   /**
    * guestbooks
    *  */
 
-  router.get('/admin/guestbooks', controller.guestbook.queryList)
-  router.delete(
+  apiRouter.get('/admin/guestbooks', controller.guestbook.queryList)
+  apiRouter.delete(
     '/admin/guestbooks/:id',
 
     controller.guestbook.deleteOne
   )
-  router.delete(
+  apiRouter.delete(
     '/admin/guestbooks/:id/dialogues/:responseID',
 
     controller.guestbook.deleteOneResponse
   )
 
-  router.delete(
+  apiRouter.delete(
     '/admin/guestbooks',
 
     controller.guestbook.deleteMany
   )
-  router.delete(
+  apiRouter.delete(
     '/admin/responses',
 
     controller.guestbook.deleteManyResponse
   )
 
-  router.post(
+  apiRouter.post(
     '/guestbooks/:id/responses/:responseID/digg',
     controller.guestbook.diggOneResponse
   )
 
-  router.post('/guestbooks/:id/digg', controller.guestbook.diggGuestbook)
+  apiRouter.post('/guestbooks/:id/digg', controller.guestbook.diggGuestbook)
 
-  router.post('/guestbooks', controller.guestbook.createOne)
+  apiRouter.post('/guestbooks', controller.guestbook.createOne)
 
   // 回复评论
-  router.post('/guestbooks/:id/dialogues', controller.guestbook.responseToUser)
+  apiRouter.post(
+    '/guestbooks/:id/dialogues',
+    controller.guestbook.responseToUser
+  )
 
-  router.get('/guestbooks', controller.guestbook.queryList)
+  apiRouter.get('/guestbooks', controller.guestbook.queryList)
 }

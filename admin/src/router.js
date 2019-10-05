@@ -16,7 +16,6 @@ import Guestbook from '@/views/Guestbooks/List'
 import About from '@/views/About'
 import Tag from '@/views/Tags'
 
-
 Vue.use(Router)
 
 const router = new Router({
@@ -40,6 +39,10 @@ const router = new Router({
       children: [
         {
           path: '',
+          redirect: 'dashboard',
+        },
+        {
+          path: '/index.html',
           redirect: 'dashboard',
         },
         {

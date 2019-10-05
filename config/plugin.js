@@ -3,4 +3,8 @@ module.exports = {
     enable: true,
     package: 'egg-cors',
   },
+  routerPlus: {
+    enable: true,
+    package: 'egg-router-plus',
+  },
 }

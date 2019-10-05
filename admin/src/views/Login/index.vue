@@ -2,7 +2,7 @@
   <div class="container">
     <el-form label-width="auto">
       <el-form-item label="用户名">
-        <el-input v-model="form.username"></el-input>
+        <el-input ref="userInput" v-model="form.username"></el-input>
       </el-form-item>
       <el-form-item label="密码">
         <el-input v-model="form.password"></el-input>
@@ -23,6 +23,9 @@ export default {
       password: ''
     }
   }),
+  mounted() {
+    this.$refs.userInput.focus()
+  },
   methods: {
     submitHandler() {
       const { username, password } = this.form

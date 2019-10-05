@@ -4,7 +4,8 @@ module.exports = appInfo => {
   return {
     keys: appInfo.name,
     static: {
-      prefix: '/',
+      prefix: '',
+      dir: resolve(appInfo.baseDir, 'public'),
     },
     upload: {
       match: '/api/upload',
