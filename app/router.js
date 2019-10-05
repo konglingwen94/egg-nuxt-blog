@@ -7,7 +7,7 @@ module.exports = app => {
    *  */
   const adminRouter = router.namespace('/admin')
 
-  adminRouter.redirect('/*', '/admin/index.html', 302)
+  adminRouter.redirect('*', '/admin/index.html', 302)
 
   /**
    * api router
