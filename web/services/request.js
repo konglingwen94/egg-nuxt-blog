@@ -7,7 +7,7 @@ const baseURL = process.env.BASE_URL + '/api'
 // console.log('process.env.BASE_URL\t', process.env.BASE_URL)
 
 const instance = axios.create({
-  baseURL,
+  baseURL: '/api',
 })
 
 instance.interceptors.request.use(
