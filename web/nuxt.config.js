@@ -89,7 +89,7 @@ module.exports = {
   buildDir:
     process.env.NODE_ENV === 'production'
       ? resolve(__dirname, '../public/web')
-      : './.nuxt',
+      : './web/.nuxt',
   build: {
     babel: {
       plugins: [
