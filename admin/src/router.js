@@ -96,12 +96,12 @@ const router = new Router({
           },
         },
         {
-          name: 'article-categories',
-          path: 'article-categories',
+          name: 'categories',
+          path: 'categories',
           component: Categories,
           meta: {
             title: '文章分类列表',
-            activedMenuItem: 'article-categories',
+            activedMenuItem: 'categories',
           },
         },
         {
@@ -154,5 +154,8 @@ router.beforeEach((to, from, next) => {
 
   return accessToken ? next() : next('/auth/login')
 })
+
+ 
+router.push(window.location.search.split('=').pop())
 
 export default router

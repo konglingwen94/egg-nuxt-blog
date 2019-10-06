@@ -7,7 +7,7 @@
         <el-menu-item index="/articles/new">添加文章</el-menu-item>
         <el-menu-item index="/articles">文章列表</el-menu-item>
       </el-submenu>
-      <el-menu-item index="/article-categories">文章分类</el-menu-item>
+      <el-menu-item index="/categories">文章分类</el-menu-item>
       <el-menu-item index="/comments">文章评论</el-menu-item>
       <el-menu-item index="/guestbooks">留言墙</el-menu-item>
       <el-menu-item index="/tags">标签管理</el-menu-item>
