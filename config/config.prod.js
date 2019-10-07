@@ -26,22 +26,11 @@ module.exports = appInfo => {
         }
       },
     },
-    nuxtRender: {
-      nuxtConfig: { buildDir: resolve(__dirname, '../public/web') },
-      ignore: ['/api', '/admin'],
-    },
+   
     webArticleFilter: {
       match: '/api/articles',
     },
-    middleware: [
-      'errorHandler',
-      'siteTraffic',
-      'adminRequired',
-      'upload',
-      'webArticleFilter',
-      'articleFilter',
-      'nuxtRender',
-    ],
+    
     cors: {
       origin: '*',
     },

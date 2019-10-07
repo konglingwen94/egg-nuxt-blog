@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development && nuxt",
-    "build": "nuxt build",
+    "build": "cross-env NODE_ENV=production && nuxt build",
     "build:local": "cross-env NODEV_ENV=local && nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"

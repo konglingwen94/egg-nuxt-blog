@@ -26,12 +26,7 @@ module.exports = {
   vue: {
     config: {
       silent: true,
-      warnHandler(info, vm, trace) {
-        console.warn(info)
-      },
-      errorHandler(err, vm, info) {
-        console.error(info)
-      },
+      
     },
   },
 
@@ -71,9 +66,13 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/proxy',
   ],
+ 
   proxy: {
-    '^/api/': { target: 'http://localhost:7001' },
-    '^/uploads/': { target: 'http://localhost:7001', changeOrigin: true },
+    
+    '/uploads': {
+      target: 'http://localhost:7001',
+     
+    },
   },
 
   /*

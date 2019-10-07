@@ -1,10 +1,10 @@
 <template>
   <div class="home">
-    <el-carousel height="300px">
-      <el-carousel-item v-for="item in carouselList" :key="item.id">
-        <img :src="item.cover.path" width="100%" />
-      </el-carousel-item>
-    </el-carousel>
+      <el-carousel height="300px">
+        <el-carousel-item v-for="item in carouselList" :key="item.id">
+          <img :src="item.cover.path" width="100%" />
+        </el-carousel-item>
+      </el-carousel>
     <article-list :dataList="articleList"></article-list>
   </div>
 </template>
