@@ -31,7 +31,11 @@ module.exports = appInfo => {
       match: ['/api/articles'],
     },
     nuxtRender: {
-      nuxtConfig: { buildDir: resolve(__dirname, '../public/web') },
+      nuxtConfig: {
+    
+        buildDir: resolve(__dirname, '../public/web'),
+        
+      },
       ignore: ['/api', '/admin'],
     },
     middleware: [

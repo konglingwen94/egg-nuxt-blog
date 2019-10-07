@@ -8,6 +8,6 @@ module.exports = (option, app) => {
   return async ctx => {
     ctx.status = 200
     ctx.respond = false
-    nuxt.render(ctx.req, ctx.res)
+    await nuxt.render(ctx.req, ctx.res)
   }
 }

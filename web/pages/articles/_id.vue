@@ -6,7 +6,7 @@
       class="banner"
       :style="bannerStyle"
     >{{data.tagList.map(item=>item.name).join(' ')}}</div>
-
+    <!-- <img :src="data.cover.path" width="300" alt=""> -->
     <div class="main">
       <section class="content-wrapper">
         <!-- 文章内容 -->

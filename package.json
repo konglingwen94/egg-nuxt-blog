@@ -9,8 +9,6 @@
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
     "admin:dev": "cd admin && npm run dev",
-    "admin:build-local": "cd admin && npm run build:local",
-    "admin:build-prod": "cd admin && npm run build:prod",
     "admin:build": "cd admin && npm run build",
     "web:dev": "cd web && npm run dev",
     "web:build": "cd web && npm run build"

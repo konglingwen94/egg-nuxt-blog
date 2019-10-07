@@ -1,6 +1,5 @@
 const { resolve } = require('path')
 
-
 module.exports = {
   mode: 'universal',
   /*
@@ -70,11 +69,11 @@ module.exports = {
   modules: [
     '@nuxtjs/style-resources',
     // Doc: https://axios.nuxtjs.org/usage
-    // '@nuxtjs/proxy',
+    '@nuxtjs/proxy',
   ],
   proxy: {
     '^/api/': { target: 'http://localhost:7001' },
-    '/uploads/': { target: 'http://localhost:7001' },
+    '^/uploads/': { target: 'http://localhost:7001', changeOrigin: true },
   },
 
   /*
