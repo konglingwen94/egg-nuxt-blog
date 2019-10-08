@@ -10,7 +10,7 @@ module.exports = app => {
   
 
   adminRouter.get('*', ctx => {
-    console.log(ctx.path)
+    
     const path = ctx.path.replace('/admin', '')
     ctx.redirect(`/admin/index.html?path=${path}`)
   })

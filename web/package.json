@@ -5,9 +5,9 @@
   "author": "konglingwen94",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development && nuxt",
-    "build": "cross-env NODE_ENV=production && nuxt build",
-    "build:local": "cross-env NODEV_ENV=local && nuxt build",
+    "dev": "nuxt",
+    "build": "cross-env NODE_ENV=production  nuxt build",
+    "build:local": "cross-env NODE_ENV=local nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"
   },

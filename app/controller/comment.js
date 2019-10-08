@@ -2,37 +2,17 @@ const { Controller } = require('egg')
 
 const { ObjectId } = require('mongoose').Types
 const _ = require('lodash')
-const CommentModel = require('../model/comment')
 const { ParameterException } = require('../utils/httpExceptions')
-const { comment: commentProjectFields } = require('../types/projectField')
-const { comment: properties } = require('../types/request')
-const { comment: commentResponseFields } = require('../types/response')
+const properties = require('../types/request').comment
+const commentResponseFields = require('../types/response').comment
 
-module.exports = class CommentController extends Controller {
+class CommentController extends Controller {
   async queryList() {
-    const { ctx } = this
-    ctx.body = await CommentModel.aggregate([
-      // { $match: ctx.state.filter },
-      {
-        $lookup: {
-          from: 'articles',
-          localField: 'articleID',
-          foreignField: '_id',
-          as: 'article',
-        },
-      },
-      {
-        $project: { ...commentProjectFields, articleTitle: '$article.title' },
-      },
-      {
-        $sort: {
-          createdAt: -1,
-        },
-      },
-    ])
+    const { ctx, service } = this
+    ctx.body = await service.comment.aggregateList()
   }
   async createOne() {
-    const { ctx } = this
+    const { ctx, service } = this
 
     const required = ['content', 'nickname', 'articleID']
     const { articleID } = ctx.params
@@ -47,12 +27,12 @@ module.exports = class CommentController extends Controller {
       throw new ParameterException(ctx.ajv.errors)
     }
 
-    const result = await CommentModel.create(payload)
+    const result = await service.comment.createOne(payload)
 
     ctx.body = _.pick(result, commentResponseFields)
   }
   async deleteOne() {
-    const { ctx } = this
+    const { ctx, service } = this
 
     const { id } = ctx.params
 
@@ -65,12 +45,12 @@ module.exports = class CommentController extends Controller {
       throw new ParameterException(ctx.ajv.errors)
     }
 
-    await CommentModel.findByIdAndRemove(id)
+    await service.comment.queryByIdAndRemove(id)
     ctx.status = 204
   }
 
   async deleteList() {
-    const { ctx } = this
+    const { ctx, service } = this
 
     const { idList } = ctx.request.body
 
@@ -83,9 +63,7 @@ module.exports = class CommentController extends Controller {
       throw new ParameterException(ctx.ajv.errors)
     }
 
-    const result = await Promise.all(
-      idList.map(id => CommentModel.findByIdAndRemove(id))
-    )
+    const result = await service.comment.deleteMany(idList)
 
     if (result.length !== idList.length) {
       return ctx.throw(400, '删除失败')
@@ -94,7 +72,7 @@ module.exports = class CommentController extends Controller {
     ctx.status = 204
   }
   async thumbup() {
-    const { ctx } = this
+    const { ctx, service } = this
 
     const { id } = ctx.params
     const validResult = ctx.ajv.validate(
@@ -106,8 +84,9 @@ module.exports = class CommentController extends Controller {
       throw new ParameterException(ctx.ajv.errors)
     }
 
-    await CommentModel.findByIdAndUpdate(id, { $inc: { thumbupCount: 1 } })
+    await service.comment.thumbup(id)
 
     ctx.status = 204
   }
 }
+module.exports = CommentController

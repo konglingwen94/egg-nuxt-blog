@@ -9,7 +9,7 @@
 
       <ul class="category-list">
         <template v-for="item in categoryList">
-          <li v-if="item.articlePublishedCount" class="category-item" :key="item.id">
+          <li  class="category-item" :key="item.id">
             <el-badge :value="item.articlePublishedCount">
               <nuxt-link :to="{name:'articles',query:{ categoryID:item.id}}">
                 <el-tag type="info">{{item.name}}</el-tag>
@@ -27,7 +27,7 @@
       </el-divider>
       <ul class="category-list">
         <template v-for="item in tagList">
-          <li v-if="item.articlePublishedCount" class="category-item" :key="item.id">
+          <li  class="category-item" :key="item.id">
             <el-badge :value="item.articlePublishedCount">
               <nuxt-link :to="{name:'articles',query:{ tagID:item.id}}">
                 <el-tag type="info">{{item.name}}</el-tag>

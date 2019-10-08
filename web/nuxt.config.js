@@ -1,10 +1,15 @@
 const { resolve } = require('path')
-
 module.exports = {
   mode: 'universal',
   /*
    ** Headers of the page
    */
+  env: {
+    baseUrl:
+      process.env.NODE_ENV === 'production'
+        ? 'http://106.54.230.205:7001/api'
+        : 'http://localhost:7001/api',
+  },
   rootDir: resolve(__dirname, '../'),
   srcDir: resolve(__dirname, '../web'),
   head: {
@@ -26,7 +31,6 @@ module.exports = {
   vue: {
     config: {
       silent: true,
-      
     },
   },
 
@@ -66,12 +70,10 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/proxy',
   ],
- 
+
   proxy: {
-    
     '/uploads': {
       target: 'http://localhost:7001',
-     
     },
   },
 
@@ -85,7 +87,7 @@ module.exports = {
    */
 
   buildDir:
-    process.env.NODE_ENV === 'production'
+    process.env.NODE_ENV !== 'development'
       ? resolve(__dirname, '../public/web')
       : './web/.nuxt',
   build: {

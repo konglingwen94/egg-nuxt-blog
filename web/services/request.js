@@ -1,13 +1,10 @@
 import axios from 'axios'
 import qs from 'qs'
 
-const baseURL =
-  process.env.NODE_ENV === 'production'
-    ? 'http://106.54.230.205:7001/api'
-    : 'http://127.0.0.1:7001/api'
+ 
 
 const instance = axios.create({
-  baseURL,
+  baseURL: process.env.baseUrl,
 })
 
 instance.interceptors.request.use(

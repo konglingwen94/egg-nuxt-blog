@@ -6,7 +6,7 @@
       class="banner"
       :style="bannerStyle"
     >{{data.tagList.map(item=>item.name).join(' ')}}</div>
-    <!-- <img :src="data.cover.path" width="300" alt=""> -->
+
     <div class="main">
       <section class="content-wrapper">
         <!-- 文章内容 -->
@@ -49,7 +49,7 @@
         </el-form>
 
         <ul class="comment-board">
-          <li class="comment-board-item" v-for="item in commentList" :key="item.id">
+          <li class="comment-board-item" v-for="item in data.commentList" :key="item.id">
             <div class="icon-user-wrapper">
               <el-avatar icon="el-icon-user-solid" size="medium"></el-avatar>
             </div>
@@ -83,7 +83,11 @@
             :class="starArticleIdList.includes(data.id)?'el-icon-star-on':'el-icon-star-off'"
           ></i>
         </div>
-        <el-badge :value="commentList.length" type="info" :hidden="commentList.length===0">
+        <el-badge
+          :value="data.commentList.length"
+          type="info"
+          :hidden="data.commentList.length===0"
+        >
           <div class="icon-wrap icon-wrap-comment">
             <i @click="$refs.input.focus()" class="el-icon-s-comment"></i>
           </div>
@@ -113,17 +117,22 @@ export default {
     const { tagIdList } = query
 
     try {
-      var [suggestionList = [], data = {}] = await Promise.all([
+      var [suggestionList, data] = await Promise.all([
         ArticleService.fetchSuggestionList({ tagIdList }),
         ArticleService.fetchOne(id)
       ])
     } catch (error) {
       return { suggestionList: [], data: {} }
     }
+
     const index = suggestionList.findIndex(item => item.id === id)
     suggestionList.splice(index, 1)
 
     return { suggestionList, data }
+  },
+  beforeRouteUpdate(form, to, next) {
+    // console.log('before-route-update', this)
+    next()
   },
   data() {
     return {
@@ -131,8 +140,7 @@ export default {
       commentForm: {
         content: '',
         nickname: ''
-      },
-      commentList: []
+      }
     }
   },
 
@@ -154,15 +162,10 @@ export default {
       }
     }
   },
-  created() {
-    CommentService.fetchList(this.$route.params.id)
-      .then(response => {
-        this.commentList = response
-      })
-      .catch(err => {
-        alert(err.message)
-      })
+  key(route) {
+    return route.fullPath
   },
+
   mounted() {
     this.recordPv()
   },
@@ -233,7 +236,7 @@ export default {
 
       CommentService.createOne(articleID, payload)
         .then(response => {
-          this.commentList.unshift(response)
+          this.data.commentList.unshift(response)
           this.commentForm.content = ''
           this.commentForm.nickname = ''
         })

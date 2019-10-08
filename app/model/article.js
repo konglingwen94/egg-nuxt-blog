@@ -1,24 +1,22 @@
 const { Schema, model } = require('mongoose')
-const ArticleCategoryModel = require('./category')
-const TagModel = require('./tag')
+const egg = require('egg')
+const CommentModel = require('../model/comment')
 
 const { ObjectId } = Schema.Types
 
 const ArticleSchema = new Schema(
   {
     categoryID: { type: ObjectId, ref: 'Category' },
-    commentIdList: [{ type: ObjectId, ref: 'Comment' }],
+
     title: String,
     tagIdList: [
       {
         type: [ObjectId],
-
         ref: 'Tag',
       },
     ],
     content: {
       type: Object,
-
       default: {
         html: '',
         text: '',
@@ -35,10 +33,7 @@ const ArticleSchema = new Schema(
         path: '',
       },
     },
-    comment: {
-      type: String,
-      default: '',
-    },
+
     pv: {
       type: Number,
       default: 0,
@@ -52,5 +47,10 @@ const ArticleSchema = new Schema(
     timestamps: true,
   }
 )
+
+ArticleSchema.post('findOneAndRemove', function(model) {
+   
+  return CommentModel.deleteMany({ articleID: model.id })
+})
 
 module.exports = model('Article', ArticleSchema)

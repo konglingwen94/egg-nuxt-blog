@@ -8,7 +8,7 @@ public
 
 
 # uploads
-public/uploads
+# public/uploads
 
 # editor files
 .vscode

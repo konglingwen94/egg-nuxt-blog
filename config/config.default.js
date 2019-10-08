@@ -23,7 +23,7 @@ module.exports = appInfo => {
         }
       },
     },
-
+ 
     webArticleFilter: {
       match: '/api/articles',
     },
@@ -45,6 +45,7 @@ module.exports = appInfo => {
       'upload',
       'webArticleFilter',
       'articleFilter',
+      
       'nuxtRender',
     ],
     cors: {

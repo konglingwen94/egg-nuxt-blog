@@ -22,7 +22,7 @@ module.exports = class ArticleService extends Service {
       tag: tagProject,
       category: categoryProject,
     } = ctx.projectFields
-    
+
     const result = ArticleModel.aggregate()
       .match(ctx.state.filter || {})
       .lookup({
@@ -105,6 +105,11 @@ module.exports = class ArticleService extends Service {
     await doc.save()
     return doc
   }
+  async queryByIdAndUpdate(id, payload) {
+    return ArticleModel.findByIdAndUpdate(id, {
+      $set: payload,
+    })
+  }
   async queryByCategoryID(categoryID) {
     return ArticleModel.findOne({ categoryID })
   }
@@ -137,11 +142,46 @@ module.exports = class ArticleService extends Service {
         foreignField: '_id',
         localField: 'tagIdList',
       })
+      .lookup({
+        from: 'comments',
+        as: 'commentList',
+        foreignField: 'articleID',
+        localField: '_id',
+      })
       .project({
         ...ctx.projectFields.article,
         tagList: { name: 1, updatedAt: 1, createdAt: 1, id: '$_id' },
+        commentList: {
+          content: 1,
+          nickname: 1,
+          thumbupCount: 1,
+          updatedAt: 1,
+          createdAt: 1,
+          id: '$_id',
+        },
       })
 
     return result[0]
+  }
+  async queryByIdAndRemove(id) {
+    return ArticleModel.findByIdAndRemove(id)
+  }
+  async deleteMany(idList) {
+    return Promise.all(
+      idList.map(id => {
+        return ArticleModel.findByIdAndRemove(id)
+      })
+    )
+  }
+  async updatePublishStatus(id, isPublished) {
+    return ArticleModel.findByIdAndUpdate(id, { $set: { isPublished } })
+  }
+  async incrementPv(id) {
+    return ArticleModel.findByIdAndUpdate(id, {
+      $inc: { pv: 1 },
+    })
+  }
+  async queryByIdAndStarOne(id) {
+    return ArticleModel.findByIdAndUpdate(id, { $inc: { starCount: 1 } })
   }
 }
