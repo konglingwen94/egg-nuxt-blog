@@ -23,7 +23,7 @@ class ArticleController extends Controller {
     let { tagIdList } = ctx.query
 
     if (!tagIdList) {
-      ctx.body = []
+      return (ctx.body = [])
     }
 
     tagIdList =
