@@ -21,6 +21,11 @@ class ArticleController extends Controller {
   async querySuggestionList() {
     const { ctx, service } = this
     let { tagIdList } = ctx.query
+
+    if (!tagIdList) {
+      ctx.body = []
+    }
+
     tagIdList =
       typeof tagIdList === 'string'
         ? [ObjectId(tagIdList)]
