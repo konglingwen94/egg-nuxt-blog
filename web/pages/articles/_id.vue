@@ -130,10 +130,7 @@ export default {
 
     return { suggestionList, data }
   },
-  beforeRouteUpdate(form, to, next) {
-    // console.log('before-route-update', this)
-    next()
-  },
+ 
   data() {
     return {
       showSideBar: true,
