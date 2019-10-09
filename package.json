@@ -12,7 +12,8 @@
     "admin:build": "cd admin && npm run build",
     "web:dev": "cd web && npm run dev",
     "web:build": "cd web && npm run build",
-    "web:build-local": "cd web && npm run build:local"
+    "web:build-local": "cd web && npm run build:local",
+    "docs": "vuepress dev docs"
   },
   "repository": {
     "type": "git",
@@ -52,6 +53,7 @@
     "egg-bin": "^4.13.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "vuepress": "^1.1.0"
   }
 }

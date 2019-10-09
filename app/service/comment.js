@@ -11,13 +11,16 @@ class CommentService extends Service {
           from: 'articles',
           localField: 'articleID',
           foreignField: '_id',
-          as: 'article',
+          as: 'articles',
         },
+      },
+      {
+        $unwind: '$articles',
       },
       {
         $project: {
           ...ctx.projectFields.comment,
-          articleTitle: '$article.title',
+          articleTitle: '$articles.title',
         },
       },
       {

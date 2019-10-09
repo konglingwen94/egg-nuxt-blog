@@ -23,7 +23,7 @@ module.exports = appInfo => {
         }
       },
     },
- 
+
     webArticleFilter: {
       match: '/api/articles',
     },
@@ -32,9 +32,7 @@ module.exports = appInfo => {
     },
     nuxtRender: {
       nuxtConfig: {
-    
         buildDir: resolve(__dirname, '../public/web'),
-        
       },
       ignore: ['/api', '/admin'],
     },
@@ -45,7 +43,7 @@ module.exports = appInfo => {
       'upload',
       'webArticleFilter',
       'articleFilter',
-      
+
       'nuxtRender',
     ],
     cors: {
