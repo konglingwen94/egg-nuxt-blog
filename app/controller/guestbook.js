@@ -109,7 +109,7 @@ module.exports = class GuestbookController extends Controller {
       })
 
       item.id = item._id
-      // delete item._id
+      delete item._id
     })
     doc.id = doc._id
 
