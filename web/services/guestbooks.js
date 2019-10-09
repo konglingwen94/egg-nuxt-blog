@@ -14,6 +14,6 @@ export default {
     return request.post(`/guestbooks/${id}/digg`)
   },
   diggResponse(id, responseID) {
-    return request.post(`/guestbooks/${id}/responses/${responseID}/digg`)
+    return request.patch(`/guestbooks/${id}/dialogues/${responseID}/digg`)
   },
 }

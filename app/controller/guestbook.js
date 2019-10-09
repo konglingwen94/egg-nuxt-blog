@@ -170,23 +170,15 @@ module.exports = class GuestbookController extends Controller {
   async deleteManyResponse() {
     const { ctx } = this
 
-    let { idList } = ctx.request.body
-    idList = idList.map(id => ObjectId(id))
-    let result = await GuestbookModel.aggregate([
-      {
-        $match: { 'dialogues._id': { $in: idList } },
-      },
-      { $project: { dialogues: 1, _id: 0 } },
-      { $unwind: '$dialogues' },
-    ])
-    result = result.map(item => item.dialogues)
-    let res = GuestbookModel.updateMany(
-      { 'dialogues._id': { $in: idList } },
-      { $pullAll: { dialogues: result } },
-      { multi: true }
-    )
+    const { idList } = ctx.request.body
+    const { id } = ctx.params
 
-    return res
+    const guestbookDoc = await GuestbookModel.findById(id)
+    idList.forEach(id => {
+      guestbookDoc.dialogues.pull(id)
+    })
+    await guestbookDoc.save()
+    ctx.status = 204
   }
 
   async diggOneResponse() {

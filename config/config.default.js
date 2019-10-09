@@ -7,6 +7,9 @@ module.exports = appInfo => {
       prefix: '',
       dir: resolve(appInfo.baseDir, 'public'),
     },
+    history: {
+      match: ['/admin'],
+    },
     upload: {
       match: '/api/upload',
       dir: 'public/uploads/',
@@ -43,7 +46,6 @@ module.exports = appInfo => {
       'upload',
       'webArticleFilter',
       'articleFilter',
-
       'nuxtRender',
     ],
     cors: {

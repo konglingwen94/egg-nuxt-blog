@@ -72,9 +72,11 @@ export default {
       dataList: [],
       selection: [],
       replySelectedList: [],
-      expandRowKeys: []
+      expandRowKeys: [],
+      action: ''
     }
   },
+
   created() {
     GuestbookApi.fetchList()
       .then(response => (this.dataList = response))
@@ -84,15 +86,30 @@ export default {
     onExpandChange(row, expandedRows) {
       this.guestbook = row
       const index = expandedRows.indexOf(row)
+     
       if (index > -1) {
         this.expandRowKeys = [row.id]
       }
+      console.log('onExpandChange')
     },
 
     replySelectionChange(selection) {
       this.replySelectedList = selection
 
-      this.action = 'reply'
+      this.action = this.selection.length
+        ? 'guestbook'
+        : selection.length
+        ? 'reply'
+        : ''
+    },
+    onSelectionChange(selection) {
+      this.selection = selection
+
+      this.action = selection.length
+        ? 'guestbook'
+        : this.replySelectedList.length
+        ? 'reply'
+        : ''
     },
     async deleteMany() {
       if (!this.selection.length && !this.replySelectedList.length) {
@@ -105,7 +122,7 @@ export default {
       try {
         await this.$confirm(
           `${
-            this.action === 'repay' ? '回复' : '留言'
+            this.action === 'reply' ? '回复' : '留言'
           }以经删除将无法恢复，是否删除?`,
           '提示',
           {
@@ -118,7 +135,9 @@ export default {
 
       const action =
         this.action === 'reply'
-          ? GuestbookApi.deleteManyReply({ idList: replyIdList })
+          ? GuestbookApi.deleteManyReply(this.guestbook.id, {
+              idList: replyIdList
+            })
           : GuestbookApi.deleteMany({ idList })
 
       action
@@ -146,10 +165,7 @@ export default {
         })
         .catch(err => this.$message.error(err.message))
     },
-    onSelectionChange(selection) {
-      this.selection = selection
-      this.action = 'guestbook'
-    },
+
     async deleteOne(id, index) {
       try {
         await this.$confirm('此条留言以经删除将无法恢复,是否删除?', '提示', {

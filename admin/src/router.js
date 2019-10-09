@@ -155,7 +155,4 @@ router.beforeEach((to, from, next) => {
   return accessToken ? next() : next('/auth/login')
 })
 
- 
-router.push(window.location.search.split('=').pop())
-
 export default router

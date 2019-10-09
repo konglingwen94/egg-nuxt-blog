@@ -13,7 +13,7 @@ export default {
   deleteMany(data) {
     return request.delete(`/guestbooks`, { data })
   },
-  deleteManyReply(data) {
-    return request.delete('/responses', { data })
+  deleteManyReply(id, data) {
+    return request.delete(`/guestbooks/${id}/dialogues`, { data })
   },
 }

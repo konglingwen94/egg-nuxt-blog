@@ -118,6 +118,15 @@
 }
 ```
 
+## 点赞回复
+
+`PATCH /guestbooks/:id/dialogues/:responseID/digg`
+
+### Response
+
+`HTTP/1.1 204 No Content`
+
+
 ## 删除留言
 
 `DELETE /admin/guestbooks/:id`
@@ -125,3 +134,27 @@
 ### Respnose
 
 `HTTP/1.1 204 No Content`
+
+
+## 删除留言回复
+
+`DELETE /admin/guestbooks/:id/dialogues/:responseID`
+
+### Response
+
+`HTTP/1.1 204 No Content`
+
+## 删除多个留言回复
+
+`DELETE /admin/guestbooks/:id/dialogues`
+
+### Request 
+
+| Field  |       Type        |  Description   | Required |
+| :----: | :---------------: | :------------: | :------: |
+| idList | Array\<ObjectId\> | 留言回复ID列表 |   Yes    |
+
+### Response
+
+`HTTP/1.1 204 No Content`
+

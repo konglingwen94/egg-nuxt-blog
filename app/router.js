@@ -7,10 +7,7 @@ module.exports = app => {
    *  */
   const adminRouter = router.namespace('/admin')
 
-  
-
   adminRouter.get('*', ctx => {
-    
     const path = ctx.path.replace('/admin', '')
     ctx.redirect(`/admin/index.html?path=${path}`)
   })
@@ -193,13 +190,13 @@ module.exports = app => {
     controller.guestbook.deleteMany
   )
   apiRouter.delete(
-    '/admin/responses',
+    '/admin/guestbooks/:id/dialogues',
 
     controller.guestbook.deleteManyResponse
   )
 
-  apiRouter.post(
-    '/guestbooks/:id/responses/:responseID/digg',
+  apiRouter.patch(
+    '/guestbooks/:id/dialogues/:responseID/digg',
     controller.guestbook.diggOneResponse
   )
 
