@@ -1,16 +1,5 @@
 module.exports = app => {
-  const { router, controller, middleware } = app
-
-  /**
-   *
-   * static admin
-   *  */
-  const adminRouter = router.namespace('/admin')
-
-  adminRouter.get('*', ctx => {
-    const path = ctx.path.replace('/admin', '')
-    ctx.redirect(`/admin/index.html?path=${path}`)
-  })
+  const { router, controller } = app
 
   /**
    * api router
