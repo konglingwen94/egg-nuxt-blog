@@ -13,7 +13,8 @@
     "web:dev": "cd web && npm run dev",
     "web:build": "cd web && npm run build",
     "web:build-local": "cd web && npm run build:local",
-    "docs": "vuepress dev docs"
+    "docs": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "repository": {
     "type": "git",

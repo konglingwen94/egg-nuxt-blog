@@ -3,6 +3,8 @@ const fs = require('fs')
 const _ = require('lodash')
 
 const config = {
+  dest: path.resolve(__dirname, '../../public/docs'),
+  base:'/docs/',
   themeConfig: {
     nav: [
       {
