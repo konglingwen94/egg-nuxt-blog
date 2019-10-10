@@ -57,7 +57,7 @@ export default {
       return
     }
 
-    this.userForm.nickname = adminInfo.nickname
+    _.assign(this.userForm, _.pick(adminInfo, ['username', 'nickname']))
   },
   methods: {
     saveUserInfoHandle() {

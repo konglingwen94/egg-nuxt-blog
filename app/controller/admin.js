@@ -97,9 +97,9 @@ class AdminController extends Controller {
   async changeAccount() {
     const { ctx, service } = this
     const { id } = ctx.params
-    const required = ['nickname', 'id']
+    const required = ['nickname', 'username', 'id']
 
-    const { nickname } = ctx.request.body
+    const payload = _.pick(ctx.request.body, ['username', 'nickname'])
 
     const valid = ctx.ajv.validate(
       {
@@ -107,7 +107,7 @@ class AdminController extends Controller {
         properties,
       },
       {
-        nickname,
+        ...payload,
         id,
       }
     )
@@ -116,7 +116,7 @@ class AdminController extends Controller {
       throw new ParameterException(ctx.ajv.errors)
     }
     try {
-      await service.admin.queryByIdAndUpdate(id, { nickname })
+      await service.admin.queryByIdAndUpdate(id, payload)
     } catch (error) {
       throw error
     }
