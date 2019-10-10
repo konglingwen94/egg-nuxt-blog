@@ -7,6 +7,9 @@ module.exports = appInfo => {
       prefix: '',
       dir: resolve(appInfo.baseDir, 'public'),
     },
+    compress: {
+      threshold: 800, //它支持指定只有当 body 大于配置的 threshold 时才进行 gzip 压缩
+    },
     history: {
       match: ['/admin'],
     },
