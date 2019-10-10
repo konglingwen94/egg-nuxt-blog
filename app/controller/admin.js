@@ -1,15 +1,13 @@
 const { Controller } = require('egg')
 const _ = require('lodash')
-const bcrypt = require('bcrypt')
 const { ParameterException } = require('../utils/httpExceptions')
 const jwt = require('jsonwebtoken')
-const AdminModel = require('../model/admin')
-const { admin: properties } = require('../types/request')
-const { admin: fields } = require('../types/response')
+const properties = require('../types/request').admin
+const fields = require('../types/response').admin
 
 class AdminController extends Controller {
   async login() {
-    const { ctx, config } = this
+    const { ctx, config, service } = this
 
     const required = ['username', 'password']
 
@@ -25,7 +23,7 @@ class AdminController extends Controller {
     const { username, password } = data
 
     try {
-      var result = await AdminModel.findOne({ username })
+      var result = await service.admin.queryByUsername(username)
     } catch (error) {
       throw error
     }
@@ -34,13 +32,13 @@ class AdminController extends Controller {
       return ctx.throw(404, '没有此用户')
     }
     try {
-      var valid = await bcrypt.compare(password, result.password)
+      var valid = await service.admin.comparePass(password, result.password)
     } catch (error) {
       throw error
     }
 
     if (!valid) {
-      return ctx.throw(400, '密码不正确')
+      return ctx.throw(403, '密码不正确')
     }
 
     const user = _.pick(result, fields)
@@ -56,7 +54,7 @@ class AdminController extends Controller {
     }
   }
   async changePass() {
-    const { ctx } = this
+    const { ctx, service } = this
     const required = ['oldPassword', 'newPassword', 'id']
     const { id } = ctx.params
     const schema = {
@@ -74,15 +72,14 @@ class AdminController extends Controller {
     const { oldPassword, newPassword } = data
 
     try {
-      var { password } = await AdminModel.findById(id)
+      var { password } = await service.admin.queryById(id)
     } catch (error) {
       throw error
     }
-
-    const valid = bcrypt.compareSync(oldPassword, password)
+    const valid = await service.admin.comparePass(oldPassword, password)
 
     if (!valid) {
-      return ctx.throw(400, '错误的原密码')
+      return ctx.throw(403, '错误的原密码')
     }
 
     try {
@@ -91,14 +88,14 @@ class AdminController extends Controller {
       throw error
     }
     try {
-      await AdminModel.findByIdAndUpdate(id, { password: hashPass })
+      await service.admin.queryByIdAndUpdate(id, { password: hashPass })
     } catch (error) {
       throw error
     }
     ctx.status = 204
   }
   async changeAccount() {
-    const { ctx } = this
+    const { ctx, service } = this
     const { id } = ctx.params
     const required = ['nickname', 'id']
 
@@ -118,9 +115,8 @@ class AdminController extends Controller {
     if (!valid) {
       throw new ParameterException(ctx.ajv.errors)
     }
-
     try {
-      await AdminModel.findByIdAndUpdate(id, { $set: { nickname } })
+      await service.admin.queryByIdAndUpdate(id, { nickname })
     } catch (error) {
       throw error
     }
