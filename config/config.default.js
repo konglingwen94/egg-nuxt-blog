@@ -10,6 +10,9 @@ module.exports = appInfo => {
     history: {
       match: ['/admin'],
     },
+    docs: {
+      match: ['/docs'],
+    },
     upload: {
       match: '/api/upload',
       dir: 'public/uploads/',
