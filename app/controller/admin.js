@@ -23,7 +23,7 @@ class AdminController extends Controller {
     const { username, password } = data
 
     try {
-      var result = await service.admin.queryByUsername(username)
+      var result = await service.admin.queryOneByUsername(username)
     } catch (error) {
       throw error
     }
