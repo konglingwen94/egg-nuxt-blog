@@ -8,10 +8,7 @@ module.exports = option => {
         from: /\/docs/,
         to: function(context) {
           const reg = /\/docs\/assets\//
-          console.log(
-            context.parsedUrl.pathname,
-            context.parsedUrl.pathname.match(reg)
-          )
+         
           if (context.parsedUrl.pathname.match(reg)) {
             return context.parsedUrl.pathname
           }

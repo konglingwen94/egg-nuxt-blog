@@ -18,7 +18,8 @@ class AdminController extends Controller {
 
     const isValid = ctx.ajv.validate(schema, data)
     if (!isValid) {
-      ctx.throw(400, 'Invalid parameters', { errors: ctx.ajv.errors })
+      throw new ParameterException(ctx.ajv.errors)
+      return
     }
 
     const { username, password } = data
@@ -56,8 +57,8 @@ class AdminController extends Controller {
   }
   async changePass() {
     const { ctx } = this
-    const required = ['oldPassword', 'newPassword']
-
+    const required = ['oldPassword', 'newPassword', 'id']
+    const { id } = ctx.params
     const schema = {
       required,
       properties,
@@ -65,14 +66,13 @@ class AdminController extends Controller {
 
     const data = _.pick(ctx.request.body, required)
 
-    const isValid = ctx.ajv.validate(schema, data)
+    const isValid = ctx.ajv.validate(schema, { ...data, id })
 
     if (!isValid) {
       throw new ParameterException(ctx.ajv.errors)
     }
     const { oldPassword, newPassword } = data
 
-    const { id } = ctx.state.adminInfo
     try {
       var { password } = await AdminModel.findById(id)
     } catch (error) {
@@ -99,9 +99,9 @@ class AdminController extends Controller {
   }
   async changeAccount() {
     const { ctx } = this
+    const { id } = ctx.params
+    const required = ['nickname', 'id']
 
-    const required = ['nickname']
-    
     const { nickname } = ctx.request.body
 
     const valid = ctx.ajv.validate(
@@ -111,6 +111,7 @@ class AdminController extends Controller {
       },
       {
         nickname,
+        id,
       }
     )
 
@@ -118,16 +119,8 @@ class AdminController extends Controller {
       throw new ParameterException(ctx.ajv.errors)
     }
 
-    const { id } = ctx.state.adminInfo
-
     try {
-      await AdminModel.findByIdAndUpdate(
-        id,
-        { $set: { nickname } },
-        {
-          new: true,
-        }
-      ).select({ nickname: 1, _id: 0 })
+      await AdminModel.findByIdAndUpdate(id, { $set: { nickname } })
     } catch (error) {
       throw error
     }

@@ -25,7 +25,7 @@ module.exports = app => {
   apiRouter.get('/about', controller.about.getOne)
   /**
    *
-   * auth
+   * admin
    */
 
   apiRouter.post(
@@ -34,14 +34,14 @@ module.exports = app => {
     controller.admin.login
   )
 
-  apiRouter.patch(
-    '/admin/auth/change-password',
+  apiRouter.put(
+    '/admin/accounts/:id/change-password',
 
     controller.admin.changePass
   )
 
-  apiRouter.patch(
-    '/admin/auth/change-account',
+  apiRouter.put(
+    '/admin/accounts/:id',
 
     controller.admin.changeAccount
   )

@@ -59,15 +59,15 @@ export default {
         this.$message.error('请输入昵称')
         return
       }
-      AuthApi.changeNickname({ nickname: this.nickname })
+      try {
+        var adminInfo = JSON.parse(localStorage.adminInfo)
+      } catch (error) {
+        return
+      }
+      AuthApi.updateAccount(adminInfo.id, { nickname: this.nickname })
         .then(() => {
           this.$message.success('修改昵称成功')
           document.getElementById('nickname').innerHTML = this.nickname
-          try {
-            var adminInfo = JSON.parse(localStorage.adminInfo)
-          } catch (error) {
-            return
-          }
           adminInfo.nickname = this.nickname
 
           localStorage.setItem('adminInfo', JSON.stringify(adminInfo))
@@ -108,13 +108,17 @@ export default {
         this.$message.error('两次输入密码不一致')
         return
       }
-
+      try {
+        var { id } = JSON.parse(localStorage.adminInfo)
+      } catch (error) {
+        return
+      }
       const payload = {
         oldPassword,
         newPassword
       }
 
-      AuthApi.changePassword(payload)
+      AuthApi.changePassword(id, payload)
         .then(() => {
           this.$message.success('密码修改成功')
           for (let key in this.form) {
