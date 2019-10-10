@@ -1,17 +1,17 @@
 import Vue from 'vue'
-import Element from 'element-ui'
+
 import App from './App.vue'
 import router from './router'
+import store from './store/index.js'
 
 import 'normalize.css'
 import '@/assets/css/overwrite.css'
-import 'element-ui/lib/theme-chalk/index.css'
+ 
+
 import registerGlobalComponents from '@/utils/global-registration'
-import store from './store/index.js'
+import registerElementUI from '@/utils/element-ui.js'
 
-window.Vue = Vue
-
-Vue.use(Element)
+registerElementUI()
 registerGlobalComponents(Vue)
 
 Vue.config.productionTip = false
