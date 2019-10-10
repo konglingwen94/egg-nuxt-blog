@@ -83,7 +83,7 @@ class AdminController extends Controller {
     }
 
     try {
-      var hashPass = await bcrypt.hash(newPassword, 10)
+      var hashPass = await service.admin.hashPass(newPassword)
     } catch (error) {
       throw error
     }

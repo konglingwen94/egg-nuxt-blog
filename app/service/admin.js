@@ -15,6 +15,9 @@ class AdminService extends Service {
   async queryByIdAndUpdate(id, payload) {
     return AdminModel.findByIdAndUpdate(id, { $set: payload })
   }
+  async hashPass(pass) {
+    return bcrypt.hash(pass, 10)
+  }
 }
 
 module.exports = AdminService
