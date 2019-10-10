@@ -11,6 +11,6 @@ export default {
     return request.delete(`/comments/${id}`)
   },
   giveThumbUp(id) {
-    return request.post(`/comments/${id}/like`)
+    return request.patch(`/comments/${id}/thumbup`)
   },
 }

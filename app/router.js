@@ -155,7 +155,7 @@ module.exports = app => {
   )
   apiRouter.post('/articles/:articleID/comments', controller.comment.createOne)
 
-  apiRouter.post('/comments/:id/like', controller.comment.thumbup)
+  apiRouter.patch('/comments/:id/thumbup', controller.comment.thumbup)
 
   /**
    * guestbooks

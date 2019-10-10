@@ -55,3 +55,12 @@
 ### Response
 
 `HTTP/1.1 204 No Content`
+
+
+## 评论点赞
+
+`PATCH /comments/:id/thumbup`
+
+### Response
+
+`HTTP/1.1 204 No Content`
