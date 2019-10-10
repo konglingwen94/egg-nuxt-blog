@@ -20,11 +20,14 @@
     </div>
     <el-card>
       <el-form>
+        <el-form-item label="用户名">
+          <el-input v-model="userForm.username" clearable></el-input>
+        </el-form-item>
         <el-form-item label="昵称">
-          <el-input v-model="nickname"></el-input>
+          <el-input v-model="userForm.nickname" clearable></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="saveNicknameHandle">保存</el-button>
+          <el-button type="primary" @click="saveUserInfoHandle">保存</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -41,7 +44,10 @@ export default {
         newPassword: '',
         checkPassword: ''
       },
-      nickname: ''
+      userForm: {
+        nickname: '',
+        username: ''
+      }
     }
   },
   created() {
@@ -51,11 +57,16 @@ export default {
       return
     }
 
-    this.nickname = adminInfo.nickname
+    this.userForm.nickname = adminInfo.nickname
   },
   methods: {
-    saveNicknameHandle() {
-      if (!this.nickname) {
+    saveUserInfoHandle() {
+      const { nickname, username } = this.userForm
+      if (!username) {
+        this.$message.error('请输入用户名')
+        return
+      }
+      if (!nickname) {
         this.$message.error('请输入昵称')
         return
       }
@@ -64,13 +75,16 @@ export default {
       } catch (error) {
         return
       }
-      AuthApi.updateAccount(adminInfo.id, { nickname: this.nickname })
+      const payload = { username, nickname }
+      AuthApi.updateAccount(adminInfo.id, payload)
         .then(() => {
           this.$message.success('修改昵称成功')
           document.getElementById('nickname').innerHTML = this.nickname
-          adminInfo.nickname = this.nickname
 
-          localStorage.setItem('adminInfo', JSON.stringify(adminInfo))
+          localStorage.setItem(
+            'adminInfo',
+            JSON.stringify(_.assign(adminInfo, payload))
+          )
         })
         .catch(err => {
           this.$message.error(err.message)
