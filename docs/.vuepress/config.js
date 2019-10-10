@@ -4,8 +4,10 @@ const _ = require('lodash')
 
 const config = {
   dest: path.resolve(__dirname, '../../public/docs'),
-  base:'/docs/',
+  base: '/docs/',
+  title: '博客',
   themeConfig: {
+     
     nav: [
       {
         text: 'API',
@@ -18,6 +20,10 @@ const config = {
       {
         text: 'CONFIG',
         link: '/configurations',
+      },
+      {
+        text: 'GitHub',
+        link: 'https://github.com/konglingwen94/egg-nuxt-blog',
       },
     ],
     sidebar: {},
