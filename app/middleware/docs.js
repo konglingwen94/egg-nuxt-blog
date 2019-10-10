@@ -2,8 +2,7 @@ const { historyApiFallback } = require('koa2-connect-history-api-fallback')
 
 module.exports = option => {
   return historyApiFallback({
-    // verbose: true,
-    // index: '/docs/index.html',
+    
     rewrites: [
       {
         from: /\/docs/,
