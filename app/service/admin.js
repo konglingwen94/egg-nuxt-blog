@@ -10,7 +10,7 @@ class AdminService extends Service {
     return AdminModel.findById(id)
   }
   async comparePass(oldPass, pass) {
-    return bcrypt.compareSync(oldPassword, password)
+    return bcrypt.compareSync(...arguments)
   }
   async queryByIdAndUpdate(id, payload) {
     return AdminModel.findByIdAndUpdate(id, { $set: payload })
