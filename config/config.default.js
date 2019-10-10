@@ -40,7 +40,7 @@ module.exports = appInfo => {
       nuxtConfig: {
         buildDir: resolve(__dirname, '../public/web'),
       },
-      ignore: ['/api', '/admin'],
+      ignore: ['/api', '/admin', '/docs'],
     },
     middleware: [
       'errorHandler',
