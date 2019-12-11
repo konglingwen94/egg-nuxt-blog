@@ -6,7 +6,9 @@ import AboutService from '@/services/abouts'
 export default {
   name: 'About',
   layout: 'Public',
-  async asyncData() {
+  async asyncData(ctx) {
+    console.log('=====================',ctx)
+
     try {
       var state = await AboutService.fetchData()
     } catch (error) {

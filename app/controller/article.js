@@ -12,6 +12,7 @@ class ArticleController extends Controller {
     ctx.body = await service.article.queryList()
   }
   async queryCarouselList() {
+    // console.log(__filename,'-----',this)
     const { service, ctx } = this
 
     const result = await service.article.queryList()

@@ -7,7 +7,7 @@ module.exports = {
   env: {
     baseUrl:
       process.env.NODE_ENV === 'production'
-        ? 'http://106.54.230.205:7001/api'
+        ? 'http://localhost:7001/api'
         : 'http://localhost:7001/api',
   },
   rootDir: resolve(__dirname, '../'),

@@ -79,6 +79,7 @@ export default {
       AuthApi.updateAccount(adminInfo.id, payload)
         .then(() => {
           this.$message.success('账户修改成功')
+          
           document.getElementById('nickname').innerHTML = nickname
 
           localStorage.setItem(
