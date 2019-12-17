@@ -8,30 +8,28 @@ const { ParameterException } = require('../utils/httpExceptions')
 class ArticleController extends Controller {
   async queryList() {
     const { service, ctx } = this
-
-    ctx.body = await service.article.queryList()
+    const data = await service.article.queryList()
+     
+    return data
   }
   async queryCarouselList() {
-    // console.log(__filename,'-----',this)
     const { service, ctx } = this
 
-    const result = await service.article.queryList()
-
-    ctx.body = result.sort((b, a) => a.pv - b.pv).slice(0, 4)
+    return await service.article.queryCarouselList()
   }
   async querySuggestionList() {
     const { ctx, service } = this
     let { tagIdList } = ctx.query
 
     if (!tagIdList) {
-      return (ctx.body = [])
+      return []
     }
 
     tagIdList =
       typeof tagIdList === 'string'
         ? [ObjectId(tagIdList)]
         : tagIdList.map(id => ObjectId(id))
-    ctx.body = await service.article.queryByTagIdList(tagIdList)
+   return await service.article.queryByTagIdList(tagIdList)
   }
 
   async queryOne() {
@@ -39,7 +37,7 @@ class ArticleController extends Controller {
     const { id } = ctx.params
     const result = await service.article.queryOneById(id)
 
-    ctx.body = result
+    return result
   }
   async createOne() {
     const { ctx, service } = this

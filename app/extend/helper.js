@@ -12,8 +12,25 @@ class DuplicatingFields extends Error {
   }
 }
 
+function patchFieldForData(data) {
+  if (typeof data !== 'object') {
+    return
+  }
+
+  for (let key in data) {
+    if (typeof data[key] === 'object' && key !== '_id' && key !== 'id') {
+      patchFieldForData(data[key])
+    }
+    if (key === '_id') {
+      Reflect.set(data, 'id', data[key])
+      Reflect.deleteProperty(data, key)
+    }
+  }
+  return data
+}
 
 module.exports = {
   ParameterException,
   DuplicatingFields,
+  patchFieldForData,
 }

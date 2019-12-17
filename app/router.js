@@ -108,9 +108,8 @@ module.exports = app => {
     controller.article.updatePublishStatus
   )
 
-  apiRouter.get('/articles/carousels', controller.article.queryCarouselList)
   apiRouter.get('/articles', controller.article.queryList)
-
+  apiRouter.get('/articles/carousels', controller.article.queryCarouselList)
   apiRouter.get('/articles/suggestion', controller.article.querySuggestionList)
 
   apiRouter.get('/articles/:id', controller.article.queryOne)

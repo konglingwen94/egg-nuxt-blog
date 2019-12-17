@@ -37,12 +37,12 @@ class CategoryController extends Controller {
     }
     ctx.status = 201
     const count = await service.article.countOwnCategoryArticle(data.id)
-    ctx.body = _.defaults(_.pick(data, ctx.responseFields.category), count)
+    return _.defaults(_.pick(data, ctx.responseFields.category), count)
   }
   async queryList() {
     const { ctx, service } = this
 
-    let result = await service.category.aggregateList()
+    let result = await service.category.queryList()
 
     await Promise.all(
       result.map(async item => {
@@ -53,7 +53,7 @@ class CategoryController extends Controller {
       })
     )
 
-    ctx.body = result
+    return result
   }
 
   async queryOne() {
@@ -62,7 +62,7 @@ class CategoryController extends Controller {
 
     var result = await CategoryModel.findById(id)
 
-    ctx.body = _.pick(result, responseFields)
+    return _.pick(result, responseFields)
   }
   async deleteOne() {
     const { ctx, service } = this
@@ -112,7 +112,7 @@ class CategoryController extends Controller {
           ).select(categoryProjectFields)
         : CategoryModel.create(payload))
      
-    ctx.body = _.pick(result, responseFields)
+    return _.pick(result, responseFields)
   }
 }
 

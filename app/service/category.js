@@ -6,36 +6,10 @@ class CategoryService extends Service {
     return await CategoryModel.create(payload)
   }
 
-  async aggregateList() {
+  async queryList() {
     const { ctx } = this
 
-    const result = CategoryModel.aggregate([
-      {
-        $lookup: {
-          from: 'articles',
-          let: { id: '$_id' },
-          pipeline: [
-            {
-              $match: { $expr: { $eq: ['$$id', '$categoryID'] } },
-            },
-            {
-              $project: ctx.projectFields.article,
-            },
-          ],
-          as: 'articles',
-        },
-      },
-
-      {
-        $project: ctx.projectFields.category,
-      },
-
-      {
-        $sort: {
-          createdAt: -1,
-        },
-      },
-    ])
+    const result = CategoryModel.find()
 
     return result
   }

@@ -16,69 +16,22 @@ const {
 module.exports = class ArticleService extends Service {
   async queryList() {
     const { ctx } = this
-    const {
-      article: articleProject,
-      comment: commentProject,
-      tag: tagProject,
-      category: categoryProject,
-    } = ctx.projectFields
 
-    const result = ArticleModel.aggregate()
-      .match(ctx.state.filter || {})
-      .lookup({
-        from: 'categories',
-        let: { categoryID: '$categoryID' },
+    const result = await ArticleModel.find(ctx.state.filter || {})
+      .sort('-createdAt')
+      .populate('tagIdList')
+      .populate('category')
+      .populate('commentList')
 
-        as: 'category',
-        pipeline: [
-          { $match: { $expr: { $eq: ['$$categoryID', '$_id'] } } },
-          { $project: categoryProjectionFields },
-        ],
-      })
-      .unwind('$category')
-      .project(ctx.projectFields.article)
-      .lookup({
-        from: 'comments',
-        let: { id: '$id' },
-        pipeline: [
-          {
-            $match: {
-              $expr: {
-                $eq: ['$$id', '$articleID'],
-              },
-            },
-          },
-          {
-            $project: commentProjectFields,
-          },
-          {
-            $sort: { createdAt: -1 },
-          },
-        ],
-        as: 'comments',
-      })
-      .lookup({
-        from: 'tags',
-        let: { tagIdList: '$tagIdList' },
-        pipeline: [
-          {
-            $match: {
-              $expr: {
-                $in: ['$_id', '$$tagIdList'],
-              },
-            },
-          },
-          {
-            $project: tagProjectionFields,
-          },
-        ],
-        as: 'tagList',
-      })
-      .sort({ createdAt: -1 })
+    console.log(result)
 
     return result
   }
-
+  async queryCarouselList() {
+    return await ArticleModel.find()
+      .sort('-pv')
+      .limit(4)
+  }
   async publishedCount() {
     return ArticleModel.count({ isPublished: true })
   }
@@ -134,34 +87,12 @@ module.exports = class ArticleService extends Service {
   async queryOneById(id) {
     const { ctx } = this
 
-    const result = await ArticleModel.aggregate()
-      .match({ _id: ObjectId(id) })
-      .lookup({
-        from: 'tags',
-        as: 'tagList',
-        foreignField: '_id',
-        localField: 'tagIdList',
-      })
-      .lookup({
-        from: 'comments',
-        as: 'commentList',
-        foreignField: 'articleID',
-        localField: '_id',
-      })
-      .project({
-        ...ctx.projectFields.article,
-        tagList: { name: 1, updatedAt: 1, createdAt: 1, id: '$_id' },
-        commentList: {
-          content: 1,
-          nickname: 1,
-          thumbupCount: 1,
-          updatedAt: 1,
-          createdAt: 1,
-          id: '$_id',
-        },
-      })
+    const result = await ArticleModel.findById(id)
+      .populate('category')
+      .populate('comments')
+      // .populate('tags')
 
-    return result[0]
+    return result
   }
   async queryByIdAndRemove(id) {
     return ArticleModel.findByIdAndRemove(id)

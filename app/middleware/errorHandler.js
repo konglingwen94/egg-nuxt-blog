@@ -1,10 +1,10 @@
 const consola = require('consola')
 
-module.exports = (opt,app) => {
+module.exports = (opt, app) => {
   return async (ctx, next) => {
-    
     try {
-      await next()
+      const result = await next()
+      console.log(__filename, result)
     } catch (error) {
       consola.error({
         message: error,

@@ -45,6 +45,12 @@ module.exports = appInfo => {
       },
       ignore: ['/api', '/admin', '/docs'],
     },
+    responseHandler: {
+      match: ['/api'],
+    },
+    errorHandler: {
+      match: ['/api'],
+    },
     middleware: [
       'errorHandler',
       'siteTraffic',
@@ -52,6 +58,7 @@ module.exports = appInfo => {
       'upload',
       'webArticleFilter',
       'articleFilter',
+      'responseHandler', 
       'nuxtRender',
     ],
     cors: {

@@ -1,10 +1,10 @@
 <template>
   <div class="home">
-      <el-carousel height="300px">
-        <el-carousel-item v-for="item in carouselList" :key="item.id">
-          <img :src="item.cover.path" width="100%" />
-        </el-carousel-item>
-      </el-carousel>
+    <el-carousel height="300px">
+      <el-carousel-item v-for="item in carouselList" :key="item.id">
+        <img :src="item.cover.path" width="100%" />
+      </el-carousel-item>
+    </el-carousel>
     <article-list :dataList="articleList"></article-list>
   </div>
 </template>
@@ -13,16 +13,17 @@
 import ArticleService from '@/services/articles'
 export default {
   layout: 'Public',
-  async asyncData() {
+  async asyncData({ req }) {
     try {
-      var [articleList, carouselList] = await Promise.all([
+      var [articleList, carouselList = []] = await Promise.all([
+        // req.service.article.queryList()
         ArticleService.fetchList(),
         ArticleService.fetchCarouselList()
       ])
     } catch (error) {
       return { articleList: [], carouselList: [] }
     }
-
+    console.log(articleList, carouselList)
     return { articleList, carouselList }
   },
   data() {

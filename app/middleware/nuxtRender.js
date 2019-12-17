@@ -8,7 +8,6 @@ module.exports = (option, app) => {
   return async ctx => {
     ctx.status = 200
     ctx.respond = false
-    console.log('------------------------', app)
     ctx.req.controller = app.controller
     ctx.req.service = ctx.service
 

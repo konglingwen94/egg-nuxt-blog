@@ -2,17 +2,17 @@
   <div class="article">
     <div
       ref="banner"
-      v-if="data.cover.path"
+      v-if="data.cover && data.cover.path"
       class="banner"
       :style="bannerStyle"
-    >{{data.tagList.map(item=>item.name).join(' ')}}</div>
+    >{{data.tagIdList.map(item=>item.name).join(' ')}}</div>
 
     <div class="main">
       <section class="content-wrapper">
         <!-- 文章内容 -->
         <div class="content">
           <h1>{{data.title}}</h1>
-          <div v-html="data.content.html"></div>
+          <div v-html="data.content && data.content.html"></div>
         </div>
       </section>
       <section class="suggestion-wrapper">
@@ -84,9 +84,9 @@
           ></i>
         </div>
         <el-badge
-          :value="data.commentList.length"
+          :value="data.commentList && data.commentList.length"
           type="info"
-          :hidden="data.commentList.length===0"
+          :hidden="data.commentList && data.commentList.length===0"
         >
           <div class="icon-wrap icon-wrap-comment">
             <i @click="$refs.input.focus()" class="el-icon-s-comment"></i>

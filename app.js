@@ -8,7 +8,7 @@ class AppBootHook {
   }
 
   async willReady() {
-    console.log(this)
+    console.log('App will ready',this.app)
 
     const nuxt = new Nuxt(nuxtConfig)
 
@@ -16,7 +16,7 @@ class AppBootHook {
     this.app.context.egg = this
 
     const builder = new Builder(nuxt)
-    await builder.build()
+    // await builder.build()
     await nuxt.ready()
     await mongodb.connect(this.app)
   }
