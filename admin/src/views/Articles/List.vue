@@ -1,8 +1,6 @@
 <template>
   <div class>
     <Panel>
-       
-
       <el-table :data="dataList" border @selection-change="handleSelectionChange">
         <!-- <el-table-column type="selection"></el-table-column> -->
         <el-table-column type="expand">
@@ -57,11 +55,13 @@
           </template>
         </el-table-column>
         <el-table-column label="所属类别" show-overflow-tooltip>
-          <template v-slot="{row}">{{row.category.name }}</template>
+          <template v-slot="{row}">{{row.category && row.category.name }}</template>
         </el-table-column>
         <el-table-column label="标签" show-overflow-tooltip>
           <template v-slot="{row}">
-            <span v-if="Array.isArray(row.tagList)">{{row.tagList.map(item=>item.name).join(' , ')}}</span>
+            <span
+              v-if="Array.isArray(row.tagList)"
+            >{{row.tagList.map(item=> item && item.name).join(' , ')}}</span>
           </template>
         </el-table-column>
         <el-table-column label="标题" show-overflow-tooltip prop="title"></el-table-column>
@@ -76,7 +76,7 @@
             >{{row.isPublished?'已发布':'未发布'}}</span>
           </template>
         </el-table-column>
-         
+
         <el-table-column label="创建时间">
           <template v-slot="{row}">{{new Date(row.createdAt).toLocaleString()}}</template>
         </el-table-column>

@@ -11,9 +11,9 @@ const ArticleSchema = new Schema(
       ref: 'Category',
       alias: 'categoryID',
       select: false,
-      toObject:{
-        getters:false
-      }
+      toObject: {
+        getters: false,
+      },
     },
 
     title: String,
@@ -50,9 +50,7 @@ const ArticleSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    __v: {
-      select: false,
-    },
+    
   },
   {
     timestamps: true,
@@ -66,7 +64,9 @@ const ArticleSchema = new Schema(
 )
 
 ArticleSchema.post('findOneAndRemove', function(model) {
-  return CommentModel.deleteMany({ articleID: model.id })
+  if (model && model.id) {
+    return CommentModel.deleteMany({ articleID: model.id })
+  }
 })
 
 ArticleSchema.virtual('comments', {

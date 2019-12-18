@@ -23,7 +23,7 @@ module.exports = class ArticleService extends Service {
       .populate('category')
       .populate('commentList')
 
-    console.log(result)
+    console.log(__filename, result)
 
     return result
   }
@@ -90,7 +90,7 @@ module.exports = class ArticleService extends Service {
     const result = await ArticleModel.findById(id)
       .populate('category')
       .populate('comments')
-      // .populate('tags')
+    // .populate('tags')
 
     return result
   }

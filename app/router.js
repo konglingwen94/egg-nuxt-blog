@@ -1,12 +1,13 @@
 module.exports = app => {
-  const { router, controller } = app
+  const { router, controller, middleware } = app
 
   /**
    * api router
    *
    *  */
 
-  const apiRouter = router.namespace('/api')
+  const apiRouter = router.namespace('/api', middleware.parameterValidator())
+  
   /***
    *
    * upload
@@ -79,11 +80,11 @@ module.exports = app => {
    * articles
    */
 
-  apiRouter.post('/admin/articles', controller.article.createOne)
+  apiRouter.post('article', '/admin/articles', controller.article.createOne)
 
-  apiRouter.get('/admin/articles', controller.article.queryList)
+  apiRouter.get('article', '/admin/articles', controller.article.queryList)
 
-  apiRouter.get('/admin/articles/:id', controller.article.queryOne)
+  apiRouter.get('article', '/admin/articles/:id', controller.article.queryOne)
 
   apiRouter.delete(
     '/admin/articles/:id',
@@ -98,6 +99,7 @@ module.exports = app => {
   )
 
   apiRouter.patch(
+    'article',
     '/admin/articles/:id',
 
     controller.article.updateOne

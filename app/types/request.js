@@ -58,14 +58,14 @@ module.exports = {
     },
   },
   article: {
-    categoryID: { type: 'string', minLength: 24, maxLength: 24 },
+    categoryID: { type: 'string', min: 24, max: 24 },
     tagIdList: {
-      type: 'array',
+      type: 'array?',
 
-      items: {
+      itemType: {
         type: 'string',
-        minLength: 24,
-        maxLength: 24,
+        min: 24,
+        max: 24,
       },
     },
     title: {
@@ -73,22 +73,19 @@ module.exports = {
     },
     content: {
       type: 'object',
-      required: ['html', 'text'],
-      properties: {
+
+      rule: {
         html: {
           type: 'string',
-          minLength: 1,
         },
         text: {
           type: 'string',
-          minLenght: 1,
         },
       },
     },
     cover: {
-      type: 'object',
-      required: ['name', 'path'],
-      properties: {
+      type: 'object?',
+      rule: {
         name: {
           type: 'string',
           minLenght: 1,
@@ -100,12 +97,13 @@ module.exports = {
       },
     },
     id: {
-      type: 'string',
-      minLenght: 24,
-      maxLength: 24,
+      type: 'string?',
+      min: 24,
+      max: 24,
     },
     isPublished: {
-      type: 'boolean',
+      type: 'boolean?',
+      default: true,
     },
   },
   category: {

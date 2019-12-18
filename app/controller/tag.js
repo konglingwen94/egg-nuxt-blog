@@ -39,7 +39,7 @@ module.exports = class TagController extends Controller {
   async queryList() {
     const { ctx, service } = this
 
-    const result = await service.tag.aggretageList()
+    const result = await service.tag.queryList()
 
     await Promise.all(
       result.map(async item => {
@@ -47,7 +47,7 @@ module.exports = class TagController extends Controller {
         _.assign(item, count)
       })
     )
-    ctx.body = result
+   return result
   }
 
   async updateOne() {

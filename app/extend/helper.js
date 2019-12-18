@@ -12,21 +12,19 @@ class DuplicatingFields extends Error {
   }
 }
 
-function patchFieldForData(data) {
-  if (typeof data !== 'object') {
-    return
-  }
-
-  for (let key in data) {
-    if (typeof data[key] === 'object' && key !== '_id' && key !== 'id') {
-      patchFieldForData(data[key])
-    }
-    if (key === '_id') {
-      Reflect.set(data, 'id', data[key])
-      Reflect.deleteProperty(data, key)
-    }
-  }
-  return data
+function patchFieldForData(doc) {
+  return (
+    doc &&
+    typeof doc.toObject === 'function' &&
+    doc.toObject({
+      versionKey: false,
+      transform(doc, result) {
+        Reflect.set(result, 'id', result._id)
+        Reflect.deleteProperty(result, '_id')
+        return result
+      },
+    })
+  )
 }
 
 module.exports = {

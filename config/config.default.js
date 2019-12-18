@@ -51,14 +51,20 @@ module.exports = appInfo => {
     errorHandler: {
       match: ['/api'],
     },
+    parameterValidator: {
+      methods: ['POST', 'PUT', 'PATCH'],
+      
+    },
     middleware: [
       'errorHandler',
       'siteTraffic',
       'adminRequired',
       'upload',
+      
       'webArticleFilter',
       'articleFilter',
-      'responseHandler', 
+      'responseHandler',
+      
       'nuxtRender',
     ],
     cors: {

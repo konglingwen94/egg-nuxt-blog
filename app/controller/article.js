@@ -8,9 +8,9 @@ const { ParameterException } = require('../utils/httpExceptions')
 class ArticleController extends Controller {
   async queryList() {
     const { service, ctx } = this
-    const data = await service.article.queryList()
-     
-    return data
+    const dataList = await service.article.queryList()
+
+    return dataList
   }
   async queryCarouselList() {
     const { service, ctx } = this
@@ -29,7 +29,7 @@ class ArticleController extends Controller {
       typeof tagIdList === 'string'
         ? [ObjectId(tagIdList)]
         : tagIdList.map(id => ObjectId(id))
-   return await service.article.queryByTagIdList(tagIdList)
+    return await service.article.queryByTagIdList(tagIdList)
   }
 
   async queryOne() {
@@ -41,42 +41,21 @@ class ArticleController extends Controller {
   }
   async createOne() {
     const { ctx, service } = this
-    const required = ['title', 'content', 'categoryID', 'isPublished']
 
-    const data = _.pick(ctx.request.body, required.concat('tagIdList'))
+    console.log(__filename,ctx.state.body)
 
-    const { tagIdList } = data
+    var result = await service.article.create(ctx.state.body)
 
-    const valid = ctx.ajv.validate({ required, properties }, data)
-    if (!valid) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
-
-    try {
-      var result = await service.article.create(data)
-    } catch (error) {
-      throw error
-    }
-
-    ctx.state.status = 201
-    ctx.body = _.pick(result, responseFields)
+    ctx.status = 201
+    return result
   }
   async updateOne() {
     const { ctx, service } = this
-    const data = _.pick(ctx.request.body, _.keys(properties))
+   
     const { id } = ctx.params
 
-    const valid = ctx.ajv.validate({ properties }, data)
-    if (!valid) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
-
-    try {
-      await service.article.queryByIdAndUpdate(id, data)
-    } catch (err) {
-      throw err
-    }
-    ctx.status = 204
+    await service.article.queryByIdAndUpdate(id, ctx.state.body)
+   
   }
   async delete() {
     const { ctx, service } = this
@@ -102,12 +81,9 @@ class ArticleController extends Controller {
   async deleteOne() {
     const { ctx, service } = this
     const { id } = ctx.params
-    try {
-      await service.article.queryByIdAndRemove(id)
-    } catch (error) {
-      throw error
-    }
-    ctx.status = 204
+
+    // console.log(id)
+    await service.article.queryByIdAndRemove(id)
   }
   async updatePublishStatus() {
     const { ctx, service } = this

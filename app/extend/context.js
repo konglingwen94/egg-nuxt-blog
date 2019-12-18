@@ -1,17 +1,15 @@
 const Ajv = require('ajv')
-const requestParams = require('../types/request')
+const validationRule = require('../types/request')
 const responseFields = require('../types/response')
 
 const projectFields = require('../types/projectField')
 
-
 const ajv = new Ajv({ allErrors: true, jsonPointers: true })
 
-
-
 module.exports = {
-  requestParams,
+  // requestParams,
   responseFields,
   projectFields,
-  ajv,
+  validationRule,
+  ajv
 }
