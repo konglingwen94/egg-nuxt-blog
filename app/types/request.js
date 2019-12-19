@@ -58,7 +58,7 @@ module.exports = {
     },
   },
   article: {
-    categoryID: { type: 'string', min: 24, max: 24 },
+    category: { type: 'string', min: 24, max: 24 },
     tagIdList: {
       type: 'array?',
 
@@ -113,48 +113,29 @@ module.exports = {
     },
   },
   comment: {
-    idList: {
-      minItems: 1,
-      type: 'array',
-      items: {
-        type: 'string',
-        minLength: 24,
-        maxLength: 24,
-      },
-    },
-    id: {
-      type: 'string',
-      minLength: 24,
-      maxLength: 24,
-    },
     content: {
       type: 'string',
-      minLength: 1,
+      min: 1,
     },
     email: {
-      type: 'string',
+      type: 'string?',
       format: 'email',
     },
     nickname: {
       type: 'string',
-      minLength: 1,
-    },
-    articleID: {
-      type: 'string',
-      minLength: 24,
-      maxLength: 24,
+      min: 1,
     },
   },
   guestbook: {
     id: {
       type: 'string',
       minLength: 24,
-      maxLength: 24,
+      max: 24,
     },
     responseID: {
       type: 'string',
       minLength: 24,
-      maxLength: 24,
+      max: 24,
     },
     responseTo: {
       type: 'string',

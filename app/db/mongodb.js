@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 exports.connect = async app => {
   return new Promise((resolve, reject) => {
-    const mongodbConfig = app.config.mongodb
+    const mongodbConfig = app.config.mongoose
     const { username, password, database, port, host } = mongodbConfig
     let mongodbURI = 'mongodb://'
 

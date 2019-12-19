@@ -9,7 +9,7 @@ class CategoryService extends Service {
   async queryList() {
     const { ctx } = this
 
-    const result = CategoryModel.find()
+    const result = CategoryModel.find().populate('articleCount')
 
     return result
   }

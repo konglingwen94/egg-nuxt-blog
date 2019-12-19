@@ -18,6 +18,7 @@ function patchFieldForData(doc) {
     typeof doc.toObject === 'function' &&
     doc.toObject({
       versionKey: false,
+      virtuals:true,
       transform(doc, result) {
         Reflect.set(result, 'id', result._id)
         Reflect.deleteProperty(result, '_id')

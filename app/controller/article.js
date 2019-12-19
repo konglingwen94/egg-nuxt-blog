@@ -1,3 +1,4 @@
+const ArticleModel = require('../model/article')
 const { Controller } = require('egg')
 const { ObjectId } = require('mongoose').Types
 const _ = require('lodash')
@@ -9,7 +10,7 @@ class ArticleController extends Controller {
   async queryList() {
     const { service, ctx } = this
     const dataList = await service.article.queryList()
-
+    console.log(__filename,ctx.path)
     return dataList
   }
   async queryCarouselList() {
@@ -35,14 +36,12 @@ class ArticleController extends Controller {
   async queryOne() {
     const { ctx, service } = this
     const { id } = ctx.params
-    const result = await service.article.queryOneById(id)
 
+    const result = await service.article.queryOneById(id)
     return result
   }
   async createOne() {
     const { ctx, service } = this
-
-    console.log(__filename,ctx.state.body)
 
     var result = await service.article.create(ctx.state.body)
 
@@ -51,11 +50,10 @@ class ArticleController extends Controller {
   }
   async updateOne() {
     const { ctx, service } = this
-   
+
     const { id } = ctx.params
 
     await service.article.queryByIdAndUpdate(id, ctx.state.body)
-   
   }
   async delete() {
     const { ctx, service } = this
@@ -87,24 +85,11 @@ class ArticleController extends Controller {
   }
   async updatePublishStatus() {
     const { ctx, service } = this
-    const required = ['isPublished']
 
     const { isPublished } = ctx.request.body
 
-    const valid = ctx.ajv.validate({ properties, required }, { isPublished })
-
-    if (!valid) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
-
     const { id } = ctx.params
-    try {
-      await service.article.updatePublishStatus(id, isPublished)
-    } catch (error) {
-      throw error
-    }
-
-    ctx.status = 204
+    await ArticleModel.findByIdAndUpdate(id, { $set: { isPublished } })
   }
   async incrementPv() {
     const { ctx, service } = this

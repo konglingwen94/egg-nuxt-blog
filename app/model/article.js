@@ -9,11 +9,6 @@ const ArticleSchema = new Schema(
     category: {
       type: ObjectId,
       ref: 'Category',
-      alias: 'categoryID',
-      select: false,
-      toObject: {
-        getters: false,
-      },
     },
 
     title: String,
@@ -50,16 +45,10 @@ const ArticleSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    
   },
   {
     timestamps: true,
-    toJSON: {
-      virtuals: true,
-    },
-    toObject: {
-      getters: false,
-    },
+    
   }
 )
 
@@ -72,7 +61,7 @@ ArticleSchema.post('findOneAndRemove', function(model) {
 ArticleSchema.virtual('comments', {
   ref: 'Comment', // The model to use
   localField: '_id', // Find people where `localField`
-  foreignField: 'articleID', // is equal to `foreignField`
+  foreignField: 'article', // is equal to `foreignField`
   // If `justOne` is true, 'members' will be a single doc as opposed to
   // an array. `justOne` is false by default.
   justOne: false,

@@ -11,7 +11,7 @@ const CommentSchema = new Schema(
       type: String,
       default: '',
     },
-    articleID: {
+    article: {
       type: ObjectId,
       ref: 'Article',
     },

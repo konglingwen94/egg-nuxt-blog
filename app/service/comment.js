@@ -2,33 +2,9 @@ const { Service } = require('egg')
 const CommentModel = require('../model/comment')
 
 class CommentService extends Service {
-  async aggregateList() {
+  async queryList() {
     const { ctx } = this
-    return await CommentModel.aggregate([
-      // { $match: ctx.state.filter },
-      {
-        $lookup: {
-          from: 'articles',
-          localField: 'articleID',
-          foreignField: '_id',
-          as: 'articles',
-        },
-      },
-      {
-        $unwind: '$articles',
-      },
-      {
-        $project: {
-          ...ctx.projectFields.comment,
-          articleTitle: '$articles.title',
-        },
-      },
-      {
-        $sort: {
-          createdAt: -1,
-        },
-      },
-    ])
+    return await CommentModel.find().populate('article')
   }
   async createOne(payload) {
     return CommentModel.create(payload)

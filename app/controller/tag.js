@@ -13,41 +13,23 @@ module.exports = class TagController extends Controller {
     const required = ['name']
     const { name } = ctx.request.body
 
-    const isValid = ctx.ajv.validate(
-      { properties: request.tag, required },
-      { name }
-    )
-
-    if (!isValid) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
-
     const data = await TagModel.findOne({ name })
 
     if (data) {
       return ctx.throw(400, '重复的标签名称')
     }
 
-    try {
-      var result = await TagModel.create({ name })
-    } catch (error) {
-      throw error
-    }
-    const count = await service.article.countOwnTagArticle(result.id)
-    ctx.body = _.defaults(_.pick(result, response.tag), count)
+    var result = await TagModel.create({ name })
+
+    return result
   }
   async queryList() {
     const { ctx, service } = this
 
     const result = await service.tag.queryList()
 
-    await Promise.all(
-      result.map(async item => {
-        const count = await service.article.countOwnTagArticle(item.id)
-        _.assign(item, count)
-      })
-    )
-   return result
+    console.log(__filename, result)
+    return result
   }
 
   async updateOne() {
@@ -87,9 +69,8 @@ module.exports = class TagController extends Controller {
       { id }
     )
     const result = await service.article.queryOneByTagID(id)
-    
+
     if (result) {
-      
       return ctx.throw(403, '此标签下有文章')
     }
     if (!isValid) {

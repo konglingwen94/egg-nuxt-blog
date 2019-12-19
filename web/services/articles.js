@@ -14,7 +14,8 @@ export default {
     return request.get(`/articles/${id}`)
   },
   incrementPv(id) {
-    return request.put(`/articles/${id}/visit`)
+     
+    return request.patch(`/articles/${id}/visit`)
   },
   starOne(id) {
     return request.patch(`/articles/${id}/star`)

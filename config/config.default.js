@@ -53,18 +53,17 @@ module.exports = appInfo => {
     },
     parameterValidator: {
       methods: ['POST', 'PUT', 'PATCH'],
-      
     },
     middleware: [
       'errorHandler',
       'siteTraffic',
       'adminRequired',
       'upload',
-      
+
       'webArticleFilter',
       'articleFilter',
       'responseHandler',
-      
+
       'nuxtRender',
     ],
     cors: {
@@ -79,7 +78,9 @@ module.exports = appInfo => {
       secretKey: 'konglingwen',
       expiresIn: '100h',
     },
-    mongodb: {
+    mongoose: {
+      url: 'mongodb://127.0.0.1:27017/my-blog',
+      options: { useUnifiedTopology: true },
       database: 'my-blog',
       host: '127.0.0.1',
       port: '27017',

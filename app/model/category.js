@@ -13,4 +13,19 @@ const CategorySchema = new Schema(
   }
 )
 
+CategorySchema.virtual('articleCount', {
+  ref: 'Article',
+  localField: '_id',
+  foreignField: 'category',
+  // count: true,
+})
+
+CategorySchema.virtual('publishedArticleCount', {
+  ref: 'Article',
+  localField: '_id',
+  foreignField: 'category',
+  // count: true,
+  options: { isPublished: true },
+})
+
 module.exports = model('Category', CategorySchema)

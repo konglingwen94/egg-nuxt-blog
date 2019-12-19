@@ -228,14 +228,15 @@ export default {
         return
       }
 
-      const { id: articleID } = this.$route.params
+      const { id: article } = this.$route.params
       const payload = { content, nickname }
 
-      CommentService.createOne(articleID, payload)
+      CommentService.createOne(article, payload)
         .then(response => {
-          this.data.commentList.unshift(response)
+          this.data.comments.unshift(response)
           this.commentForm.content = ''
           this.commentForm.nickname = ''
+          this.$message.success('评论成功')
         })
         .catch(err => this.$message.error(err.message))
     }

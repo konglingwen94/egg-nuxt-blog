@@ -9,27 +9,19 @@ const commentResponseFields = require('../types/response').comment
 class CommentController extends Controller {
   async queryList() {
     const { ctx, service } = this
-    ctx.body = await service.comment.aggregateList()
+    return await service.comment.queryList()
   }
   async createOne() {
     const { ctx, service } = this
 
-    const required = ['content', 'nickname', 'articleID']
-    const { articleID } = ctx.params
-    const schema = { required, properties }
-    const payload = _.assign(_.pick(ctx.request.body, required), {
-      articleID,
-    })
+    const article = ctx.params.id
 
-    const valid = ctx.ajv.validate(schema, payload)
-
-    if (!valid) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
+    const payload = {...ctx.state.body,article}
+    console.log(__filename,payload)
 
     const result = await service.comment.createOne(payload)
 
-    ctx.body = _.pick(result, commentResponseFields)
+    return result
   }
   async deleteOne() {
     const { ctx, service } = this

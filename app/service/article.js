@@ -23,7 +23,7 @@ module.exports = class ArticleService extends Service {
       .populate('category')
       .populate('commentList')
 
-    console.log(__filename, result)
+    
 
     return result
   }
@@ -91,7 +91,7 @@ module.exports = class ArticleService extends Service {
       .populate('category')
       .populate('comments')
     // .populate('tags')
-
+    console.log(__filename,id,result)
     return result
   }
   async queryByIdAndRemove(id) {
@@ -104,9 +104,7 @@ module.exports = class ArticleService extends Service {
       })
     )
   }
-  async updatePublishStatus(id, isPublished) {
-    return ArticleModel.findByIdAndUpdate(id, { $set: { isPublished } })
-  }
+  
   async incrementPv(id) {
     return ArticleModel.findByIdAndUpdate(id, {
       $inc: { pv: 1 },

@@ -2,13 +2,10 @@ const _ = require('lodash')
 
 module.exports = () => {
   return async (ctx, next) => {
-    console.log(__filename)
-
-    
+    console.log(__filename, ctx._matchedRouteName)
 
     const paramKeys = _.keys(ctx.params)
 
-     
     if (paramKeys.length) {
       const paramSchema = {}
       paramKeys.forEach(key => {
@@ -20,7 +17,7 @@ module.exports = () => {
 
     const { methods } = ctx.app.config.parameterValidator
 
-    if (!methods.includes(ctx.method)) {
+    if (!methods.includes(ctx.method) || !ctx._matchedRouteName) {
       return await next()
     }
 
@@ -33,7 +30,8 @@ module.exports = () => {
         validationSchema[key].required = false
       }
     }
-
+ 
+    console.log(validationSchema, ctx.request.body)
     ctx.validate(validationSchema, ctx.request.body)
     ctx.state.body = _.pick(ctx.request.body, _.keys(validationSchema))
 
