@@ -14,7 +14,7 @@
           <span>{{data.pv}}</span>
         </i>
         <i class="el-icon-s-comment">
-          <!-- <span>{{data.comments.length}}</span> -->
+          <span>{{data.commentCount}}</span>
         </i>
         <i class="el-icon-star-on">
           <span>{{data.starCount}}</span>

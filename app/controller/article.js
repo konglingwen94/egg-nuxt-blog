@@ -80,14 +80,14 @@ class ArticleController extends Controller {
     const { ctx, service } = this
     const { id } = ctx.params
 
-    // console.log(id)
     await service.article.queryByIdAndRemove(id)
   }
   async updatePublishStatus() {
     const { ctx, service } = this
-
+    
     const { isPublished } = ctx.request.body
-
+    
+    
     const { id } = ctx.params
     await ArticleModel.findByIdAndUpdate(id, { $set: { isPublished } })
   }

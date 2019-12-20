@@ -17,15 +17,15 @@ CategorySchema.virtual('articleCount', {
   ref: 'Article',
   localField: '_id',
   foreignField: 'category',
-  // count: true,
+  count: true,
 })
 
-CategorySchema.virtual('publishedArticleCount', {
+CategorySchema.virtual('articlePublishedCount', {
   ref: 'Article',
   localField: '_id',
   foreignField: 'category',
-  // count: true,
-  options: { isPublished: true },
+  count: true,
+ 
 })
 
 module.exports = model('Category', CategorySchema)

@@ -2,7 +2,7 @@ module.exports = {
   about: {
     id: {
       tyep: 'string',
-      minLength: 24,
+      min: 24,
       maxLength: 24,
     },
     profile: {
@@ -11,7 +11,7 @@ module.exports = {
       properties: {
         description: {
           type: 'string',
-          minLength: 1,
+          min: 1,
         },
       },
     },
@@ -21,7 +21,7 @@ module.exports = {
       properties: {
         description: {
           type: 'string',
-          minLength: 1,
+          min: 1,
         },
       },
     },
@@ -29,7 +29,7 @@ module.exports = {
   admin: {
     id: {
       type: 'string',
-      minLength: 24,
+      min: 24,
       maxLength: 24,
     },
     username: {
@@ -38,15 +38,15 @@ module.exports = {
     },
     password: {
       type: 'string',
-      minLength: 6,
+      min: 6,
     },
     oldPassword: {
       type: 'string',
-      minLength: 6,
+      min: 6,
     },
     newPassword: {
       type: 'string',
-      minLength: 6,
+      min: 6,
     },
     role: {
       type: 'string',
@@ -62,11 +62,7 @@ module.exports = {
     tagIdList: {
       type: 'array?',
 
-      itemType: {
-        type: 'string',
-        min: 24,
-        max: 24,
-      },
+      itemType: 'string',
     },
     title: {
       type: 'string',
@@ -85,14 +81,17 @@ module.exports = {
     },
     cover: {
       type: 'object?',
+      
       rule: {
         name: {
+           
           type: 'string',
-          minLenght: 1,
+          min: 1,
         },
         path: {
+          
           type: 'string',
-          minLenght: 1,
+          min: 1,
         },
       },
     },
@@ -109,7 +108,7 @@ module.exports = {
   category: {
     name: {
       type: 'string',
-      minLength: 1,
+      min: 1,
     },
   },
   comment: {
@@ -129,12 +128,12 @@ module.exports = {
   guestbook: {
     id: {
       type: 'string',
-      minLength: 24,
+      min: 24,
       max: 24,
     },
     responseID: {
       type: 'string',
-      minLength: 24,
+      min: 24,
       max: 24,
     },
     responseTo: {
@@ -142,21 +141,21 @@ module.exports = {
     },
     content: {
       type: 'string',
-      minLength: 1,
+      min: 1,
     },
     nickname: {
       type: 'string',
-      minLength: 1,
+      min: 1,
     },
   },
   tag: {
     name: {
       type: 'string',
-      minLength: 1,
+      min: 1,
     },
     id: {
       type: 'string',
-      minLength: 24,
+      min: 24,
       maxLength: 24,
     },
 
@@ -164,7 +163,7 @@ module.exports = {
       type: 'array',
       items: {
         type: 'string',
-        minLength: 24,
+        min: 24,
         maxLength: 24,
       },
     },

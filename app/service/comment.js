@@ -4,7 +4,7 @@ const CommentModel = require('../model/comment')
 class CommentService extends Service {
   async queryList() {
     const { ctx } = this
-    return await CommentModel.find().populate('article')
+    return  CommentModel.find().populate('article')
   }
   async createOne(payload) {
     return CommentModel.create(payload)

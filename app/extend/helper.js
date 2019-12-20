@@ -1,3 +1,5 @@
+const { Document } = require('mongoose')
+
 class ParameterException extends Error {
   constructor(errors) {
     super('Invalid Parameters')
@@ -13,19 +15,19 @@ class DuplicatingFields extends Error {
 }
 
 function patchFieldForData(doc) {
-  return (
-    doc &&
-    typeof doc.toObject === 'function' &&
-    doc.toObject({
+  if (doc instanceof Document) {
+    return doc.toObject({
       versionKey: false,
-      virtuals:true,
+      virtuals: true,
       transform(doc, result) {
         Reflect.set(result, 'id', result._id)
         Reflect.deleteProperty(result, '_id')
         return result
       },
     })
-  )
+  } else {
+    return doc
+  }
 }
 
 module.exports = {

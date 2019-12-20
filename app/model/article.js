@@ -48,7 +48,6 @@ const ArticleSchema = new Schema(
   },
   {
     timestamps: true,
-    
   }
 )
 
@@ -62,9 +61,13 @@ ArticleSchema.virtual('comments', {
   ref: 'Comment', // The model to use
   localField: '_id', // Find people where `localField`
   foreignField: 'article', // is equal to `foreignField`
-  // If `justOne` is true, 'members' will be a single doc as opposed to
-  // an array. `justOne` is false by default.
-  justOne: false,
+  // count: true,
+})
+ArticleSchema.virtual('commentCount', {
+  ref: 'Comment', // The model to use
+  localField: '_id', // Find people where `localField`
+  foreignField: 'article', // is equal to `foreignField`
+  count: true,
 })
 
 module.exports = model('Article', ArticleSchema)

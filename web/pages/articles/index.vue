@@ -10,8 +10,8 @@ export default {
   layout: 'Public',
 
   async asyncData({ query, params }) {
-    const { categoryID, tagID } = query
-    const payload = categoryID ? { categoryID } : tagID ? { tagID } : {}
+    const { category, tagID } = query
+    const payload = category ? { category } : tagID ? { tagID } : {}
     
     try {
       var dataList = await ArticleService.fetchList(payload)

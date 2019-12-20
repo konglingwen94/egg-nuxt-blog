@@ -21,7 +21,7 @@ module.exports = class ArticleService extends Service {
       .sort('-createdAt')
       .populate('tagIdList')
       .populate('category')
-      .populate('commentList')
+      .populate('commentCount')
 
     
 

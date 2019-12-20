@@ -2,7 +2,7 @@ const _ = require('lodash')
 
 module.exports = () => {
   return async (ctx, next) => {
-    console.log(__filename, ctx._matchedRouteName)
+    
 
     const paramKeys = _.keys(ctx.params)
 

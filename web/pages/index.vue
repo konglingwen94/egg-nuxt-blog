@@ -23,7 +23,7 @@ export default {
     } catch (error) {
       return { articleList: [], carouselList: [] }
     }
-    console.log(articleList, carouselList)
+     
     return { articleList, carouselList }
   },
   data() {

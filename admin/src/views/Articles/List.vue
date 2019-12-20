@@ -66,7 +66,7 @@
         </el-table-column>
         <el-table-column label="标题" show-overflow-tooltip prop="title"></el-table-column>
 
-        <el-table-column label="评论数量" prop="comments.length"></el-table-column>
+        <el-table-column label="评论数量" prop="commentCount"></el-table-column>
         <el-table-column prop="pv" label="浏览量(次)"></el-table-column>
         <el-table-column prop="starCount" label="星星个数"></el-table-column>
         <el-table-column prop="pv" label="是否发布">

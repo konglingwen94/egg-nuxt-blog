@@ -38,7 +38,7 @@ module.exports = class GuestbookController extends Controller {
       })
     })
 
-    ctx.body = result
+    return result
   }
   async createOne() {
     const { ctx } = this

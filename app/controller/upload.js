@@ -4,7 +4,7 @@ class UploadController extends Controller {
   async uploadFile() {
     const { ctx } = this
     const name = ctx.req.file.filename
-    ctx.body = {
+    return {
       name,
       path: `/uploads/${name}`,
     }

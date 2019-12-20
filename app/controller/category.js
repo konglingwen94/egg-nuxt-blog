@@ -44,14 +44,7 @@ class CategoryController extends Controller {
 
     let result = await service.category.queryList()
 
-    await Promise.all(
-      result.map(async item => {
-        const articleCount = await service.article.countOwnCategoryArticle(
-          item.id
-        )
-        _.assign(item, articleCount)
-      })
-    )
+    
 
     return result
   }

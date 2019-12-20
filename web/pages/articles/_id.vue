@@ -5,7 +5,7 @@
       v-if="data.cover && data.cover.path"
       class="banner"
       :style="bannerStyle"
-    >{{data.tagIdList.map(item=>item.name).join(' ')}}</div>
+    >{{data.tags.map(item=>item.name).join(' ')}}</div>
 
     <div class="main">
       <section class="content-wrapper">
@@ -49,7 +49,7 @@
         </el-form>
 
         <ul class="comment-board">
-          <li class="comment-board-item" v-for="item in data.commentList" :key="item.id">
+          <li class="comment-board-item" v-for="item in data.comments" :key="item.id">
             <div class="icon-user-wrapper">
               <el-avatar icon="el-icon-user-solid" size="medium"></el-avatar>
             </div>
@@ -84,9 +84,9 @@
           ></i>
         </div>
         <el-badge
-          :value="data.commentList && data.commentList.length"
+          :value="data.comments && data.comments.length"
           type="info"
-          :hidden="data.commentList && data.commentList.length===0"
+          :hidden="data.comments && data.comments.length===0"
         >
           <div class="icon-wrap icon-wrap-comment">
             <i @click="$refs.input.focus()" class="el-icon-s-comment"></i>
@@ -114,11 +114,11 @@ export default {
   },
   async asyncData({ params, query }) {
     const { id } = params
-    const { tagIdList } = query
+    const { tags } = query
 
     try {
       var [suggestionList, data] = await Promise.all([
-        ArticleService.fetchSuggestionList({ tagIdList }),
+        ArticleService.fetchSuggestionList({ tags }),
         ArticleService.fetchOne(id)
       ])
     } catch (error) {

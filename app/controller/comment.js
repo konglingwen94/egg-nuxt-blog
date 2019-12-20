@@ -9,15 +9,16 @@ const commentResponseFields = require('../types/response').comment
 class CommentController extends Controller {
   async queryList() {
     const { ctx, service } = this
-    return await service.comment.queryList()
+
+    console.log(__filename,await service.comment.queryList())
+    return  service.comment.queryList()
   }
   async createOne() {
     const { ctx, service } = this
 
     const article = ctx.params.id
 
-    const payload = {...ctx.state.body,article}
-    console.log(__filename,payload)
+    const payload = { ...ctx.state.body, article }
 
     const result = await service.comment.createOne(payload)
 
@@ -28,17 +29,10 @@ class CommentController extends Controller {
 
     const { id } = ctx.params
 
-    const validResult = ctx.ajv.validate(
-      { properties, required: ['id'] },
-      { id }
-    )
-
-    if (!validResult) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
+    
 
     await service.comment.queryByIdAndRemove(id)
-    ctx.status = 204
+     
   }
 
   async deleteList() {

@@ -11,7 +11,7 @@
           <cell-popover :content="row.content"></cell-popover>
         </template>
       </el-table-column>
-      <el-table-column label="文章标题" prop="articleTitle"></el-table-column>
+      <el-table-column label="文章标题" prop="article.title"></el-table-column>
       <el-table-column label="点赞数" prop="thumbupCount"></el-table-column>
       <el-table-column label="操作">
         <template v-slot="{row,$index}">
