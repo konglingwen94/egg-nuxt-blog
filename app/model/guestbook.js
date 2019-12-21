@@ -3,6 +3,7 @@ const { ObjectId } = Schema.Types
 
 const DialogueSchema = new Schema(
   {
+    kind: String,
     nickname: {
       type: String,
       default: '',
@@ -15,13 +16,19 @@ const DialogueSchema = new Schema(
       type: Number,
       default: 0,
     },
-    responseTo: ObjectId,
+    responseTo: {
+      type: ObjectId,
+      refPath: 'Dialogues.kind',
+    },
   },
   { timestamps: true }
 )
 
+model('Dialogues', DialogueSchema)
+
 const GuestbookSchema = new Schema(
   {
+    kind: { type: String, default: 'guestbook' },
     content: {
       type: String,
       default: '',

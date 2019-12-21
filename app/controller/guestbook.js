@@ -11,31 +11,8 @@ module.exports = class GuestbookController extends Controller {
   async queryList() {
     const { ctx } = this
 
-    const result = await GuestbookModel.aggregate([
-      {
-        $project,
-      },
-
-      {
-        $sort: {
-          createdAt: -1,
-        },
-      },
-    ])
-
-    result.forEach(item => {
-      item.dialogues.forEach(response => {
-        response.responseToUser = item.dialogues.find(item => {
-          if (item.id && response.responseTo) {
-            return item.id.toString() === response.responseTo.toString()
-          }
-        })
-        response.id = response._id
-        delete response._id
-      })
-      item.dialogues.sort((b, a) => {
-        return new Date(a.createdAt) - new Date(b.createdAt)
-      })
+    const result = await GuestbookModel.find().populate({
+      path: 'dialogues.responseTo',
     })
 
     return result
@@ -43,19 +20,12 @@ module.exports = class GuestbookController extends Controller {
   async createOne() {
     const { ctx } = this
 
-    const { content, nickname } = ctx.request.body
+    const { content, nickname } = ctx.state.body
     const payload = { content, nickname }
-    const schema = { required: ['content', 'nickname'], properties }
-
-    const validResult = ctx.ajv.validate(schema, payload)
-
-    if (!validResult) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
 
     const result = await GuestbookModel.create(payload)
 
-    ctx.body = _.pick(result, responseFields)
+    return result
   }
   async deleteOne() {
     const { ctx } = this
@@ -79,20 +49,10 @@ module.exports = class GuestbookController extends Controller {
     const { ctx } = this
 
     const { id } = ctx.params
-    const { content, responseTo, nickname } = ctx.request.body
+    const { content, responseTo, nickname } = ctx.state.body
     const payload = { id, responseTo, content, nickname }
 
-    const validResult = ctx.ajv.validate(
-      {
-        required: ['id', 'content', 'nickname'],
-        properties,
-      },
-      payload
-    )
-
-    if (!validResult) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
+     
 
     const parentTarget = await GuestbookModel.findById(id)
 
