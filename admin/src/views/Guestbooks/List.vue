@@ -4,7 +4,6 @@
       <el-button type="danger" @click="deleteMany">批量删除</el-button>
     </div>
     <el-table
-      @expand-change="onExpandChange"
       ref="table"
       :row-key="row=>row.id"
       :expand-row-keys="expandRowKeys"
@@ -15,11 +14,7 @@
       <el-table-column type="selection"></el-table-column>
       <el-table-column type="expand">
         <template v-slot="{row}">
-          <el-table
-            ref="tableChildren"
-            @selection-change="replySelectionChange"
-            :data="row.dialogues"
-          >
+          <el-table ref="tableChildren" @selection-change="onSelectionChange" :data="row.dialogues">
             <el-table-column type="selection"></el-table-column>
 
             <el-table-column label="用户昵称" prop="nickname"></el-table-column>
@@ -28,14 +23,14 @@
                 <cell-popover :content="row.content"></cell-popover>
               </template>
             </el-table-column>
-            <el-table-column prop="responseToUser.nickname" label="@用户"></el-table-column>
+            <el-table-column prop="responseTo.nickname" label="@用户"></el-table-column>
             <el-table-column prop="diggCount" label="点赞数量"></el-table-column>
             <el-table-column label="操作">
               <template v-slot="{row:response,$index}">
                 <el-button
                   type="danger"
                   size="mini"
-                  @click="deleteOneResponse(row.id,response.id,row.dialogues,$index)"
+                  @click="deleteOneResponse(response.id,row.dialogues,$index)"
                 >删除</el-button>
               </template>
             </el-table-column>
@@ -86,7 +81,7 @@ export default {
     onExpandChange(row, expandedRows) {
       this.guestbook = row
       const index = expandedRows.indexOf(row)
-     
+
       if (index > -1) {
         this.expandRowKeys = [row.id]
       }
@@ -105,11 +100,11 @@ export default {
     onSelectionChange(selection) {
       this.selection = selection
 
-      this.action = selection.length
-        ? 'guestbook'
-        : this.replySelectedList.length
-        ? 'reply'
-        : ''
+      // this.action = selection.length
+      //   ? 'guestbook'
+      //   : this.replySelectedList.length
+      //   ? 'reply'
+      //   : ''
     },
     async deleteMany() {
       if (!this.selection.length && !this.replySelectedList.length) {
@@ -134,36 +129,35 @@ export default {
       }
 
       const action =
-        this.action === 'reply'
-          ? GuestbookApi.deleteManyReply(this.guestbook.id, {
-              idList: replyIdList
+        // this.action === 'reply'
+        //   ? GuestbookApi.deleteManyReply(this.guestbook.id, {
+        //       idList: replyIdList
+        //     })
+
+        GuestbookApi.deleteMany({ idList })
+          .then(() => {
+            if (this.action === 'reply') {
+              this.$message.success(`共删除${replyIdList.length}条回复`)
+            } else {
+              this.$message.success(`共删除${idList.length}条留言`)
+            }
+
+            this.replySelectedList.forEach(item => {
+              const index = this.guestbook.dialogues.indexOf(item)
+              if (index > -1) {
+                this.guestbook.dialogues.splice(index, 1)
+              }
             })
-          : GuestbookApi.deleteMany({ idList })
 
-      action
-        .then(() => {
-          if (this.action === 'reply') {
-            this.$message.success(`共删除${replyIdList.length}条回复`)
-          } else {
-            this.$message.success(`共删除${idList.length}条留言`)
-          }
+            this.selection.forEach(item => {
+              const index = this.dataList.indexOf(item)
 
-          this.replySelectedList.forEach(item => {
-            const index = this.guestbook.dialogues.indexOf(item)
-            if (index > -1) {
-              this.guestbook.dialogues.splice(index, 1)
-            }
+              if (index > -1) {
+                this.dataList.splice(index, 1)
+              }
+            })
           })
-
-          this.selection.forEach(item => {
-            const index = this.dataList.indexOf(item)
-
-            if (index > -1) {
-              this.dataList.splice(index, 1)
-            }
-          })
-        })
-        .catch(err => this.$message.error(err.message))
+          .catch(err => this.$message.error(err.message))
     },
 
     async deleteOne(id, index) {
@@ -182,7 +176,7 @@ export default {
         })
         .catch(err => this.$message.error(err.message))
     },
-    async deleteOneResponse(id, responseID, dialogues, index) {
+    async deleteOneResponse(responseID, dialogues, index) {
       try {
         await this.$confirm('此条回复以经删除将无法恢复,是否删除?', '提示', {
           type: 'warning'
@@ -191,7 +185,7 @@ export default {
         return
       }
 
-      GuestbookApi.deleteOneResponse(id, responseID)
+      GuestbookApi.deleteOneResponse(responseID)
         .then(() => {
           this.$message.success('回复删除成功')
           dialogues.splice(index, 1)

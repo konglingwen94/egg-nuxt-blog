@@ -11,7 +11,7 @@
     <div class="guestbook-form">
       <el-alert
         show-icon
-        :title="`@${responseToUser.nickname}`"
+        :title="`@${responseTo.nickname}`"
         type="info"
         @close="onClose"
         v-show="action==='response'"
@@ -75,8 +75,8 @@
                 <div class="content-wrapper">
                   <span>{{response.content}}</span>
                   <span
-                    v-if="response.responseToUser"
-                  >//@{{response.responseToUser.nickname}} : {{response.responseToUser.content}}</span>
+                    v-if="response.responseTo && !response.responseTo.dialogues.length"
+                  >//@{{response.responseTo.nickname}} : {{response.responseTo.content}}</span>
                   <div class="bottom-operation">
                     <div class="left">
                       <time>{{new Date(response.createdAt).toLocaleString()}}</time>
@@ -144,12 +144,13 @@ export default {
       index: -1,
       guestbookID: '',
       form: {
+        kind: '',
         nickname: '',
         content: '',
         placeholder: '欢迎留言!',
         responseTo: ''
       },
-      responseToUser: {}
+      responseTo: {}
     }
   },
   methods: {
@@ -158,7 +159,7 @@ export default {
         return
       }
 
-      GuestbookService.diggResponse(id, response.id)
+      GuestbookService.diggGuestbook(response.id)
         .then(() => {
           this.$store.commit('pushDiggId', response.id)
           this.$message.success('点赞成功')
@@ -179,27 +180,33 @@ export default {
       this.action = 'message'
       this.form.placeholder = '欢迎您留言'
       this.form.content = ''
-      this.responseToUser = {}
+      this.responseTo = {}
+      this.guestbookID = ''
       this.index = -1
+      this.form.kind = ''
     },
     handleResponse(item, index, response) {
       window.scrollTo(0, 0)
       this.index = index
       this.action = 'response'
       this.guestbookID = item.id
+
       if (response) {
         this.form.placeholder = `回复${response.nickname}`
-        this.responseToUser = response
+        this.responseTo = response
+        this.form.kind = 'Dialogue'
       } else {
+        this.form.kind = 'Guestbook'
+
         this.form.placeholder = `回复${item.nickname}`
-        this.responseToUser = item
+        this.responseTo = item
       }
 
       this.form.content = ''
       this.$refs.input.focus()
     },
     handleSend() {
-      const { nickname, content, responseTo } = this.form
+      const { nickname, content, responseTo, kind } = this.form
 
       if (!content) {
         this.$message.warning('请输入您的留言内容!')
@@ -212,8 +219,9 @@ export default {
 
       const payload = { nickname, content }
 
-      payload.responseTo = this.responseToUser.id
-      if (this.action === 'response' && this.responseID) {
+      payload.responseTo = this.responseTo.id
+      if (this.form.kind) {
+        payload.kind = this.form.kind
       }
 
       const action =
@@ -236,7 +244,7 @@ export default {
           this.form.placeholder = '欢迎留言!'
           this.form.content = ''
           this.action = ''
-          this.responseToUser = {}
+          this.responseTo = {}
           this.index = -1
         })
         .catch(err => {

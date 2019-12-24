@@ -6,98 +6,54 @@ const { guestbook: properties } = require('../types/request')
 const { guestbook: $project } = require('../types/projectField')
 const { guestbook: responseFields } = require('../types/response')
 const _ = require('lodash')
+const { models } = require('mongoose')
 
 module.exports = class GuestbookController extends Controller {
   async queryList() {
     const { ctx } = this
-
-    const result = await GuestbookModel.find().populate({
-      path: 'dialogues.responseTo',
-    })
+    // console.log(__filename,await models.Dialogue.find())
+    let result = GuestbookModel.find({ responseTo: { $exists: 0 } })
+      // .populate('responseTo')
+      .populate({ path: 'dialogues', populate: 'responseTo' })
+    // result = result.populate('dialogues.0.responseTo')
+    // result.popu
 
     return result
   }
   async createOne() {
     const { ctx } = this
 
-    const { content, nickname } = ctx.state.body
+    const { content, nickname, responseTo } = ctx.request.body
     const payload = { content, nickname }
 
     const result = await GuestbookModel.create(payload)
 
     return result
   }
-  async deleteOne() {
-    const { ctx } = this
-
-    const { id } = ctx.params
-
-    const validResult = ctx.ajv.validate(
-      { required: ['id'], properties },
-      { id }
-    )
-
-    if (!validResult) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
-
-    await GuestbookModel.findByIdAndRemove(id)
-
-    ctx.status = 204
-  }
+   
   async responseToUser() {
     const { ctx } = this
 
     const { id } = ctx.params
-    const { content, responseTo, nickname } = ctx.state.body
-    const payload = { id, responseTo, content, nickname }
+    const { content, responseTo, nickname, kind } = ctx.request.body
+    const payload = { responseTo, content, nickname }
+    const doc = await GuestbookModel.create(payload)
+    const result = await GuestbookModel.findByIdAndUpdate(
+      id,
+      {
+        $addToSet: { dialogues: doc.id },
+      },
+      { new: true }
+    ).populate({ path: 'dialogues', populate: 'responseTo' })
 
-     
-
-    const parentTarget = await GuestbookModel.findById(id)
-
-    await parentTarget.dialogues.push(_.omit(payload, 'id'))
-
-    await parentTarget.save()
-
-    let doc = parentTarget.toObject()
-    doc.dialogues.forEach((item, index, array) => {
-      item.responseToUser = array.find(response => {
-        if (response._id && item.responseTo) {
-          return response._id.toString() === item.responseTo.toString()
-        }
-      })
-
-      item.id = item._id
-      delete item._id
-    })
-    doc.id = doc._id
-
-    doc.dialogues.sort((a, b) => {
-      return new Date(b.createdAt) - new Date(a.createdAt)
-    })
-
-    ctx.body = _.pick(doc, responseFields)
+    return result
   }
-  async deleteOneResponse() {
+  async deleteOne () {
     const { ctx } = this
 
-    const { id, responseID } = ctx.params
+    const { id } = ctx.params
 
-    const schema = { properties, required: ['id', 'responseID'] }
-    const validResult = ctx.ajv.validate(schema, { id, responseID })
-
-    if (!validResult) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
-
-    const result = await GuestbookModel.findById(id)
-
-    result.dialogues.id(responseID).remove()
-
-    await result.save()
-
-    ctx.status = 204
+    const result = await GuestbookModel.findByIdAndRemove(id)
   }
   async deleteMany() {
     const { ctx } = this
@@ -141,42 +97,13 @@ module.exports = class GuestbookController extends Controller {
     ctx.status = 204
   }
 
-  async diggOneResponse() {
-    const { ctx } = this
-
-    const { id, responseID } = ctx.params
-    const schema = { required: ['id', 'responseID'], properties }
-    const data = { id, responseID }
-
-    const isValid = ctx.ajv.validate(schema, data)
-
-    if (!isValid) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
-
-    const parent = await GuestbookModel.findById(id)
-
-    parent.dialogues.id(responseID).diggCount++
-
-    const result = await parent.save()
-    ctx.status = 204
-  }
-
   async diggGuestbook() {
     const { ctx } = this
 
     const { id } = ctx.params
 
-    const isValid = ctx.ajv.validate({ required: ['id'], properties }, { id })
-
-    if (!isValid) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
-
-    const result = await GuestbookModel.findByIdAndUpdate(id, {
+    await GuestbookModel.findByIdAndUpdate(id, {
       $inc: { diggCount: 1 },
     })
-
-    ctx.status = 204
   }
 }

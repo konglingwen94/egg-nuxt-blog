@@ -7,15 +7,11 @@ module.exports = app => {
    *  */
 
   router.get('/admin/guestbooks', controller.guestbook.queryList)
+   
   router.delete(
     '/admin/guestbooks/:id',
 
-    controller.guestbook.deleteOne
-  )
-  router.delete(
-    '/admin/guestbooks/:id/dialogues/:responseID',
-
-    controller.guestbook.deleteOneResponse
+    controller.guestbook.deleteOne 
   )
 
   router.delete(
@@ -27,11 +23,6 @@ module.exports = app => {
     '/admin/guestbooks/:id/dialogues',
 
     controller.guestbook.deleteManyResponse
-  )
-
-  router.patch(
-    '/guestbooks/:id/dialogues/:responseID/digg',
-    controller.guestbook.diggOneResponse
   )
 
   router.post('/guestbooks/:id/digg', controller.guestbook.diggGuestbook)

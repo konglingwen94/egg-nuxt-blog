@@ -28,7 +28,7 @@ module.exports = class TagController extends Controller {
 
     const result = await service.tag.queryList()
 
-    console.log(__filename, result)
+     
     return result
   }
 

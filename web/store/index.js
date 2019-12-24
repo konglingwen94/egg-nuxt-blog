@@ -19,6 +19,6 @@ export const mutations = {
 
 export const actions = {
   nuxtServerInit({ commit },ctx) {
-    console.log(ctx)
+    // console.log(ctx)
   },
 }

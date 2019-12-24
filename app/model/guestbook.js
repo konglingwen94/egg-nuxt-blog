@@ -3,7 +3,8 @@ const { ObjectId } = Schema.Types
 
 const DialogueSchema = new Schema(
   {
-    kind: String,
+    responseTo: { type: ObjectId, ref: 'Dialogue', autopopulate: false },
+    // kind: String,
     nickname: {
       type: String,
       default: '',
@@ -16,37 +17,24 @@ const DialogueSchema = new Schema(
       type: Number,
       default: 0,
     },
+    dialogues: [
+      {
+        type: ObjectId,
+        ref: 'Dialogue',
+      },
+    ],
     responseTo: {
       type: ObjectId,
-      refPath: 'Dialogues.kind',
+      ref: 'Dialogue',
     },
   },
   { timestamps: true }
 )
 
-model('Dialogues', DialogueSchema)
-
-const GuestbookSchema = new Schema(
-  {
-    kind: { type: String, default: 'guestbook' },
-    content: {
-      type: String,
-      default: '',
-    },
-    diggCount: {
-      type: Number,
-      default: 0,
-    },
-    nickname: {
-      type: String,
-      default: '',
-    },
-    dialogues: {
-      type: [DialogueSchema],
-      default: [],
-    },
-  },
-  { timestamps: true }
+DialogueSchema.post('findOneAndRemove', doc =>
+  DialogModel.deleteMany({ _id: doc.dialogues })
 )
 
-module.exports = model('Guestbook', GuestbookSchema)
+const DialogModel = model('Dialogue', DialogueSchema)
+
+module.exports = DialogModel
