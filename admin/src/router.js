@@ -16,20 +16,6 @@ const Guestbook = () => import('@/views/Guestbooks/List')
 const About = () => import('@/views/About')
 const Tag = () => import('@/views/Tags')
 
-// import BasicLayout from '@/layouts/Basic'
-// import UserLayout from '@/layouts/User'
-// import NotFound from '@/layouts/NotFound'
-
-// import Dashboard from '@/views/Dashboard'
-// import Login from '@/views/Login'
-// import Security from '@/views/Security'
-// import ArticleList from '@/views/Articles/List.vue'
-// import ArticleEditor from '@/views/Articles/Editor'
-// import Category from '@/views/Categories/List'
-// import Comment from '@/views/Comments/List'
-// import Guestbook from '@/views/Guestbooks/List'
-// import About from '@/views/About'
-// import Tag from '@/views/Tags'
 
 Vue.use(Router)
 
@@ -56,10 +42,10 @@ const router = new Router({
           path: '',
           redirect: 'dashboard',
         },
-        {
-          path: '/index.html',
-          redirect: 'dashboard',
-        },
+        // {
+        //   path: '/index.html',
+        //   redirect: 'dashboard',
+        // },
         {
           name: 'dashboard',
           path: 'dashboard',

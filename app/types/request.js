@@ -59,7 +59,7 @@ module.exports = {
   },
   article: {
     category: { type: 'string', min: 24, max: 24 },
-    tagIdList: {
+    tags: {
       type: 'array?',
 
       itemType: 'string',

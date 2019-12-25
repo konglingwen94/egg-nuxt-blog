@@ -121,7 +121,7 @@
 import GuestbookService from '@/services/guestbooks'
 export default {
   layout: 'Public',
-  async asyncData({ redirect }) {
+  asyncData({ redirect }) {
     return GuestbookService.fetchList()
       .then(response => {
         return { dataList: response }

@@ -12,7 +12,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="标签">
-        <el-select multiple clearable placeholder="请添加文章标签" v-model="form.tagIdList">
+        <el-select multiple clearable placeholder="请添加文章标签" v-model="form.tags">
           <el-option :value="item.id" :label="item.name" v-for="item in tagList" :key="item.id"></el-option>
         </el-select>
       </el-form-item>
@@ -60,7 +60,7 @@ export default {
         },
         cover: { name: '', path: '' },
         category: '',
-        tagIdList: [],
+        tags: [],
         isPublished: false
       },
 
@@ -94,7 +94,7 @@ export default {
     handleSubmit() {
       const {
         isPublished,
-        tagIdList,
+        tags,
         category,
         title,
         content,
@@ -121,7 +121,7 @@ export default {
         content,
         cover,
         category,
-        tagIdList,
+        tags,
         isPublished
       }
 

@@ -2,8 +2,6 @@ const _ = require('lodash')
 
 module.exports = () => {
   return async (ctx, next) => {
-    
-
     const paramKeys = _.keys(ctx.params)
 
     if (paramKeys.length) {
@@ -30,10 +28,10 @@ module.exports = () => {
         validationSchema[key].required = false
       }
     }
- 
-    console.log(validationSchema, ctx.request.body)
+
     ctx.validate(validationSchema, ctx.request.body)
     ctx.state.body = _.pick(ctx.request.body, _.keys(validationSchema))
+     
 
     return await next()
   }

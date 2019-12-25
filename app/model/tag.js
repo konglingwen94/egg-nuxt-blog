@@ -8,15 +8,24 @@ const TagSchema = new Schema(
       type: String,
       default: '',
       unique: true,
-    } 
+    },
   },
   {
     timestamps: true,
   }
 )
 
-
- 
-
+TagSchema.virtual('articleCount', {
+  ref: 'Article',
+  localField: '_id',
+  foreignField: 'tags',
+  count: true,
+})
+TagSchema.virtual('articlePublishedCount', {
+  ref: 'Article',
+  localField: '_id',
+  foreignField: 'tags',
+  count: true,
+})
 
 module.exports = model('Tag', TagSchema)

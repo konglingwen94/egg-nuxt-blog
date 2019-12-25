@@ -59,22 +59,12 @@ class ArticleController extends Controller {
     const { ctx, service } = this
 
     const { idList } = ctx.request.body
-    const schema = { properties, required: ['idList'] }
-    const data = { idList }
+    
+    
 
-    const valid = ctx.ajv.validate(schema, data)
-
-    if (!valid) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
-
-    try {
+     
       await service.article.deleteMany(idList)
-    } catch (error) {
-      throw error
-    }
-
-    ctx.status = 204
+     
   }
   async deleteOne() {
     const { ctx, service } = this
@@ -93,25 +83,21 @@ class ArticleController extends Controller {
   }
   async incrementPv() {
     const { ctx, service } = this
-    try {
+    
       await service.article.incrementPv(ctx.params.id)
-    } catch (error) {
-      throw error
-    }
+     
 
-    ctx.status = 204
+     
   }
   async starOne() {
     const { ctx, service } = this
     const { id } = ctx.params
-    const isValid = ctx.ajv.validate({ required: ['id'], properties }, { id })
+    
 
-    if (!isValid) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
+    
     await service.article.queryByIdAndStarOne(id)
 
-    ctx.status = 204
+     
   }
 }
 module.exports = ArticleController

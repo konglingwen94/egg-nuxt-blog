@@ -13,15 +13,17 @@ module.exports = app => {
     controller.category.queryOne
   )
 
-  router.post('/admin/categories', controller.category.createOne)
+  router.post('category', '/admin/categories', controller.category.createOne)
 
   router.patch(
+    'category',
     '/admin/categories/:id',
 
     controller.category.updateOne
   )
 
   router.delete(
+    'category',
     '/admin/categories/:id',
 
     controller.category.deleteOne

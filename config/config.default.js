@@ -56,6 +56,7 @@ module.exports = appInfo => {
     },
     middleware: [
       'errorHandler',
+      'platformENV',
       'siteTraffic',
       'adminRequired',
       'upload',

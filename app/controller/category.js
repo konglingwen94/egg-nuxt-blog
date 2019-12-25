@@ -12,39 +12,21 @@ const { articleCategories: responseFields } = require('../types/response')
 class CategoryController extends Controller {
   async createOne() {
     const { ctx, service } = this
-
-    const required = ['name']
-
-    const payload = _.pick(ctx.request.body, required)
-
-    const schema = { properties: ctx.requestParams.category, required }
-    const valid = ctx.ajv.validate(schema, payload)
-
-    if (!valid) {
-      throw new ctx.helper.ParameterException(ctx.ajv.errors)
-    }
+    const payload = ctx.state.body
+    console.log(__filename, ctx.state.body)
 
     const result = await service.category.queryOneByName(payload.name)
 
     if (result) {
-      return ctx.throw(400, '重复的分类名称')
+      ctx.throw(400, '重复的分类名称')
     }
 
-    try {
-      var data = await service.category.create(payload)
-    } catch (error) {
-      throw error
-    }
-    ctx.status = 201
-    const count = await service.article.countOwnCategoryArticle(data.id)
-    return _.defaults(_.pick(data, ctx.responseFields.category), count)
+    return service.category.create(payload)
   }
   async queryList() {
     const { ctx, service } = this
 
     let result = await service.category.queryList()
-
-    
 
     return result
   }
@@ -96,15 +78,14 @@ class CategoryController extends Controller {
       return ctx.throw(400, '重复的分类名称')
     }
 
-    
-      const result = await (id
-        ? CategoryModel.findByIdAndUpdate(
-            id,
-            { $set: payload },
-            { new: true }
-          ).select(categoryProjectFields)
-        : CategoryModel.create(payload))
-     
+    const result = await (id
+      ? CategoryModel.findByIdAndUpdate(
+          id,
+          { $set: payload },
+          { new: true }
+        ).select(categoryProjectFields)
+      : CategoryModel.create(payload))
+
     return _.pick(result, responseFields)
   }
 }

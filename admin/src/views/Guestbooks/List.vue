@@ -9,13 +9,12 @@
       :expand-row-keys="expandRowKeys"
       :data="dataList"
       border
-      @selection-change="onSelectionChange"
     >
       <el-table-column type="selection"></el-table-column>
       <el-table-column type="expand">
         <template v-slot="{row}">
-          <el-table ref="tableChildren" @selection-change="onSelectionChange" :data="row.dialogues">
-            <el-table-column type="selection"></el-table-column>
+          <el-table ref="tableChildren" v-if="row.dialogues.length" :data="row.dialogues">
+            <el-table-column ref="selectionColumn" type="selection"></el-table-column>
 
             <el-table-column label="用户昵称" prop="nickname"></el-table-column>
             <el-table-column label="回复内容">
@@ -60,21 +59,49 @@
 
 <script>
 import GuestbookApi from '@/api/guestbooks'
+import _ from 'lodash'
 
 export default {
   data() {
     return {
-      dataList: [],
       selection: [],
       replySelectedList: [],
       expandRowKeys: [],
-      action: ''
+      action: '',
+      originalDataList: []
     }
   },
+  computed: {
+    dataList() {
+      const originalDataList = this.originalDataList
 
+      let guestbookList = originalDataList.filter(item => !item.responseTo)
+
+      guestbookList = guestbookList.map(guestbook => {
+        const item = _.omit(guestbook, 'dialogues')
+
+        item.dialogues = []
+        guestbook.dialogues.forEach(dialogueID => {
+          const response = originalDataList.find(item => item.id === dialogueID)
+
+          if (response && response.responseTo) {
+            response.responseTo = originalDataList.find(
+              item => item.id === response.responseTo
+            )
+
+            item.dialogues.push(response)
+          }
+        })
+        item.dialogues = _.uniq(item.dialogues)
+        return item
+      })
+
+      return guestbookList
+    }
+  },
   created() {
     GuestbookApi.fetchList()
-      .then(response => (this.dataList = response))
+      .then(response => (this.originalDataList = response))
       .catch(err => this.$message.error(err.message))
   },
   methods: {
@@ -85,79 +112,51 @@ export default {
       if (index > -1) {
         this.expandRowKeys = [row.id]
       }
-      console.log('onExpandChange')
+      // console.log('onExpandChange')
     },
 
-    replySelectionChange(selection) {
-      this.replySelectedList = selection
-
-      this.action = this.selection.length
-        ? 'guestbook'
-        : selection.length
-        ? 'reply'
-        : ''
-    },
-    onSelectionChange(selection) {
-      this.selection = selection
-
-      // this.action = selection.length
-      //   ? 'guestbook'
-      //   : this.replySelectedList.length
-      //   ? 'reply'
-      //   : ''
-    },
     async deleteMany() {
-      if (!this.selection.length && !this.replySelectedList.length) {
+      const tableComponents = []
+
+      ;(function recursive(component) {
+        if (component.$options.name === 'ElTable') {
+          tableComponents.push(component)
+        }
+        component.$children.forEach(childComp => {
+          recursive(childComp)
+        })
+      })(this.$refs.table)
+
+      const selection = tableComponents
+        .map(tableComp => tableComp.selection)
+        .flat()
+
+      if (!selection.length) {
         this.$message.warning('请选择要删除的选项')
         return
       }
-      const idList = this.selection.map(item => item.id)
 
-      const replyIdList = this.replySelectedList.map(item => item.id)
       try {
-        await this.$confirm(
-          `${
-            this.action === 'reply' ? '回复' : '留言'
-          }以经删除将无法恢复，是否删除?`,
-          '提示',
-          {
-            type: 'warning'
-          }
-        )
+        await this.$confirm(`留言以经删除将无法恢复，是否删除?`, '提示', {
+          type: 'warning'
+        })
       } catch (error) {
         return
       }
 
-      const action =
-        // this.action === 'reply'
-        //   ? GuestbookApi.deleteManyReply(this.guestbook.id, {
-        //       idList: replyIdList
-        //     })
+      const idList = selection.map(item => item.id)
 
-        GuestbookApi.deleteMany({ idList })
-          .then(() => {
-            if (this.action === 'reply') {
-              this.$message.success(`共删除${replyIdList.length}条回复`)
-            } else {
-              this.$message.success(`共删除${idList.length}条留言`)
-            }
-
-            this.replySelectedList.forEach(item => {
-              const index = this.guestbook.dialogues.indexOf(item)
-              if (index > -1) {
-                this.guestbook.dialogues.splice(index, 1)
-              }
-            })
-
-            this.selection.forEach(item => {
-              const index = this.dataList.indexOf(item)
-
-              if (index > -1) {
-                this.dataList.splice(index, 1)
-              }
-            })
+      GuestbookApi.deleteMany({ idList })
+        .then(() => {
+          this.$message.success(`共删除${idList.length}条留言`)
+          console.log(this.originalDataList, selection)
+          selection.forEach(item => {
+            const delIndex = this.originalDataList.indexOf(item)
+            this.originalDataList.splice(delIndex, 1)
           })
-          .catch(err => this.$message.error(err.message))
+          // _.pullAll(this.originalDataList, selection)
+        })
+        .catch(err => this.$message.error(err.message))
     },
 
     async deleteOne(id, index) {

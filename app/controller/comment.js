@@ -61,18 +61,11 @@ class CommentController extends Controller {
     const { ctx, service } = this
 
     const { id } = ctx.params
-    const validResult = ctx.ajv.validate(
-      { required: ['id'], properties },
-      { id }
-    )
-
-    if (!validResult) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
+     
 
     await service.comment.thumbup(id)
 
-    ctx.status = 204
+    
   }
 }
 module.exports = CommentController

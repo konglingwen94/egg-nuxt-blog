@@ -12,11 +12,17 @@ module.exports = class GuestbookController extends Controller {
   async queryList() {
     const { ctx } = this
     // console.log(__filename,await models.Dialogue.find())
-    let result = GuestbookModel.find({ responseTo: { $exists: 0 } })
-      // .populate('responseTo')
-      .populate({ path: 'dialogues', populate: 'responseTo' })
-    // result = result.populate('dialogues.0.responseTo')
-    // result.popu
+    let result
+    if (ctx.state.platformENV === 'web') {
+      result = GuestbookModel.find({ responseTo: { $exists: 0 } }).populate({
+        path: 'dialogues',
+        populate: 'responseTo',
+      })
+    } else {
+      result = GuestbookModel.find()
+    }
+
+    console.log(__filename, GuestbookModel)
 
     return result
   }
@@ -30,7 +36,7 @@ module.exports = class GuestbookController extends Controller {
 
     return result
   }
-   
+
   async responseToUser() {
     const { ctx } = this
 
@@ -48,7 +54,7 @@ module.exports = class GuestbookController extends Controller {
 
     return result
   }
-  async deleteOne () {
+  async deleteOne() {
     const { ctx } = this
 
     const { id } = ctx.params
