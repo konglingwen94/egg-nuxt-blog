@@ -18,14 +18,27 @@ const TagSchema = new Schema(
 TagSchema.virtual('articleCount', {
   ref: 'Article',
   localField: '_id',
-  foreignField: 'tags',
+  foreignField: 'tagIdList',
   count: true,
+  // autopopulate: true,
 })
 TagSchema.virtual('articlePublishedCount', {
   ref: 'Article',
   localField: '_id',
-  foreignField: 'tags',
+  foreignField: 'tagIdList',
   count: true,
+  // autopopulate: true,
 })
+
+TagSchema.post('save', (doc, next) => {
+  doc
+    .populate('articleCount')
+    .populate({ path: 'articlePublishedCount', match: { isPublished: true } })
+    .execPopulate(next)
+})
+
+ 
+
+// TagSchema.plugin(require('mongoose-autopopulate'))
 
 module.exports = model('Tag', TagSchema)

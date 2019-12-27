@@ -2,35 +2,32 @@ const ArticleModel = require('../model/article')
 const { Controller } = require('egg')
 const { ObjectId } = require('mongoose').Types
 const _ = require('lodash')
-const responseFields = require('../types/response').article
-const properties = require('../types/request').article
-const { ParameterException } = require('../utils/httpExceptions')
 
 class ArticleController extends Controller {
   async queryList() {
     const { service, ctx } = this
-    const dataList = await service.article.queryList()
-    console.log(__filename,ctx.path)
+    const dataList = service.article.queryList()
+
     return dataList
   }
   async queryCarouselList() {
     const { service, ctx } = this
 
-    return await service.article.queryCarouselList()
+    return service.article.queryCarouselList()
   }
   async querySuggestionList() {
     const { ctx, service } = this
-    let { tagIdList } = ctx.query
+    let { tagIdList } = ctx.queries
+    
+    const { id } = ctx.params
 
-    if (!tagIdList) {
-      return []
-    }
+     
 
-    tagIdList =
-      typeof tagIdList === 'string'
-        ? [ObjectId(tagIdList)]
-        : tagIdList.map(id => ObjectId(id))
-    return await service.article.queryByTagIdList(tagIdList)
+
+    return ArticleModel.find({
+      tagIdList ,
+      _id: { $ne: id },
+    })
   }
 
   async queryOne() {
@@ -59,12 +56,8 @@ class ArticleController extends Controller {
     const { ctx, service } = this
 
     const { idList } = ctx.request.body
-    
-    
 
-     
-      await service.article.deleteMany(idList)
-     
+    await service.article.deleteMany(idList)
   }
   async deleteOne() {
     const { ctx, service } = this
@@ -74,30 +67,22 @@ class ArticleController extends Controller {
   }
   async updatePublishStatus() {
     const { ctx, service } = this
-    
+
     const { isPublished } = ctx.request.body
-    
-    
+
     const { id } = ctx.params
     await ArticleModel.findByIdAndUpdate(id, { $set: { isPublished } })
   }
   async incrementPv() {
     const { ctx, service } = this
-    
-      await service.article.incrementPv(ctx.params.id)
-     
 
-     
+    await service.article.incrementPv(ctx.params.id)
   }
   async starOne() {
     const { ctx, service } = this
     const { id } = ctx.params
-    
 
-    
     await service.article.queryByIdAndStarOne(id)
-
-     
   }
 }
 module.exports = ArticleController

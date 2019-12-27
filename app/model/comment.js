@@ -14,6 +14,7 @@ const CommentSchema = new Schema(
     article: {
       type: ObjectId,
       ref: 'Article',
+      autopopulate: true,
     },
     nickname: {
       type: String,
@@ -28,5 +29,7 @@ const CommentSchema = new Schema(
     timestamps: true,
   }
 )
+
+CommentSchema.plugin(require('mongoose-autopopulate'))
 
 module.exports = model('Comment', CommentSchema)

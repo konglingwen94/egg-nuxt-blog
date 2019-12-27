@@ -9,58 +9,54 @@ module.exports = class ArticleService extends Service {
 
     const result = ArticleModel.find(ctx.state.filter || {})
       .sort('-createdAt')
-      .populate('tags')
+      .populate('tagList')
       .populate('category')
       .populate('commentCount')
 
     return result
   }
   async queryCarouselList() {
-    return await ArticleModel.find()
+    return ArticleModel.find()
       .sort('-pv')
       .limit(4)
   }
 
   async create(payload) {
     const doc = new ArticleModel(payload)
-    await doc.save()
-    return doc
+    return doc.save()
   }
   async queryByIdAndUpdate(id, payload) {
     return ArticleModel.findByIdAndUpdate(id, {
       $set: payload,
     })
   }
-  async queryByCategoryID(categoryID) {
-    return ArticleModel.findOne({ categoryID })
-  }
-  async queryOneByTagID(tagID) {
-    console.log(__filename, ArticleModel.findOne({ tags: tagID }))
-    return ArticleModel.findOne({ tags: tagID })
-  }
+  // async queryByCategoryID(categoryID) {
+  //   return ArticleModel.findOne({ categoryID })
+  // }
+  // async queryOneByTagID(tagID) {
+  //   return ArticleModel.findOne({ tagIdList: tagID })
+  // }
   async queryByTagIdList(tagIdList) {
     const { ctx } = this
+
+    // console.log(__filename,id,tagIdList)
     return ArticleModel.find({ tagIdList })
   }
   async queryOneById(id) {
     const { ctx } = this
 
-    const result = await ArticleModel.findById(id)
+    const result = ArticleModel.findById(id)
       .populate('category')
       .populate('comments')
-      .populate('tags')
-    console.log(__filename, id, result)
+      .populate('tagList')
+
     return result
   }
   async queryByIdAndRemove(id) {
     return ArticleModel.findByIdAndRemove(id)
   }
   async deleteMany(idList) {
-    return Promise.all(
-      idList.map(id => {
-        return ArticleModel.findByIdAndRemove(id)
-      })
-    )
+    return ArticleModel.deleteMany({ id: idList })
   }
 
   async incrementPv(id) {

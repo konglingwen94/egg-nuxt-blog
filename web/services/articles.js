@@ -7,8 +7,8 @@ export default {
   fetchCarouselList(params) {
     return request.get('/articles/carousels', { params })
   },
-  fetchSuggestionList(params) {
-    return request.get('/articles/suggestion', { params })
+  fetchSuggestionList(id,params) {
+    return request.get(`/articles/${id}/suggestion`, { params })
   },
   fetchOne(id) {
     return request.get(`/articles/${id}`)

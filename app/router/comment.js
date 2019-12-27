@@ -13,7 +13,7 @@ module.exports = app => {
     controller.comment.deleteOne
   )
 
-  router.post('comment', '/admin/comments', controller.comment.deleteList)
+  router.delete('comment', '/admin/comments', controller.comment.deleteList)
 
   router.get(
     '/admin/articles/:articleID/comments',

@@ -3,7 +3,7 @@ const { ObjectId } = Schema.Types
 
 const DialogueSchema = new Schema(
   {
-    responseTo: { type: ObjectId, ref: 'Dialogue', autopopulate: false },
+    responseTo: { type: ObjectId, ref: 'Dialogue'   },
     // kind: String,
     nickname: {
       type: String,

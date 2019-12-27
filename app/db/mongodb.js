@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+mongoose.plugin(require('mongoose-autopopulate'))
 
 exports.connect = async app => {
   return new Promise((resolve, reject) => {

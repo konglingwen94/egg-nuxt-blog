@@ -1,16 +1,16 @@
 const { ObjectId } = require('mongoose').Types
 module.exports = (opt, app) => {
   return async (ctx, next) => {
-    const { tagID, category } = ctx.query
+    const { tagID, categoryID } = ctx.query
 
     let filter = ctx.state.filter || { $and: [] }
     if (tagID) {
       filter.$and.push({
-        tags: ObjectId(tagID),
+        tagIdList: ObjectId(tagID),
       })
-    } else if (category) {
+    } else if (categoryID) {
       filter.$and.push({
-        category: ObjectId(category),
+        categoryID: ObjectId(categoryID),
       })
     }
 

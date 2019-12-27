@@ -43,7 +43,7 @@ module.exports = app => {
 
   router.get('/articles', controller.article.queryList)
   router.get('/articles/carousels', controller.article.queryCarouselList)
-  router.get('/articles/suggestion', controller.article.querySuggestionList)
+  router.get('/articles/:id/suggestion', controller.article.querySuggestionList)
 
   router.get('/articles/:id', controller.article.queryOne)
 

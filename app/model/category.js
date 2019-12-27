@@ -13,19 +13,27 @@ const CategorySchema = new Schema(
   }
 )
 
+CategorySchema.post('save', function(doc, next) {
+  doc.populate('articleCount').populate({
+    path: 'articlePublishedCount',
+    match: {
+      isPublished: true,
+    },
+  }).execPopulate(next)
+})
+
 CategorySchema.virtual('articleCount', {
   ref: 'Article',
   localField: '_id',
-  foreignField: 'category',
+  foreignField: 'categoryID',
   count: true,
 })
 
 CategorySchema.virtual('articlePublishedCount', {
   ref: 'Article',
   localField: '_id',
-  foreignField: 'category',
+  foreignField: 'categoryID',
   count: true,
- 
 })
 
 module.exports = model('Category', CategorySchema)

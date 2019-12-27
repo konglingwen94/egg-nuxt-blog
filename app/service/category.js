@@ -3,20 +3,24 @@ const CategoryModel = require('../model/category')
 
 class CategoryService extends Service {
   async create(payload) {
-    return await CategoryModel.create(payload)
+    return CategoryModel.create(payload)
   }
 
   async queryList() {
     const { ctx } = this
 
     const result = CategoryModel.find()
+      .sort({ createdAt: -1 })
       .populate('articleCount')
       .populate({ path: 'articlePublishedCount', match: { isPublished: true } })
 
     return result
   }
   async queryById(id) {
-    return CategoryModel.findById(id).exec()
+    return CategoryModel.findById(id)
+      .populate('articleCount')
+      .populate({ path: 'articlePublishedCount', match: { isPublished: true } })
+      .exec()
   }
   async count() {
     return CategoryModel.countDocuments()
@@ -25,7 +29,7 @@ class CategoryService extends Service {
     return CategoryModel.findOne({ name })
   }
   async queryByIdAndUpdate(id, payload) {
-    return await CategoryModel.findByIdAndUpdate(id, { $set: payload }).exec()
+    return CategoryModel.findByIdAndUpdate(id, { $set: payload }).exec()
   }
 }
 

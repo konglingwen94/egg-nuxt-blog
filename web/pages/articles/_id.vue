@@ -5,7 +5,7 @@
       v-if="data.cover && data.cover.path"
       class="banner"
       :style="bannerStyle"
-    >{{data.tags.map(item=>item.name).join(' ')}}</div>
+    >{{data.tagList && data.tagList.map(item=>item.name).join(' ')}}</div>
 
     <div class="main">
       <section class="content-wrapper">
@@ -114,23 +114,20 @@ export default {
   },
   async asyncData({ params, query }) {
     const { id } = params
-    const { tags } = query
+    const { tagIdList } = query
 
     try {
       var [suggestionList, data] = await Promise.all([
-        ArticleService.fetchSuggestionList({ tags }),
+        ArticleService.fetchSuggestionList(id, { tagIdList }),
         ArticleService.fetchOne(id)
       ])
     } catch (error) {
       return { suggestionList: [], data: {} }
     }
 
-    const index = suggestionList.findIndex(item => item.id === id)
-    suggestionList.splice(index, 1)
-
     return { suggestionList, data }
   },
- 
+
   data() {
     return {
       showSideBar: true,

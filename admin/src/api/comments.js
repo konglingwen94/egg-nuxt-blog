@@ -11,6 +11,6 @@ export default {
     return request.delete(`/comments/${id}`)
   },
   deleteList(params) {
-    return request.post('/comments', params)
+    return request.delete('/comments', { params })
   },
 }

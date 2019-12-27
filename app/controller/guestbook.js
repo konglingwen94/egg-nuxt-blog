@@ -22,7 +22,7 @@ module.exports = class GuestbookController extends Controller {
       result = GuestbookModel.find()
     }
 
-    console.log(__filename, GuestbookModel)
+    
 
     return result
   }

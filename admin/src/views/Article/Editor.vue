@@ -2,7 +2,7 @@
   <div class="editor-wrapper">
     <el-form label-width="auto">
       <el-form-item label="文章分类" required>
-        <el-select clearable placeholder="请选择文章分类" v-model="form.category">
+        <el-select clearable placeholder="请选择文章分类" v-model="form.categoryID">
           <el-option
             :value="item.id"
             :label="item.name"
@@ -12,7 +12,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="标签">
-        <el-select multiple clearable placeholder="请添加文章标签" v-model="form.tags">
+        <el-select multiple clearable placeholder="请添加文章标签" v-model="form.tagIdList">
           <el-option :value="item.id" :label="item.name" v-for="item in tagList" :key="item.id"></el-option>
         </el-select>
       </el-form-item>
@@ -59,8 +59,8 @@ export default {
           text: ''
         },
         cover: { name: '', path: '' },
-        category: '',
-        tags: [],
+        categoryID: '',
+        tagIdList: [],
         isPublished: false
       },
 
@@ -94,14 +94,14 @@ export default {
     handleSubmit() {
       const {
         isPublished,
-        tags,
-        category,
+        tagIdList,
+        categoryID,
         title,
         content,
         cover
       } = this.form
 
-      if (!category) {
+      if (!categoryID) {
         this.$message.error('请选择文章分类')
         return
       }
@@ -120,8 +120,8 @@ export default {
         title,
         content,
         cover,
-        category,
-        tags,
+        categoryID,
+        tagIdList,
         isPublished
       }
 

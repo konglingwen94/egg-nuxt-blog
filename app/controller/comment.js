@@ -10,8 +10,8 @@ class CommentController extends Controller {
   async queryList() {
     const { ctx, service } = this
 
-    console.log(__filename,await service.comment.queryList())
-    return  service.comment.queryList()
+    console.log(__filename, await service.comment.queryList())
+    return service.comment.queryList()
   }
   async createOne() {
     const { ctx, service } = this
@@ -29,43 +29,24 @@ class CommentController extends Controller {
 
     const { id } = ctx.params
 
-    
-
     await service.comment.queryByIdAndRemove(id)
-     
   }
 
   async deleteList() {
     const { ctx, service } = this
 
-    const { idList } = ctx.request.body
-
-    const validResult = ctx.ajv.validate(
-      { required: ['idList'], properties },
-      { idList }
-    )
-
-    if (!validResult) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
+    const { idList } = ctx.queries
 
     const result = await service.comment.deleteMany(idList)
 
-    if (result.length !== idList.length) {
-      return ctx.throw(400, '删除失败')
-    }
-
-    ctx.status = 204
+     
   }
   async thumbup() {
     const { ctx, service } = this
 
     const { id } = ctx.params
-     
 
     await service.comment.thumbup(id)
-
-    
   }
 }
 module.exports = CommentController

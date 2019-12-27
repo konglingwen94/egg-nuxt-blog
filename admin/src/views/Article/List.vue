@@ -60,8 +60,8 @@
         <el-table-column label="标签" show-overflow-tooltip>
           <template v-slot="{row}">
             <span
-              v-if="Array.isArray(row.tags)"
-            >{{row.tags.map(item=> item && item.name).join(' , ')}}</span>
+              v-if="Array.isArray(row.tagList)"
+            >{{row.tagList.map(item=> item && item.name).join(' , ')}}</span>
           </template>
         </el-table-column>
         <el-table-column label="标题" show-overflow-tooltip prop="title"></el-table-column>
