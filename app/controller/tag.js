@@ -28,7 +28,6 @@ module.exports = class TagController extends Controller {
 
     const result = await service.tag.queryList()
 
-     
     return result
   }
 
@@ -37,26 +36,17 @@ module.exports = class TagController extends Controller {
 
     const { id } = ctx.params
     const { name } = ctx.request.body
-    const schema = { required: ['id', 'name'], properties: request.tag }
-
-    const isValid = ctx.ajv.validate(schema, { name, id })
 
     const data = await TagModel.findOne({ name })
     if (data) {
-      return ctx.throw(400, '重复的标签名称')
+      //  ctx.throw(400, '重复的标签名称')
     }
 
-    if (!isValid) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
-
-    try {
-      await TagModel.findByIdAndUpdate(id, { $set: { name } })
-    } catch (error) {
-      throw error
-    }
-
-    ctx.status = 204
+    return await TagModel.findByIdAndUpdate(
+      id,
+      { $set: { name } },
+      { new: true }
+    )
   }
 
   async deleteOne() {
@@ -64,21 +54,6 @@ module.exports = class TagController extends Controller {
 
     const { id } = ctx.params
 
-    const isValid = ctx.ajv.validate(
-      { required: ['id'], properties: request.tag },
-      { id }
-    )
-    const result = await service.article.queryOneByTagID(id)
-
-    if (result) {
-      return ctx.throw(403, '此标签下有文章')
-    }
-    if (!isValid) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
-
-    await TagModel.findByIdAndRemove(id)
-
-    ctx.status = 204
+    return TagModel.findByIdAndRemove(id)
   }
 }

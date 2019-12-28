@@ -1,12 +1,10 @@
 const { Controller } = require('egg')
 const { ObjectId } = require('mongoose').Types
-const { ParameterException } = require('../utils/httpExceptions')
+ 
 const GuestbookModel = require('../model/guestbook')
-const { guestbook: properties } = require('../types/request')
-const { guestbook: $project } = require('../types/projectField')
-const { guestbook: responseFields } = require('../types/response')
+ 
 const _ = require('lodash')
-const { models } = require('mongoose')
+ 
 
 module.exports = class GuestbookController extends Controller {
   async queryList() {
@@ -24,7 +22,7 @@ module.exports = class GuestbookController extends Controller {
 
     
 
-    return result
+    return result.sort({createdAt:-1})
   }
   async createOne() {
     const { ctx } = this
@@ -66,42 +64,16 @@ module.exports = class GuestbookController extends Controller {
 
     const { idList } = ctx.request.body
 
-    const schema = {
-      required: ['idList'],
-      properties: {
-        idList: {
-          type: 'array',
-          minItems: 1,
-          items: { type: 'string', minLength: 24, maxLength: 24 },
-        },
-      },
-    }
+   
 
-    const payload = { idList }
+     
+ 
 
-    const validResult = ctx.ajv.validate(schema, payload)
-
-    if (!validResult) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
-
-    await GuestbookModel.deleteMany({ _id: { $in: idList } })
-    ctx.status = 204
+    await GuestbookModel.deleteMany({ _id:     idList   })
+     
   }
 
-  async deleteManyResponse() {
-    const { ctx } = this
-
-    const { idList } = ctx.request.body
-    const { id } = ctx.params
-
-    const guestbookDoc = await GuestbookModel.findById(id)
-    idList.forEach(id => {
-      guestbookDoc.dialogues.pull(id)
-    })
-    await guestbookDoc.save()
-    ctx.status = 204
-  }
+   
 
   async diggGuestbook() {
     const { ctx } = this

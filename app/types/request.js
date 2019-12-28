@@ -27,14 +27,10 @@ module.exports = {
     },
   },
   admin: {
-    id: {
-      type: 'string',
-      min: 24,
-      maxLength: 24,
-    },
+     
     username: {
       type: 'string',
-      minLenght: 1,
+      min: 1,
     },
     password: {
       type: 'string',
@@ -95,11 +91,7 @@ module.exports = {
         },
       },
     },
-    id: {
-      type: 'string?',
-      min: 24,
-      max: 24,
-    },
+    
     isPublished: {
       type: 'boolean?',
       default: true,
@@ -153,19 +145,6 @@ module.exports = {
       type: 'string',
       min: 1,
     },
-    id: {
-      type: 'string',
-      min: 24,
-      maxLength: 24,
-    },
-
-    articleIdList: {
-      type: 'array',
-      items: {
-        type: 'string',
-        min: 24,
-        maxLength: 24,
-      },
-    },
+    
   },
 }

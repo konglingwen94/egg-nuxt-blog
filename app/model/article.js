@@ -8,12 +8,12 @@ const ArticleSchema = new Schema(
   {
     categoryID: ObjectId,
 
-    title: String,
+    title: String,  
     tagIdList: [ObjectId],
     content: {
       type: Object,
       default: {
-        html: '',
+        html: '', 
         text: '',
       },
     },

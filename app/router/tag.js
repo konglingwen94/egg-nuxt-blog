@@ -6,8 +6,8 @@ module.exports = app => {
    * tags
    *  */
   router.get('/admin/tags', controller.tag.queryList)
-  router.post('/admin/tags', controller.tag.createOne)
-  router.put('/admin/tags/:id', controller.tag.updateOne)
+  router.post('tag','/admin/tags', controller.tag.createOne)
+  router.patch('tag','/admin/tags/:id', controller.tag.updateOne)
   router.delete('/admin/tags/:id', controller.tag.deleteOne)
 
   router.get('/tags', controller.tag.queryList)

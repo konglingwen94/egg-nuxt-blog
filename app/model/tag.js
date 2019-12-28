@@ -37,8 +37,26 @@ TagSchema.post('save', (doc, next) => {
     .execPopulate(next)
 })
 
+TagSchema.pre('findOneAndRemove', async function(doc, next) {
+   
+  const tagDoc = await this.model
+    .findById(this._conditions._id)
+    .populate('articleCount')
+   
+  if (tagDoc.articleCount > 0) {
+    const error = new Error('此标签下有文章')
+    error.status = 403
+    throw error
+  }
+  next()
+})
  
 
-// TagSchema.plugin(require('mongoose-autopopulate'))
+TagSchema.pre('init',function(next){
+  console.log(__filename)
+  console.log(arguments,this)
+
+  // this.contructor.findOne({name})
+})
 
 module.exports = model('Tag', TagSchema)

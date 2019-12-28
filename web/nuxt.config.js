@@ -8,7 +8,7 @@ module.exports = {
     baseUrl:
       process.env.NODE_ENV === 'production'
         ? 'http://localhost:7001/api'
-        : 'http://localhost:7001/api',
+        : '/api',
   },
   rootDir: resolve(__dirname, '../'),
   srcDir: resolve(__dirname, '../web'),
@@ -72,11 +72,13 @@ module.exports = {
   ],
 
   proxy: {
-    '/uploads': {
+    '/api': {
       target: 'http://localhost:7001',
     },
+    '/uploads':{
+      target:'http://localhost:7001'
+    }
   },
-
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options

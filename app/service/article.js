@@ -30,12 +30,12 @@ module.exports = class ArticleService extends Service {
       $set: payload,
     })
   }
-  // async queryByCategoryID(categoryID) {
-  //   return ArticleModel.findOne({ categoryID })
-  // }
-  // async queryOneByTagID(tagID) {
-  //   return ArticleModel.findOne({ tagIdList: tagID })
-  // }
+  async queryByCategoryID(categoryID) {
+    return ArticleModel.findOne({ categoryID })
+  }
+  async queryOneByTagID(tagID) {
+    return ArticleModel.findOne({ tagIdList: tagID })
+  }
   async queryByTagIdList(tagIdList) {
     const { ctx } = this
 

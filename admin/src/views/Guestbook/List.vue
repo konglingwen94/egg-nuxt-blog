@@ -127,9 +127,15 @@ export default {
         })
       })(this.$refs.table)
 
-      const selection = tableComponents
+      let selection = tableComponents
         .map(tableComp => tableComp.selection)
         .flat()
+        .map(item => {
+          return item.dialogues.concat(item)
+        })
+        .flat(3)
+
+      selection = _.uniq(selection)
 
       if (!selection.length) {
         this.$message.warning('请选择要删除的选项')
@@ -145,16 +151,21 @@ export default {
       }
 
       const idList = selection.map(item => item.id)
+      
 
+      
+
+
+      
       GuestbookApi.deleteMany({ idList })
         .then(() => {
           this.$message.success(`共删除${idList.length}条留言`)
-          console.log(this.originalDataList, selection)
           selection.forEach(item => {
             const delIndex = this.originalDataList.indexOf(item)
             this.originalDataList.splice(delIndex, 1)
           })
-          // _.pullAll(this.originalDataList, selection)
+          
+           
         })
         .catch(err => this.$message.error(err.message))
     },

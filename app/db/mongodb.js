@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-mongoose.plugin(require('mongoose-autopopulate'))
+ 
 
 exports.connect = async app => {
   return new Promise((resolve, reject) => {
@@ -26,13 +26,13 @@ exports.connect = async app => {
 
       .catch(err => {
         console.error(err)
-        reject()
+        reject(err)
       })
 
     const db = mongoose.connection
     db.once('open', () => {
       console.log(`Database connected to mongodb ${mongodbURI}`)
-      resolve()
+      resolve(mongoose)
     })
 
     db.on('error', err => {

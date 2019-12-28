@@ -48,6 +48,7 @@ class CategoryController extends Controller {
   async updateOne() {
     const { ctx, service } = this
     const { id } = ctx.params
+    const payload = ctx.state.body
     const hasOne = await service.category.queryOneByName(payload.name)
 
     if (hasOne) {
@@ -59,7 +60,7 @@ class CategoryController extends Controller {
           id,
           { $set: payload },
           { new: true }
-        ).select(categoryProjectFields)
+        )
       : CategoryModel.create(payload))
 
     return result

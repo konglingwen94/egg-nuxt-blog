@@ -47,6 +47,12 @@ module.exports = appInfo => {
     },
     responseHandler: {
       match: ['/api'],
+      // match(ctx) {
+      //   if (ctx.method === 'DELETE') {
+      //     return false
+      //   }
+      //   return true
+      // },
     },
     errorHandler: {
       match: ['/api'],

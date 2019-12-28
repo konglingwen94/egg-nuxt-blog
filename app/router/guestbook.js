@@ -19,11 +19,7 @@ module.exports = app => {
 
     controller.guestbook.deleteMany
   )
-  router.delete(
-    '/admin/guestbooks/:id/dialogues',
-
-    controller.guestbook.deleteManyResponse
-  )
+   
 
   router.post('/guestbooks/:id/digg', controller.guestbook.diggGuestbook)
 
