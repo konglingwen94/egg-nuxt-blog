@@ -1,7 +1,7 @@
 const { Service } = require('egg')
 const mongoose = require('mongoose')
 const { ObjectId } = mongoose.Types
-const ArticleModel = require('../model/article')
+// const ArticleModel = require('../model/article')
 
 module.exports = class ArticleService extends Service {
   async queryList() {

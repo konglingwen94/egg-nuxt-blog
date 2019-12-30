@@ -89,10 +89,10 @@ module.exports = appInfo => {
       url: 'mongodb://127.0.0.1:27017/my-blog',
       options: { useUnifiedTopology: true },
       database: 'my-blog',
-      host: '127.0.0.1',
-      port: '27017',
-      username: '',
-      password: '',
+      // host: '127.0.0.1',
+      // port: '27017',
+      // username: '',
+      // password: '',
     },
   }
 }

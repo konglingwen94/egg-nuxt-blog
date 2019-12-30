@@ -1,4 +1,4 @@
-const ArticleModel = require('../model/article')
+const ArticleModel = require('../model/article')  
 const { Controller } = require('egg')
 const { ObjectId } = require('mongoose').Types
 const _ = require('lodash')
