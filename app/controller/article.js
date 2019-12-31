@@ -1,4 +1,3 @@
-const ArticleModel = require('../model/article')  
 const { Controller } = require('egg')
 const { ObjectId } = require('mongoose').Types
 const _ = require('lodash')
@@ -7,7 +6,7 @@ class ArticleController extends Controller {
   async queryList() {
     const { service, ctx } = this
     const dataList = service.article.queryList()
-
+     
     return dataList
   }
   async queryCarouselList() {
@@ -18,14 +17,11 @@ class ArticleController extends Controller {
   async querySuggestionList() {
     const { ctx, service } = this
     let { tagIdList } = ctx.queries
-    
+
     const { id } = ctx.params
 
-     
-
-
-    return ArticleModel.find({
-      tagIdList ,
+    return this.ctx.model.Article.find({
+      tagIdList,
       _id: { $ne: id },
     })
   }
@@ -71,7 +67,9 @@ class ArticleController extends Controller {
     const { isPublished } = ctx.request.body
 
     const { id } = ctx.params
-    await ArticleModel.findByIdAndUpdate(id, { $set: { isPublished } })
+    await this.ctx.model.Article.findByIdAndUpdate(id, {
+      $set: { isPublished },
+    })
   }
   async incrementPv() {
     const { ctx, service } = this

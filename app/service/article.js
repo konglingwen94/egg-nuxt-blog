@@ -1,13 +1,12 @@
 const { Service } = require('egg')
 const mongoose = require('mongoose')
 const { ObjectId } = mongoose.Types
-// const ArticleModel = require('../model/article')
 
 module.exports = class ArticleService extends Service {
   async queryList() {
     const { ctx } = this
 
-    const result = ArticleModel.find(ctx.state.filter || {})
+    const result = ctx.model.Article.find(ctx.state.filter || {})
       .sort('-createdAt')
       .populate('tagList')
       .populate('category')
@@ -16,36 +15,38 @@ module.exports = class ArticleService extends Service {
     return result
   }
   async queryCarouselList() {
-    return ArticleModel.find()
+    return this.ctx.model.Article.find()
       .sort('-pv')
       .limit(4)
   }
 
   async create(payload) {
-    const doc = new ArticleModel(payload)
+    const {ctx}=this
+    const doc = new ctx.model.Article(payload)
     return doc.save()
   }
   async queryByIdAndUpdate(id, payload) {
-    return ArticleModel.findByIdAndUpdate(id, {
+    const {ctx}=this
+    return ctx.model.Article.findByIdAndUpdate(id, {
       $set: payload,
     })
   }
   async queryByCategoryID(categoryID) {
-    return ArticleModel.findOne({ categoryID })
+    return this.ctx.model.Article.findOne({ categoryID })
   }
-  async queryOneByTagID(tagID) {
-    return ArticleModel.findOne({ tagIdList: tagID })
-  }
+  // async queryOneByTagID(tagID) {
+  //   return this.ctx.model.Article.findOne({ tagIdList: tagID })
+  // }
   async queryByTagIdList(tagIdList) {
     const { ctx } = this
 
     // console.log(__filename,id,tagIdList)
-    return ArticleModel.find({ tagIdList })
+    return ctx.model.Article.find({ tagIdList })
   }
   async queryOneById(id) {
     const { ctx } = this
 
-    const result = ArticleModel.findById(id)
+    const result = ctx.model.Article.findById(id)
       .populate('category')
       .populate('comments')
       .populate('tagList')
@@ -53,18 +54,18 @@ module.exports = class ArticleService extends Service {
     return result
   }
   async queryByIdAndRemove(id) {
-    return ArticleModel.findByIdAndRemove(id)
+    return this.ctx.model.Article.findByIdAndRemove(id)
   }
   async deleteMany(idList) {
-    return ArticleModel.deleteMany({ id: idList })
+    return this.ctx.model.Article.deleteMany({ id: idList })
   }
 
   async incrementPv(id) {
-    return ArticleModel.findByIdAndUpdate(id, {
+    return this.ctx.model.Article.findByIdAndUpdate(id, {
       $inc: { pv: 1 },
     })
   }
   async queryByIdAndStarOne(id) {
-    return ArticleModel.findByIdAndUpdate(id, { $inc: { starCount: 1 } })
+    return this.ctx.model.Article.findByIdAndUpdate(id, { $inc: { starCount: 1 } })
   }
 }

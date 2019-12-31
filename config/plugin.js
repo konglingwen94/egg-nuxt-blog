@@ -13,7 +13,7 @@ module.exports = {
     package: 'egg-router-plus',
   },
   mongoose: {
-    enable: false,
+    enable: true,
     package: 'egg-mongoose',
   },
 }

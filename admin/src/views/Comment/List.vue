@@ -13,7 +13,7 @@
       </el-table-column>
       <el-table-column label="文章标题" prop="article.title"></el-table-column>
       <el-table-column label="文章是否发布">
-        <template v-slot="{row}"><span :style="{color:row.article.isPublished?'green':'red'}">{{row.article.isPublished?'已发布':'未发布'}}</span></template>
+        <template v-slot="{row}"><span v-if="row.article" :style="{color:row.article.isPublished?'green':'red'}">{{row.article.isPublished?'已发布':'未发布'}}</span></template>
       </el-table-column>
       <el-table-column label="点赞数" prop="thumbupCount"></el-table-column>
       <el-table-column label="操作">

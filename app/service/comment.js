@@ -1,24 +1,23 @@
 const { Service } = require('egg')
-const CommentModel = require('../model/comment')
 
 class CommentService extends Service {
   async queryList() {
     const { ctx } = this
-    return  CommentModel.find().populate('article')
+    return  this.ctx.model.Comment.find().populate('article')
   }
   async createOne(payload) {
-    return CommentModel.create(payload)
+    return this.ctx.model.Comment.create(payload)
   }
   async queryByIdAndRemove(id) {
-    return CommentModel.findByIdAndRemove(id)
+    return this.ctx.model.Comment.findByIdAndRemove(id)
   }
   async deleteMany(idList) {
     return await Promise.all(
-      idList.map(id => CommentModel.findByIdAndRemove(id))
+      idList.map(id => this.ctx.model.Comment.findByIdAndRemove(id))
     )
   }
   async thumbup(id) {
-    return CommentModel.findByIdAndUpdate(id, { $inc: { thumbupCount: 1 } })
+    return this.ctx.model.Comment.findByIdAndUpdate(id, { $inc: { thumbupCount: 1 } })
   }
 }
 

@@ -2,15 +2,13 @@ const { Controller } = require('egg')
 
 const { ObjectId } = require('mongoose').Types
 const _ = require('lodash')
-const { ParameterException } = require('../utils/httpExceptions')
-const properties = require('../types/request').comment
-const commentResponseFields = require('../types/response').comment
+ 
 
 class CommentController extends Controller {
   async queryList() {
     const { ctx, service } = this
 
-    console.log(__filename, await service.comment.queryList())
+    // console.log(__filename, await service.comment.queryList())
     return service.comment.queryList()
   }
   async createOne() {

@@ -1,15 +1,10 @@
 const { Service } = require('egg')
-const CategoryModel = require('../model/category')
 
 class CategoryService extends Service {
-  async create(payload) {
-    return CategoryModel.create(payload)
-  }
-
   async queryList() {
     const { ctx } = this
 
-    const result = CategoryModel.find()
+    const result = this.ctx.model.Category.find()
       .sort({ createdAt: -1 })
       .populate('articleCount')
       .populate({ path: 'articlePublishedCount', match: { isPublished: true } })
@@ -17,19 +12,12 @@ class CategoryService extends Service {
     return result
   }
   async queryById(id) {
-    return CategoryModel.findById(id)
-      .populate('articleCount')
-      .populate({ path: 'articlePublishedCount', match: { isPublished: true } })
-      .exec()
-  }
-  async count() {
-    return CategoryModel.countDocuments()
-  }
-  async queryOneByName(name) {
-    return CategoryModel.findOne({ name })
-  }
-  async queryByIdAndUpdate(id, payload) {
-    return CategoryModel.findByIdAndUpdate(id, { $set: payload }).exec()
+    return (
+      this.ctx.model.Category.findById(id)
+        .populate('articleList')
+        // .populate({ path: 'articlePublishedCount', match: { isPublished: true } })
+        .exec()
+    )
   }
 }
 

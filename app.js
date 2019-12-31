@@ -1,12 +1,27 @@
 // const mongodb = require('./app/db/mongodb')
 // const { Nuxt, Builder } = require('nuxt')
 // const nuxtConfig = require('./web/nuxt.config')
+
+const path = require('path')
 class AppBootHook {
   constructor(app) {
     this.app = app
     app.config.coreMiddleware.unshift('history', 'docs', 'compress')
   }
-  didLoad() {}
+  didLoad() {
+    const { mongooseDB, mongoose } = this.app
+    const { url } = this.app.config.mongoose
+    mongooseDB.on('open', () => console.log(`Database is connected on ${url}`))
+    mongooseDB.on('error', error => console.error(error))
+
+    // this.app.loader.loadFile(
+    //   path.join(this.app.config.baseDir, 'app/utils/schemaHook.js')
+    // )
+    // this.app.loader.loadFile(
+    //   path.join(this.app.config.baseDir, 'app/utils/virtualType.js')
+    // )
+    // console.log(__filename, this.app.mongoose)
+  }
   async willReady() {
     // const nuxt = new Nuxt(nuxtConfig)
 
@@ -14,11 +29,14 @@ class AppBootHook {
     // this.app.context.egg = this
 
     // const builder = new Builder(nuxt)
-    // await builder.build() 
+    // await builder.build()
     // await nuxt.ready()
     // this.app.mongoose = await mongodb.connect(this.app)
     // console.log('App will ready',this.app.mongoose.modelSchemas)
     console.log('App will ready')
+  }
+  serverDidReady() {
+    console.log('Server did ready')
   }
 }
 

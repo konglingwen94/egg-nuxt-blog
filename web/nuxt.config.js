@@ -8,7 +8,7 @@ module.exports = {
     baseUrl:
       process.env.NODE_ENV === 'production'
         ? 'http://localhost:7001/api'
-        : '/api',
+        : 'http://localhost:7001/api',
   },
   rootDir: resolve(__dirname, '../'),
   srcDir: resolve(__dirname, '../web'),
