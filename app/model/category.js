@@ -6,6 +6,8 @@ module.exports = app => {
     {
       name: {
         type: String,
+        unique: true,
+
         default: '',
       },
     },

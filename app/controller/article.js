@@ -4,15 +4,16 @@ const _ = require('lodash')
 
 class ArticleController extends Controller {
   async queryList() {
-    const { service, ctx } = this
-    const dataList = service.article.queryList()
-     
-    return dataList
+    const { service} = this
+
+    return service.article.queryList().sort('-createdAt')
   }
   async queryCarouselList() {
-    const { service, ctx } = this
-
-    return service.article.queryCarouselList()
+    const { service } = this
+    return service.article
+      .queryList()
+      .sort('-pv -createdAt')
+      .limit(3)
   }
   async querySuggestionList() {
     const { ctx, service } = this
@@ -21,7 +22,7 @@ class ArticleController extends Controller {
     const { id } = ctx.params
 
     return this.ctx.model.Article.find({
-      tagIdList,
+      tagIdList:{$in:tagIdList},
       _id: { $ne: id },
     })
   }

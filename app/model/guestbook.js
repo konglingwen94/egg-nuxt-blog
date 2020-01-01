@@ -5,7 +5,7 @@ module.exports = app => {
   const DialogueSchema = new Schema(
     {
       responseTo: { type: ObjectId, ref: 'Dialogue' },
-      // kind: String,
+       
       nickname: {
         type: String,
         default: '',
@@ -32,9 +32,11 @@ module.exports = app => {
     { timestamps: true }
   )
 
-  DialogueSchema.post('findOneAndRemove', doc =>
-    DialogModel.deleteMany({ _id: doc.dialogues })
-  )
+  DialogueSchema.post('findOneAndRemove', doc => {
+     
+
+    return doc.constructor.deleteMany({ _id: doc.dialogues })
+  })
 
   return model('Dialogue', DialogueSchema)
 }

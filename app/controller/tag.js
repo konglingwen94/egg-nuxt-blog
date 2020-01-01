@@ -1,7 +1,6 @@
 const { Controller } = require('egg')
-const _ = require('lodash')
 
-module.exports = class TagController extends Controller {
+class TagController extends Controller {
   async createOne() {
     const { ctx, service } = this
 
@@ -19,9 +18,9 @@ module.exports = class TagController extends Controller {
     const { ctx } = this
 
     const { id } = ctx.params
-    const { name } = ctx.request.body
+    const { name } = ctx.state.body
 
-    return this.ctx.model.Tag.findByIdAndUpdate(
+    return  this.ctx.model.Tag.findByIdAndUpdate(
       id,
       { $set: { name } },
       { new: true }
@@ -36,3 +35,4 @@ module.exports = class TagController extends Controller {
     return this.ctx.model.Tag.findByIdAndRemove(id)
   }
 }
+module.exports = TagController

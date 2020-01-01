@@ -1,10 +1,5 @@
 const { Controller } = require('egg')
 const { ObjectId } = require('mongoose').Types
- 
-const GuestbookModel = require('../model/guestbook')
- 
-const _ = require('lodash')
- 
 
 module.exports = class GuestbookController extends Controller {
   async queryList() {
@@ -12,7 +7,9 @@ module.exports = class GuestbookController extends Controller {
     // console.log(__filename,await models.Dialogue.find())
     let result
     if (ctx.state.platformENV === 'web') {
-      result = this.ctx.model.Guestbook.find({ responseTo: { $exists: 0 } }).populate({
+      result = this.ctx.model.Guestbook.find({
+        responseTo: { $exists: 0 },
+      }).populate({
         path: 'dialogues',
         populate: 'responseTo',
       })
@@ -20,9 +17,7 @@ module.exports = class GuestbookController extends Controller {
       result = this.ctx.model.Guestbook.find()
     }
 
-    
-
-    return result.sort({createdAt:-1})
+    return result.sort({ createdAt: -1 })
   }
   async createOne() {
     const { ctx } = this
@@ -30,9 +25,7 @@ module.exports = class GuestbookController extends Controller {
     const { content, nickname, responseTo } = ctx.request.body
     const payload = { content, nickname }
 
-    const result = await this.ctx.model.Guestbook.create(payload)
-
-    return result
+    return this.ctx.model.Guestbook.create(payload)
   }
 
   async responseToUser() {
@@ -41,8 +34,8 @@ module.exports = class GuestbookController extends Controller {
     const { id } = ctx.params
     const { content, responseTo, nickname, kind } = ctx.request.body
     const payload = { responseTo, content, nickname }
-    const doc = await this.ctx.model.Guestbook.create(payload)
-    const result = await this.ctx.model.Guestbook.findByIdAndUpdate(
+    const doc = await ctx.model.Guestbook.create(payload)
+    const result = await ctx.model.Guestbook.findByIdAndUpdate(
       id,
       {
         $addToSet: { dialogues: doc.id },
@@ -64,16 +57,8 @@ module.exports = class GuestbookController extends Controller {
 
     const { idList } = ctx.request.body
 
-   
-
-     
- 
-
-    await this.ctx.model.Guestbook.deleteMany({ _id:     idList   })
-     
+    await this.ctx.model.Guestbook.deleteMany({ _id: idList })
   }
-
-   
 
   async diggGuestbook() {
     const { ctx } = this

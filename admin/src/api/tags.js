@@ -11,6 +11,6 @@ export default {
     return request.delete(`/tags/${id}`)
   },
   updateOne(id, params) {
-    return request.put(`/tags/${id}`, params)
+    return request.patch(`/tags/${id}`, params)
   },
 }

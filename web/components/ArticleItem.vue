@@ -9,16 +9,21 @@
       <div class="text" v-html="data.content.text "></div>
 
       <div class="bottom">
-        <time>{{new Date(data.createdAt).toLocaleDateString()}}</time>
-        <i class="el-icon-view">
-          <span>{{data.pv}}</span>
-        </i>
-        <i class="el-icon-s-comment">
-          <span>{{data.commentCount}}</span>
-        </i>
-        <i class="el-icon-star-on">
-          <span>{{data.starCount}}</span>
-        </i>
+        <div class="left">
+          <el-tag size="small" v-for="(item,index) in data.tagList" :key="index">{{item.name}}</el-tag>
+        </div>
+        <div class="right">
+          <time>{{new Date(data.createdAt).toLocaleString()}}</time>
+          <i class="el-icon-view">
+            <span>{{data.pv}}</span>
+          </i>
+          <i class="el-icon-s-comment">
+            <span>{{data.commentCount}}</span>
+          </i>
+          <i class="el-icon-star-on">
+            <span>{{data.starCount}}</span>
+          </i>
+        </div>
       </div>
     </div>
 
@@ -35,8 +40,7 @@ export default {
       type: Object,
       default: () => ({})
     }
-  },
-  created() {}
+  }
 }
 </script>
 
@@ -58,11 +62,13 @@ export default {
   }
   .content {
     flex: 1;
+    width: 0;
     .nuxt-link {
       padding: 20px 0;
       color: #303133;
       font-size: 20px;
-
+      display: block;
+      .nowrap-ellipsis(100%);
       &:hover {
         color: #409eff;
         text-decoration: underline;
@@ -78,9 +84,16 @@ export default {
     }
 
     .bottom {
-      text-align: right;
+      display: flex;
+      justify-content: space-between;
       margin-top: 14px;
       color: #909399;
+      .left {
+        .el-tag {
+          margin-right: 9px;
+        }
+      }
+
       [class^='el-icon'] {
         vertical-align: middle;
         margin-left: 5px;

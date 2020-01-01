@@ -31,7 +31,11 @@ class CategoryController extends Controller {
     const { id } = ctx.params
     const payload = ctx.state.body
 
-    await this.ctx.model.Category.findByIdAndUpdate(id, { $set: payload })
+    return this.ctx.model.Category.findByIdAndUpdate(
+      id,
+      { $set: payload },
+      { new: true }
+    )
   }
 }
 

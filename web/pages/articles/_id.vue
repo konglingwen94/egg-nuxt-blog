@@ -11,7 +11,7 @@
       <section class="content-wrapper">
         <!-- 文章内容 -->
         <div class="content">
-          <h1>{{data.title}}</h1>
+          <h2>{{data.title}}</h2>
           <div v-html="data.content && data.content.html"></div>
         </div>
       </section>

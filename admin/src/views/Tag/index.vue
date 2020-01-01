@@ -9,6 +9,9 @@
           <el-table-column label="更新时间">
             <template v-slot="{row}">{{new Date(row.updatedAt).toLocaleTimeString()}}</template>
           </el-table-column>
+          <el-table-column label="创建时间">
+            <template v-slot="{row}">{{new Date(row.createdAt).toLocaleTimeString()}}</template>
+          </el-table-column>
           <el-table-column label="操作">
             <template v-slot="{row,$index}">
               <el-button type="primary" @click="editOne(row.id,row)" size="small">编辑</el-button>

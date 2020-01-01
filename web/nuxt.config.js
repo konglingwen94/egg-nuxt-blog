@@ -61,6 +61,7 @@ module.exports = {
     'normalize.css',
     // 'element-ui/lib/theme-chalk/index.css',
     '@/assets/css/overwrite.css',
+    '@/assets/css/variables.css',
   ],
   styleResources: {
     less: 'assets/css/*.less',
