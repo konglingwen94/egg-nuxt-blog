@@ -1,11 +1,6 @@
 <template>
   <div class="article">
-    <div
-      ref="banner"
-      v-if="data.cover && data.cover.path"
-      class="banner"
-      :style="bannerStyle"
-    >{{data.tagList && data.tagList.map(item=>item.name).join(' ')}}</div>
+    <div ref="banner" v-if="data.cover && data.cover.path" class="banner" :style="bannerStyle"></div>
 
     <div class="main">
       <section class="content-wrapper">
@@ -15,9 +10,16 @@
           <div v-html="data.content && data.content.html"></div>
         </div>
       </section>
+      <div class="tag-box">
+        <i class="el-icon-collection-tag"></i>
+        <el-link class="tag-item" v-for="(item,key) in data.tagList" :key="key">
+          <nuxt-link :to="{name:'articles',query:{tagID:item.id}}">{{item.name}}</nuxt-link>
+        </el-link>
+      </div>
+
       <section class="suggestion-wrapper">
         <el-divider content-position="left">相关推荐</el-divider>
-        <side-bar :dataList="suggestionList"></side-bar>
+        <suggestion :dataList="suggestionList"></suggestion>
       </section>
 
       <!-- 评论 -->
@@ -43,7 +45,7 @@
               v-model="commentForm.nickname"
               placeholder="请输入您的昵称"
             >
-              <el-button @click="handleSave" slot="append" type="button">保存</el-button>
+              <el-button :loading="buttonLoading" @click="handleSave" slot="append" type="button">保存</el-button>
             </el-input>
           </el-form-item>
         </el-form>
@@ -130,6 +132,7 @@ export default {
 
   data() {
     return {
+      buttonLoading: false,
       showSideBar: true,
       commentForm: {
         content: '',
@@ -216,17 +219,19 @@ export default {
     handleSave() {
       const { content, nickname } = this.commentForm
       if (!content) {
-        this.$message.error('请输入评论内容!')
+        this.$message.warning('请输入评论内容!')
         return
       }
 
       if (!nickname) {
-        this.$message.error('请输入您的邮箱!')
+        this.$message.warning('请输入您的邮箱!')
         return
       }
 
       const { id: article } = this.$route.params
       const payload = { content, nickname }
+
+      this.buttonLoading = true
 
       CommentService.createOne(article, payload)
         .then(response => {
@@ -234,8 +239,13 @@ export default {
           this.commentForm.content = ''
           this.commentForm.nickname = ''
           this.$message.success('评论成功')
+          this.buttonLoading = false
         })
-        .catch(err => this.$message.error(err.message))
+        .catch(err => {
+          this.$message.error(err.message)
+
+          this.buttonLoading = false
+        })
     }
   }
 }
@@ -245,58 +255,67 @@ export default {
   max-width: 1100px;
   margin: auto;
   padding-top: 100px;
+}
+.content-wrapper {
+  h2 {
+    text-align: center;
+  }
+}
 
-  .comment {
-    margin-top: 30px;
-    &-nickname {
-      width: 400px;
-    }
-    .comment-board {
-      margin-top: 40px;
-      &-item {
-        color: #444;
-        justify-content: space-between;
-        padding-bottom: 40px;
-        margin: 35px 0;
-        border-bottom: 1px solid #ccc;
-        display: flex;
-        .icon-user-wrapper {
-          font-size: 1.3em;
-          margin-right: 20px;
+.comment {
+  margin-top: 30px;
+  &-nickname {
+    width: 400px;
+  }
+  .comment-board {
+    margin-top: 40px;
+    &-item {
+      color: #444;
+      justify-content: space-between;
+      padding-bottom: 40px;
+      margin: 35px 0;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      .icon-user-wrapper {
+        font-size: 1.3em;
+        margin-right: 20px;
+      }
+      .comment-text {
+        line-height: 1.4;
+        flex: 1;
+
+        .comment-detail {
+          margin: 14px 0;
         }
-        .comment-text {
-          line-height: 1.4;
-          flex: 1;
-
-          .comment-detail {
-            margin: 14px 0;
+        .comment-footer {
+          time {
+            font-size: 14px;
+            letter-spacing: 2px;
           }
-          .comment-footer {
-            time {
-              font-size: 14px;
-              letter-spacing: 2px;
-            }
-            .el-icon-thumb {
-              cursor: pointer;
-              float: right;
-            }
-            .is-like {
-              color: blue;
-            }
-            .thumbup-count {
-              margin-left: 4px;
-              font-size: 14px;
-            }
+          .el-icon-thumb {
+            cursor: pointer;
+            float: right;
+          }
+          .is-like {
+            color: blue;
+          }
+          .thumbup-count {
+            margin-left: 4px;
+            font-size: 14px;
           }
         }
       }
     }
   }
-
-  .suggestion-wrapper {
-    margin-top: 50px;
+}
+.tag-box {
+  margin-top: 40px;
+  margin-bottom: 30px;
+  .tag-item {
+    margin-right: 9px;
   }
 }
+
 .floating-action-window {
   position: fixed;
   right: 0px;

@@ -47,7 +47,7 @@ export default {
 <style lang="less" scoped>
 .wrapper {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   // justify-content: space-between;
   .cover {
     width: 200px;
@@ -56,7 +56,7 @@ export default {
     img {
       height: 150px;
       width: 100%;
-      object-position: top;
+      object-position: center;
       object-fit: cover;
     }
   }

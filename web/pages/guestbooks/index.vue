@@ -35,7 +35,7 @@
             placeholder="输入您的昵称"
             v-model="form.nickname"
           ></el-input>
-          <el-button @click="handleSend">保存</el-button>
+          <el-button type="primary" :loading="buttonLoading" @click="handleSend">保存</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -143,6 +143,7 @@ export default {
       action: 'message',
       index: -1,
       guestbookID: '',
+      buttonLoading: false,
       form: {
         kind: '',
         nickname: '',
@@ -229,6 +230,8 @@ export default {
           ? GuestbookService.responseToUser(this.guestbookID, payload)
           : GuestbookService.createOne(payload)
 
+      this.buttonLoading = true
+
       action
         .then(response => {
           if (this.action === 'response') {
@@ -246,9 +249,11 @@ export default {
           this.action = ''
           this.responseTo = {}
           this.index = -1
+          this.buttonLoading = false
         })
         .catch(err => {
           this.$message.error(err.message)
+          this.buttonLoading = false
         })
     }
   }

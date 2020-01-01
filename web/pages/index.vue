@@ -1,8 +1,17 @@
 <template>
   <div class="home">
-    <el-carousel height="300px">
-      <el-carousel-item :label="item.title" v-for="item in carouselList" :key="item.id">
-        <img :src="item.cover.path" width="100%" />
+    <el-carousel height="300px" :autoplay="false">
+      <el-carousel-item :label="index+1" v-for="(item,index) in carouselList" :key="item.id">
+        <nuxt-link
+          :to="{name:'articles-id',params:{id:item.id,},query:{tagIdList:item.tagIdList}}"
+          class="carousel-content"
+        >
+          <img :src="item.cover.path" />
+          <div class="description">
+            <h1>{{item.title}}</h1>
+            <time>{{new Date(item.createdAt).toLocaleDateString()}}</time>
+          </div>
+        </nuxt-link>
       </el-carousel-item>
     </el-carousel>
     <article-list :dataList="articleList"></article-list>
@@ -23,7 +32,7 @@ export default {
     } catch (error) {
       return { articleList: [], carouselList: [] }
     }
-     
+
     return { articleList, carouselList }
   },
   data() {
@@ -48,6 +57,36 @@ export default {
   // display:flex;
   .article-item {
     margin-bottom: 20px;
+  }
+}
+
+.el-carousel {
+  margin: 0 -74px;
+}
+
+.el-carousel__item {
+  .carousel-content {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    background-color: lightblue;
+    img {
+      // object-position: center -250px;
+      margin-right: 80px;
+      width: 50%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    div.description {
+      padding-right: 50px;
+      flex: 1;
+      h1 {
+        .text-overflow-hidden(2);
+      }
+      // margin-left:
+    }
   }
 }
 </style>

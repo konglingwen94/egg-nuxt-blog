@@ -37,7 +37,7 @@ module.exports = {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#fff', height: '10px' },
+  loading: { color: '#67C23A' },
   /*
    ** Global CSS
    */
@@ -76,9 +76,9 @@ module.exports = {
     '/api': {
       target: 'http://localhost:7001',
     },
-    '/uploads':{
-      target:'http://localhost:7001'
-    }
+    '/uploads': {
+      target: 'http://localhost:7001',
+    },
   },
   /*
    ** Axios module configuration

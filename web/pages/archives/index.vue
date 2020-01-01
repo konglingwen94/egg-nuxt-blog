@@ -12,7 +12,7 @@
           <li class="category-item" :key="item.id">
             <el-badge :value="item.articlePublishedCount">
               <nuxt-link :to="{name:'articles',query:{ categoryID:item.id}}">
-                <el-tag type="info">{{item.name}}</el-tag>
+                <el-tag  type="info">{{item.name}}</el-tag>
               </nuxt-link>
             </el-badge>
           </li>
