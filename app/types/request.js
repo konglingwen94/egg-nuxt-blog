@@ -27,7 +27,6 @@ module.exports = {
     },
   },
   admin: {
-     
     username: {
       type: 'string',
       min: 1,
@@ -77,21 +76,19 @@ module.exports = {
     },
     cover: {
       type: 'object?',
-      
+
       rule: {
         name: {
-           
           type: 'string',
           min: 1,
         },
         path: {
-          
           type: 'string',
           min: 1,
         },
       },
     },
-    
+
     isPublished: {
       type: 'boolean?',
       default: true,
@@ -101,6 +98,13 @@ module.exports = {
     name: {
       type: 'string',
       min: 1,
+    },
+    cover: {
+      type: 'object',
+      rule: {
+        path: 'string',
+        name: 'string',
+      },
     },
   },
   comment: {
@@ -145,6 +149,12 @@ module.exports = {
       type: 'string',
       min: 1,
     },
-    
+    cover: {
+      type: 'object',
+      rule: {
+        path: 'string',
+        name: 'string',
+      },
+    },
   },
 }

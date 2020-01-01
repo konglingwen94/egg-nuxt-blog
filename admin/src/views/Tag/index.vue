@@ -25,6 +25,13 @@
           <el-form-item label="名称">
             <el-input ref="input" v-model="form.name"></el-input>
           </el-form-item>
+          <el-form-item label="封面">
+            <upload
+              :file-list="fileList"
+              @remove="form.cover={path:'',name:''} "
+              @success="response=>Object.assign(form.cover,response)"
+            ></upload>
+          </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleSubmit">确定</el-button>
           </el-form-item>
@@ -41,10 +48,12 @@ export default {
   data() {
     return {
       dataList: [],
+      fileList: [],
       activeName: 'list',
       action: 'create',
       form: {
-        name: ''
+        name: '',
+        cover: { path: '', name: '' }
       }
     }
   },
@@ -67,16 +76,23 @@ export default {
   },
   methods: {
     handleSubmit() {
-      const { name } = this.form
+      const { name, cover } = this.form
       if (!name) {
-        this.$message.error('请输入标签名称')
+        this.$message.warning('请输入标签名称')
         return
       }
 
+      if (!cover.path) {
+        this.$message.warning('请上传图片')
+        return
+      }
+
+      const payload = { name, cover }
+
       const action =
         this.action === 'edit'
-          ? TagApi.updateOne(this.editingItem.id, { name })
-          : TagApi.createOne({ name })
+          ? TagApi.updateOne(this.editingItem.id, payload)
+          : TagApi.createOne(payload)
 
       action
         .then(response => {
@@ -95,6 +111,8 @@ export default {
       this.activeName = 'list'
       this.action = 'create'
       this.form.name = ''
+      this.form.cover = { name: '', path: '' }
+      this.fileList = []
     },
     toggleTab(activeInstance) {
       if (activeInstance.name === 'list') {
@@ -121,7 +139,11 @@ export default {
       this.editingItem = row
       this.activeName = 'action'
       this.action = 'edit'
-      _.assign(this.form, _.pick(row, ['name']))
+      _.assign(this.form, _.pick(row, ['name','cover']))
+      const { path, name } = this.form.cover
+      if (path) {
+        this.fileList = [{ url: path, name }]
+      }
     }
   }
 }

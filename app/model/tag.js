@@ -10,6 +10,13 @@ module.exports = app => {
         default: '',
         unique: true,
       },
+      cover: {
+        type: Object,
+        default: {
+          name: '',
+          path: '',
+        },
+      },
     },
     {
       timestamps: true,
@@ -35,9 +42,9 @@ module.exports = app => {
     foreignField: 'tagIdList',
   })
 
-  TagSchema.pre('save', async function(next){
+  TagSchema.pre('save', async function(next) {
     const result = await models.Tag.findOne({ name: this.name })
-    console.log(__filename,this, result)
+    console.log(__filename, this, result)
     if (result) {
       const error = new Error('重复的标签名称')
       error.status = 400

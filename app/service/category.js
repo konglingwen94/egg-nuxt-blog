@@ -12,12 +12,11 @@ class CategoryService extends Service {
     return result
   }
   async queryById(id) {
-    return (
-      this.ctx.model.Category.findById(id)
-        .populate('articleList')
-        // .populate({ path: 'articlePublishedCount', match: { isPublished: true } })
-        .exec()
-    )
+    return this.ctx.model.Category.findById(id)
+      // .populate('articleList')
+      .populate({ path: 'articlePublishedCount', match: { isPublished: true } })
+      .populate({ path: 'articleCount' })
+      .exec()
   }
 }
 

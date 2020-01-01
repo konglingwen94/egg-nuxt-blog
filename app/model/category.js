@@ -10,6 +10,13 @@ module.exports = app => {
 
         default: '',
       },
+      cover: {
+        type: Object,
+        default: {
+          name: '',
+          path: '',
+        },
+      },
     },
     {
       timestamps: true,

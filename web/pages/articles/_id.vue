@@ -163,7 +163,7 @@ export default {
     },
     bannerStyle() {
       return {
-        background: `url(${this.data.cover.path})no-repeat top/100%`,
+        background: `url(${this.data.cover.path})no-repeat center/100%`,
         height: '440px',
         // color: 'red',
 

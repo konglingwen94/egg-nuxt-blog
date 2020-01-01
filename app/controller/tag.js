@@ -4,10 +4,16 @@ class TagController extends Controller {
   async createOne() {
     const { ctx, service } = this
 
-    const { name } = ctx.state.body
-
-    return this.ctx.model.Tag.create({ name })
+    const payload = ctx.state.body
+    
+    return this.ctx.model.Tag.create(payload)
   }
+
+  async queryOne() {
+    const { ctx } = this
+    return this.ctx.model.Tag.findById(ctx.params.id).populate('articleCount')
+  }
+
   async queryList() {
     const { ctx, service } = this
 
@@ -18,11 +24,11 @@ class TagController extends Controller {
     const { ctx } = this
 
     const { id } = ctx.params
-    const { name } = ctx.state.body
+    const payload = ctx.state.body
 
-    return  this.ctx.model.Tag.findByIdAndUpdate(
+    return this.ctx.model.Tag.findByIdAndUpdate(
       id,
-      { $set: { name } },
+      { $set: payload },
       { new: true }
     )
   }

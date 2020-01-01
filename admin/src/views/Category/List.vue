@@ -20,10 +20,22 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog @opened="onDialogOpen" :visible="dialogVisible" @close="closeDialog" :title="dialogTitle">
+    <el-dialog
+      @opened="onDialogOpen"
+      :visible="dialogVisible"
+      @close="closeDialog"
+      :title="dialogTitle"
+    >
       <el-form label-width="auto">
         <el-form-item label="分类名称">
           <el-input ref="input" v-model="form.name" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="分类封面">
+          <upload
+            @remove="form.cover={name:'',path:''}"
+            @success="response=>Object.assign(form.cover,response)"
+            :file-list="fileList"
+          ></upload>
         </el-form-item>
       </el-form>
       <el-button slot="footer" @click="handleSubmit">确定</el-button>
@@ -37,8 +49,10 @@ import ArticleCategoryService from '@/api/categories'
 export default {
   data() {
     return {
+      fileList: [],
       form: {
-        name: ''
+        name: '',
+        cover: { path: '', name: '' }
       },
       dialogVisible: false,
       dataList: [],
@@ -72,6 +86,8 @@ export default {
     },
     resetDialog() {
       this.form.name = ''
+      this.form.cover = { name: '', path: '' }
+      this.fileList = []
     },
     handleAdd() {
       this.action = 'create'
@@ -98,18 +114,29 @@ export default {
     editOne(item) {
       this.action = 'edit'
       this.editingItem = item
-      _.assign(this.form, _.pick(item, _.keys(this.form)))
+      _.merge(this.form, _.pick(item, _.keys(this.form)))
+
+      if (this.form.cover.path) {
+        this.fileList = [
+          { url: this.form.cover.path, name: this.form.cover.name }
+        ]
+      }
+
       this.openDialog()
     },
     handleSubmit() {
-      const { name } = this.form
+      const { name, cover } = this.form
 
       if (!name) {
         this.$message.error('请输入文章分类名称')
         return
       }
+      if (!cover.path) {
+        this.$message.error('请上传文章分类封面')
+        return
+      }
 
-      const payload = { name }
+      const payload = { name, cover }
 
       const action =
         this.action === 'create'
