@@ -12,7 +12,7 @@
           <li class="category-item" :key="item.id">
             <el-badge :value="item.articlePublishedCount">
               <nuxt-link :to="{name:'articles',query:{ categoryID:item.id}}">
-                <el-tag  type="info">{{item.name}}</el-tag>
+                <el-tag type="info">{{item.name}}</el-tag>
               </nuxt-link>
             </el-badge>
           </li>
@@ -57,8 +57,7 @@ export default {
     }
 
     return { categoryList, tagList }
-  },
-   
+  }
 }
 </script>
 
@@ -66,12 +65,23 @@ export default {
 .icon-inner-text {
   margin-left: 3px;
 }
+.category {
+  margin-bottom: 70px;
+  margin-top: 40px;
+}
+
 .category-list {
-  margin-top: 30px;
+  margin-top: 44px;
   display: flex;
   .category-item {
     margin-right: 20px;
     cursor: pointer;
   }
+}
+
+.el-tag {
+  padding: 0 18px;
+  border-radius: 20px;
+  zoom:1.2;
 }
 </style>

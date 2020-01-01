@@ -1,12 +1,25 @@
 <template>
   <div class="article">
-    <div ref="banner" v-if="data.cover && data.cover.path" class="banner" :style="bannerStyle"></div>
+    <div ref="banner" v-if="data.cover && data.cover.path" class="banner" :style="bannerStyle">
+      <div class="tag-box">
+        <el-tag
+          size="medium"
+          type="info"
+          v-for="(tag,index)  in data.tagList"
+          :key="index"
+        >{{tag.name}}</el-tag>
+      </div>
+
+      <h1>{{data.title}}</h1>
+
+      <time>{{new Date(data.createdAt).toLocaleString()}}</time>
+    </div>
 
     <div class="main">
       <section class="content-wrapper">
         <!-- 文章内容 -->
         <div class="content">
-          <h2>{{data.title}}</h2>
+          <h1>{{data.title}}</h1>
           <div v-html="data.content && data.content.html"></div>
         </div>
       </section>
@@ -151,11 +164,10 @@ export default {
     bannerStyle() {
       return {
         background: `url(${this.data.cover.path})no-repeat top/100%`,
-        height: '300px',
-        color: 'red',
-        fontSize: '50px',
-        textAlign: 'center',
-        lineHeight: 3
+        height: '440px',
+        // color: 'red',
+
+        textAlign: 'center'
       }
     }
   },
@@ -256,6 +268,27 @@ export default {
   margin: auto;
   padding-top: 100px;
 }
+
+.banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  color: white;
+  .el-tag {
+    margin-right: 7px;
+    border-radius: 13px;
+    padding: 0 20px;
+  }
+  h1 {
+    .text-overflow-hidden(1);
+  }
+
+  time {
+    letter-spacing: 2px;
+  }
+}
+
 .content-wrapper {
   h2 {
     text-align: center;

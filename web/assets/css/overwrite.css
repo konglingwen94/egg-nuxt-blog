@@ -16,12 +16,22 @@ li {
   padding: 0;
 }
 
-h1,h2 {
+h1 {
   font-weight: 500;
+}
+h2 {
+  font-weight: 400;
 }
 
 h3,
 h4,
 h5 {
   font-weight: 100;
+}
+
+div,
+header,
+footer,
+main {
+  box-sizing: border-box;
 }

@@ -22,7 +22,9 @@ export default {
 
 <style lang='less' scoped>
 .header {
+  height:160px;
   padding: 20px;
+  padding-top:40px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   padding-left: 200px;
 }
@@ -30,6 +32,10 @@ export default {
   display: flex;
   .theme-mode-wrapper {
     width: 30%;
+  }
+
+  .el-menu-item {
+    font-size: 18px;
   }
 }
 </style>
