@@ -6,6 +6,7 @@ const UserLayout = () => import('@/layouts/User')
 const NotFound = () => import('@/layouts/NotFound')
 
 const Dashboard = () => import('@/views/Dashboard')
+const Carousel = () => import('@/views/Carousel')
 const Login = () => import('@/views/Login')
 const Security = () => import('@/views/Security')
 const ArticleList = () => import('@/views/Article/List.vue')
@@ -15,7 +16,6 @@ const Comment = () => import('@/views/Comment/List')
 const Guestbook = () => import('@/views/Guestbook/List')
 const About = () => import('@/views/About')
 const Tag = () => import('@/views/Tag')
-
 
 Vue.use(Router)
 
@@ -135,6 +135,14 @@ const router = new Router({
           component: Tag,
           meta: {
             title: '标签列表',
+          },
+        },
+        {
+          name: 'carousels',
+          path: 'carousels',
+          component: Carousel,
+          meta: {
+            title: '轮播图',
           },
         },
       ],

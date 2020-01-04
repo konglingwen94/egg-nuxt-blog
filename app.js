@@ -13,14 +13,6 @@ class AppBootHook {
     const { url } = this.app.config.mongoose
     mongooseDB.on('open', () => console.log(`Database is connected on ${url}`))
     mongooseDB.on('error', error => console.error(error))
-
-    // this.app.loader.loadFile(
-    //   path.join(this.app.config.baseDir, 'app/utils/schemaHook.js')
-    // )
-    // this.app.loader.loadFile(
-    //   path.join(this.app.config.baseDir, 'app/utils/virtualType.js')
-    // )
-    // console.log(__filename, this.app.mongoose)
   }
   async willReady() {
     // const nuxt = new Nuxt(nuxtConfig)

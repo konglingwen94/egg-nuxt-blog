@@ -6,7 +6,10 @@ module.exports = app => {
    *
    *  */
 
-  const apiRouter = router.namespace('/api', middleware.parameterValidator())
+  const apiRouter = router.namespace(
+    '/api',
+    middleware.commonParameterValidator()
+  )
 
   /***
    *

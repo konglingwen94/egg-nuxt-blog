@@ -43,7 +43,7 @@ module.exports = appInfo => {
       nuxtConfig: {
         buildDir: resolve(__dirname, '../public/web'),
       },
-      ignore: ['/api', '/admin', '/docs'],
+      ignore: ['/api', '/admin', '/docs', '/uploads'],
     },
     responseHandler: {
       match: ['/api'],
@@ -54,16 +54,19 @@ module.exports = appInfo => {
       //   return true
       // },
     },
+    platformENV: {
+      match: '/api',
+    },
     errorHandler: {
       match: ['/api'],
     },
-    parameterValidator: {
-      methods: ['POST', 'PUT', 'PATCH'],
+    commonParameterValidator: {
+      requestMethods: ['POST', 'PUT', 'PATCH'],
     },
     middleware: [
       'errorHandler',
       'platformENV',
-      'siteTraffic',
+      // 'siteTraffic',
       'adminRequired',
       'upload',
 

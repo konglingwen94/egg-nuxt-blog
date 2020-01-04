@@ -1,14 +1,8 @@
 module.exports = {
   about: {
-    id: {
-      tyep: 'string',
-      min: 24,
-      maxLength: 24,
-    },
     profile: {
       type: 'object',
-      required: ['description'],
-      properties: {
+      rule: {
         description: {
           type: 'string',
           min: 1,
@@ -17,8 +11,7 @@ module.exports = {
     },
     platform: {
       type: 'object',
-      required: ['description'],
-      properties: {
+      rule: {
         description: {
           type: 'string',
           min: 1,
@@ -35,21 +28,17 @@ module.exports = {
       type: 'string',
       min: 6,
     },
-    oldPassword: {
-      type: 'string',
-      min: 6,
-    },
-    newPassword: {
-      type: 'string',
-      min: 6,
+    nickname: {
+      type: 'string?',
+      min: 1,
     },
     role: {
-      type: 'string',
-      enmu: ['JUNIOR', 'SENIOR'],
+      type: 'enum?',
+      values: ['JUNIOR', 'SENIOR'],
     },
     level: {
-      type: 'number',
-      enmu: [1, 10],
+      type: 'enum?',
+      values: [1, 10],
     },
   },
   article: {
@@ -79,11 +68,11 @@ module.exports = {
 
       rule: {
         name: {
-          type: 'string',
+          type: 'string?',
           min: 1,
         },
         path: {
-          type: 'string',
+          type: 'string?',
           min: 1,
         },
       },

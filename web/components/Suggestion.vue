@@ -2,7 +2,7 @@
   <div class="suggestion">
     <dl>
       <dt v-for="item in dataList" :key="item.id" class="suggestion-item">
-        {{new Date(item.createdAt).toLocaleDateString()}}
+        <time>{{new Date(item.createdAt).toLocaleDateString()}}</time>
         <nuxt-link
           :title="item.title"
           :to="{name:'articles-id',params:{id:item.id},query:{tagIdList:item.tagIdList}}"
@@ -34,6 +34,12 @@ export default {
 }
 .suggestion-item {
   line-height: 2;
-  color: lightcoral;
+  color: #333;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  time{
+    margin-right:7px;
+  }
 }
 </style>

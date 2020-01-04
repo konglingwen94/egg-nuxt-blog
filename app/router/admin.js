@@ -1,6 +1,9 @@
 module.exports = app => {
   const { controller, middleware } = app
-  const router = app.router.namespace('/api', middleware.parameterValidator())
+  const router = app.router.namespace(
+    '/api',
+    middleware.commonParameterValidator()
+  )
 
   /**
    *
@@ -8,18 +11,20 @@ module.exports = app => {
    */
 
   router.post(
+    'admin',
     '/admin/auth/login',
 
     controller.admin.login
   )
 
-  router.put(
+  router.patch(
     '/admin/accounts/:id/change-password',
 
     controller.admin.changePass
   )
 
-  router.put(
+  router.patch(
+    'admin',
     '/admin/accounts/:id',
 
     controller.admin.changeAccount

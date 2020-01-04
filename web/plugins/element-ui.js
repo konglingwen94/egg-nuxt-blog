@@ -16,7 +16,8 @@ import {
   MenuItem,
   Carousel,
   CarouselItem,
-  Image
+  Image,
+  Calendar,
 } from 'element-ui'
 import Vue from 'vue'
 
@@ -38,5 +39,6 @@ export default () => {
   Vue.use(MenuItem)
   Vue.use(Carousel)
   Vue.use(CarouselItem)
+  Vue.use(Calendar)
   Vue.prototype.$message = Message
 }

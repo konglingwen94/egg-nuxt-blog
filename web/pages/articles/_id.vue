@@ -284,13 +284,11 @@ export default {
     .text-overflow-hidden(1);
   }
 
-  time {
-    letter-spacing: 2px;
-  }
+   
 }
 
 .content-wrapper {
-  h2 {
+  h1 {
     text-align: center;
   }
 }

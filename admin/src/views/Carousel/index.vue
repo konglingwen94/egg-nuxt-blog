@@ -1,12 +1,9 @@
 <template>
-  <div class="">comment</div>
+  <div class>carousel</div>
 </template>
-
 <script>
 export default {
-  props:{
-    
-  }
+  name: 'Carousel'
 }
 </script>
 

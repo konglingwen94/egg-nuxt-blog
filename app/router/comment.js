@@ -1,6 +1,9 @@
 module.exports = app => {
   const { controller, middleware } = app
-  const router = app.router.namespace('/api', middleware.parameterValidator())
+  const router = app.router.namespace(
+    '/api',
+    middleware.commonParameterValidator()
+  )
   /**
    * comments
    */

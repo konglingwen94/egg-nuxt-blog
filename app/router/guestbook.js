@@ -1,17 +1,20 @@
 module.exports = app => {
   const { controller, middleware } = app
-  const router = app.router.namespace('/api', middleware.parameterValidator())
+  const router = app.router.namespace(
+    '/api',
+    middleware.commonParameterValidator()
+  )
 
   /**
    * guestbooks
    *  */
 
   router.get('/admin/guestbooks', controller.guestbook.queryList)
-   
+
   router.delete(
     '/admin/guestbooks/:id',
 
-    controller.guestbook.deleteOne 
+    controller.guestbook.deleteOne
   )
 
   router.delete(
@@ -19,7 +22,6 @@ module.exports = app => {
 
     controller.guestbook.deleteMany
   )
-   
 
   router.post('/guestbooks/:id/digg', controller.guestbook.diggGuestbook)
 

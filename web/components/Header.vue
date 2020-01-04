@@ -12,19 +12,66 @@
         <el-menu-item index="/guestbooks">留言墙</el-menu-item>
       </el-menu>
     </div>
+    <div class="weather-container">
+      <vue-weather title :enableCredits="false" :forecast="[]" units="ca" :currentDay="currentDay"></vue-weather>
+    </div>
   </div>
 </template>
 <script>
+import request from '@/services/request'
+
 export default {
-  name: 'Header'
+  name: 'Header',
+  async created() {
+    if (process.server) {
+      return
+    }
+    let coords
+
+    const getCurrentPosition = new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(result => {
+        resolve(result.coords)
+      })
+    })
+
+    getCurrentPosition.then(coords => {
+      console.log(coords)
+      alert(coords.longitude)
+      alert(coords.latitude)
+
+      request.get('/location-city', {
+        params: { lng: coords.longitude, lat: coords.latitude }
+      })
+    })
+
+    const result = await request.get('/weather', {
+      params: {
+        city: '郑州'
+      }
+    })
+
+    Object.assign(this.currentDay, result)
+    return { result }
+  },
+  data() {
+    return {
+      currentDay: {
+        icon: 'fog',
+        temp: '0',
+        currentSummary: '',
+        hourlySummary: '',
+        windSpeed: 0
+      }
+    }
+  }
 }
 </script>
 
 <style lang='less' scoped>
 .header {
-  height:160px;
+  height: 160px;
   padding: 20px;
-  padding-top:40px;
+  padding-top: 40px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   padding-left: 200px;
 }
@@ -36,6 +83,15 @@ export default {
 
   .el-menu-item {
     font-size: 18px;
+  }
+}
+.weather-container {
+  height: 200px;
+  position: absolute;
+  top: 20px;
+  right: 100px;
+  /deep/ #header {
+    display: none;
   }
 }
 </style>

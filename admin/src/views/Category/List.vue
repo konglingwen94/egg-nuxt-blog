@@ -5,8 +5,13 @@
     </div>
 
     <el-table :data="dataList" border>
-      <el-table-column label="ID" prop="id"></el-table-column>
       <el-table-column label="分类名称" prop="name"></el-table-column>
+      <el-table-column label="封面"  >
+        <template v-slot="{row}">
+
+        <el-image :src="row.cover.path" style="width:80px;height:80px" fit="cover" :preview-src-list="[row.cover.path]"></el-image>
+        </template>
+      </el-table-column>
       <el-table-column label="文章数量" prop="articleCount"></el-table-column>
       <el-table-column label="已发布文章数量" prop="articlePublishedCount"></el-table-column>
       <el-table-column label="创建时间">

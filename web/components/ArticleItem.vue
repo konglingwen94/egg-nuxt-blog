@@ -28,7 +28,16 @@
     </div>
 
     <div class="cover">
-      <img alt="图片加载失败" :src="data.cover && data.cover.path" />
+      <el-image
+        ref="image"
+        style="height:160px;width:100%"
+        fit="cover"
+        :src="data.cover && data.cover.path"
+        @error="onImageError"
+      >
+        <!-- <span slot="error">加载失败</span> -->
+        <!-- <span slot="placeholder">暂未加载</span> -->
+      </el-image>
     </div>
   </div>
 </template>
@@ -39,6 +48,27 @@ export default {
     data: {
       type: Object,
       default: () => ({})
+    }
+  },
+  methods: {
+    async onImageError(e) {
+      await this.$nextTick()
+      const attrSrc = e && e.path && e.path[0].getAttribute('src')
+      const el = this.$refs.image.$el.querySelector('.el-image__error')
+
+      if (!attrSrc) {
+        el.innerHTML = '暂无图片'
+        return
+      }
+
+      try {
+        new URL(attrSrc)
+      } catch (e) {
+        return
+      }
+
+      // el.innerHTML = '暂无图片'
+      // console.log(e)
     }
   }
 }
@@ -53,11 +83,15 @@ export default {
     width: 200px;
     margin-left: 30px;
     // margin-right: 0;
-    img {
-      height: 150px;
-      width: 100%;
-      object-position: center;
-      object-fit: cover;
+    /deep/ .el-image__error {
+      &:after {
+        // content: '暂无图片';
+        color: #c0c4cc;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+      }
     }
   }
   .content {
@@ -78,9 +112,6 @@ export default {
       margin-top: 14px;
       color: #606266;
       .text-overflow-hidden(3);
-      /deep/img {
-        width: 100%;
-      }
     }
 
     .bottom {
@@ -103,7 +134,6 @@ export default {
       }
       time {
         font-size: 12px;
-        letter-spacing: 2px;
       }
     }
   }

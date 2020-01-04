@@ -4,6 +4,11 @@ module.exports = {
   /*
    ** Headers of the page
    */
+
+  server: {
+    host: '192.168.2.155',
+    port:3000
+  },
   env: {
     baseUrl:
       process.env.NODE_ENV === 'production'
@@ -48,6 +53,8 @@ module.exports = {
     { src: '@/plugins/global-components.js' },
     { src: '@/plugins/element-ui', ssr: true },
     { src: '@/plugins/init-store', ssr: false },
+    { src: '@/plugins/vue-weather.js', ssr: false },
+    { src: '@/plugins/vconsole.js', ssr: false },
   ],
   /*
    ** Nuxt.js dev-modules

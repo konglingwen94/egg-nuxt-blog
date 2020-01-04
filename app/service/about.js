@@ -1,13 +1,9 @@
 const { Service } = require('egg')
-// const AboutModel = require('../model/about')
+ 
 
 class AboutService extends Service {
   async create(payload) {
-    try {
-      var result = this.ctx.model.About.create(payload)
-    } catch (error) {
-      return {}
-    }
+    var result = this.ctx.model.About.create(payload)
     return result
   }
   async queryByIdAndRemove(id) {

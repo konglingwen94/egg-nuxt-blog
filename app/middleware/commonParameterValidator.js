@@ -13,9 +13,9 @@ module.exports = () => {
       ctx.validate(paramSchema, ctx.params)
     }
 
-    const { methods } = ctx.app.config.parameterValidator
+    const { requestMethods } = ctx.app.config.commonParameterValidator
 
-    if (!methods.includes(ctx.method) || !ctx._matchedRouteName) {
+    if (!requestMethods.includes(ctx.method) || !ctx._matchedRouteName) {
       return await next()
     }
 

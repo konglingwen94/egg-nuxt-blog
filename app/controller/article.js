@@ -13,7 +13,7 @@ class ArticleController extends Controller {
     return service.article
       .queryList()
       .sort('-pv -createdAt')
-      .limit(3)
+      .limit(13)
   }
   async querySuggestionList() {
     const { ctx, service } = this

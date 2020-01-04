@@ -9,118 +9,69 @@ class AdminController extends Controller {
   async login() {
     const { ctx, config, service } = this
 
-    const required = ['username', 'password']
-
-    const schema = { properties, required }
-    const data = _.pick(ctx.request.body, required)
-
-    const isValid = ctx.ajv.validate(schema, data)
-    if (!isValid) {
-      throw new ParameterException(ctx.ajv.errors)
-      return
-    }
+    const data = ctx.state.body
 
     const { username, password } = data
 
-    try {
-      var result = await service.admin.queryOneByUsername(username)
-    } catch (error) {
-      throw error
-    }
+    const result = await service.admin.queryOneByUsername(username)
 
     if (!result) {
-      return ctx.throw(404, '没有此用户')
+      ctx.throw(404, '没有此用户')
     }
-    try {
-      var valid = await service.admin.comparePass(password, result.password)
-    } catch (error) {
-      throw error
-    }
+    const valid = await service.admin.comparePass(password, result.password)
 
     if (!valid) {
-      return ctx.throw(403, '密码不正确')
+      ctx.throw(403, '密码不正确')
     }
 
-    const user = _.pick(result, fields)
+    const adminInfo = _.omit(ctx.helper.patchFieldForData(result), 'password')
 
     const { secretKey, expiresIn } = config.adminSecret
-    const token = jwt.sign(user, secretKey, {
+    const token = jwt.sign(adminInfo, secretKey, {
       expiresIn,
     })
 
-    ctx.body = {
-      adminInfo: user,
+    return {
+      adminInfo,
       token,
     }
   }
   async changePass() {
     const { ctx, service } = this
-    const required = ['oldPassword', 'newPassword', 'id']
+
     const { id } = ctx.params
-    const schema = {
-      required,
-      properties,
-    }
 
-    const data = _.pick(ctx.request.body, required)
+    const payload = ctx.request.body
+    const passwordRule = ctx.validationRule.admin.password
+     
+    ctx.validate(
+      {
+        newPassword: passwordRule,
+        oldPassword: passwordRule,
+      },
+      payload
+    )
 
-    const isValid = ctx.ajv.validate(schema, { ...data, id })
+    const { oldPassword, newPassword } = payload
 
-    if (!isValid) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
-    const { oldPassword, newPassword } = data
+    const { password } = await service.admin.queryById(id)
+    const passwordValidation = await service.admin.comparePass(
+      oldPassword,
+      password
+    )
 
-    try {
-      var { password } = await service.admin.queryById(id)
-    } catch (error) {
-      throw error
-    }
-    const valid = await service.admin.comparePass(oldPassword, password)
-
-    if (!valid) {
+    if (!passwordValidation) {
       return ctx.throw(403, '错误的原密码')
     }
 
-    try {
-      var hashPass = await service.admin.hashPass(newPassword)
-    } catch (error) {
-      throw error
-    }
-    try {
-      await service.admin.queryByIdAndUpdate(id, { password: hashPass })
-    } catch (error) {
-      throw error
-    }
-    ctx.status = 204
+    const hashPass = await service.admin.hashPass(newPassword)
+    await service.admin.queryByIdAndUpdate(id, { password: hashPass })
   }
   async changeAccount() {
     const { ctx, service } = this
     const { id } = ctx.params
-    const required = ['nickname', 'username', 'id']
 
-    const payload = _.pick(ctx.request.body, ['username', 'nickname'])
-
-    const valid = ctx.ajv.validate(
-      {
-        required,
-        properties,
-      },
-      {
-        ...payload,
-        id,
-      }
-    )
-
-    if (!valid) {
-      throw new ParameterException(ctx.ajv.errors)
-    }
-    try {
-      await service.admin.queryByIdAndUpdate(id, payload)
-    } catch (error) {
-      throw error
-    }
-    ctx.status = 204
+    await service.admin.queryByIdAndUpdate(id, ctx.state.body)
   }
 }
 
