@@ -1,9 +1,8 @@
 const { Controller } = require('egg')
 const _ = require('lodash')
-const { ParameterException } = require('../utils/httpExceptions')
+ 
 const jwt = require('jsonwebtoken')
-const properties = require('../types/request').admin
-const fields = require('../types/response').admin
+ 
 
 class AdminController extends Controller {
   async login() {
