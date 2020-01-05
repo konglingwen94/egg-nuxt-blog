@@ -9,9 +9,24 @@ class AppBootHook {
     app.config.coreMiddleware.unshift('history', 'docs', 'compress')
   }
   didLoad() {
-    const { mongooseDB, mongoose } = this.app
+    const { mongooseDB, mongoose, config, model } = this.app
     const { url } = this.app.config.mongoose
-    mongooseDB.on('open', () => console.log(`Database is connected on ${url}`))
+
+    mongooseDB.on('open', async () => {
+      console.log(`Database is connected on ${url}`)
+      // console.log(__filename, this.app)
+      // let result = await model.About.findOne({})
+
+      // if (!result) {
+      //   try {
+      //     result = await model.About.create(config.aboutDefaultConfig)
+      //   } catch (error) {
+      //     console.error(error)
+      //   }
+      // }
+
+      // console.log(__filename, result)
+    })
     mongooseDB.on('error', error => console.error(error))
   }
   async willReady() {

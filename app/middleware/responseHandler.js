@@ -1,10 +1,24 @@
+const { Document } = require('mongoose')
+
 module.exports = (opts, app) => {
   return async (ctx, next) => {
     const data = await next()
+    const response = (function recursion(data) {
+      if (data instanceof Document) {
+        return ctx.helper.patchFieldToData(data)
+      }
 
-    const response = Array.isArray(data)
-      ? data.map(ctx.helper.patchFieldForData)
-      : ctx.helper.patchFieldForData(data)
+      for (let key in data) {
+        if (data[key] instanceof Document) {
+          data[key] = ctx.helper.patchFieldToData(data[key])
+        }
+        if (typeof data[key] === 'object') {
+          recursion(data[key])
+        }
+      }
+
+      return data
+    })(data)
 
     ctx.body = response
   }

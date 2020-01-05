@@ -1,7 +1,12 @@
 <template>
   <div class="home">
-    <el-carousel height="380px" :autoplay="false">
-      <el-carousel-item :label="index+1" v-for="(item,index) in carouselList" :key="item.id">
+    <el-carousel
+      :interval="carousel.configOptions.interval"
+      :loop="carousel.configOptions.loop"
+      height="380px"
+      :autoplay="carousel.configOptions.autoplay"
+    >
+      <el-carousel-item :label="index+1" v-for="(item,index) in carousel.data" :key="item.id">
         <nuxt-link
           :to="{name:'articles-id',params:{id:item.id,},query:{tagIdList:item.tagIdList}}"
           class="carousel-content"
@@ -9,7 +14,15 @@
           <img v-if="item.cover.path" :src="item.cover.path" />
           <div class="description">
             <h1>{{item.title}}</h1>
-            <time>{{new Date(item.createdAt).toLocaleDateString()}}</time>
+            <div class="pv">
+              <label for>浏览量:</label>
+              <span>{{item.pv}}</span>
+            </div>
+            <div class="starCount">
+              <label for>收藏数:</label>
+              <span>{{item.starCount}}</span>
+            </div>
+            <time>{{new Date(item.createdAt).toLocaleString()}}</time>
           </div>
         </nuxt-link>
       </el-carousel-item>
@@ -24,19 +37,16 @@ export default {
   layout: 'Public',
   async asyncData({ req }) {
     try {
-      var [articleList, carouselList = []] = await Promise.all([
+      var [articleList, carousel = {}] = await Promise.all([
         // req.service.article.queryList()
         ArticleService.fetchList(),
         ArticleService.fetchCarouselList()
       ])
     } catch (error) {
-      return { articleList: [], carouselList: [] }
+      return { articleList: [], carousel: {} }
     }
 
-    return { articleList, carouselList }
-  },
-  data() {
-    return {}
+    return { articleList, carousel }
   },
   head() {
     return {
@@ -82,12 +92,12 @@ export default {
     }
 
     div.description {
-      margin-left:30px;
-      margin-right:30px;
-      text-align:center  ;
+      margin-left: 30px;
+      margin-right: 30px;
+      text-align: center;
       flex: 1;
       h1 {
-      text-align:center !important;
+        text-align: center !important;
         .text-overflow-hidden(2);
       }
       // margin-left:

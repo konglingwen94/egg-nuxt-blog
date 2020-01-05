@@ -12,6 +12,7 @@ import {
   Form,
   FormItem,
   Input,
+  InputNumber,
   Icon,
   Tag,
   Menu,
@@ -35,6 +36,8 @@ import {
   Row,
   Checkbox,
   CheckboxGroup,
+  RadioGroup,
+  Radio
 } from 'element-ui'
 
 export default () => {
@@ -59,9 +62,8 @@ export default () => {
   Vue.use(Form)
   Vue.use(FormItem)
   Vue.use(Input)
-
+  Vue.use(InputNumber)
   Vue.use(Icon)
-
 
   Vue.use(Tag)
   Vue.use(Image)
@@ -75,6 +77,9 @@ export default () => {
   Vue.use(Switch)
   Vue.use(Select)
   Vue.use(Option)
+  Vue.use(RadioGroup)
+  Vue.use(Radio)
+
   Vue.prototype.$message = Message
   Vue.prototype.$confirm = MessageBox.confirm
 }

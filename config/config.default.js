@@ -2,6 +2,28 @@ const { resolve } = require('path')
 
 module.exports = appInfo => {
   return {
+    aboutDefaultConfig: {
+      carousel: {
+        number: 4,
+        sort: 'pv',
+        interval: 3000,
+        loop: true,
+        autoplay: true,
+      },
+      platform: {
+        description: '',
+      },
+      profile: {
+        description: '',
+      },
+      contact: {
+        qq: '',
+        wechat: '',
+        github: '',
+        phone: '',
+      },
+    },
+
     keys: appInfo.name,
     static: {
       prefix: '',

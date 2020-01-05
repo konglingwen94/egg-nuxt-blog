@@ -3,18 +3,20 @@ const { Controller } = require('egg')
 
 class AboutController extends Controller {
   async getOne() {
-    const { ctx, service } = this
-    const result = await service.about.queryOne()
+    const { ctx, service, config } = this
+    const result = (await service.about.queryOne()) || config.aboutDefaultConfig
     return result
   }
-  async createOne() {
-    const { ctx, service } = this
-
-    const payload = ctx.state.body
-
-    ctx.status = 201
-
-    return service.about.create(payload)
+  async overwriteOne() {
+    const { ctx, config, service } = this
+    const { id } = ctx.params
+    const result = await ctx.model.About.findByIdAndUpdate(
+      id,
+      config.aboutDefaultConfig,
+      { new: true }
+    )
+    console.log(__filename, result)
+    return result
   }
   async updateOne() {
     const { ctx, service } = this
@@ -23,11 +25,11 @@ class AboutController extends Controller {
 
     await service.about.queryByIdAndUpdate(id, payload)
   }
-  async deleteOne() {
-    const { service, ctx } = this
-    const { id } = ctx.params
-
-    await service.about.queryByIdAndRemove(id)
+  async createOne() {
+    const { ctx } = this
+    ctx.status = 201
+    console.log(__filename,ctx.state.body)
+    return ctx.model.About.create(ctx.state.body)
   }
 }
 

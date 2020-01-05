@@ -23,6 +23,16 @@ module.exports = app => {
           description: '',
         },
       },
+      carousel: {
+        type: Object,
+        default: {
+          number: 0,
+          sort: 'pv',
+          interval: 3000,
+          loop: false,
+          autoplay: true,
+        },
+      },
     },
     { timestamps: true }
   )

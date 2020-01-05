@@ -4,16 +4,31 @@ const _ = require('lodash')
 
 class ArticleController extends Controller {
   async queryList() {
-    const { service} = this
+    const { service } = this
 
     return service.article.queryList().sort('-createdAt')
   }
   async queryCarouselList() {
-    const { service } = this
-    return service.article
+    const { service, ctx } = this
+    const defaultCarouselConfig = {
+      number: 4,
+      sort: 'pv',
+      interval: 3000,
+      loop: true,
+      autoplay: true,
+    }
+    const aboutResult = (await this.ctx.model.About.findOne({})) || {
+      carousel: defaultCarouselConfig,
+    }
+
+    const { number, sort } = aboutResult.carousel
+    const data = await service.article
       .queryList()
-      .sort('-pv -createdAt')
-      .limit(13)
+      .setOptions({ sort: { [sort]: -1, createdAt: -1 } })
+      // .sort('-pv -createdAt')
+      .limit(number)
+    // console.log(__filename, carouselOptions)
+    return { data, configOptions: aboutResult.carousel }
   }
   async querySuggestionList() {
     const { ctx, service } = this
@@ -22,7 +37,7 @@ class ArticleController extends Controller {
     const { id } = ctx.params
 
     return this.ctx.model.Article.find({
-      tagIdList:{$in:tagIdList},
+      tagIdList: { $in: tagIdList },
       _id: { $ne: id },
     })
   }

@@ -5,12 +5,12 @@ export default {
     return request.get('/about')
   },
   updateOne(id, params) {
-    return request.put(`/abouts/${id}`, params)
+    return request.patch(`/abouts/${id}`, params)
   },
-  createOne(params) {
-    return request.post('/abouts', params)
+  resetOne(id) {
+    return request.put(`/abouts/${id}`)
   },
-  deleteOne(id) {
-    return request.delete(`/abouts/${id}`)
+  createOne(payload) {
+    return request.post('/abouts', payload)
   },
 }

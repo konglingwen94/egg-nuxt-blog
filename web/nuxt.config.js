@@ -54,7 +54,7 @@ module.exports = {
     { src: '@/plugins/element-ui', ssr: true },
     { src: '@/plugins/init-store', ssr: false },
     { src: '@/plugins/vue-weather.js', ssr: false },
-    { src: '@/plugins/vconsole.js', ssr: false },
+    // { src: '@/plugins/vconsole.js', ssr: false },
   ],
   /*
    ** Nuxt.js dev-modules
