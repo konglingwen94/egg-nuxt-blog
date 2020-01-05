@@ -6,9 +6,16 @@
 
     <div class="carousel-wrapper">
       <el-card header="轮播图配置">
-        <el-form :model="carousel">
+        <el-form :model="carousel" label-suffix=" : ">
           <el-form-item label="轮播图个数">
-            <el-input-number :min="1" v-model.number="carousel.number"></el-input-number>
+            <el-input-number
+              :step="1"
+              :max="10"
+              :min="1"
+              :step-strictly="true"
+              :precision="0"
+              v-model.number="carousel.number"
+            ></el-input-number>
           </el-form-item>
 
           <el-form-item label="轮播图排序">
@@ -17,8 +24,14 @@
               <el-radio label="starCount">收藏个数</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="自动切换时间">
-            <el-input-number :min="500" :step="500" v-model="carousel.interval"></el-input-number>
+          <el-form-item label="自动切换时间 (毫秒)">
+            <el-input-number
+              :min="500"
+              :step="500"
+              :precision="0"
+              label="ddd"
+              v-model="carousel.interval"
+            ></el-input-number>
           </el-form-item>
           <el-form-item label="是否自动播放">
             <el-switch v-model="carousel.autoplay"></el-switch>
@@ -34,8 +47,8 @@
     </div>
     <div class="profile-wrapper">
       <el-card header="博主简介">
-        <el-form>
-          <el-form-item>
+        <el-form :model="profile" ref="profile">
+          <el-form-item prop="profile" :rules="{required:true,trigger:'blur',message:'博主简介不能为空'}">
             <el-input type="textarea" clearable :rows="4" v-model="profile.description"></el-input>
           </el-form-item>
           <el-form-item>
@@ -46,8 +59,11 @@
     </div>
     <div>
       <el-card header="博客简介">
-        <el-form>
-          <el-form-item>
+        <el-form :model="platform" ref="platform">
+          <el-form-item
+            prop="description"
+            :rules="{required:true,trigger:'blur',message:'描述信息不能为空'}"
+          >
             <el-input type="textarea" clearable :rows="4" v-model="platform.description"></el-input>
           </el-form-item>
           <el-form-item>
@@ -76,7 +92,7 @@ export default {
     platform: {
       // description: ''
     },
-    id:'',
+    id: '',
     carousel: {
       // number: -1,
       // sort: '',
@@ -87,9 +103,7 @@ export default {
   }),
   created() {
     AboutApi.fetchOne().then(response => {
-
-      _.assign(this.$data,response)
-      
+      _.assign(this.$data, response)
     })
   },
   methods: {
@@ -112,7 +126,12 @@ export default {
           this.$message.error(err.message)
         })
     },
-    submit(key) {
+    async submit(key) {
+      console.log(key)
+      const validationResult = await this.$refs[key].validate()
+
+      console.log(validationResult)
+
       const { id } = this
       const payload = { [key]: this.$data[key] }
       const action = id
