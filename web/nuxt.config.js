@@ -5,8 +5,8 @@ module.exports = {
    ** Headers of the page
    */
 
-  server: {
-    host: '192.168.2.155',
+  server: { 
+    // host: '192.168.2.155',
     port:3000
   },
   env: {

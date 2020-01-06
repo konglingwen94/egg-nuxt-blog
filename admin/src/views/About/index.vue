@@ -6,7 +6,7 @@
 
     <div class="carousel-wrapper">
       <el-card header="轮播图配置">
-        <el-form :model="carousel" label-suffix=" : ">
+        <el-form :model="carousel" label-suffix=" : " label-position="left">
           <el-form-item label="轮播图个数">
             <el-input-number
               :step="1"
@@ -24,14 +24,16 @@
               <el-radio label="starCount">收藏个数</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="自动切换时间 (毫秒)">
-            <el-input-number
+          <el-form-item label-width="150px" label="自动切换时间 (毫秒)">
+            <el-slider
               :min="500"
+              :max="5000"
               :step="500"
               :precision="0"
-              label="ddd"
+              show-input
+              show-stops
               v-model="carousel.interval"
-            ></el-input-number>
+            ></el-slider>
           </el-form-item>
           <el-form-item label="是否自动播放">
             <el-switch v-model="carousel.autoplay"></el-switch>
@@ -45,10 +47,13 @@
         </el-form>
       </el-card>
     </div>
-    <div class="profile-wrapper">
+    <div class="profile-wrapper" @mouseleave="$refs.profile.clearValidate()">
       <el-card header="博主简介">
         <el-form :model="profile" ref="profile">
-          <el-form-item prop="profile" :rules="{required:true,trigger:'blur',message:'博主简介不能为空'}">
+          <el-form-item
+            prop="description"
+            :rules="{required:true,trigger:'blur',message:'博主简介不能为空'}"
+          >
             <el-input type="textarea" clearable :rows="4" v-model="profile.description"></el-input>
           </el-form-item>
           <el-form-item>
@@ -57,7 +62,7 @@
         </el-form>
       </el-card>
     </div>
-    <div>
+    <div @mouseleave="$refs.platform.clearValidate()">
       <el-card header="博客简介">
         <el-form :model="platform" ref="platform">
           <el-form-item
@@ -72,6 +77,34 @@
         </el-form>
       </el-card>
     </div>
+
+    <div class="contact-wrapper" @mouseleave="$refs.contact.clearValidate()">
+      <el-card header="联系方式">
+        <el-form
+          :rules="contactRule"
+          label-width="auto"
+          label-suffix=" : "
+          :model="contact"
+          ref="contact"
+        >
+          <el-form-item prop="phone" label="电话">
+            <el-input v-model.trim="contact.phone" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="微信" prop="wechat">
+            <el-input v-model.trim="contact.wechat" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="QQ" prop="qq">
+            <el-input v-model.trim="contact.qq" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="Github" prop="github">
+            <el-input v-model.trim="contact.github" clearable></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button @click="submit('contact')" type="primary">保存</el-button>
+          </el-form-item>
+        </el-form>
+      </el-card>
+    </div>
   </panel>
 </template>
 
@@ -81,11 +114,39 @@ import { invokeDeepObject } from '@/utils/helper'
 const mapStateKey = {
   profile: '博主简介',
   platform: '博客简介',
-  carousel: '轮播图'
+  carousel: '轮播图',
+  contact: '联系方式'
 }
 export default {
   name: 'About',
   data: () => ({
+    contactRule: {
+      phone: [
+        {
+          required: true,
+          type: 'string',
+          trigger: 'blur',
+          message: '手机号不能为空'
+        },
+        {
+          min: 11,
+          max: 11,
+          trigger: 'blur',
+          message: '手机号格式不正确'
+        }
+      ],
+      wechat: [
+        {
+          required: true,
+          type: 'string',
+          trigger: 'blur',
+          message: '微信号不能为空'
+        },
+       
+      ],
+      github: [{ type: 'string', trigger: 'blur' }],
+      qq: [{ type: 'string', trigger: 'blur' }]
+    },
     profile: {
       // description: ''
     },
@@ -99,7 +160,8 @@ export default {
       // autoplay: false,
       // loop: false,
       // interval: -1
-    }
+    },
+    contact: {}
   }),
   created() {
     AboutApi.fetchOne().then(response => {
@@ -150,7 +212,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.profile-wrapper {
+[class$='wrapper'] {
   margin-bottom: 20px;
   margin-top: 20px;
 }

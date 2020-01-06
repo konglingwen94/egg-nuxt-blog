@@ -37,7 +37,8 @@ import {
   Checkbox,
   CheckboxGroup,
   RadioGroup,
-  Radio
+  Radio,
+  Slider
 } from 'element-ui'
 
 export default () => {
@@ -79,6 +80,7 @@ export default () => {
   Vue.use(Option)
   Vue.use(RadioGroup)
   Vue.use(Radio)
+  Vue.use(Slider)
 
   Vue.prototype.$message = Message
   Vue.prototype.$confirm = MessageBox.confirm
