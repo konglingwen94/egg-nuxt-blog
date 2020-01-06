@@ -40,7 +40,7 @@ class AppBootHook {
     // await nuxt.ready()
     // this.app.mongoose = await mongodb.connect(this.app)
     // console.log('App will ready',this.app.mongoose.modelSchemas)
-    console.log('App will ready')
+    console.log('App will ready',this.app)
   }
   serverDidReady() {
     console.log('Server did ready')

@@ -1,7 +1,7 @@
 module.exports = app => {
   const { Schema, model } = app.mongoose
 
-  const AboutSchema = new Schema(
+  const AboutusSchema = new Schema(
     {
       contact: {
         type: Object,
@@ -37,5 +37,5 @@ module.exports = app => {
     { timestamps: true }
   )
 
-  return model('About', AboutSchema)
+  return model('Aboutus', AboutusSchema)
 }

@@ -4,13 +4,13 @@ const { Controller } = require('egg')
 class AboutController extends Controller {
   async getOne() {
     const { ctx, service, config } = this
-    const result = (await service.about.queryOne()) || config.aboutDefaultConfig
+    const result = (await service.aboutus.queryOne()) || config.aboutDefaultConfig
     return result
   }
   async overwriteOne() {
     const { ctx, config, service } = this
     const { id } = ctx.params
-    const result = await ctx.model.About.findByIdAndUpdate(
+    const result = await ctx.model.Aboutus.findByIdAndUpdate(
       id,
       config.aboutDefaultConfig,
       { new: true }
@@ -23,13 +23,19 @@ class AboutController extends Controller {
     const { id } = ctx.params
     const payload = ctx.state.body
 
-    await service.about.queryByIdAndUpdate(id, payload)
+    await service.aboutus.queryByIdAndUpdate(id, payload)
   }
   async createOne() {
     const { ctx } = this
+
+    const result = await ctx.model.Aboutus.findOne()
+    console.log(__filename, ctx.state.body)
+
+    if (result) {
+      ctx.throw('400', '重复的数据')
+    }
     ctx.status = 201
-    console.log(__filename,ctx.state.body)
-    return ctx.model.About.create(ctx.state.body)
+    return ctx.model.Aboutus.create(ctx.state.body)
   }
 }
 

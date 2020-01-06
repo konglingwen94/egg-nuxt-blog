@@ -1,5 +1,5 @@
 module.exports = {
-  about: {
+  aboutus: {
     profile: {
       type: 'object?',
       rule: {

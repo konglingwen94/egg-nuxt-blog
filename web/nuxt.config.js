@@ -54,6 +54,7 @@ module.exports = {
     { src: '@/plugins/element-ui', ssr: true },
     { src: '@/plugins/init-store', ssr: false },
     { src: '@/plugins/vue-weather.js', ssr: false },
+    { src: '@/plugins/service.js',  },
     // { src: '@/plugins/vconsole.js', ssr: false },
   ],
   /*

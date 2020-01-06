@@ -14,7 +14,7 @@ const ArticleEditor = () => import('@/views/Article/Editor.vue')
 const Category = () => import('@/views/Category/List')
 const Comment = () => import('@/views/Comment/List')
 const Guestbook = () => import('@/views/Guestbook/List')
-const About = () => import('@/views/About')
+const Aboutus = () => import('@/views/Aboutus')
 const Tag = () => import('@/views/Tag')
 
 Vue.use(Router)
@@ -55,11 +55,11 @@ const router = new Router({
           },
         },
         {
-          name: 'abouts',
-          path: 'abouts',
-          component: About,
+          name: 'aboutus',
+          path: 'aboutus',
+          component: Aboutus,
           meta: {
-            activedMenuItem: 'about',
+            activedMenuItem: 'aboutus',
           },
         },
         {

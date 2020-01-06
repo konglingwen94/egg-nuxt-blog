@@ -17,7 +17,7 @@ class ArticleController extends Controller {
       loop: true,
       autoplay: true,
     }
-    const aboutResult = (await this.ctx.model.About.findOne({})) || {
+    const aboutResult = (await this.ctx.model.Aboutus.findOne({})) || {
       carousel: defaultCarouselConfig,
     }
 

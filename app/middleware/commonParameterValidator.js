@@ -29,6 +29,7 @@ module.exports = () => {
       }
     }
 
+    console.log(__filename,validationSchema, ctx.request.body) 
     ctx.validate(validationSchema, ctx.request.body)
     ctx.state.body = _.pick(ctx.request.body, _.keys(validationSchema))
      

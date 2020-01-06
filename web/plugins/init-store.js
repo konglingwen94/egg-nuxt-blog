@@ -6,9 +6,9 @@ export default ({ app }) => {
     store = {}
   }
 
-  app.store.replaceState(_.merge({}, app.store.state, store))
+  app.store.replaceState(_.merge({}, store, app.store.state))
 
   window.onbeforeunload = () => {
-    localStorage.store = JSON.stringify(app.store.state)
+    localStorage.store = JSON.stringify(_.omit(app.store.state, 'aboutus'))
   }
 }

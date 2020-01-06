@@ -109,8 +109,53 @@
 </template>
 
 <script>
-import AboutApi from '@/api/abouts'
+import AboutusApi from '@/api/aboutus'
 import { invokeDeepObject } from '@/utils/helper'
+
+const contactRule = {
+  phone: [
+    {
+      required: true,
+      type: 'string',
+      trigger: 'blur',
+      message: '手机号不能为空'
+    },
+    {
+      pattern: /^\d{11}$/,
+      trigger: 'blur',
+      message: '手机号格式不正确'
+    }
+  ],
+  wechat: [
+    {
+      required: true,
+      trigger: 'blur',
+      message: '微信号不能为空'
+    },
+    {
+      pattern: /^\w+$/,
+      trigger: 'blur',
+      message: '微信号格式不正确'
+    }
+  ],
+  github: [
+    {
+      type: 'url',
+
+      message: 'Github账号格式不正确',
+      trigger: 'blur'
+    }
+  ],
+  qq: [
+    {
+      pattern: /^\w{5,14}$/,
+
+      message: 'QQ格式不正确',
+      trigger: 'blur'
+    }
+  ]
+}
+
 const mapStateKey = {
   profile: '博主简介',
   platform: '博客简介',
@@ -118,53 +163,17 @@ const mapStateKey = {
   contact: '联系方式'
 }
 export default {
-  name: 'About',
+  name: 'Aboutus',
   data: () => ({
-    contactRule: {
-      phone: [
-        {
-          required: true,
-          type: 'string',
-          trigger: 'blur',
-          message: '手机号不能为空'
-        },
-        {
-          min: 11,
-          max: 11,
-          trigger: 'blur',
-          message: '手机号格式不正确'
-        }
-      ],
-      wechat: [
-        {
-          required: true,
-          type: 'string',
-          trigger: 'blur',
-          message: '微信号不能为空'
-        },
-       
-      ],
-      github: [{ type: 'string', trigger: 'blur' }],
-      qq: [{ type: 'string', trigger: 'blur' }]
-    },
-    profile: {
-      // description: ''
-    },
-    platform: {
-      // description: ''
-    },
+    contactRule: Object.freeze(contactRule),
+    profile: {},
+    platform: {},
     id: '',
-    carousel: {
-      // number: -1,
-      // sort: '',
-      // autoplay: false,
-      // loop: false,
-      // interval: -1
-    },
+    carousel: {},
     contact: {}
   }),
   created() {
-    AboutApi.fetchOne().then(response => {
+    AboutusApi.fetchOne().then(response => {
       _.assign(this.$data, response)
     })
   },
@@ -178,7 +187,7 @@ export default {
         return
       }
 
-      AboutApi.resetOne(this.id)
+      AboutusApi.resetOne(this.id)
         .then(result => {
           this.$message.success('重置配置成功')
           // invokeDeepObject(this.state)
@@ -197,8 +206,8 @@ export default {
       const { id } = this
       const payload = { [key]: this.$data[key] }
       const action = id
-        ? AboutApi.updateOne(id, payload)
-        : AboutApi.createOne(payload)
+        ? AboutusApi.updateOne(id, payload)
+        : AboutusApi.createOne(payload)
       action
         .then(response => {
           if (response.id) {

@@ -7,7 +7,7 @@
 
       <el-menu router :default-active="$route.path" mode="horizontal">
         <el-menu-item index="/">首页</el-menu-item>
-        <el-menu-item index="/about">关于</el-menu-item>
+        <el-menu-item index="/aboutus">关于</el-menu-item>
         <el-menu-item index="/archives">归档</el-menu-item>
         <el-menu-item index="/guestbooks">留言墙</el-menu-item>
       </el-menu>
@@ -35,10 +35,7 @@ export default {
     })
 
     getCurrentPosition.then(coords => {
-      console.log(coords)
-      alert(coords.longitude)
-      alert(coords.latitude)
-
+      
       request.get('/location-city', {
         params: { lng: coords.longitude, lat: coords.latitude }
       })
