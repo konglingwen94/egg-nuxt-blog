@@ -14,8 +14,10 @@ const ArticleEditor = () => import('@/views/Article/Editor.vue')
 const Category = () => import('@/views/Category/List')
 const Comment = () => import('@/views/Comment/List')
 const Guestbook = () => import('@/views/Guestbook/List')
-const Aboutus = () => import('@/views/Aboutus')
 const Tag = () => import('@/views/Tag')
+// const Aboutus = () => import('@/views/Aboutus')
+const Introduction = () => import('@/views/Introduction')
+const Contact = () => import('@/views/Contact')
 
 Vue.use(Router)
 
@@ -54,12 +56,21 @@ const router = new Router({
             activedMenuItem: 'dashboard',
           },
         },
+        
         {
-          name: 'aboutus',
-          path: 'aboutus',
-          component: Aboutus,
+          name: 'introduction',
+          path: 'introduction',
+          component: Introduction,
           meta: {
-            activedMenuItem: 'aboutus',
+            activedMenuItem: 'introduction',
+          },
+        },
+        {
+          name: 'contact',
+          path: 'contact',
+          component: Contact,
+          meta: {
+            activedMenuItem: 'contact',
           },
         },
         {

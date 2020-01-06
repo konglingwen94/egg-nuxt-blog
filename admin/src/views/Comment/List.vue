@@ -11,7 +11,7 @@
           <cell-popover :content="row.content"></cell-popover>
         </template>
       </el-table-column>
-      <el-table-column label="文章标题" prop="article.title"></el-table-column>
+      <el-table-column label="文章标题" show-overflow-tooltip prop="article.title"></el-table-column>
       <el-table-column label="文章是否发布">
         <template v-slot="{row}"><span v-if="row.article" :style="{color:row.article.isPublished?'green':'red'}">{{row.article.isPublished?'已发布':'未发布'}}</span></template>
       </el-table-column>

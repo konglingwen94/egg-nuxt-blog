@@ -4,7 +4,11 @@
   </div>
 </template>
 <script>
-export default {}
+export default {
+  created() {
+    this.$store.dispatch('getAboutus')
+  }
+}
 </script>
 
 <style lang="less">

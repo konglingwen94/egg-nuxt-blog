@@ -23,7 +23,7 @@ Vue.config.warnHandler = (warn, vm) => {
   console.warn(warn)
 }
 
-new Vue({
+export default new Vue({
   router,
   store,
   render: h => h(App),
