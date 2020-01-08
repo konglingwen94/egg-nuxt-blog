@@ -16,7 +16,6 @@
       </el-submenu>
       <el-menu-item index="/comments">文章评论</el-menu-item>
       <el-menu-item index="/guestbooks">留言墙</el-menu-item>
-      <el-menu-item index="/carousels">轮播图</el-menu-item>
       <el-submenu index="/settings">
         <template slot="title">安全</template>
         <el-menu-item index="/settings/security">修改密码</el-menu-item>

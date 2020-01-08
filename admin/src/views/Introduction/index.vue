@@ -35,10 +35,10 @@ export default {
     submit() {
       const { profile, platform } = this
 
-      if (!profile.descrition) {
+      if (!profile.description) {
         return this.$message.error('作者简介不能为空')
       }
-      if (!platform.descrition) {
+      if (!platform.description) {
         return this.$message.error('平台简介不能为空')
       }
 

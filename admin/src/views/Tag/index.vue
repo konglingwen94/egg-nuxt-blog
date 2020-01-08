@@ -4,6 +4,11 @@
       <el-tab-pane name="list" label="标签列表">
         <el-table :data="dataList" border>
           <el-table-column prop="name" label="名称"></el-table-column>
+          <el-table-column label="封面">
+            <template v-slot="{row}">
+              <el-image :src="row.cover.path" style="height:60px" :preview-src-list="[row.cover.path]" fit="cover"></el-image>
+            </template>
+          </el-table-column>
           <el-table-column prop="articleCount" label="文章数量"></el-table-column>
           <el-table-column prop="articlePublishedCount" label="已发布文章数量"></el-table-column>
           <el-table-column label="更新时间">
@@ -139,7 +144,7 @@ export default {
       this.editingItem = row
       this.activeName = 'action'
       this.action = 'edit'
-      _.assign(this.form, _.pick(row, ['name','cover']))
+      _.assign(this.form, _.pick(row, ['name', 'cover']))
       const { path, name } = this.form.cover
       if (path) {
         this.fileList = [{ url: path, name }]
