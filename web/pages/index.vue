@@ -35,7 +35,8 @@
 import ArticleService from '@/services/articles'
 export default {
   layout: 'Public',
-  async asyncData({ req }) {
+  async asyncData({ req ,query}) {
+    console.log(query)
     try {
       var [articleList, carousel = {}] = await Promise.all([
         // req.service.article.queryList()

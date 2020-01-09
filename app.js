@@ -14,18 +14,6 @@ class AppBootHook {
 
     mongooseDB.on('open', async () => {
       console.log(`Database is connected on ${url}`)
-      // console.log(__filename, this.app)
-      // let result = await model.About.findOne({})
-
-      // if (!result) {
-      //   try {
-      //     result = await model.About.create(config.aboutDefaultConfig)
-      //   } catch (error) {
-      //     console.error(error)
-      //   }
-      // }
-
-      // console.log(__filename, result)
     })
     mongooseDB.on('error', error => console.error(error))
   }
@@ -40,7 +28,7 @@ class AppBootHook {
     // await nuxt.ready()
     // this.app.mongoose = await mongodb.connect(this.app)
     // console.log('App will ready',this.app.mongoose.modelSchemas)
-    console.log('App will ready',this.app)
+    console.log('App will ready', this.app)
   }
   serverDidReady() {
     console.log('Server did ready')

@@ -2,7 +2,7 @@
   <div class="article">
     <div class="banner" :style="bannerStyle">
       <h1>{{archiveInfo.name}}</h1>
-      <span>{{archiveInfo.articleCount}}</span>
+      <span>{{archiveInfo.articlePublishedCount}}</span>
     </div>
 
     <article-list :dataList="dataList"></article-list>
@@ -19,18 +19,21 @@ export default {
   async asyncData({ query, params }) {
     const { categoryID, tagID } = query
     let payload, fetchArchiveData
+    let action
     if (categoryID) {
       payload = { categoryID }
       fetchArchiveData = CategoryService.fetchOne(categoryID)
+      action=ArticleService.fetchOwnerCategoriesList(payload)
     } else if (tagID) {
       payload = { tagID }
+      action=ArticleService.fetchOwnerTagsList(payload)
       fetchArchiveData = TagService.fetchOne(tagID)
     }
 
     // const archive
     try {
       var [dataList, archiveInfo] = await Promise.all([
-        ArticleService.fetchList(payload),
+        action,
         fetchArchiveData
       ])
     } catch (error) {

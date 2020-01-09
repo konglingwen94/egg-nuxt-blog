@@ -3,32 +3,81 @@ const { ObjectId } = require('mongoose').Types
 const _ = require('lodash')
 
 class ArticleController extends Controller {
-  async queryList() {
-    const { service } = this
+  async queryOwnerCategoriesList() {
+    const { ctx, service } = this
 
-    return service.article.queryList().sort('-createdAt')
+    const categoryIdList = ctx.queries.categoryID
+
+    ctx.validate(
+      {
+        categoryIdList: {
+          type: 'array',
+          itemType: 'string',
+          min: 1,
+          rule: {
+            min: 24,
+            max: 24,
+          },
+        },
+      },
+      { categoryIdList }
+    )
+
+    return service.article
+      .queryListByOptions({
+        categoryID: { $in: categoryIdList },
+      })
+      .sort('-createdAt')
+  }
+  async queryOwnerTagsList() {
+    const { ctx, service } = this
+
+    const tagIdList = ctx.queries.tagID
+
+    ctx.validate(
+      {
+        tagIdList: {
+          type: 'array',
+          itemType: 'string',
+          min: 1,
+          rule: {
+            min: 24,
+            max: 24,
+          },
+        },
+      },
+      { tagIdList }
+    )
+
+    return service.article
+      .queryListByOptions({
+        tagIdList: { $in: tagIdList },
+      })
+      .sort('-createdAt')
+  }
+  async queryList() {
+    const { ctx, service } = this
+
+    return service.article.queryListByOptions().sort('-createdAt')
   }
   async queryCarouselList() {
-    const { service, ctx } = this
-    const defaultCarouselConfig = {
-      number: 4,
-      sort: 'pv',
-      interval: 3000,
-      loop: true,
-      autoplay: true,
-    }
-    const aboutResult = (await this.ctx.model.Aboutus.findOne({})) || {
+    const { service, ctx, config } = this
+    const defaultCarouselConfig = config.aboutusDefaultConfig.carousel
+    const aboutusResult = (await this.ctx.model.Aboutus.findOne({})) || {
       carousel: defaultCarouselConfig,
     }
 
-    const { number, sort } = aboutResult.carousel
+    const { number, sort: sortBy } = aboutusResult.carousel
+
+    const sort = { [sortBy]: -1 }
+
     const data = await service.article
-      .queryList()
-      .setOptions({ sort: { [sort]: -1, createdAt: -1 } })
-      // .sort('-pv -createdAt')
+      .queryListByOptions()
+      .sort(sort)
+
       .limit(number)
-    // console.log(__filename, carouselOptions)
-    return { data, configOptions: aboutResult.carousel }
+
+    return { data, configOptions: aboutusResult.carousel }
   }
   async querySuggestionList() {
     const { ctx, service } = this
@@ -36,7 +85,7 @@ class ArticleController extends Controller {
 
     const { id } = ctx.params
 
-    return this.ctx.model.Article.find({
+    return service.article.queryListByOptions({
       tagIdList: { $in: tagIdList },
       _id: { $ne: id },
     })
@@ -69,6 +118,18 @@ class ArticleController extends Controller {
 
     const { idList } = ctx.request.body
 
+    ctx.validate(
+      {
+        idList: {
+          type: 'array',
+          min: 1,
+          itemType: 'string',
+          rule: { min: 24, max: 24 },
+        },
+      },
+      { idList }
+    )
+
     await service.article.deleteMany(idList)
   }
   async deleteOne() {
@@ -81,6 +142,7 @@ class ArticleController extends Controller {
     const { ctx, service } = this
 
     const { isPublished } = ctx.request.body
+    ctx.validate({ isPublished: 'boolean' }, { isPublished })
 
     const { id } = ctx.params
     await this.ctx.model.Article.findByIdAndUpdate(id, {

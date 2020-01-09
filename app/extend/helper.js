@@ -10,6 +10,7 @@ function patchFieldToData(doc) {
   })
 }
 
+
 module.exports = {
   patchFieldToData,
 }

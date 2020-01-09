@@ -3,10 +3,14 @@ const mongoose = require('mongoose')
 const { ObjectId } = mongoose.Types
 
 class ArticleService extends Service {
-  queryList() {
+  queryListByOptions(options = {}) {
     const { ctx } = this
 
-    const result = ctx.model.Article.find(ctx.state.filter || {})
+    if (ctx.state.platformENV === 'web') {
+      options.isPublished = true
+    }
+
+    const result = ctx.model.Article.find(options)
 
       .populate('tagList')
       .populate('category')

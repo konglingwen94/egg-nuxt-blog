@@ -41,7 +41,11 @@ module.exports = app => {
     controller.article.updatePublishStatus
   )
 
-  router.get('/articles', controller.article.queryList)
+  router.get('/articles', controller.article.queryList )
+
+  router.get('/ownertags-articles',controller.article.queryOwnerTagsList)
+  router.get('/ownercategories-articles',controller.article.queryOwnerCategoriesList)
+
   router.get('/articles/carousels', controller.article.queryCarouselList)
   router.get('/articles/:id/suggestion', controller.article.querySuggestionList)
 

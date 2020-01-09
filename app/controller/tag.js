@@ -5,16 +5,18 @@ class TagController extends Controller {
     const { ctx, service } = this
 
     const payload = ctx.state.body
-    
+
     return this.ctx.model.Tag.create(payload)
   }
 
   async queryOne() {
     const { ctx } = this
-    return this.ctx.model.Tag.findById(ctx.params.id).populate('articleCount')
+    return this.ctx.model.Tag.findById(ctx.params.id)
+      .populate('articleCount') 
+      .populate({ path: 'articlePublishedCount', match: { isPublished: true } })
   }
 
-  async queryList() {
+  async queryList() { 
     const { ctx, service } = this
 
     return service.tag.queryList()

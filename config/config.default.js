@@ -2,7 +2,7 @@ const { resolve } = require('path')
 
 module.exports = appInfo => {
   return {
-    aboutDefaultConfig: {
+    aboutusDefaultConfig: {
       carousel: {
         number: 4,
         sort: 'pv',
@@ -55,12 +55,6 @@ module.exports = appInfo => {
       },
     },
 
-    webArticleFilter: {
-      match: '/api/articles',
-    },
-    articleFilter: {
-      match: ['/api/articles'],
-    },
     nuxtRender: {
       nuxtConfig: {
         buildDir: resolve(__dirname, '../public/web'),
@@ -69,12 +63,6 @@ module.exports = appInfo => {
     },
     responseHandler: {
       match: ['/api'],
-      // match(ctx) {
-      //   if (ctx.method === 'DELETE') {
-      //     return false
-      //   }
-      //   return true
-      // },
     },
     platformENV: {
       match: '/api',
@@ -91,11 +79,7 @@ module.exports = appInfo => {
       // 'siteTraffic',
       'adminRequired',
       'upload',
-
-      'webArticleFilter',
-      'articleFilter',
       'responseHandler',
-
       'nuxtRender',
     ],
     cors: {
