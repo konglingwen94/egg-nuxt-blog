@@ -35,7 +35,11 @@
             placeholder="输入您的昵称"
             v-model="form.nickname"
           ></el-input>
-          <el-button type="primary" :loading="buttonLoading" @click="handleSend">保存</el-button>
+          <el-button
+            type="primary"
+            :loading="buttonLoading"
+            @click="handleSend"
+          >{{action==='response'?'回复':'发送'}}</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -210,7 +214,9 @@ export default {
       const { nickname, content, responseTo, kind } = this.form
 
       if (!content) {
-        this.$message.warning('请输入您的留言内容!')
+        this.$message.warning(
+          `请输入您的${this.action === 'response' ? '回复' : '留言'}内容!`
+        )
         return
       }
       if (!nickname) {
