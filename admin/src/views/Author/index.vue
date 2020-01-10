@@ -1,28 +1,42 @@
 <template>
   <div>
-    <div class="contact-wrapper">
-      <el-card header="联系方式">
+    <div class="author-wrapper">
+      <el-card header="个人简介">
+        <el-form>
+          <el-form-item label="个人资料">
+            <el-input type="textarea" :rows="5" v-model="personal"></el-input>
+          </el-form-item>
+          <el-form-item label="前端技术">
+            <el-input type="textarea" :rows="5" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="服务端技术">
+            <el-input type="textarea" :rows="5" clearable></el-input>
+          </el-form-item>
+        </el-form>
+      </el-card>
+
+      <el-card header="联系方式" v-if="0">
         <el-form
-          :rules="contactRule"
+          :rules="authorRule"
           label-width="auto"
           label-suffix=" : "
-          :model="contact"
-          ref="contact"
+          :model="author"
+          ref="author"
         >
           <el-form-item prop="phone" label="电话">
-            <el-input v-model.trim="contact.phone" clearable></el-input>
+            <el-input v-model.trim="author.phone" clearable></el-input>
           </el-form-item>
           <el-form-item label="微信" prop="wechat">
-            <el-input v-model.trim="contact.wechat" clearable></el-input>
+            <el-input v-model.trim="author.wechat" clearable></el-input>
           </el-form-item>
           <el-form-item label="QQ" prop="qq">
-            <el-input v-model.trim="contact.qq" clearable></el-input>
+            <el-input v-model.trim="author.qq" clearable></el-input>
           </el-form-item>
           <el-form-item label="Github" prop="github">
-            <el-input v-model.trim="contact.github" clearable></el-input>
+            <el-input v-model.trim="author.github" clearable></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button @click="submit('contact')" type="primary">保存</el-button>
+            <el-button @click="submit('author')" type="primary">保存</el-button>
           </el-form-item>
         </el-form>
       </el-card>
@@ -30,20 +44,7 @@
   </div>
 </template>
 <script>
-const contactRule = {
-  phone: [
-    {
-      required: true,
-      type: 'string',
-      trigger: 'blur',
-      message: '手机号不能为空'
-    },
-    {
-      pattern: /^\d{11}$/,
-      trigger: 'blur',
-      message: '手机号格式不正确'
-    }
-  ],
+const authorRule = {
   wechat: [
     {
       required: true,
@@ -55,46 +56,31 @@ const contactRule = {
       trigger: 'blur',
       message: '微信号格式不正确'
     }
-  ],
-  github: [
-    {
-      type: 'url',
-
-      message: 'Github账号格式不正确',
-      trigger: 'blur'
-    }
-  ],
-  qq: [
-    {
-      pattern: /^\w{5,14}$/,
-
-      message: 'QQ格式不正确',
-      trigger: 'blur'
-    }
   ]
 }
 
 export default {
   data() {
     return {
-      contactRule: Object.freeze(contactRule)
+      personal: '',
+      // authorRule: Object.freeze(authorRule)
     }
   },
   computed: {
-    contact() {
-      return this.$store.state.aboutus.contact
+    author() {
+      return this.$store.state.aboutus.author
     }
   },
   methods: {
     async submit() {
       try {
-        await this.$refs.contact.validate()
+        await this.$refs.author.validate()
       } catch (error) {
         return
       }
 
       this.$store
-        .dispatch('updateAboutus', { contact: this.contact })
+        .dispatch('updateAboutus', { author: this.author })
         .then(() => {
           this.$message.success('设置联系方式成功')
         })

@@ -1,19 +1,17 @@
 <template>
-  <div class>
+  <el-container>
+    <el-aside>
+      <Menu></Menu>
+    </el-aside>
     <el-container>
-      <el-aside>
-        <Menu></Menu>
-      </el-aside>
-      <el-container>
-        <el-header>
-          <Header />
-        </el-header>
-        <el-main>
-          <router-view></router-view>
-        </el-main>
-      </el-container>
+      <el-header>
+        <Header />
+      </el-header>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
     </el-container>
-  </div>
+  </el-container>
 </template>
 
 <style lang="less" scoped>
@@ -28,6 +26,12 @@
   .el-aside {
     width: 120px !important;
   }
+}
+
+
+.el-aside {
+  min-height: 100vh;
+  background-color: #304156;
 }
 </style>
 
