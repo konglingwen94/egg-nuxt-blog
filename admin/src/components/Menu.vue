@@ -5,7 +5,7 @@
         <template v-slot:title>博客设置</template>
         <el-menu-item index="/carousels">轮播图设置</el-menu-item>
         <el-menu-item index="/introduction">平台简介</el-menu-item>
-        <el-menu-item index="/contact">联系方式</el-menu-item>
+        <el-menu-item index="/contact">作者简介</el-menu-item>
       </el-submenu>
       <el-menu-item index="/categories">分类管理</el-menu-item>
       <el-menu-item index="/tags">标签管理</el-menu-item>
@@ -36,7 +36,7 @@ export default {
 
 <style lang="less">
 .menu-container {
-  height: 100%;
+  height: 100vh;
   .el-menu {
     height: 100%;
   }

@@ -12,9 +12,10 @@ module.exports = app => {
         },
       },
       profile: {
-        type: Object,
-        default: {
-          description: '',
+        personal: {},
+        technology: {
+          frontend: {},
+          serverSide: {},
         },
       },
       platform: {

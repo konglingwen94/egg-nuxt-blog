@@ -17,7 +17,7 @@ const Guestbook = () => import('@/views/Guestbook/List')
 const Tag = () => import('@/views/Tag')
 // const Aboutus = () => import('@/views/Aboutus')
 const Introduction = () => import('@/views/Introduction')
-const Contact = () => import('@/views/Contact')
+const Author = () => import('@/views/Author')
 
 Vue.use(Router)
 
@@ -66,11 +66,11 @@ const router = new Router({
           },
         },
         {
-          name: 'contact',
-          path: 'contact',
-          component: Contact,
+          name: 'author',
+          path: 'author',
+          component: Author,
           meta: {
-            activedMenuItem: 'contact',
+            activedMenuItem: 'author',
           },
         },
         {
