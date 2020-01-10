@@ -3,36 +3,24 @@ module.exports = app => {
 
   const AboutusSchema = new Schema(
     {
-      contact: {
-        type: Object,
-        default: {
-          qq: '',
-          wechat: '',
-          github: '',
-        },
-      },
       profile: {
-        personal: {},
+        personal: { type: String, default: '' },
         technology: {
-          frontend: {},
-          serverSide: {},
+          frontend: { type: String, default: '' },
+          serverSide: { type: String, default: '' },
         },
       },
       platform: {
-        type: Object,
-        default: {
-          description: '',
-        },
+        webClient: { type: String, default: '' },
+        serverUI: { type: String, default: '' },
+        serverApi: { type: String, default: '' },
       },
       carousel: {
-        type: Object,
-        default: {
-          number: 0,
-          sort: 'pv',
-          interval: 3000,
-          loop: false,
-          autoplay: true,
-        },
+        number: { type: Number, default: 1 },
+        sort: { type: String, default: 'pv' },
+        interval: { type: Number, default: '3000' },
+        loop: { type: Boolean, default: true },
+        autoplay: { type: Boolean, default: true },
       },
     },
     { timestamps: true }

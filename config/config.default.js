@@ -11,16 +11,16 @@ module.exports = appInfo => {
         autoplay: true,
       },
       platform: {
-        description: '',
+        webClient: '',
+        serverUI: '',
+        serverApi: '',
       },
       profile: {
-        description: '',
-      },
-      contact: {
-        qq: '',
-        wechat: '',
-        github: '',
-        phone: '',
+        personal: '',
+        technology: {
+          frontend: '',
+          serverSide: '',
+        },
       },
     },
 

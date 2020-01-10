@@ -7,12 +7,7 @@ export default {
   state: {
     profile: {},
     platform: {},
-    contact: {
-      phone: '',
-      wechat: '',
-      qq: '',
-      github: '',
-    },
+
     carousel: {},
   },
   mutations: {
@@ -29,9 +24,13 @@ export default {
         .catch(err => vm.$message.error(err.message))
     },
     updateAboutus({ commit, state }, payload, type) {
-      return AboutusApi.updateOne(state.id, payload)
-        .then(() => {
-          commit('setAboutus', payload)
+      const action = !state.id
+        ? AboutusApi.createOne(payload)
+        : AboutusApi.updateOne(state.id, payload)
+
+      return action
+        .then(result => {
+          commit('setAboutus', result)
         })
         .catch(error => {
           vm.$message.error(error.message)

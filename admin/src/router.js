@@ -16,7 +16,7 @@ const Comment = () => import('@/views/Comment/List')
 const Guestbook = () => import('@/views/Guestbook/List')
 const Tag = () => import('@/views/Tag')
 // const Aboutus = () => import('@/views/Aboutus')
-const Introduction = () => import('@/views/Introduction')
+const Platform = () => import('@/views/Platform')
 const Author = () => import('@/views/Author')
 
 Vue.use(Router)
@@ -58,11 +58,11 @@ const router = new Router({
         },
         
         {
-          name: 'introduction',
-          path: 'introduction',
-          component: Introduction,
+          name: 'platform',
+          path: 'platform',
+          component: Platform,
           meta: {
-            activedMenuItem: 'introduction',
+            activedMenuItem: 'platform',
           },
         },
         {

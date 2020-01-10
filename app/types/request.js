@@ -3,16 +3,37 @@ module.exports = {
     profile: {
       type: 'object?',
       rule: {
-        description: {
+        personal: {
           type: 'string',
           min: 1,
+        },
+        technology: {
+          type: 'object',
+          rule: {
+            frontend: {
+              type: 'string',
+              min: 1,
+            },
+            serverSide: {
+              type: 'string',
+              min: 1,
+            },
+          },
         },
       },
     },
     platform: {
       type: 'object?',
       rule: {
-        description: {
+        webClient: {
+          type: 'string',
+          min: 1,
+        },
+        serverUI: {
+          type: 'string',
+          min: 1,
+        },
+        serverApi: {
           type: 'string',
           min: 1,
         },

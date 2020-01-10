@@ -4,7 +4,8 @@ const { Controller } = require('egg')
 class AboutController extends Controller {
   async getOne() {
     const { ctx, service, config } = this
-    const result = (await service.aboutus.queryOne()) || config.aboutDefaultConfig
+    const result =
+      (await service.aboutus.queryOne()) || config.aboutusDefaultConfig
     return result
   }
   async overwriteOne() {
@@ -15,7 +16,7 @@ class AboutController extends Controller {
       config.aboutDefaultConfig,
       { new: true }
     )
-    console.log(__filename, result)
+    // console.log(__filename, result)
     return result
   }
   async updateOne() {
@@ -23,7 +24,8 @@ class AboutController extends Controller {
     const { id } = ctx.params
     const payload = ctx.state.body
 
-    await service.aboutus.queryByIdAndUpdate(id, payload)
+    const result = await service.aboutus.queryByIdAndUpdate(id, payload)
+    return result
   }
   async createOne() {
     const { ctx } = this
@@ -35,7 +37,10 @@ class AboutController extends Controller {
       ctx.throw('400', '重复的数据')
     }
     ctx.status = 201
-    return ctx.model.Aboutus.create(ctx.state.body)
+    const newDoc = await ctx.model.Aboutus.create(ctx.state.body)
+    console.log(__filename, newDoc)
+
+    return newDoc
   }
 }
 

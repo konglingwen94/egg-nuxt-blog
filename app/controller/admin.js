@@ -23,7 +23,7 @@ class AdminController extends Controller {
       ctx.throw(403, '密码不正确')
     }
 
-    const adminInfo = _.omit(ctx.helper.patchFieldForData(result), 'password')
+    const adminInfo = _.omit(ctx.helper.patchFieldToData(result), 'password')
 
     const { secretKey, expiresIn } = config.adminSecret
     const token = jwt.sign(adminInfo, secretKey, {
