@@ -4,7 +4,7 @@
       <el-card header="个人简介" style="margin-bottom:19px;">
         <el-form label-suffix=":">
           <el-form-item label="个人资料">
-            <el-input type="textarea" :rows="5" v-model.trim="profile.personal.description"></el-input>
+            <el-input type="textarea" :rows="5" v-model="profile.personal.description"></el-input>
           </el-form-item>
           <div class="contact-container">
             <label for>联系方式</label>

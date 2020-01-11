@@ -4,15 +4,9 @@
     <div class="contact-wrapper">
       <el-divider content-position="left">联系方式</el-divider>
       <div class="contact-content" v-if="1">
-        
-        <div class="wechat">
-          <label for>微信</label> :
-          <span>{{contact.wechat}}</span>
-        </div>
-        
-        <div class="github">
-          <label for>Github</label> :
-          <el-link target="_blank" :href="contact.github">{{contact.github}}</el-link>
+        <div class="contact-item" v-for="(item,key) in contact" :key="key">
+          <label for>{{item.label}}</label> :
+          <span>{{item.value}}</span>
         </div>
       </div>
     </div>
@@ -21,10 +15,10 @@
 <script>
 export default {
   name: 'Footer',
-  computed:{
-    contact(){
+  computed: {
+    contact() {
       // console.log(this.$store.state.aboutus)
-      return this.$store.state.aboutus.profile.concat || {}
+      return this.$store.state.aboutus.profile.personal.contact || {}
     }
   },
   async created() {

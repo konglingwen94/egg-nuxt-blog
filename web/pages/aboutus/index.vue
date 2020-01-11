@@ -2,7 +2,7 @@
   <div class="about" v-if="1">
     <div class="profile-wrapper">
       <el-divider content-position="left">作者简介</el-divider>
-      <div class="profile-content">{{profile.description}}</div>
+      <div class="profile-content">{{profile.personal.description}}</div>
     </div>
     <div class="platform-wrapper">
       <el-divider content-position="left">博客简介</el-divider>
@@ -32,6 +32,12 @@ export default {
 <style scoped lang="less">
 [class$='wrapper'] {
   margin: 90px 0;
+}
+
+.profile-content {
+  white-space: pre-wrap;
+  line-height: 2;
+  margin-left: 30px;
 }
 
 .contact-wrapper {
