@@ -16,7 +16,13 @@ module.exports = appInfo => {
         serverApi: '',
       },
       profile: {
-        personal: '',
+        personal: {
+           
+          description: '',
+          contact: [
+            { label: 'Github', value: 'https://github.com/konglingwen94' },
+          ],
+        },
         technology: {
           frontend: '',
           serverSide: '',

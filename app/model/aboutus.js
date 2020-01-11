@@ -4,7 +4,13 @@ module.exports = app => {
   const AboutusSchema = new Schema(
     {
       profile: {
-        personal: { type: String, default: '' },
+        personal: {
+          description: {
+            type: String,
+            default: '',
+          },
+          contact: [{}],
+        },
         technology: {
           frontend: { type: String, default: '' },
           serverSide: { type: String, default: '' },

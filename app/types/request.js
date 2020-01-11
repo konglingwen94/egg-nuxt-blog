@@ -4,11 +4,27 @@ module.exports = {
       type: 'object?',
       rule: {
         personal: {
-          type: 'string',
-          min: 1,
+          type: 'object',
+          rule: {
+            contact: {
+              type: 'array',
+              itemType: 'object',
+              rule: {
+                label: {
+                  type: 'string',
+                  value: 'string',
+                },
+              },
+              min: 1,
+            },
+            description: {
+              type: 'string',
+              min: 1,
+            },
+          },
         },
         technology: {
-          type: 'object',
+          type: 'object?',
           rule: {
             frontend: {
               type: 'string',
