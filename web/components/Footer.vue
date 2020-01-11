@@ -3,16 +3,13 @@
     <!-- {{contact}} -->
     <div class="contact-wrapper">
       <el-divider content-position="left">联系方式</el-divider>
-      <div class="contact-content">
+      <div class="contact-content" v-if="1">
         
         <div class="wechat">
           <label for>微信</label> :
           <span>{{contact.wechat}}</span>
         </div>
-        <div class="qq">
-          <label for>QQ</label> :
-          <span>{{contact.qq}}</span>
-        </div>
+        
         <div class="github">
           <label for>Github</label> :
           <el-link target="_blank" :href="contact.github">{{contact.github}}</el-link>
@@ -27,7 +24,7 @@ export default {
   computed:{
     contact(){
       // console.log(this.$store.state.aboutus)
-      return this.$store.state.aboutus.contact
+      return this.$store.state.aboutus.profile.concat || {}
     }
   },
   async created() {
