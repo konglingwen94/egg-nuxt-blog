@@ -1,7 +1,7 @@
 module.exports = app => {
   const { Schema, model, modelSchemas, models } = app.mongoose
   const { Comment: CommentModel } = models
-// console.log(__filename,models.Comment)
+  // console.log(__filename,models.Comment)
   const { ObjectId } = Schema.Types
 
   const ArticleSchema = new Schema(
@@ -11,10 +11,13 @@ module.exports = app => {
       title: String,
       tagIdList: [ObjectId],
       content: {
-        type: Object,
-        default: {
-          html: '',
-          text: '',
+        html: {
+          type: String,
+          default: '',
+        },
+        text: {
+          type: String,
+          default: '',
         },
       },
       starCount: {
@@ -22,10 +25,13 @@ module.exports = app => {
         default: 0,
       },
       cover: {
-        type: Object,
-        default: {
-          name: '',
-          path: '',
+        path: {
+          type: String,
+          default: '',
+        },
+        name: {
+          type: String,
+          default: '',
         },
       },
 

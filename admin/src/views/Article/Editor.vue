@@ -21,6 +21,7 @@
       </el-form-item>
       <el-form-item label="文章内容" required>
         <pell
+      
           @change="content=>Object.assign(form.content,content)"
           :initialMarkdown="form.content"
         ></pell>
@@ -111,7 +112,7 @@ export default {
         return
       }
 
-      if (!content) {
+      if (!content.html) {
         this.$message.error('请输入文章内容')
         return
       }

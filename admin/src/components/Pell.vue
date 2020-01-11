@@ -26,27 +26,15 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      html: '',
-      text: ''
-    }
+  created() {
+    const unwatch = this.$watch('initialMarkdown', function(value) {
+      this.editor.content.innerHTML = value.html
+      typeof unwatch === 'function' && unwatch()
+    })
   },
-  watch: {
-    initialMarkdown: {
-      deep: true,
-       
-      handler(value) {
-        this.html = value.html
-        this.text = value.text
 
-        this.editor.content.innerHTML = value.html
-      }
-    }
-  },
   mounted() {
     const self = this
-
     this.editor = pell.init({
       element: this.$refs.pell,
 
