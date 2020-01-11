@@ -11,6 +11,7 @@
     "admin:dev": "cd admin && npm run dev",
     "admin:build": "cd admin && npm run build",
     "web:dev": "cd web && npm run dev",
+    "web:debug": "cd web && npm run debug",
     "web:build": "cd web && npm run build",
     "web:build-local": "cd web && npm run build:local",
     "docs": "vuepress dev docs",

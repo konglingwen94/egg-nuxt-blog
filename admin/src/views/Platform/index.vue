@@ -2,13 +2,13 @@
   <div class="profile-wrapper">
     <el-form :model="platform" label-suffix=" : ">
       <el-form-item label="客户端简介" prop="webClient">
-        <el-input type="textarea" clearable :rows="5" v-model.trim.lazy="platform.webClient"></el-input>
+        <el-input type="textarea" clearable :rows="5" v-model.lazy="platform.webClient"></el-input>
       </el-form-item>
       <el-form-item label="管理后台简介" prop="serverUI">
-        <el-input type="textarea" clearable :rows="5" v-model.trim.lazy="platform.serverUI"></el-input>
+        <el-input type="textarea" clearable :rows="5" v-model.lazy="platform.serverUI"></el-input>
       </el-form-item>
       <el-form-item label="服务端简介" prop="serverApi">
-        <el-input type="textarea" clearable :rows="5" v-model.trim.lazy="platform.serverApi"></el-input>
+        <el-input type="textarea" clearable :rows="5" v-model.lazy="platform.serverApi"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button @click="submit" type="primary">保存</el-button>

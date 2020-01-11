@@ -7,7 +7,6 @@ export const state = () => ({
 
 export const mutations = {
   setAboutus(state, payload) {
-    
     _.merge(state.aboutus, payload)
   },
 
@@ -26,12 +25,26 @@ export const mutations = {
 }
 
 export const actions = {
-  async nuxtServerInit({ commit }, ctx) {
+  async nuxtServerInit() {
+    // debugger
     try {
-      var result = await ctx.service.aboutus.fetchData()
+      await Promise.all([
+        this.dispatch('fetchAboutusData'),
+        this.dispatch('weather/fetchWeatherData'),
+      ])
     } catch (error) {
-      return
+      console.error(error)
+      // .catch(err => Promise.reject(err))
     }
-    commit('setAboutus', result)
+  },
+
+  fetchAboutusData() {
+    // debugger
+    return this.app.service.aboutus
+      .fetchData()
+      .then(result => {
+        this.commit('setAboutus', result)
+      })
+      .catch(error => Promise.reject(error))
   },
 }

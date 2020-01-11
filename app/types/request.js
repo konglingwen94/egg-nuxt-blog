@@ -4,7 +4,7 @@ module.exports = {
       type: 'object?',
       rule: {
         personal: {
-          type: 'object',
+          type: 'object?',
           rule: {
             contact: {
               type: 'array',

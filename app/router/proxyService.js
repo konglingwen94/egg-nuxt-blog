@@ -49,12 +49,11 @@ module.exports = app => {
     )
 
     const { error_code, result } = data
-
     if (error_code !== 0) {
-      return { message: '查询失败' }
-    }
+      console.log(__filename, data)
 
-    console.log(__filename, result)
+      return { message: data.reason }
+    }
 
     const icon = _.findKey(weatherInfo, value => {
       return value.includes(result.realtime.info)

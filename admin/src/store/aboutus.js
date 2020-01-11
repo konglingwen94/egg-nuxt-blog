@@ -23,7 +23,7 @@ export default {
         })
         .catch(err => vm.$message.error(err.message))
     },
-    updateAboutus({ commit, state }, payload, type) {
+    updateAboutus({ commit, state }, payload) {
       const action = !state.id
         ? AboutusApi.createOne(payload)
         : AboutusApi.updateOne(state.id, payload)
@@ -34,6 +34,7 @@ export default {
         })
         .catch(error => {
           vm.$message.error(error.message)
+          return Promise.reject(error)
         })
     },
   },

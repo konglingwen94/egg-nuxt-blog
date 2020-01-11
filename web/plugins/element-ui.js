@@ -15,9 +15,12 @@ import {
   Menu,
   MenuItem,
   Carousel,
+  Card,
   CarouselItem,
   Image,
   Calendar,
+  Collapse,
+  CollapseItem,
 } from 'element-ui'
 import Vue from 'vue'
 
@@ -29,6 +32,9 @@ export default () => {
   Vue.use(Backtop)
   Vue.use(Icon)
   Vue.use(Divider)
+  Vue.use(Card)
+  Vue.use(CollapseItem)
+  Vue.use(Collapse)
   Vue.use(Link)
   Vue.use(Alert)
   Vue.use(Tag)

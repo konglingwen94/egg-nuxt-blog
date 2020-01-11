@@ -24,8 +24,14 @@ class AboutController extends Controller {
     const { id } = ctx.params
     const payload = ctx.state.body
 
-    const result = await service.aboutus.queryByIdAndUpdate(id, payload)
-    return result
+    // const result = await service.aboutus.queryByIdAndUpdate(id, payload)
+
+    const result = await ctx.model.Aboutus.findById(id)
+
+    _.merge(result, payload)
+    console.log(__filename, result.toObject(), payload)
+
+    return result.save()
   }
   async createOne() {
     const { ctx } = this

@@ -40,23 +40,13 @@
       <el-card header="技术介绍">
         <el-form ref="technology">
           <el-form-item label="前端技术">
-            <el-input
-              type="textarea"
-              :rows="5"
-              v-model.trim="profile.technology.frontend"
-              clearable
-            ></el-input>
+            <el-input type="textarea" :rows="5" v-model="profile.technology.frontend" clearable></el-input>
           </el-form-item>
           <el-form-item label="服务端技术">
-            <el-input
-              type="textarea"
-              :rows="5"
-              v-model.trim="profile.technology.serverSide"
-              clearable
-            ></el-input>
+            <el-input type="textarea" :rows="5" v-model="profile.technology.serverSide" clearable></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button @click="submit" type="primary">保存</el-button>
+            <el-button @click="submitTechnology" type="primary">保存</el-button>
           </el-form-item>
         </el-form>
       </el-card>
@@ -115,11 +105,15 @@ export default {
     },
     submitPersonal() {
       const {
-        personal: { description, contact }
+        personal: { description, contact },
+        technology
       } = this.profile
 
       if (!description) {
         return this.$message.warning('个人介绍不能为空')
+      }
+      if (!contact.length) {
+        return this.$message.warning('联系方式最少为一个')
       }
 
       try {
@@ -134,40 +128,18 @@ export default {
         return
       }
 
-      const payload = { personal: { name, description, contact } }
+      const payload = { personal: { description, contact } }
 
       this.$store.dispatch('updateAboutus', { profile: payload }).then(() => {
         this.$message.success('修改个人介绍成功')
       })
     },
-    async submit() {
-      try {
-        await this.$refs.profile.validate()
-      } catch (error) {
-        return
-      }
-
+    async submitTechnology() {
       const {
-        personal: {
-          name,
-          description,
-          contact: { github }
-        },
-        technology: { serverSide, frontend }
+        technology: { serverSide, frontend },
+        personal
       } = this.profile
       console.log(frontend, serverSide)
-      if (!name) {
-        this.$message.warning('请输入姓名')
-        return
-      }
-      if (!description) {
-        this.$message.warning('请输入个人描述')
-        return
-      }
-      if (!github) {
-        this.$message.warning('请输入联系方式')
-        return
-      }
       if (!frontend) {
         this.$message.warning('请输入前端技术内容')
         return
@@ -179,12 +151,12 @@ export default {
       }
 
       const payload = {
-        personal: { name, description, contact: { github } },
         technology: { frontend, serverSide }
+        // personal
       }
 
       this.$store.dispatch('updateAboutus', { profile: payload }).then(() => {
-        this.$message.success('设置个人简介成功')
+        this.$message.success('设置技术简介成功')
       })
     }
   }

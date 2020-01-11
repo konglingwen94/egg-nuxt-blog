@@ -20,19 +20,13 @@
 <script>
 export default {
   name: 'Header',
+  data() {
+    return {}
+  },
   computed: {
     currentDay() {
       return this.$store.state.weather.currentDay
     }
-  },
-  async created() {
-    if (process.server) {
-      return
-    }
-
-    this.$store
-      .dispatch('weather/fetchWeatherData')
-      .then(() => console.log('fetch weatherData successfully'))
   }
 }
 </script>

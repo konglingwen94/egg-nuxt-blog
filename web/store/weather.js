@@ -12,16 +12,18 @@ export const state = () => ({
 
 export const mutations = {
   setCurrentDay(state, payload) {
+    // console.log('result', payload)
+
     Object.assign(state.currentDay, payload)
   },
 }
 
 export const actions = {
   fetchWeatherData({ commit }) {
-    if (process.server) {
-      return
-    }
-    let coords
+    // if (process.server) {
+    //   return
+    // }
+    // let coords
 
     // const getCurrentPosition = new Promise((resolve, reject) => {
     //   navigator.geolocation.getCurrentPosition(result => {
