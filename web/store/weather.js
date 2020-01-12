@@ -13,7 +13,6 @@ export const state = () => ({
 export const mutations = {
   setCurrentDay(state, payload) {
     // console.log('result', payload)
-
     Object.assign(state.currentDay, payload)
   },
 }
@@ -44,6 +43,7 @@ export const actions = {
         },
       })
       .then(result => {
+        // console.log(__filename, result)
         commit('setCurrentDay', result)
       })
   },

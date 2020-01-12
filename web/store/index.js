@@ -27,6 +27,11 @@ export const mutations = {
 export const actions = {
   async nuxtServerInit() {
     // debugger
+
+console.log(this.app)
+
+
+
     try {
       await Promise.all([
         this.dispatch('fetchAboutusData'),

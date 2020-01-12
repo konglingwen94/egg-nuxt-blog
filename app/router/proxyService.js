@@ -49,8 +49,8 @@ module.exports = app => {
     )
 
     const { error_code, result } = data
+   
     if (error_code !== 0) {
-      console.log(__filename, data)
 
       return { message: data.reason }
     }
@@ -79,7 +79,6 @@ module.exports = app => {
       },
     })
     const { error_code, result } = data
-    console.log(result)
 
     if (error_code !== 0) {
       return { message: '查询失败' }

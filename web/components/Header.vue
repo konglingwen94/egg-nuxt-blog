@@ -13,16 +13,15 @@
       </el-menu>
     </div>
     <div class="weather-container">
+      <no-ssr>
       <vue-weather title :enableCredits="false" :forecast="[]" units="ca" :currentDay="currentDay"></vue-weather>
+      </no-ssr>
     </div>
   </div>
 </template>
 <script>
 export default {
   name: 'Header',
-  data() {
-    return {}
-  },
   computed: {
     currentDay() {
       return this.$store.state.weather.currentDay
@@ -53,7 +52,7 @@ export default {
   height: 200px;
   position: absolute;
   top: 20px;
-  right: 100px;
+  right: 20px;
   /deep/ #header {
     display: none;
   }
