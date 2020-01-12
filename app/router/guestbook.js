@@ -12,12 +12,14 @@ module.exports = app => {
   router.get('/admin/guestbooks', controller.guestbook.queryList)
 
   router.delete(
+    'guestbook',
     '/admin/guestbooks/:id',
 
     controller.guestbook.deleteOne
   )
 
   router.delete(
+    'guestbook',
     '/admin/guestbooks',
 
     controller.guestbook.deleteMany
@@ -28,7 +30,11 @@ module.exports = app => {
   router.post('/guestbooks', controller.guestbook.createOne)
 
   // 回复评论
-  router.post('/guestbooks/:id/dialogues', controller.guestbook.responseToUser)
+  router.post(
+    'guestbook',
+    '/guestbooks/:id/dialogues',
+    controller.guestbook.responseToUser
+  )
 
   router.get('/guestbooks', controller.guestbook.queryList)
 }

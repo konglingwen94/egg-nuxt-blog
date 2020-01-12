@@ -32,18 +32,29 @@ module.exports = class GuestbookController extends Controller {
     const { ctx } = this
 
     const { id } = ctx.params
-    const { content, responseTo, nickname, kind } = ctx.request.body
-    const payload = { responseTo, content, nickname }
-    const doc = await ctx.model.Guestbook.create(payload)
-    const result = await ctx.model.Guestbook.findByIdAndUpdate(
-      id,
-      {
-        $addToSet: { dialogues: doc.id },
-      },
-      { new: true }
-    ).populate({ path: 'dialogues', populate: 'responseTo' })
 
-    return result
+    const payload = ctx.state.body
+
+    let guestbookResult = await ctx.model.Guestbook.findById(id)
+
+    const responseToIds = guestbookResult.dialogues.concat(guestbookResult._id)
+
+    if (!responseToIds.includes(ObjectId(payload.responseTo))) {
+      ctx.throw('404', `未知的responseTo:${payload.responseTo}`)
+    }
+
+    const doc = await ctx.model.Guestbook.create(payload)
+
+    guestbookResult.dialogues.addToSet(doc.id)
+
+    guestbookResult = (await guestbookResult.save())
+      .populate({
+        path: 'dialogues',
+        populate: 'responseTo',
+      })
+      .execPopulate()
+
+    return guestbookResult
   }
   async deleteOne() {
     const { ctx } = this

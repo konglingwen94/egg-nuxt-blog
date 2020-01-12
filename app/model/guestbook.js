@@ -5,7 +5,7 @@ module.exports = app => {
   const DialogueSchema = new Schema(
     {
       responseTo: { type: ObjectId, ref: 'Dialogue' },
-       
+
       nickname: {
         type: String,
         default: '',
@@ -24,18 +24,20 @@ module.exports = app => {
           ref: 'Dialogue',
         },
       ],
-      responseTo: {
-        type: ObjectId,
-        ref: 'Dialogue',
-      },
     },
     { timestamps: true }
   )
 
   DialogueSchema.post('findOneAndRemove', doc => {
-     
-
     return doc.constructor.deleteMany({ _id: doc.dialogues })
+  })
+
+  DialogueSchema.pre('find', function() {
+    // console.log(__filename, 'pre-find')
+  })
+   
+  DialogueSchema.pre('findOneAndUpdate', function() {
+    // console.log(__filename, 'pre-findOneAndUpdate')
   })
 
   return model('Dialogue', DialogueSchema)

@@ -189,18 +189,11 @@ module.exports = {
     },
   },
   guestbook: {
-    id: {
-      type: 'string',
-      min: 24,
-      max: 24,
-    },
-    responseID: {
-      type: 'string',
-      min: 24,
-      max: 24,
-    },
+     
     responseTo: {
       type: 'string',
+      max:24,
+      min:24
     },
     content: {
       type: 'string',

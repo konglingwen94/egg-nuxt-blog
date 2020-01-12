@@ -1,8 +1,11 @@
 <template>
   <div class="footer" v-if="1">
     <!-- {{contact}} -->
+      <el-divider content-position="left"></el-divider>
     <div class="contact-wrapper">
-      <el-divider content-position="left">联系方式</el-divider>
+
+
+
       <div class="contact-content" v-if="1">
         <div class="contact-item" v-for="(item,key) in contact" :key="key">
           <label for>{{item.label}}</label> :
