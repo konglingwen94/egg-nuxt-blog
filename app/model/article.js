@@ -49,6 +49,28 @@ module.exports = app => {
     }
   )
 
+  ArticleSchema.path('categoryID').validate(async function(id) {
+    return models.Category.findById(id)
+  })
+
+  ArticleSchema.path('tagIdList').validate({
+    async validator(tagIdList, props) {
+      const results = await Promise.all(
+        tagIdList.map(tagID => models.Tag.findById(tagID))
+      )
+
+      console.log(__filename, results)
+      // props.value = []
+      results.forEach((result, index) => {
+        if (result) {
+          props.value.splice(index, 1)
+        }
+      })
+      return results.every(item => item)
+    },
+    propsParameter: true,
+  })
+
   ArticleSchema.post('findOneAndRemove', function(model) {
     if (model && model.id) {
       return models.Comment.deleteMany({ article: model.id })

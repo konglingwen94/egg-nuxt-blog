@@ -11,7 +11,7 @@ export default {
     return request.get('/articles', { params })
   },
   fetchCarouselList(params) {
-    return request.get('/articles/carousels', { params })
+    return request.get('/article-carousels', { params })
   },
   fetchSuggestionList(id, params) {
     return request.get(`/articles/${id}/suggestion`, { params })

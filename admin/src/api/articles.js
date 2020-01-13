@@ -16,8 +16,8 @@ export default {
   deleteWithId(id) {
     return request.delete(`/articles/${id}`)
   },
-  delete(params) {
-    return request.post('/articles/delete', params)
+  deleteMany(idList) {
+    return request.delete('/articles', { params: { idList } })
   },
   updatePublishStatus(id, params) {
     return request.patch(`/articles/${id}/status`, params)

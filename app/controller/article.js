@@ -113,11 +113,11 @@ class ArticleController extends Controller {
 
     await service.article.queryByIdAndUpdate(id, ctx.state.body)
   }
-  async delete() {
+  async deleteMany() {
     const { ctx, service } = this
 
-    const { idList } = ctx.request.body
-
+    const { idList } = ctx.queries
+ 
     ctx.validate(
       {
         idList: {

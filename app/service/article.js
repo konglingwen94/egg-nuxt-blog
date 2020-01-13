@@ -51,7 +51,7 @@ class ArticleService extends Service {
     return this.ctx.model.Article.findByIdAndRemove(id)
   }
   async deleteMany(idList) {
-    return this.ctx.model.Article.deleteMany({ id: idList })
+    return this.ctx.model.Article.deleteMany({ _id: idList })
   }
 
   async incrementPv(id) {

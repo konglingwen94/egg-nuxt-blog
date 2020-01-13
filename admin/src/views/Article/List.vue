@@ -1,8 +1,9 @@
 <template>
   <div class>
     <Panel>
+      <el-button type="danger" @click="deleteMany">批量删除</el-button>
       <el-table :data="dataList" border @selection-change="handleSelectionChange">
-        <!-- <el-table-column type="selection"></el-table-column> -->
+        <el-table-column type="selection"></el-table-column>
         <el-table-column type="expand">
           <template v-slot="{row}">
             <el-row :gutter="40" type="flex" justify="space-between">
@@ -147,7 +148,7 @@ export default {
           this.$message.error(err.message)
         })
     },
-    async batchDelete() {
+    async deleteMany() {
       const idList = this.selection.map(item => item.id)
       if (!idList.length) {
         this.$message.info('请选择您要删除的选项')
@@ -165,7 +166,7 @@ export default {
       } catch (error) {
         return
       }
-      ArticleApi.delete({ idList })
+      ArticleApi.deleteMany(idList)
 
         .then(() => {
           this.selection.forEach(item => {
