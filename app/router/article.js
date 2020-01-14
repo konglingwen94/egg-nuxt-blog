@@ -9,21 +9,21 @@ module.exports = app => {
 
   const router = app.router.namespace('/api')
 
-  // router.param('id', async (id, ctx, next) => {
-  //   ctx.validate({ id: { type: 'string', max: 24, min: 24 } }, { id })
-  //   const result = models.Article.findById(id)
-  //   if (!(await result)) {
-  //     ctx.throw('400', 'Invalid Fields', {
-  //       errors: {
-  //         id: { kind: 'params', path: ctx.path, value: id, code: 404 },
-  //       },
-  //     })
-  //   }
+  router.param('id', async (id, ctx, next) => {
+    ctx.validate({ id: { type: 'string', max: 24, min: 24 } }, { id })
+    const result = models.Article.findById(id)
+    if (!(await result)) {
+      ctx.throw('400', 'Invalid Fields', {
+        errors: {
+          id: { kind: 'params', path: ctx.path, value: id, code: 404 },
+        },
+      })
+    }
 
-  //   ctx.state.queryArticle = result
-  //   // console.log(id)
-  //   return await next()
-  // })
+    ctx.state.queryArticle = result
+    // console.log(id)
+    return await next()
+  })
 
   /***
    *

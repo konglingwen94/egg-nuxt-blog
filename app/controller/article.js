@@ -109,18 +109,11 @@ class ArticleController extends Controller {
   async updateOne() {
     const { ctx, service } = this
 
-    const { id } = ctx.params
-    console.log(__filename, ctx.state.queryArticle)
-
-    // ctx.state.queryArticle
-
-    return await ctx.state.queryArticle.updateOne(
+    return ctx.state.queryArticle.updateOne(
       {},
-      { $set: ctx.state.body },
+      { $set: ctx.request.body },
       { new: true }
     )
-
-    // await service.article.queryByIdAndUpdate(id, ctx.state.body)
   }
   async deleteMany() {
     const { ctx, service } = this
