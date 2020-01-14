@@ -3,7 +3,7 @@ module.exports = app => {
 
   const router = app.router.namespace(
     '/api',
-    middleware.commonParameterValidator(),
+    
     // app.router.allowedMethods()
     )
     
@@ -37,10 +37,6 @@ module.exports = app => {
   router.get('/categories', controller.category.queryList)
 
   router.get('/categories/:id', controller.category.queryOne)
-  router.use(router.allowedMethods())
-
-  // router.all('*', ctx => {
-  //   ctx.status = 404
-  //   return { message: 'NotFound' }
-  // })
+   
+   
 }

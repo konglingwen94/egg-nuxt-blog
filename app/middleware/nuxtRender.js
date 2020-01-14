@@ -11,6 +11,8 @@ module.exports = (option, app) => {
     ctx.req.controller = app.controller
     ctx.req.service = ctx.service
 
+     
+
     // await ctx.nuxt.render(ctx.req, ctx.res)
   }
 }

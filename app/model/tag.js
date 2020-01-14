@@ -11,11 +11,8 @@ module.exports = app => {
         unique: true,
       },
       cover: {
-        type: Object,
-        default: {
-          name: '',
-          path: '',
-        },
+        path: { type: String, default: '' },
+        name: { type: String, default: '' },
       },
     },
     {

@@ -3,6 +3,10 @@ const { Document } = require('mongoose')
 module.exports = (opts, app) => {
   return async (ctx, next) => {
     const data = await next()
+
+     
+     
+
     const response = (function recursion(data) {
       if (data instanceof Document) {
         return ctx.helper.patchFieldToData(data)
@@ -19,8 +23,12 @@ module.exports = (opts, app) => {
 
       return data
     })(data)
+
+
     if (data && response) {
       ctx.body = response
+    } else {
+      ctx.status = 204
     }
   }
 }

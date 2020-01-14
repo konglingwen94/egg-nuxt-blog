@@ -32,6 +32,7 @@ class AppBootHook {
     global.app = this.app
     global.mongoose = this.app.mongoose
     global._ = require('lodash')
+
   }
   serverDidReady() {
     console.log('Server did ready')

@@ -2,7 +2,7 @@
 module.exports = (opt, app) => {
   return async (ctx, next) => {
     try {
-      const result = await next()
+       await next()
        
     } catch (error) {
       console.error(error)

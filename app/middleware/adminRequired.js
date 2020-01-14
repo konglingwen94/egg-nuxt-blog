@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken')
 
 module.exports = (option, app) => {
   return async (ctx, next) => {
-    console.log(__filename)
 
     const { authorization } = ctx.headers
     const { secretKey, expiresIn } = ctx.app.config.adminSecret
