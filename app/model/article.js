@@ -1,5 +1,6 @@
+const _ = require('lodash')
 module.exports = app => {
-  const { Schema, model, modelSchemas, models } = app.mongoose
+  const { Schema, model, modelSchemas, models, Types } = app.mongoose
   const { Comment: CommentModel } = models
   // console.log(__filename,models.Comment)
   const { ObjectId } = Schema.Types
@@ -9,7 +10,7 @@ module.exports = app => {
       categoryID: ObjectId,
 
       title: String,
-      tagIdList: [ObjectId],
+      tagIdList: [{ type: ObjectId, unique: true }],
       content: {
         html: {
           type: String,
@@ -55,18 +56,38 @@ module.exports = app => {
 
   ArticleSchema.path('tagIdList').validate({
     async validator(tagIdList, props) {
-      const results = await Promise.all(
-        tagIdList.map(tagID => models.Tag.findById(tagID))
-      )
+      const duplicateArr = []
 
-      console.log(__filename, results)
-      // props.value = []
-      results.forEach((result, index) => {
-        if (result) {
-          props.value.splice(index, 1)
-        }
-      })
-      return results.every(item => item)
+      tagIdList
+        .slice()
+        .sort()
+        .sort((a, b) => {
+          if (a.equals(b) && !duplicateArr.includes(b)) {
+            duplicateArr.push(b)
+          }
+        })
+
+      if (duplicateArr.length) {
+        props.message = 'Duplicate item value'
+        props.value = duplicateArr
+
+        return false
+      }
+
+      const storageTagIdList = (await models.Tag.find()).map(item => item.id)
+
+      props.value = _.difference(
+        tagIdList.map(item => item.toString()),
+        storageTagIdList
+      )
+      // console.log(tagIdList, mongooseArrayTagIdList)
+      // tagIdList.forEach((tagObjectId, index) => {
+      //   if (!mongooseArrayTagIdList.includes(tagObjectId)) {
+      //     props.value.push(tagObjectId)
+      //   }
+      // })
+
+      return !props.value.length
     },
     propsParameter: true,
   })

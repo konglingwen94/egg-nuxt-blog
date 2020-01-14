@@ -22,6 +22,7 @@ class ArticleService extends Service {
   async create(payload) {
     const { ctx } = this
     const doc = new ctx.model.Article(payload)
+    console.log(__filename, doc)
     return doc.save()
   }
   async queryByIdAndUpdate(id, payload) {

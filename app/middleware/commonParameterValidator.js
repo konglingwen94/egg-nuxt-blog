@@ -4,7 +4,9 @@ module.exports = () => {
   return async (ctx, next) => {
     const { requestMethods } = ctx.app.config.commonParameterValidator
 
-    if (!requestMethods.includes(ctx.method) || !ctx._matchedRouteName) {
+
+
+    if (!requestMethods.includes(ctx.method) || !ctx.routerName) {
       return await next()
     }
 
@@ -22,13 +24,13 @@ module.exports = () => {
       // const result = await ctx.model[modelName].findById(ctx.params.id)
       // debugger
       // if (!result) {
-      //   ctx.throw(404, `NotFound ${paramKeys[0]}:${ctx.params.id}`)
+        //   ctx.throw(404, `NotFound ${paramKeys[0]}:${ctx.params.id}`)
       // }
-      console.log(__filename, ctx)
     }
+     
 
     const validationSchema = _.cloneDeep(
-      ctx.validationRule[ctx._matchedRouteName]
+      ctx.validationRule[ctx.routerName]
     )
 
     if (ctx.method === 'PATCH') {
@@ -38,6 +40,7 @@ module.exports = () => {
     }
 
     // console.log(__filename, validationSchema, ctx.request.body)
+     
     ctx.validate(validationSchema, ctx.request.body)
     ctx.state.body = _.pick(ctx.request.body, _.keys(validationSchema))
 

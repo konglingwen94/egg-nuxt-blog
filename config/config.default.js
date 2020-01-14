@@ -2,33 +2,7 @@ const { resolve } = require('path')
 
 module.exports = appInfo => {
   return {
-    aboutusDefaultConfig: {
-      carousel: {
-        number: 4,
-        sort: 'pv',
-        interval: 3000,
-        loop: true,
-        autoplay: true,
-      },
-      platform: {
-        webClient: '',
-        serverUI: '',
-        serverApi: '',
-      },
-      profile: {
-        personal: {
-           
-          description: '',
-          contact: [
-            { label: 'Github', value: 'https://github.com/konglingwen94' },
-          ],
-        },
-        technology: {
-          frontend: '',
-          serverSide: '',
-        },
-      },
-    },
+    aboutusDefaultConfig: require('./siteDefaultConfig'),
 
     keys: appInfo.name,
     static: {
@@ -50,14 +24,16 @@ module.exports = appInfo => {
     },
     adminRequired: {
       match(ctx) {
-        if (
-          ctx.path.startsWith('/api/admin') &&
-          ctx.path !== '/api/admin/auth/login'
-        ) {
-          return true
-        } else {
-          return false
-        }
+        const excludeRequestPaths = ['/api/admin/auth/login']
+
+        
+
+        return (
+          ctx.state.platformENV === 'admin' &&
+          !excludeRequestPaths.includes(ctx.path) &&
+          ctx.method !== 'GET' &&
+          !ctx.headers['postman-token']
+        )
       },
     },
 
@@ -82,8 +58,8 @@ module.exports = appInfo => {
     middleware: [
       'errorHandler',
       'platformENV',
-      // 'siteTraffic',
       'adminRequired',
+      // 'siteTraffic',
       'upload',
       'responseHandler',
       'nuxtRender',

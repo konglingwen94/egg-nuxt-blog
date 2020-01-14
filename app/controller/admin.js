@@ -10,6 +10,8 @@ class AdminController extends Controller {
 
     const data = ctx.state.body
 
+
+
     const { username, password } = data
 
     const result = await service.admin.queryOneByUsername(username)

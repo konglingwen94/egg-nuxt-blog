@@ -19,7 +19,8 @@ module.exports = (opts, app) => {
 
       return data
     })(data)
-
-    ctx.body = response
+    if (data && response) {
+      ctx.body = response
+    }
   }
 }

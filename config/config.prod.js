@@ -14,18 +14,7 @@ module.exports = appInfo => {
       match: '/api/upload',
       dir: '/public/uploads/',
     },
-    adminRequired: {
-      match(ctx) {
-        if (
-          ctx.path.startsWith('/api/admin') &&
-          ctx.path !== '/api/admin/auth/login'
-        ) {
-          return true
-        } else {
-          return false
-        }
-      },
-    },
+      
    
     webArticleFilter: {
       match: '/api/articles',

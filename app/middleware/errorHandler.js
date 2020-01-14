@@ -1,4 +1,3 @@
-const consola = require('consola')
 
 module.exports = (opt, app) => {
   return async (ctx, next) => {
@@ -6,10 +5,8 @@ module.exports = (opt, app) => {
       const result = await next()
        
     } catch (error) {
-      consola.error({
-        message: error,
-        badge: true,
-      })
+      console.error(error)
+      // console.dir(error)
 
       const response = {
         message: error.message || 'Internal Server Error',

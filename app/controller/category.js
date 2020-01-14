@@ -2,7 +2,9 @@ const { Controller } = require('egg')
 
 class CategoryController extends Controller {
   async createOne() {
+    
     const { ctx, service } = this
+    
     const payload = ctx.state.body
 
     return ctx.model.Category.create(payload)
