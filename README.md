@@ -11,9 +11,11 @@ Nuxt.js（web 端） + Egg.js（api 服务） + Vue.js（管理后台）+ Elemen
 
 ## Setup
 
+npm install （安装项目构建所有依赖包）
+
 ### Development
 
-- npm run dev （启动服务端 Api http://localhost:7001）
+- npm run dev （启动服务端数据接口 http://localhost:7001）
 
 - npm run web:dev （启动客户端 http://localhost:3000）
 
@@ -91,10 +93,12 @@ Nuxt.js（web 端） + Egg.js（api 服务） + Vue.js（管理后台）+ Elemen
   - [x] 删除一个评论
   - [x] 批量删除评论
 - [x] 留言管理
+
   - [x] 单个删除留言
   - [x] 批量删除留言
   - [x] 查看留言相关回复
   - [x] 单个删除留言回复
   - [x] 批量删除留言回复
-- [x] 通用图片上传功能（上传后前端才能展示，否则为空）
-      如果我的项目对您有所帮助，您可以点右上角 "Star" 支持一下 感谢～～！
+  - [x] 通用图片上传功能（上传后前端才能展示，否则为空）
+
+如果我的项目对您有所帮助，您可以点右上角 "Star" 支持一下 感谢～～！
