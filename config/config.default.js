@@ -2,7 +2,7 @@ const { resolve } = require('path')
 
 module.exports = appInfo => {
   return {
-    aboutusDefaultConfig: require('./siteDefaultConfig'),
+    aboutusDefaultConfig: require('./defaultSiteConfig'),
 
     keys: appInfo.name,
     static: {
@@ -52,9 +52,7 @@ module.exports = appInfo => {
     errorHandler: {
       match: ['/api'],
     },
-    commonParameterValidator: {
-      requestMethods: ['POST', 'PUT', 'PATCH'],
-    },
+    
     middleware: [
       'errorHandler',
       'platformENV',

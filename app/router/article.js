@@ -1,9 +1,8 @@
-const _ = require('lodash')
 
 module.exports = app => {
   const {
     controller,
-    middleware,
+
     mongoose: { models },
   } = app
 
@@ -15,14 +14,14 @@ module.exports = app => {
     if (!(await result)) {
       ctx.throw('400', 'Invalid Fields', {
         errors: {
-          id: { kind: 'params', path: ctx.path, value: id, code: 404 },
+          id: { kind: 'urlParam', url: ctx.path, value: id, code: 404 },
         },
       })
     }
 
     ctx.state.queryArticle = result
     // console.log(id)
-    return await next()
+    return  next()
   })
 
   /***
