@@ -1,10 +1,9 @@
 # EGG-NUXT-BLOG
 
-## Platform
+## ProjectEnviroment
 
-- WebClient
-- AdminClient
-- ApiServer
+- Node: v10.13.0
+- Mongodb: v4.0.5
 
 ## Setup
 
@@ -29,3 +28,17 @@
 - Web: http://localhost:7001
 - Admin: http://localhost:7001/admin
 - Api: http://localhost:7001/api
+
+## Technology stack
+
+### UILibrary ElementUI
+
+### DataStorage MongoDB
+
+### RequestTool Axios
+
+### PlatformFrameWork
+
+- Web: Nuxt
+- Admin: VueJs
+- Server:EggJs
