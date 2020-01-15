@@ -1,3 +1,7 @@
-| 表头1  | 表头2                  |
-| ------ | :---------------------: |
-| 发顺丰 | 发顺丰房价快速的了放假 |
+# EGG-NUXT-BLOG
+
+## Platform
+
+- WebClient
+- AdminClient
+- Server
