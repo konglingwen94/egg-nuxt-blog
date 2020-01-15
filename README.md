@@ -24,14 +24,11 @@ Nuxt.js（web 端） + Egg.js（api 服务） + Vue.js（管理后台）+ Elemen
 - npm run web:build（打包客户端）
 
 - npm run admin:build (打包管理后台)
+- npm start (启动项目)
 
-### Production
-
-npm start (启动项目)
-
-- Web: http://localhost:7001
-- Admin: http://localhost:7001/admin
-- Api: http://localhost:7001/api
+  - Web: http://localhost:7001
+  - Admin: http://localhost:7001/admin
+  - Api: http://localhost:7001/api
 
 ## Technology stack
 
@@ -77,6 +74,7 @@ npm start (启动项目)
 - [x] 文章分类数据的增删改查
 - [x] 文章标签数据的增删改查
 - [x] 文章管理
+
   - [x] 查看文章的有关数据（浏览量，收藏个数，评论个数等内容）
   - [x] 单个文章的增删改查
   - [x] 批量删除多个文章（功能待完善）
