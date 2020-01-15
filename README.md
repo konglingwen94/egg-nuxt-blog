@@ -20,12 +20,12 @@
 
 - npm run web:build（打包客户端）
 
-#### npm run admin:build (打包管理后台)
+- npm run admin:build (打包管理后台)
 
 ### Production
 
 #### npm start (启动项目)
 
-- Web:http://localhost:7001
-- Admin:http://localhost:7001/admin
-- Api:http://localhost:7001/api
+- Web: http://localhost:7001
+- Admin: http://localhost:7001/admin
+- Api: http://localhost:7001/api
