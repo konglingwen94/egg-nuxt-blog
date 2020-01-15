@@ -1,6 +1,10 @@
 # EGG-NUXT-BLOG
 
-## ProjectEnviroment
+## Introduction
+
+Nuxt.js（web 端） + Egg.js（api 服务） + Vue.js（管理后台）+ ElementUi（通用组件库）服务器渲染(SSR)搭建的个人博客系统
+
+## Environment
 
 - Node: v10.13.0
 - Mongodb: v4.0.5
@@ -23,7 +27,7 @@
 
 ### Production
 
-#### npm start (启动项目)
+npm start (启动项目)
 
 - Web: http://localhost:7001
 - Admin: http://localhost:7001/admin
@@ -31,14 +35,12 @@
 
 ## Technology stack
 
-### UILibrary ElementUI
+- UI: ElementUI (基于 VueJs 的组件库)
+    * Web:服务端渲染的多页面应用
+    * Manager:单页面应用
 
-### DataStorage MongoDB
+- HttpTool: Axios
+- Renderer: Nuxt （基于 VueJs 的服务端渲染框架）
+- Server : EggJs(封装了 koa+koa-router 的 NodeJs 框架)
+- DataBase： Mongoose(支持异步操作 MongoDB 的库)
 
-### RequestTool Axios
-
-### PlatformFrameWork
-
-- Web: Nuxt
-- Admin: VueJs
-- Server:EggJs
