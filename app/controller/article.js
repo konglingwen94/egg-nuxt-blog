@@ -93,10 +93,11 @@ class ArticleController extends Controller {
 
   async queryOne() {
     const { ctx, service } = this
-    const { id } = ctx.params
 
-    const result = await service.article.queryOneById(id)
-    return result
+    return ctx.state.queryArticle
+      .populate('tagList')
+      .populate('comments')
+      .findOne()
   }
   async createOne() {
     const { ctx, service } = this
@@ -109,11 +110,7 @@ class ArticleController extends Controller {
   async updateOne() {
     const { ctx, service } = this
 
-    return ctx.state.queryArticle.updateOne(
-      {},
-      { $set: ctx.request.body },
-      { new: true }
-    )
+    return ctx.state.queryArticle.updateOne({}, { $set: ctx.request.body })
   }
   async deleteMany() {
     const { ctx, service } = this
@@ -136,9 +133,8 @@ class ArticleController extends Controller {
   }
   async deleteOne() {
     const { ctx, service } = this
-    const { id } = ctx.params
 
-    await service.article.queryByIdAndRemove(id)
+    return ctx.state.queryArticle.deleteOne()
   }
   async updatePublishStatus() {
     const { ctx, service } = this
@@ -146,21 +142,22 @@ class ArticleController extends Controller {
     const { isPublished } = ctx.request.body
     ctx.validate({ isPublished: 'boolean' }, { isPublished })
 
-    const { id } = ctx.params
-    await this.ctx.model.Article.findByIdAndUpdate(id, {
-      $set: { isPublished },
-    })
+    return ctx.state.queryArticle.updateOne(
+      {},
+      {
+        $set: { isPublished },
+      }
+    )
   }
   async incrementPv() {
     const { ctx, service } = this
 
-    await service.article.incrementPv(ctx.params.id)
+    return ctx.state.queryArticle.updateOne({}, { $inc: { pv: 1 } })
   }
   async starOne() {
     const { ctx, service } = this
-    const { id } = ctx.params
 
-    await service.article.queryByIdAndStarOne(id)
+    return ctx.state.queryArticle.updateOne({}, { $inc: { starCount: 1 } })
   }
 }
 module.exports = ArticleController
