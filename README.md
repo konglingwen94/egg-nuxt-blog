@@ -34,7 +34,7 @@ npm install （安装项目构建所有依赖包）
 
 ## Technology stack
 
-- UI: ElementUI (基于 VueJs 的通用组件库)
+- UI: ElementUI (基于 VueJs 的客户端通用组件库)
 
   - Web 客户端:服务端渲染的多页面应用
   - 管理后台:单页面应用
@@ -42,9 +42,9 @@ npm install （安装项目构建所有依赖包）
 - Base：HTML、CSS、Javascript
 - Extensions：ES6(next)、Less、JSON、TypeScript（待使用）
 - HTTP: Axios
-- Renderer: Nuxt （封装了 VueJs+Vuex+VueRouter 的服务端渲染框架）
+- Renderer: Nuxt （封装了 VueJs+Vuex+VueRouter 的服务端数据渲染框架）
 - Web 客户端数据存储：LocalStorage、Vuex
-- ServerApi : EggJs(封装了 koa+koa-router 等等的 NodeJs 框架)
+- ServerApi : EggJs(封装了 koa+koa-router 等模块的 NodeJs 框架)
 - Database： Mongoose(支持异步操作 MongoDB 的库)
 - CodeDebugger：ChromeInspector、LinuxShell
 - TestTools：Postman(Api 测试)、Chrome
