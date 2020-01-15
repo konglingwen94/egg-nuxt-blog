@@ -40,11 +40,12 @@ Nuxt.js（web 端） + Egg.js（api 服务） + Vue.js（管理后台）+ Elemen
 - Base：HTML、CSS、Javascript
 - Extensions：ES6(next)、Less、JSON、TypeScript（待使用）
 - HTTP: Axios
-- Renderer: Nuxt （基于 VueJs 的服务端渲染框架）
-- Server : EggJs(封装了 koa+koa-router 等等的 NodeJs 框架)
-- DataBase： Mongoose(支持异步操作 MongoDB 的库)
-- Debugger：ChromeInspector、LinuxShell
-- OtherTools：Webpack、Postman(Api 测试工具)、Chrome
+- Renderer: Nuxt （封装了 VueJs+Vuex+VueRouter 的服务端渲染框架）
+- Web 客户端数据存储：LocalStorage、Vuex
+- ServerApi : EggJs(封装了 koa+koa-router 等等的 NodeJs 框架)
+- Database： Mongoose(支持异步操作 MongoDB 的库)
+- CodeDebugger：ChromeInspector、LinuxShell
+- TestTools：Postman(Api 测试)、Chrome
 
 ## Features
 
@@ -95,6 +96,5 @@ Nuxt.js（web 端） + Egg.js（api 服务） + Vue.js（管理后台）+ Elemen
   - [x] 查看留言相关回复
   - [x] 单个删除留言回复
   - [x] 批量删除留言回复
-
-
-如果我的项目对您有所帮助，您可以点右上角 "Star" 支持一下 感谢～～！
+- [x] 通用图片上传功能（上传后前端才能展示，否则为空）
+      如果我的项目对您有所帮助，您可以点右上角 "Star" 支持一下 感谢～～！
