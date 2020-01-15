@@ -1,4 +1,4 @@
-# EGG-NUXT-BLOG
+# egg-nuxt-blog
 
 ## Introduction
 
@@ -13,7 +13,7 @@ Nuxt.js（web 端） + Egg.js（api 服务） + Vue.js（管理后台）+ Elemen
 
 ### Development
 
-- npm run dev （启动服务端Api http://localhost:7001）
+- npm run dev （启动服务端 Api http://localhost:7001）
 
 - npm run web:dev （启动客户端 http://localhost:3000）
 
@@ -32,23 +32,28 @@ Nuxt.js（web 端） + Egg.js（api 服务） + Vue.js（管理后台）+ Elemen
 
 ## Technology stack
 
-- UI: ElementUI (基于 VueJs 的组件库)
+- UI: ElementUI (基于 VueJs 的通用组件库)
 
-  - Web:服务端渲染的多页面应用
-  - Manager:单页面应用
+  - Web 客户端:服务端渲染的多页面应用
+  - 管理后台:单页面应用
 
-- HttpTool: Axios
+- Base：HTML、CSS、Javascript
+- Extensions：ES6(next)、Less、JSON、TypeScript（待使用）
+- HTTP: Axios
 - Renderer: Nuxt （基于 VueJs 的服务端渲染框架）
-- Server : EggJs(封装了 koa+koa-router 的 NodeJs 框架)
+- Server : EggJs(封装了 koa+koa-router 等等的 NodeJs 框架)
 - DataBase： Mongoose(支持异步操作 MongoDB 的库)
+- Debugger：ChromeInspector、LinuxShell
+- OtherTools：Webpack、Postman(Api 测试工具)、Chrome
 
 ## Features
 
 ### Web 客户端
 
-- [x] 首页展示博客所有文章
-- [x] 首页按文章相关排序展示轮播图
-- [x] 点击文章标题展示文章内容
+- [x] 首页展示
+  - [x] 根据网站访问地理位置自动展示当前城市天气（目前展示本地郑州,此功能待完善。由于作者测试的浏览器地理定位 Api 出现误差，不知是否是此 Api 兼容性问题还是电脑硬件问题，希望查看此开源项目的您帮助测试一下此 Api(window.navigation.geolocation.getCurrentPosition())的相关准确性）
+  - [x] 首页按文章相关排序展示轮播图
+  - [x] 点击文章标题查看文章内容
 - [x] 文章详情页面交互
   - [x] 点击相关推荐链接查看推荐的文章
   - [x] 点击所属标签链接查看相关文章
