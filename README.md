@@ -4,7 +4,7 @@
 
 - WebClient
 - AdminClient
-- Server
+- ApiServer
 
 ## Setup
 
