@@ -131,7 +131,7 @@ npm run docs:build
 ### Web 客户端
 
 - [x] 首页展示
-  - [x] 根据网站访问地理位置自动展示当前城市天气（目前展示本地郑州,此功能待完善。由于作者测试的浏览器地理定位 Api 出现误差，不知是否是此 Api 兼容性问题还是电脑硬件问题，希望查看此开源项目的您帮助测试一下此 Api(window.navigation.geolocation.getCurrentPosition())的相关准确性）
+  - [x] 根据网站访问地理位置自动展示当前城市天气（目前展示本地郑州,此功能待完善。查看原因请[点击](#天气地理定位-Issue)）
   - [x] 首页按文章相关排序展示轮播图
   - [x] 点击文章标题查看文章内容
 - [x] 文章详情页面交互
@@ -178,7 +178,6 @@ npm run docs:build
   - [x] 批量删除留言回复
   - [x] 通用图片上传功能（上传后前端才能展示，否则为空）
 
-
 ### 服务端 Api（点击查看接口详情）
 
 - [管理员](/docs/api/admin.md)
@@ -190,5 +189,9 @@ npm run docs:build
 - [留言管理](/docs/api/guestbook.md)
 
 如果我的项目对您有所帮助，您可以点右上角 "Star" 支持一下 感谢～～！
+
+##### 天气地理定位 Issue
+
+由于作者测试的浏览器地理定位 Api 出现误差，不知是否是此 Api 兼容性问题还是电脑硬件问题，希望查看此开源项目的您帮助测试一下此 Api(window.navigation.geolocation.getCurrentPosition())的相关准确性
 
 <!-- [issur1](/docs/README.md) -->
