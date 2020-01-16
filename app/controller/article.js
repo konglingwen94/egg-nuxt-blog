@@ -94,7 +94,7 @@ class ArticleController extends Controller {
   async queryOne() {
     const { ctx, service } = this
 
-    return ctx.state.queryArticle
+    return ctx.state.ActiveQueryWithParamId
       .populate('tagList')
       .populate('comments')
       .findOne()
@@ -110,7 +110,7 @@ class ArticleController extends Controller {
   async updateOne() {
     const { ctx, service } = this
 
-    return ctx.state.queryArticle.updateOne({}, { $set: ctx.request.body })
+    return ctx.state.ActiveQueryWithParamId.updateOne({}, { $set: ctx.request.body })
   }
   async deleteMany() {
     const { ctx, service } = this
@@ -134,7 +134,7 @@ class ArticleController extends Controller {
   async deleteOne() {
     const { ctx, service } = this
 
-    return ctx.state.queryArticle.deleteOne()
+    return ctx.state.ActiveQueryWithParamId.deleteOne()
   }
   async updatePublishStatus() {
     const { ctx, service } = this
@@ -142,7 +142,7 @@ class ArticleController extends Controller {
     const { isPublished } = ctx.request.body
     ctx.validate({ isPublished: 'boolean' }, { isPublished })
 
-    return ctx.state.queryArticle.updateOne(
+    return ctx.state.ActiveQueryWithParamId.updateOne(
       {},
       {
         $set: { isPublished },
@@ -152,12 +152,12 @@ class ArticleController extends Controller {
   async incrementPv() {
     const { ctx, service } = this
 
-    return ctx.state.queryArticle.updateOne({}, { $inc: { pv: 1 } })
+    return ctx.state.ActiveQueryWithParamId.updateOne({}, { $inc: { pv: 1 } })
   }
   async starOne() {
     const { ctx, service } = this
 
-    return ctx.state.queryArticle.updateOne({}, { $inc: { starCount: 1 } })
+    return ctx.state.ActiveQueryWithParamId.updateOne({}, { $inc: { starCount: 1 } })
   }
 }
 module.exports = ArticleController

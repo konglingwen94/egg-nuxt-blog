@@ -1,4 +1,3 @@
-
 module.exports = app => {
   const {
     controller,
@@ -9,9 +8,13 @@ module.exports = app => {
   const router = app.router.namespace('/api')
 
   router.param('id', async (id, ctx, next) => {
+    console.log(__filename, ctx.routerName)
+
+    const namespacedModel = models[_.upperFirst(ctx.routerName)]
+
     ctx.validate({ id: { type: 'string', max: 24, min: 24 } }, { id })
-    const result = models.Article.findById(id)
-    if (!(await result)) {
+    const resultQuery = namespacedModel.findById(id)
+    if (!(await resultQuery)) {
       ctx.throw('400', 'Invalid Fields', {
         errors: {
           id: { kind: 'urlParam', url: ctx.path, value: id, code: 404 },
@@ -19,8 +22,11 @@ module.exports = app => {
       })
     }
 
-    ctx.state.queryArticle = result
+    ctx.state.ActiveQueryWithParamId = resultQuery
     // console.log(id)
+
+    console.log(__filename, ctx.state.ActiveQueryWithParamId)
+
     return  next()
   })
 

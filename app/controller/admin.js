@@ -1,18 +1,23 @@
 const { Controller } = require('egg')
 const _ = require('lodash')
- 
+
 const jwt = require('jsonwebtoken')
- 
 
 class AdminController extends Controller {
   async login() {
     const { ctx, config, service } = this
 
-    const data = ctx.state.body
-
-
+    const data = ctx.request.body
 
     const { username, password } = data
+
+    const count = await ctx.model.Admin.countDocuments()
+
+    if (count === 0) {
+      ctx.throw('500', '数据库管理员数据没有初始化')
+    }
+
+    console.log(__filename, count)
 
     const result = await service.admin.queryOneByUsername(username)
 
@@ -44,7 +49,7 @@ class AdminController extends Controller {
 
     const payload = ctx.request.body
     const passwordRule = ctx.validationRule.admin.password
-     
+
     ctx.validate(
       {
         newPassword: passwordRule,
@@ -72,7 +77,10 @@ class AdminController extends Controller {
     const { ctx, service } = this
     const { id } = ctx.params
 
-    await service.admin.queryByIdAndUpdate(id, ctx.state.body)
+    return ctx.state.ActiveQueryWithParamId.updateOne(
+      {},
+      { $set: ctx.request.body }
+    )
   }
 }
 

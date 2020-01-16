@@ -1,30 +1,20 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
-const defaultConfig = require('../config/config.default.js')({ baseDir: '/' })
-const prodConfig = require('../config/config.prod.js')({ baseDir: '/' })
+const config = require('../config/config.default.js')({ baseDir: '/' })
 
-const AdminModel = require('../app/model/admin.js')
+const AdminModel = require('../app/model/admin.js')({
+  mongoose: require('mongoose'),
+})
 const argv = process.argv.slice(2)
 
-if (argv.length !== 3) {
-  console.error('NODE_ENV and username and password is required')
+if (argv.length !== 2) {
+  console.error('username and password is required')
   console.log('Please use following command')
-  console.log('node scripts/init-admin.js <env> <username> <password>')
+  console.log('node scripts/init-admin.js <username> <password>')
   process.exit(1)
 }
 
-const [env, username, password] = argv
-
-let config = {}
-
-if (env === 'production') {
-  config = Object.assign(defaultConfig, prodConfig)
-} else if (env === 'local') {
-  const localConfig = require('../config/config.local.js')({ baseDir: '/' })
-  config = Object.assign(defaultConfig, localConfig)
-} else {
-  config = defaultConfig
-}
+const [username, password] = argv
 
 const getHashText = async plainText => {
   try {
@@ -37,11 +27,13 @@ const getHashText = async plainText => {
   return hash
 }
 
-const getMongoURI = () => {
+const getMongoConfiguration = () => {
   let mongodbURI = 'mongodb://'
-  // const { mongodbConfig } = defaultConfig
   const { username, password, host, port, database } = config.mongodb
-  if (username) {
+
+  const mongooseOptions = config.mongoose.options
+
+  if (username && password) {
     mongodbURI += `${username}:${password}@`
   }
 
@@ -49,10 +41,10 @@ const getMongoURI = () => {
   if (username) {
     mongodbURI += '?authSource=admin'
   }
-  return mongodbURI
+  return { mongodbURI, mongooseOptions }
 }
 
-const mongodbURI = getMongoURI()
+const { mongodbURI, mongooseOptions } = getMongoConfiguration()
 
 const createAdminAccount = () => {
   AdminModel.findOne({ username })
@@ -90,16 +82,10 @@ const createAdminAccount = () => {
     })
 }
 
-mongoose
-  .connect(mongodbURI, {
-    useNewUrlParser: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-  })
-  .catch(err => {
-    console.error(`Failed to connected  to mongodb ${mongodbURI}.`, err.message)
-    process.exit(1)
-  })
+mongoose.connect(mongodbURI, mongooseOptions).catch(err => {
+  console.error(`Failed to connected  to mongodb ${mongodbURI}.`, err.message)
+  process.exit(1)
+})
 
 const db = mongoose.connection
 

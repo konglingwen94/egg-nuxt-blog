@@ -1,9 +1,6 @@
 module.exports = app => {
   const { controller, middleware } = app
-  const router = app.router.namespace(
-    '/api',
-     
-  )
+  const router = app.router.namespace('/api')
 
   /**
    *
@@ -18,6 +15,7 @@ module.exports = app => {
   )
 
   router.patch(
+    'admin',
     '/admin/accounts/:id/change-password',
 
     controller.admin.changePass

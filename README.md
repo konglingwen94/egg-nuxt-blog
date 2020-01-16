@@ -63,8 +63,8 @@ npm install
     host: '127.0.0.1',
     port: 27017,
     database: '数据库名称',
-    user: '数据库账号',
-    pass: '数据库密码',
+    username: '数据库账号',
+    password: '数据库密码',
   },
 }
 ```
@@ -79,33 +79,34 @@ npm run stop # 停止运行 API 服务
 #### 3. 执行初始化数据库脚本
 
 ```bash
-# 仅在第一次配置时执行
-node scripts/init-admin.js 运行环境 管理员用户名 管理员密码 ROOT
+# 仅在第一次配置时执行 默认创建超级管理员 ROOT
+node scripts/init-admin.js  管理员用户名 管理员密码
 ```
 
 ### 客户端部署
 
 ```bash
-# 1. 执行构建页面
+# 执行构建页面
 npm run web:build
 ```
 
 ### 管理后台部署
 
 ```bash
-# 1. 执行构建页面
+# 执行构建页面
 npm run admin:build
 ```
 
 ### Api 文档部署
 
 ```bash
-# 1. 执行构建页面
+# 执行构建页面
 npm run docs:build
 ```
 
 ## 项目使用技术栈
 
+```
 - UI: ElementUI (基于 VueJs 的客户端通用组件库)
 
   - Web 客户端:服务端渲染的多页面应用
@@ -120,6 +121,7 @@ npm run docs:build
 - Database： Mongoose(支持异步操作 MongoDB 的库)
 - CodeDebugger：ChromeInspector、LinuxShell
 - TestTools：Postman(Api 测试)、Chrome
+```
 
 ## 项目主要功能
 

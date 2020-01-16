@@ -1,7 +1,7 @@
 const { resolve } = require('path')
 
 module.exports = appInfo => {
-  return {
+  const config = {
     aboutusDefaultConfig: require('./defaultSiteConfig'),
 
     keys: appInfo.name,
@@ -25,8 +25,6 @@ module.exports = appInfo => {
     adminRequired: {
       match(ctx) {
         const excludeRequestPaths = ['/api/admin/auth/login']
-
-        
 
         return (
           ctx.state.platformENV === 'admin' &&
@@ -52,7 +50,7 @@ module.exports = appInfo => {
     errorHandler: {
       match: ['/api'],
     },
-    
+
     middleware: [
       'errorHandler',
       'platformENV',
@@ -74,19 +72,30 @@ module.exports = appInfo => {
       secretKey: 'konglingwen',
       expiresIn: '100h',
     },
+    mongodb: {
+      database: 'my-blog',
+      host: '127.0.0.1',
+      port: '27017',
+      username: '',
+      password: '',
+    },
     mongoose: {
-      url: 'mongodb://127.0.0.1:27017/my-blog',
+      url: 'mongodb://',
       options: {
         useNewUrlParser: true,
         useFindAndModify: false,
         useCreateIndex: true,
         useUnifiedTopology: true,
       },
-      database: 'my-blog',
-      // host: '127.0.0.1',
-      // port: '27017',
-      // username: '',
-      // password: '',
     },
   }
+  const { host, port, username, password, database } = config.mongodb
+
+  if (username && password) {
+    config.mongoose.url += `${username}:${password}@`
+  }
+
+  config.mongoose.url += `${host}:${port}/${database}`
+  
+  return config
 }
