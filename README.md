@@ -1,16 +1,20 @@
 # egg-nuxt-blog
 
-Nuxt.js（web 端） + Egg.js（api 服务） + Vue.js（管理后台）+ ElementUi（通用组件库）服务器渲染(SSR)搭建的个人博客系统
+Nuxt.js（Web 端） + Egg.js（Api 服务） + Vue.js（管理后台）+ ElementUI（前端组件库）服务器渲染(SSR)搭建的个人博客系统
 
 ## 启动项目
 
 ```bash
-npm install # 安装项目依赖
-
-npm run dev # 启动 Api 服务（http://localhost:7001）
-npm run docs:dev # 启动 Api 文档（http://localhost:8080/docs）
-npm run web:dev # 启动客户端（http://localhost:3000）
-npm run admin:dev # 启动管理后台（http://localhost:8080）
+# 1. 安装项目依赖
+npm install
+# 2.启动 Api 服务
+npm run dev # http://localhost:7001
+# 3.启动 Api 文档说明
+npm run docs:dev # http://localhost:8080/docs
+# 4.启动客户端
+npm run web:dev # http://localhost:3000
+# 5.启动管理后台
+npm run admin:dev # http://localhost:8080
 ```
 
 ## 项目配置
@@ -24,19 +28,15 @@ npm run admin:dev # 启动管理后台（http://localhost:8080）
 
 #### 版本要求
 
-```
->= 4.x
-```
+    >= 4.x
 
 ### 服务器环境
 
-项目服务端基于 [nodejs.org](https://nodejs.org/) 进行开发。
+    项目服务端基于 [nodejs.org](https://nodejs.org/) 进行开发。
 
 #### 版本要求
 
-```
->= 10.x
-```
+    >= 10.x
 
 ## 项目部署
 
@@ -73,6 +73,7 @@ npm install
 
 ```bash
 npm run start # 启动运行 API 服务
+
 npm run stop # 停止运行 API 服务
 ```
 
@@ -119,7 +120,9 @@ npm run docs:build
 - Web 客户端数据存储：LocalStorage、Vuex
 - ServerApi : EggJs(封装了 koa+koa-router 等模块的 NodeJs 框架)
 - Database： Mongoose(支持异步操作 MongoDB 的库)
+
 - CodeDebugger：ChromeInspector、LinuxShell
+## ddd
 - TestTools：Postman(Api 测试)、Chrome
 ```
 
@@ -177,4 +180,14 @@ npm run docs:build
 
 如果我的项目对您有所帮助，您可以点右上角 "Star" 支持一下 感谢～～！
 
-[issur1](/docs/README.md)
+### 服务端 Api
+
+- [管理员](/docs/api/admin.md)
+- [关于我们](/docs/api/aboutus.md)
+- [文章分类](/docs/api/category.md)
+- [文章标签](/docs/api/tag.md)
+- [文章管理](/docs/api/article.md)
+- [文章评论](/docs/api/comment.md)
+- [留言管理](/docs/api/guestbook.md)
+
+<!-- [issur1](/docs/README.md) -->
