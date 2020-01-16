@@ -6,6 +6,9 @@
 
 public
 
+# secret files
+
+config/config.prod.js
 
 # uploads
 # public/uploads

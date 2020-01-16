@@ -1,38 +1,110 @@
 # egg-nuxt-blog
 
-## Introduction
-
 Nuxt.js（web 端） + Egg.js（api 服务） + Vue.js（管理后台）+ ElementUi（通用组件库）服务器渲染(SSR)搭建的个人博客系统
 
-## Environment
+## 启动项目
 
-- Node: v10.13.0
-- MongoDB: v4.0.5
+```bash
+npm install # 安装项目依赖
 
-## Setup
+npm run dev # 启动 Api 服务（http://localhost:7001）
+npm run docs:dev # 启动 Api 文档（http://localhost:8080/docs）
+npm run web:dev # 启动客户端（http://localhost:3000）
+npm run admin:dev # 启动管理后台（http://localhost:8080）
+```
 
-npm install （安装项目构建所有依赖包）
+## 项目配置
 
-### Development
+### 数据库环境
 
-- npm run dev （启动服务端数据接口 http://localhost:7001）
+#### MongoDB
 
-- npm run web:dev （启动客户端 http://localhost:3000）
+- [官方文档](https://docs.mongodb.com/manual/introduction/)
+- [安装手册](https://docs.mongodb.com/manual/administration/install-on-linux/)
 
-- npm run admin:dev（启动管理后台 http://localhost:8080）
+#### 版本要求
 
-### Build
+```
+>= 4.x
+```
 
-- npm run web:build（打包客户端）
+### 服务器环境
 
-- npm run admin:build (打包管理后台)
-- npm start (启动项目)
+项目服务端基于 [nodejs.org](https://nodejs.org/) 进行开发。
 
-  - Web: http://localhost:7001
-  - Admin: http://localhost:7001/admin
-  - Api: http://localhost:7001/api
+#### 版本要求
 
-## Technology stack
+```
+>= 10.x
+```
+
+## 项目部署
+
+### 安装项目依赖
+
+```bash
+npm install
+```
+
+### API 服务
+
+#### 1. 编写配置文件
+
+```js
+// 开发环境配置文件 config/config.default.js
+
+// 本地测试环境配置文件 config/config.local.js
+
+{
+  keys: '随机安全 key',
+
+  // MongoDB configs.
+  mongodb: {
+    host: '127.0.0.1',
+    port: 27017,
+    database: '数据库名称',
+    user: '数据库账号',
+    pass: '数据库密码',
+  },
+}
+```
+
+#### 2. 运行 API 服务
+
+```bash
+npm run start # 启动运行 API 服务
+npm run stop # 停止运行 API 服务
+```
+
+#### 3. 执行初始化数据库脚本
+
+```bash
+# 仅在第一次配置时执行
+node scripts/init-admin.js 运行环境 管理员用户名 管理员密码 ROOT
+```
+
+### 客户端部署
+
+```bash
+# 1. 执行构建页面
+npm run web:build
+```
+
+### 管理后台部署
+
+```bash
+# 1. 执行构建页面
+npm run admin:build
+```
+
+### Api 文档部署
+
+```bash
+# 1. 执行构建页面
+npm run docs:build
+```
+
+## 项目使用技术栈
 
 - UI: ElementUI (基于 VueJs 的客户端通用组件库)
 
@@ -49,7 +121,7 @@ npm install （安装项目构建所有依赖包）
 - CodeDebugger：ChromeInspector、LinuxShell
 - TestTools：Postman(Api 测试)、Chrome
 
-## Features
+## 项目主要功能
 
 ### Web 客户端
 
@@ -102,3 +174,5 @@ npm install （安装项目构建所有依赖包）
   - [x] 通用图片上传功能（上传后前端才能展示，否则为空）
 
 如果我的项目对您有所帮助，您可以点右上角 "Star" 支持一下 感谢～～！
+
+[issur1](/docs/README.md)
