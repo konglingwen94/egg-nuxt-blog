@@ -9,7 +9,7 @@ Nuxt.js（Web 端） + Egg.js（Api 服务） + Vue.js（管理后台）+ Elemen
 npm install
 # 2.启动 Api 服务
 npm run dev # http://localhost:7001
-# 3.启动 Api 文档说明
+# 3.启动 Api 使用说明文档
 npm run docs:dev # http://localhost:8080/docs
 # 4.启动客户端
 npm run web:dev # http://localhost:3000
@@ -178,9 +178,8 @@ npm run docs:build
   - [x] 批量删除留言回复
   - [x] 通用图片上传功能（上传后前端才能展示，否则为空）
 
-如果我的项目对您有所帮助，您可以点右上角 "Star" 支持一下 感谢～～！
 
-### 服务端 Api
+### 服务端 Api（点击查看接口详情）
 
 - [管理员](/docs/api/admin.md)
 - [关于我们](/docs/api/aboutus.md)
@@ -189,5 +188,7 @@ npm run docs:build
 - [文章管理](/docs/api/article.md)
 - [文章评论](/docs/api/comment.md)
 - [留言管理](/docs/api/guestbook.md)
+
+如果我的项目对您有所帮助，您可以点右上角 "Star" 支持一下 感谢～～！
 
 <!-- [issur1](/docs/README.md) -->

@@ -57,7 +57,7 @@
     "updatedAt": "2019-10-03T07:16:30.055Z",
     "articles": [], //所包含的文章列表
     "id": "5d95a04e0c64f55a9b6ca861",
-    "articleCount": 0,  文章个数
+    "articleCount": 0,  //文章个数
     "articlePublishedCount": 0  //已发布文章个数
   },
 ]
