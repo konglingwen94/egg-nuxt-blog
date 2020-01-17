@@ -98,7 +98,7 @@ npm run web:build
 npm run admin:build
 ```
 
-### 服务端Api 文档部署
+### 服务端 Api 文档部署
 
 ```bash
 # 执行构建页面
@@ -107,7 +107,6 @@ npm run docs:build
 
 ## 项目使用技术栈
 
-```
 - UI: ElementUI (基于 VueJs 的客户端通用组件库)
 
   - Web 客户端:服务端渲染的多页面应用
@@ -122,9 +121,8 @@ npm run docs:build
 - Database： Mongoose(支持异步操作 MongoDB 的库)
 
 - CodeDebugger：ChromeInspector、LinuxShell
-## ddd
+
 - TestTools：Postman(Api 测试)、Chrome
-```
 
 ## 项目主要功能
 
