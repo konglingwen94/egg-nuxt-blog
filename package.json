@@ -16,7 +16,7 @@
     "web:build-local": "cd web && npm run build:local",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "push:master": "git add . && git commit -m `Improve`"
+    "push:master": "git add . && git commit -m `Improve` && git push origin master"
   },
   "repository": {
     "type": "git",
