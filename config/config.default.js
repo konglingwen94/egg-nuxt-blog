@@ -1,5 +1,5 @@
 const { resolve } = require('path')
-
+ 
 module.exports = appInfo => {
   const config = {
     aboutusDefaultConfig: require('./defaultSiteConfig'),
@@ -89,6 +89,8 @@ module.exports = appInfo => {
       },
     },
   }
+
+  // 配置egg-mongoose 启动选项
   const { host, port, username, password, database } = config.mongodb
 
   if (username && password) {
@@ -96,6 +98,8 @@ module.exports = appInfo => {
   }
 
   config.mongoose.url += `${host}:${port}/${database}`
-  
+   
+   
+
   return config
 }

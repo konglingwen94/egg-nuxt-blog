@@ -17,7 +17,7 @@ class AdminController extends Controller {
       ctx.throw('500', '数据库管理员数据没有初始化')
     }
 
-    console.log(__filename, count)
+    
 
     const result = await service.admin.queryOneByUsername(username)
 

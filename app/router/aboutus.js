@@ -1,9 +1,28 @@
 module.exports = app => {
+  
+
   const { controller, middleware } = app
-  const router = app.router.namespace(
+  const router = (app.ApiRouter = app.router.namespace(
     '/api',
-    
-  )
+    middleware.apiRouterParameterValidator()
+  ))
+
+
+  app.router.param('id', async (id, ctx, next) => {
+    ctx.validate({ id: { type: 'string', max: 24, min: 24 } }, { id })
+
+    if (!ctx.routerName) {
+      return next()
+    }
+
+    const result = await ctx.model[_.upperFirst(ctx.routerName)].findById(id)
+
+    if (!result) {
+      ctx.throw(404, `Invalid ObjectId("${id}")`)
+    }
+
+    return next()
+  })
 
   /***
    *

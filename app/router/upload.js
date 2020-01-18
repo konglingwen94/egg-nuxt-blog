@@ -1,3 +1,7 @@
+console.log(__filename)
+
+
+
 module.exports = app => {
   const { router, controller, middleware } = app
 

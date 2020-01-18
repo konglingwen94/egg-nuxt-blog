@@ -2,9 +2,8 @@ const { Controller } = require('egg')
 
 class CategoryController extends Controller {
   async createOne() {
-    
     const { ctx, service } = this
-    
+
     const payload = ctx.state.body
 
     return ctx.model.Category.create(payload)
@@ -19,25 +18,21 @@ class CategoryController extends Controller {
     const { service, ctx } = this
     const { id } = ctx.params
 
-    return service.category.queryById(id)
+    return ctx.state.ActiveQueryWithParamId.findOne()
   }
   async deleteOne() {
     const { ctx, service } = this
-    const { id } = ctx.params
+   
 
-    await this.ctx.model.Category.findByIdAndRemove(id)
+    return ctx.state.ActiveQueryWithParamId.deleteOne()
   }
 
   async updateOne() {
     const { ctx, service } = this
     const { id } = ctx.params
-    const payload = ctx.state.body
+    const payload = ctx.request.body
 
-    return this.ctx.model.Category.findByIdAndUpdate(
-      id,
-      { $set: payload },
-      { new: true }
-    )
+    return ctx.state.ActiveQueryWithParamId.updateOne({}, { $set: payload })
   }
 }
 

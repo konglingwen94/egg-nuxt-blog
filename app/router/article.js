@@ -1,41 +1,23 @@
+console.log(__filename)
+
 module.exports = app => {
-  const {
-    controller,
+  const { controller, middleware } = app
 
-    mongoose: { models },
-  } = app
-
-  const router = app.router.namespace('/api')
-
-  router.param('id', async (id, ctx, next) => {
-    console.log(__filename, ctx.routerName)
-
-    const namespacedModel = models[_.upperFirst(ctx.routerName)]
-
-    ctx.validate({ id: { type: 'string', max: 24, min: 24 } }, { id })
-    const resultQuery = namespacedModel.findById(id)
-    if (!(await resultQuery)) {
-      ctx.throw('400', 'Invalid Fields', {
-        errors: {
-          id: { kind: 'urlParam', url: ctx.path, value: id, code: 404 },
-        },
-      })
-    }
-
-    ctx.state.ActiveQueryWithParamId = resultQuery
-    // console.log(id)
-
-    console.log(__filename, ctx.state.ActiveQueryWithParamId)
-
-    return  next()
-  })
+  const router = app.ApiRouter
 
   /***
+   *
+   *
    *
    * articles
    */
 
-  router.post('article', '/admin/articles', controller.article.createOne)
+  router.post(
+    'article',
+    '/admin/articles',
+
+    controller.article.createOne
+  )
 
   router.get('article', '/admin/articles', controller.article.queryList)
 
@@ -44,6 +26,7 @@ module.exports = app => {
   router.delete('article', '/admin/articles', controller.article.deleteMany)
 
   router.delete(
+    'article',
     '/admin/articles/:id',
 
     controller.article.deleteOne

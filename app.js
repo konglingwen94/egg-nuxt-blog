@@ -8,7 +8,16 @@ class AppBootHook {
     this.app = app
     app.config.coreMiddleware.unshift('history', 'docs', 'compress')
   }
+  configWillLoad() {
+    
+  }
+  configDigLoad() {
+    console.log('configDigLoad')
+    debugger
+  }
   didLoad() {
+    // debugger
+
     const { mongooseDB, mongoose, config, model } = this.app
     const { url } = this.app.config.mongoose
 
@@ -32,7 +41,6 @@ class AppBootHook {
     global.app = this.app
     global.mongoose = this.app.mongoose
     global._ = require('lodash')
-
   }
   serverDidReady() {
     console.log('Server did ready')

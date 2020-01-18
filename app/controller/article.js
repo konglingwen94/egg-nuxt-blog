@@ -93,11 +93,17 @@ class ArticleController extends Controller {
 
   async queryOne() {
     const { ctx, service } = this
+    const { id } = ctx.params
 
-    return ctx.state.ActiveQueryWithParamId
+    console.log(
+      '------------',
+       await ctx.model.Article.findById(id)
+        .populate('tagList')
+        .populate('comments').exec()
+    )
+    return ctx.model.Article.findById(id)
       .populate('tagList')
       .populate('comments')
-      .findOne()
   }
   async createOne() {
     const { ctx, service } = this
@@ -110,7 +116,10 @@ class ArticleController extends Controller {
   async updateOne() {
     const { ctx, service } = this
 
-    return ctx.state.ActiveQueryWithParamId.updateOne({}, { $set: ctx.request.body })
+    return ctx.state.ActiveQueryWithParamId.updateOne(
+      {},
+      { $set: ctx.request.body }
+    )
   }
   async deleteMany() {
     const { ctx, service } = this
@@ -129,7 +138,7 @@ class ArticleController extends Controller {
       { idList }
     )
 
-    await service.article.deleteMany(idList)
+    return ctx.model.Article.deleteMany({ _id: idList })
   }
   async deleteOne() {
     const { ctx, service } = this
@@ -157,7 +166,10 @@ class ArticleController extends Controller {
   async starOne() {
     const { ctx, service } = this
 
-    return ctx.state.ActiveQueryWithParamId.updateOne({}, { $inc: { starCount: 1 } })
+    return ctx.state.ActiveQueryWithParamId.updateOne(
+      {},
+      { $inc: { starCount: 1 } }
+    )
   }
 }
 module.exports = ArticleController

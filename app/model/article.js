@@ -10,7 +10,7 @@ module.exports = app => {
       categoryID: ObjectId,
 
       title: String,
-      tagIdList: [{ type: ObjectId, unique: true }],
+      tagIdList: [{ type: ObjectId  }],
       content: {
         html: {
           type: String,

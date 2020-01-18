@@ -1,10 +1,12 @@
+console.log(__filename)
+
 module.exports = app => {
   const { middleware, controller } = app
 
   const router = app.router.namespace(
     '/api',
     
-    // app.router.allowedMethods()
+     
     )
     
   /**

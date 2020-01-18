@@ -28,7 +28,7 @@ module.exports = (opts, app) => {
     if (data && response) {
       ctx.body = response
     } else {
-      ctx.status = 204
+      // ctx.status = 204
     }
   }
 }
