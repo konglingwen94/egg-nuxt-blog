@@ -10,7 +10,7 @@
           <el-form-item label="轮播图个数">
             <el-input-number
               :step="1"
-              :max="carousel.maxNumber"
+              :max="carousel.isPublishedArticleCount"
               :min="1"
               :step-strictly="true"
               :precision="0"
@@ -58,7 +58,10 @@ export default {
       return this.$store.state.aboutus.carousel
     }
   },
-
+  created() {
+   
+    this.$store.dispatch('getAboutus')
+  },
   methods: {
     async resetConfig() {
       try {

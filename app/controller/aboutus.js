@@ -5,18 +5,15 @@ class AboutController extends Controller {
   async getOne() {
     const { ctx, service, config } = this
     const result = await ctx.model.Aboutus.findOne()
-
     const isPublishedArticleCount = await ctx.model.Article.countDocuments({
       isPublished: true,
     })
-
-    const carouselConfig = result.carousel
-    carouselConfig.number = Math.min(
-      carouselConfig.number,
+    result.carousel.number = Math.min(
+      result.carousel.number,
       isPublishedArticleCount
     )
-    carouselConfig.maxNumber = Math.min(isPublishedArticleCount, 6)
-
+    result._doc.carousel.isPublishedArticleCount = isPublishedArticleCount
+    console.log(result)
     return result
   }
   async overwriteOne() {
@@ -32,15 +29,7 @@ class AboutController extends Controller {
     const result = await ctx.model.Aboutus.findById(id)
 
     _.merge(result, payload)
-    const isPublishedArticleCount = await ctx.model.Article.countDocuments({
-      isPublished: true,
-    })
 
-    result.carousel.number = Math(
-      isPublishedArticleCount,
-      result.carousel.number
-    )
-    result.carousel.maxNumber = Math(isPublishedArticleCount, 6)
     return result.save()
   }
   async createOne() {

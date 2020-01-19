@@ -22,7 +22,7 @@ module.exports = app => {
         serverApi: { type: String, default: '' },
       },
       carousel:  {
-        maxNumber: { type: Number, default: 1 },
+        
         number: { type: Number, default: 1 },
         sort: { type: String, default: 'pv' },
         interval: { type: Number, default: '3000' },

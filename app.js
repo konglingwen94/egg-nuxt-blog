@@ -10,18 +10,29 @@ class AppBootHook {
   }
 
   async didLoad() {
-    const { mongooseDB, mongoose, config, model } = this.app
+    const { mongoose, config, model } = this.app
     const { url } = this.app.config.mongoose
 
-    mongooseDB.on('open', async () => {
-      console.log(`Database is connected on ${url}`)
+    mongoose.connection.once('close', async () => {
+      console.log(`Database is closed on ${url}`)
     })
-    mongooseDB.on('error', error => console.error(error))
-    if (await model.Aboutus.countDocuments() !== 0) { 
-      return  
-    } 
+    mongoose.connection.on('error', error => console.error(error))
 
-    return model.Aboutus.create(require('./config/defaultAboutusData'))
+    return new Promise((resolve, reject) => {
+      mongoose.connection.once('open', async () => {
+        console.log(`Database is connected on ${url}`)
+        try {
+          await model.Aboutus.deleteMany({})
+          await model.Aboutus.create(require('./config/defaultAboutusData'))
+        } catch (error) {
+          return reject()
+        }
+
+        resolve()
+      })
+    })
+
+    
   }
   async willReady() {
     // const nuxt = new Nuxt(nuxtConfig)
