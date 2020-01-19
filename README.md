@@ -116,7 +116,7 @@ npm run docs:build
 - Extensions：ES6(next)、Less、JSON、TypeScript（待使用）
 - HTTP: Axios
 - Renderer: Nuxt （封装了 VueJs+Vuex+VueRouter 的服务端数据渲染框架）
-- Web 客户端数据存储：LocalStorage、Vuex
+- Web 客户端数据持久化：LocalStorage、Vuex
 - ServerApi : EggJs(封装了 koa+koa-router 等模块的 NodeJs 框架)
 - Database： Mongoose(支持异步操作 MongoDB 的库)
 
