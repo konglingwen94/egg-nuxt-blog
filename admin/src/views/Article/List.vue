@@ -1,7 +1,7 @@
 <template>
   <div class>
     <Panel>
-      <el-button slot="header" type="danger" @click="deleteMany">批量删除</el-button>
+      <el-button slot="header"  type="danger" @click="deleteMany">批量删除</el-button>
       <el-table :data="dataList" border @selection-change="handleSelectionChange">
         <el-table-column type="selection"></el-table-column>
         <el-table-column type="expand">
