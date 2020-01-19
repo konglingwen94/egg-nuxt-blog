@@ -1,5 +1,5 @@
 module.exports = app => {
-  const { Schema, model } = app.mongoose
+  const { Schema, models, model } = app.mongoose
 
   const AboutusSchema = new Schema(
     {
@@ -21,7 +21,8 @@ module.exports = app => {
         serverUI: { type: String, default: '' },
         serverApi: { type: String, default: '' },
       },
-      carousel: {
+      carousel:  {
+        maxNumber: { type: Number, default: 1 },
         number: { type: Number, default: 1 },
         sort: { type: String, default: 'pv' },
         interval: { type: Number, default: '3000' },
@@ -31,6 +32,23 @@ module.exports = app => {
     },
     { timestamps: true }
   )
+
+   
+
+  // AboutusSchema.virtual('carousel.max', {
+  //   // ref: 'Article',
+  //   // localField: '_id',
+  //   count: true,
+  // })
+  // AboutusSchema.virtual('carousel.maxNumber').get(async function() {
+  //   const isPublishedArticleCount = await models.Article.countDocuments({
+  //     isPublished: true,
+  //   })
+
+  //   console.log(__filename, arguments, this, isPublishedArticleCount)
+
+  //   return Math.min(this.carousel.number, isPublishedArticleCount)
+  // })
 
   return model('Aboutus', AboutusSchema)
 }

@@ -8,16 +8,8 @@ class AppBootHook {
     this.app = app
     app.config.coreMiddleware.unshift('history', 'docs', 'compress')
   }
-  configWillLoad() {
-    
-  }
-  configDigLoad() {
-    console.log('configDigLoad')
-    debugger
-  }
-  didLoad() {
-    // debugger
 
+  async didLoad() {
     const { mongooseDB, mongoose, config, model } = this.app
     const { url } = this.app.config.mongoose
 
@@ -25,6 +17,11 @@ class AppBootHook {
       console.log(`Database is connected on ${url}`)
     })
     mongooseDB.on('error', error => console.error(error))
+    if (await model.Aboutus.countDocuments() !== 0) { 
+      return  
+    } 
+
+    return model.Aboutus.create(require('./config/defaultAboutusData'))
   }
   async willReady() {
     // const nuxt = new Nuxt(nuxtConfig)

@@ -1,9 +1,7 @@
 const { resolve } = require('path')
- 
+
 module.exports = appInfo => {
   const config = {
-    aboutusDefaultConfig: require('./defaultSiteConfig'),
-
     keys: appInfo.name,
     static: {
       prefix: '',
@@ -98,8 +96,6 @@ module.exports = appInfo => {
   }
 
   config.mongoose.url += `${host}:${port}/${database}`
-   
-   
 
   return config
 }

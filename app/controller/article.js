@@ -97,9 +97,10 @@ class ArticleController extends Controller {
 
     console.log(
       '------------',
-       await ctx.model.Article.findById(id)
+      await ctx.model.Article.findById(id)
         .populate('tagList')
-        .populate('comments').exec()
+        .populate('comments')
+        .exec()
     )
     return ctx.model.Article.findById(id)
       .populate('tagList')
@@ -116,9 +117,11 @@ class ArticleController extends Controller {
   async updateOne() {
     const { ctx, service } = this
 
-    return ctx.state.ActiveQueryWithParamId.updateOne(
-      {},
-      { $set: ctx.request.body }
+    return ctx.model.Article.updateOne(
+      { _id: ctx.params.id },
+      {
+        $set: ctx.request.body,
+      }
     )
   }
   async deleteMany() {
@@ -143,7 +146,7 @@ class ArticleController extends Controller {
   async deleteOne() {
     const { ctx, service } = this
 
-    return ctx.state.ActiveQueryWithParamId.deleteOne()
+    return ctx.model.Article.deleteOne({ _id: ctx.params.id })
   }
   async updatePublishStatus() {
     const { ctx, service } = this
@@ -151,8 +154,9 @@ class ArticleController extends Controller {
     const { isPublished } = ctx.request.body
     ctx.validate({ isPublished: 'boolean' }, { isPublished })
 
-    return ctx.state.ActiveQueryWithParamId.updateOne(
-      {},
+    return ctx.model.Article.updateOne(
+      { _id: ctx.params.id },
+      // ctx.params.id,
       {
         $set: { isPublished },
       }
@@ -161,13 +165,16 @@ class ArticleController extends Controller {
   async incrementPv() {
     const { ctx, service } = this
 
-    return ctx.state.ActiveQueryWithParamId.updateOne({}, { $inc: { pv: 1 } })
+    return ctx.model.Article.updateOne(
+      { _id: ctx.params.id },
+      { $inc: { pv: 1 } }
+    )
   }
   async starOne() {
     const { ctx, service } = this
 
-    return ctx.state.ActiveQueryWithParamId.updateOne(
-      {},
+    return ctx.model.Article.updateOne(
+      { _id: ctx.params.id },
       { $inc: { starCount: 1 } }
     )
   }

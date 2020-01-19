@@ -10,7 +10,7 @@
           <el-form-item label="轮播图个数">
             <el-input-number
               :step="1"
-              :max="10"
+              :max="carousel.maxNumber"
               :min="1"
               :step-strictly="true"
               :precision="0"
