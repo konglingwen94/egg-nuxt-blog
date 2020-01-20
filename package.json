@@ -25,7 +25,17 @@
     "blog",
     "egg-nuxt-blog",
     "nuxt-blog",
-    "egg-blog"
+    "egg-blog",
+     "nodejs",
+    "koa2",
+    
+    "mongodb",
+    "mongoose",
+    "vuejs",
+    "JavaScript",
+    "博客网站",
+    "Node.js实战",
+    "Nuxt 服务端渲染"
   ],
   "author": "KongLingWen",
   "license": "ISC",
