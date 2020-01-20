@@ -1,7 +1,7 @@
 {
   "name": "egg-nuxt-blog",
   "version": "1.0.0",
-  "description": "",
+  "description": "Nuxt.js（web端） + Egg.js（api 服务） + Vue.js（管理后台）+ ElementUI（通用组件库）服务器渲染(SSR)搭建的个人博客系统",
   "main": "app.js",
   "scripts": {
     "start": "egg-scripts start --daemon --title=egg-server-myblog --stdout=./logs/master-stdout.log --stderr=./logs/master-stderr.log",
@@ -15,22 +15,25 @@
     "web:build": "cd web && npm run build",
     "web:build-local": "cd web && npm run build:local",
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
-    "push:master": "git add . && git commit -m `Improve` && git push origin master"
+    "docs:build": "vuepress build docs"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/konglingwen94/egg-nuxt-blog.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "blog",
+    "egg-nuxt-blog",
+    "nuxt-blog",
+    "egg-blog"
+  ],
+  "author": "KongLingWen",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/konglingwen94/egg-nuxt-blog/issues"
   },
   "homepage": "https://github.com/konglingwen94/egg-nuxt-blog#readme",
   "dependencies": {
-    "ajv": "^6.10.2",
     "axios": "^0.19.0",
     "bcrypt": "^3.0.6",
     "egg": "^2.23.0",
@@ -45,11 +48,9 @@
     "koa-multer": "^1.0.2",
     "koa2-connect-history-api-fallback": "^0.1.2",
     "mongoose": "^5.7.1",
-    "mongoose-autopopulate": "^0.10.0",
     "normalize.css": "^8.0.1",
     "nuxt": "^2.9.2",
     "pell": "^1.0.6",
-    "qs": "^6.8.0",
     "vue-weather-component": "^1.0.0"
   },
   "devDependencies": {
@@ -62,7 +63,6 @@
     "egg-bin": "^4.13.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
-    "vconsole": "^3.3.4",
     "vue-template-compiler": "^2.6.10",
     "vuepress": "^1.1.0"
   }

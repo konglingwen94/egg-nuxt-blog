@@ -315,24 +315,25 @@ npm run docs:build
  README.md   //项目指南
 ```
 
-## 项目使用技术栈
+## 项目技术栈
 
-- UI: ElementUI (基于 VueJs 的客户端通用组件库)
+- 编程语言：HTML、CSS、Javascript、ES6(next)、Less、JSON
 
-  - Web 客户端:服务端渲染的多页面应用
-  - 管理后台:单页面应用
+* 用户界面库: ElementUI (基于 VueJs 的桌面组件库)
 
-- Base：HTML、CSS、Javascript
-- Extensions：ES6(next)、Less、JSON、TypeScript（待使用）
-- HTTP: Axios
-- Renderer: Nuxt （封装了 VueJs+Vuex+VueRouter 的服务端数据渲染框架）
-- Web 客户端数据持久化：LocalStorage、Vuex
-- ServerApi : EggJs(封装了 koa+koa-router 等模块的 NodeJs 框架)
-- Database： Mongoose(支持异步操作 MongoDB 的库)
+- 底层框架：VueJs、KoaJs
 
-- CodeDebugger：ChromeInspector、LinuxShell
+* 客户端数据持久化：LocalStorage、Vuex
 
-- TestTools：Postman(Api 测试)、Chrome
+- 服务端渲染: Nuxt （封装了 VueJs+Vuex+VueRouter 的上层框架）
+
+* 服务端数据接口 : EggJs(封装了 koa+koa-router 等 koa 功能模块的 NodeJs 上层框架)
+
+- 数据库操作： Mongoose(支持异步操作 MongoDB 的库)
+
+* 第三方插件: vue-weather-component(天气插件)、bcrypt(数据加密)、pell(富文本编辑器)、jsonwebtoken(权限认证)、axios(HTTP 请求工具)
+
+- 辅助测试工具：Postman、ChromeInspector、
 
 ## 项目主要功能
 
