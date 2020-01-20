@@ -308,11 +308,11 @@ npm run docs:build
  ├── package-lock.json   //
  ├── package.json   //
  ├── README.md   //
- app.js   //
+ app.js   //服务器启动入口文件
  package-lock.json   //
- package.json   //
+ package.json   //项目信息
  postcss.config.js   //
- README.md   //
+ README.md   //项目指南
 ```
 
 ## 项目使用技术栈

@@ -38,15 +38,24 @@
 
 |  Field   |  Type  | Description | Required |
 | :------: | :----: | :---------: | :------: |
-| nickname | String |    昵称     |   Yes    |
+| nickname | String |    昵称     |    NO    |
+| username | String |   用户名    |    NO    |
 
 ### Response
 
-`HTTP/1.1 200 No Content`
+`HTTP/1.1 200 OK`
+
+```js
+{
+  n:1,
+  nModified:1,
+  ok:1
+}
+```
 
 ## 管理员修改密码
 
-`PUT /admin/accounts/:id/change-password`
+`PATCH /admin/accounts/:id/change-password`
 
 ### Required
 
@@ -57,4 +66,12 @@
 
 ### Response
 
-`HTTP/1.1 204 No Content`
+`HTTP/1.1 200 OK`
+
+```js
+{
+  n:1,
+  nModified:1,
+  ok:1
+}
+```
