@@ -32,17 +32,17 @@
 
 ## 修改账户信息
 
-`PUT /admin/accounts/:id`
+`PATCH /admin/accounts/:id`
 
 ### Request
 
 |  Field   |  Type  | Description | Required |
 | :------: | :----: | :---------: | :------: |
-| nickname | String |   新昵称    |   Yes    |
+| nickname | String |    昵称     |   Yes    |
 
 ### Response
 
-`HTTP/1.1 204 No Content`
+`HTTP/1.1 200 No Content`
 
 ## 管理员修改密码
 

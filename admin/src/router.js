@@ -56,7 +56,7 @@ const router = new Router({
             activedMenuItem: 'dashboard',
           },
         },
-        
+
         {
           name: 'platform',
           path: 'platform',
@@ -78,7 +78,7 @@ const router = new Router({
           path: 'settings/security',
           component: Security,
           meta: {
-            title: '修改密码',
+            title: '账户设置',
             activedMenuItem: 'settings/security',
           },
         },

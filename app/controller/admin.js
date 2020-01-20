@@ -1,6 +1,6 @@
 const { Controller } = require('egg')
 const _ = require('lodash')
-
+const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 class AdminController extends Controller {
@@ -11,20 +11,14 @@ class AdminController extends Controller {
 
     const { username, password } = data
 
-    const count = await ctx.model.Admin.countDocuments()
+     
 
-    if (count === 0) {
-      ctx.throw('500', '数据库管理员数据没有初始化')
-    }
-
-    
-
-    const result = await service.admin.queryOneByUsername(username)
+    const result = await ctx.model.Admin.findOne({ username })
 
     if (!result) {
       ctx.throw(404, '没有此用户')
     }
-    const valid = await service.admin.comparePass(password, result.password)
+    const valid = await bcrypt.compareSync(password, result.password)
 
     if (!valid) {
       ctx.throw(403, '密码不正确')
@@ -48,8 +42,8 @@ class AdminController extends Controller {
     const { id } = ctx.params
 
     const payload = ctx.request.body
-    const passwordRule = ctx.validationRule.admin.password
-
+    const passwordRule = require('../types/request').admin.password
+  
     ctx.validate(
       {
         newPassword: passwordRule,
@@ -60,27 +54,24 @@ class AdminController extends Controller {
 
     const { oldPassword, newPassword } = payload
 
-    const { password } = await service.admin.queryById(id)
-    const passwordValidation = await service.admin.comparePass(
-      oldPassword,
-      password
-    )
+    const { password } = await ctx.model.Admin.findById(id)
+    const passwordValidation = await bcrypt.compareSync(oldPassword, password)
 
     if (!passwordValidation) {
       return ctx.throw(403, '错误的原密码')
     }
 
-    const hashPass = await service.admin.hashPass(newPassword)
-    await service.admin.queryByIdAndUpdate(id, { password: hashPass })
+    const hashPass = await bcrypt.hash(newPassword, 10)
+    return ctx.model.Admin.updateOne(
+      { _id: id },
+      { $set: { password: hashPass } }
+    )
   }
   async changeAccount() {
     const { ctx, service } = this
     const { id } = ctx.params
 
-    return ctx.state.ActiveQueryWithParamId.updateOne(
-      {},
-      { $set: ctx.request.body }
-    )
+    return ctx.model.Admin.updateOne({ _id: id }, { $set: ctx.request.body })
   }
 }
 

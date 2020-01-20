@@ -23,7 +23,7 @@ module.exports = (opt, app) => {
         ctx.validate(defaultValidationRule[ctx.routerName], ctx.request.body)
     }
 
-    ctx.request.body = _.pick(
+    ctx.state.body = _.pick(
       ctx.request.body,
       _.keys(defaultValidationRule[ctx.routerName])
     )

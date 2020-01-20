@@ -18,7 +18,7 @@
       <el-menu-item index="/guestbooks">留言墙</el-menu-item>
       <el-submenu index="/settings">
         <template slot="title">安全</template>
-        <el-menu-item index="/settings/security">修改密码</el-menu-item>
+        <el-menu-item index="/settings/security">账户设置</el-menu-item>
       </el-submenu>
     </el-menu>
   </div>

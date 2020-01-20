@@ -13,7 +13,13 @@
 |     pv      |             Number              |   文章访问量   |
 |  starCount  |             Number              |    星星个数    |
 
+### 虚拟字段
 
-
+|    Field     |               Type               | Description |
+| :----------: | :------------------------------: | :---------: |
+|   category   |     [Object](./category.md)      |  所属分类   |
+|   tagList    |     [Array\<tag\>](./tag.md)     |  标签列表   |
+| commentCount |              Number              |  评论个数   |
+|   comments   | [Array\<comment\>](./comment.md) |  评论列表   |
 
 
