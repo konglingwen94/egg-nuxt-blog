@@ -4,7 +4,7 @@ module.exports = app => {
   const { controller, middleware } = app
   const router = (app.ApiRouter = app.router.namespace(
     '/api',
-    middleware.apiRouterParameterValidator()
+    middleware.requestParameterValidator()
   ))
 
 

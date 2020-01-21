@@ -18,8 +18,8 @@ class TagController extends Controller {
 
   async queryList() {
     const { ctx, service } = this
-    console.log(__filename,service.tag.queryList())
-    return   service.tag.queryList()
+    console.log(__filename, service.tag.queryList())
+    return service.tag.queryList()
   }
 
   async updateOne() {
@@ -28,11 +28,7 @@ class TagController extends Controller {
     const { id } = ctx.params
     const payload = ctx.state.body
 
-    return this.ctx.model.Tag.findByIdAndUpdate(
-      id,
-      { $set: payload },
-      { new: true }
-    )
+    return this.ctx.model.Tag.updateOne({ _id: id }, { $set: payload })
   }
 
   async deleteOne() {
@@ -40,7 +36,7 @@ class TagController extends Controller {
 
     const { id } = ctx.params
 
-    return this.ctx.model.Tag.findByIdAndRemove(id)
+    return this.ctx.model.Tag.deleteOne({ _id: id })
   }
 }
 module.exports = TagController
