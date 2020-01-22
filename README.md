@@ -407,6 +407,4 @@ npm run docs:build
 
 由于作者测试的浏览器地理定位 Api 出现误差，不知是否是此 Api 兼容性问题还是电脑硬件问题，希望查看此开源项目的您帮助测试一下此 Api(window.navigation.geolocation.getCurrentPosition())的相关准确性
 
-```
-
-```
+ 
