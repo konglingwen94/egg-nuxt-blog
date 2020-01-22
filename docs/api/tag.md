@@ -33,6 +33,7 @@
 | Field |  Type  | Description | Required |
 | :---: | :----: | :---------: | :------: |
 | name  | String |  标签名称   |   Yes    |
+| cover | [File](./) |    封面     |   Yes    |
 
 ### Response
 

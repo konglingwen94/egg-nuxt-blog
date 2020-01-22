@@ -17,9 +17,8 @@ class TagController extends Controller {
   }
 
   async queryList() {
-    const { ctx, service } = this
-    console.log(__filename, service.tag.queryList())
-    return service.tag.queryList()
+    const { ctx } = this
+    return ctx.model.Tag.find()
   }
 
   async updateOne() {
