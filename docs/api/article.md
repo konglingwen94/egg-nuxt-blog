@@ -130,8 +130,8 @@
 | categoryID  |            ObjectId             |   文章分类ID   |   Yes    |
 |  tagIdList  |        Array\<ObjectId\>        | 文章标签ID列表 |    No    |
 |    title    |             String              |    文章标题    |   Yes    |
-|   content   | [Markdown](/database/#markdown) |    文章内容    |   Yes    |
-|    cover    |     [File](/database/#file)     |    文章封面    |   Yes    |
+|   content   | [Markdown](../database/README.md/#markdown) |    文章内容    |   Yes    |
+|    cover    |     [File](../database/README.md/#file)     |    文章封面    |   Yes    |
 | isPublished |             Boolean             |    是否发布    |   Yes    |
 
 ### Response
@@ -164,7 +164,7 @@
 
 ## 编辑文章
 
-`PUT /admin/articles/:id`
+`PATCH /admin/articles/:id`
 
 ### Request
 

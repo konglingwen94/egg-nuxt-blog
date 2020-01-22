@@ -30,10 +30,10 @@
  
 ### Request
 
-| Field |  Type  | Description | Required |
-| :---: | :----: | :---------: | :------: |
-| name  | String |  标签名称   |   Yes    |
-| cover | [File](./) |    封面     |   Yes    |
+| Field |                Type                 | Description | Required |
+| :---: | :---------------------------------: | :---------: | :------: |
+| name  |               String                |  标签名称   |   Yes    |
+| cover | [File](../database/README.md/#File) |    封面     |   Yes    |
 
 ### Response
 
@@ -52,13 +52,14 @@
 
 ## 编辑标签
 
-`PUT /admin/tags/:id`
+`PATCH /admin/tags/:id`
 
 ### Request
 
-| Field |  Type  | Description | Required |
-| :---: | :----: | :---------: | :------: |
-| name  | String |  标签名称   |   Yes    |
+| Field |                Type                 | Description | Required |
+| :---: | :---------------------------------: | :---------: | :------: |
+| name  |               String                |  标签名称   |   Yes    |
+| cover | [File](../database/README.md/#File) |  标签封面   |   Yes    |
 
 ### Response
 

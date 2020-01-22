@@ -6,9 +6,10 @@
 
 ### Request
 
-| Field |  Type  | Description | Required |
-| :---: | :----: | :---------: | :------: |
-| name  | String |  分类名称   |   Yes    |
+| Field |                Type                 | Description | Required |
+| :---: | :---------------------------------: | :---------: | :------: |
+| name  |               String                |  分类名称   |   Yes    |
+| cover | [File](../database/README.md/#File) |  分类封面   |   Yes    |
 
 ### Response
 
@@ -27,13 +28,15 @@
 
 ## 编辑分类
 
-`PUT /admin/categories/:id`
+`PATCH /admin/categories/:id`
 
 ### Request
 
-| Field |  Type  | Description | Required |
-| :---: | :----: | :---------: | :------: |
-| name  | String |  分类名称   |   Yes    |
+| Field |                Type                 | Description | Required |
+| :---: | :---------------------------------: | :---------: | :------: |
+| name  |               String                |  分类名称   |   Yes    |
+| cover | [File](../database/README.md/#File) |  分类封面   |   Yes    |
+
 
 ### Response 
 
