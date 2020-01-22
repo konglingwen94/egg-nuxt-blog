@@ -173,7 +173,7 @@
 | categoryID  |            ObjectId             |   文章分类ID   |    No    |
 |  tagIdList  |        Array\<ObjectId\>        | 文章标签ID列表 |    No    |
 |    title    |             String              |    文章标题    |    No    |
-|   content   | [Markdown](/database/#markdown) |    文章内容    |    No    |
+|   content   | [Markdown](../database/README.md/#markdown) |    文章内容    |    No    |
 |    cover    |     [File](../database/README.md/#File)     |      封面      |    No    |
 | isPublished |             Boolean             |    是否发布    |    No    |
 
