@@ -66,9 +66,9 @@ export default {
       }
 
       const idList = this.selectedList.map(item => item.id)
-      CommentApi.deleteList({ idList })
+      return CommentApi.deleteMany({ idList })
         .then(() => {
-          this.$message.success(`共删除${idList.length}条评论`)
+          
           this.selectedList.forEach(item => {
             const index = this.dataList.indexOf(item)
             if (index > -1) {
@@ -77,7 +77,7 @@ export default {
           })
         })
         .catch(err => {
-          this.$message.error(err.message)
+          Promise.reject(err)
         })
     },
     onSectionChange(selection) {

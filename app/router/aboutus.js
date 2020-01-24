@@ -1,22 +1,28 @@
+const Inflector = require('inflected')
+global.Inflector=Inflector
 module.exports = app => {
-  
-
-  const { controller, middleware } = app
+  const { mongoose, controller, middleware } = app
   const router = (app.ApiRouter = app.router.namespace(
     '/api',
     middleware.requestParameterValidator()
   ))
 
-
   app.router.param('id', async (id, ctx, next) => {
     ctx.validate({ id: { type: 'string', max: 24, min: 24 } }, { id })
-
-    if (!ctx.routerName) {
-      return next()
+    try {
+      mongoose.Types.ObjectId(id)
+    } catch (error) {
+      throw error
     }
 
-    const result = await ctx.model[_.upperFirst(ctx.routerName)].findById(id)
+    const routerPathArr = ctx.routerPath.split('/')
 
+    const moduleName = Inflector.singularize(
+      routerPathArr[routerPathArr.indexOf(':id') - 1]
+    )
+
+
+    const result = await ctx.model[_.upperFirst(moduleName)].findById(id)
     if (!result) {
       ctx.throw(404, `Invalid ObjectId("${id}")`)
     }

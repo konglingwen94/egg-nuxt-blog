@@ -10,7 +10,7 @@ export default {
   deleteOne(id) {
     return request.delete(`/comments/${id}`)
   },
-  deleteList(params) {
+  deleteMany(params) {
     return request.delete('/comments', { params })
   },
 }

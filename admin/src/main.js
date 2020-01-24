@@ -23,6 +23,14 @@ Vue.config.warnHandler = (warn, vm) => {
   console.warn(warn)
 }
 
+window.addEventListener(
+  'error',
+  e => {
+    console.error(e)
+  },
+  true
+)
+
 export default new Vue({
   router,
   store,

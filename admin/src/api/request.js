@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Loading } from 'element-ui'
+import { Loading, Message } from 'element-ui'
 import router from '@/router.js'
 
 let loading
@@ -36,6 +36,27 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   response => {
     loading.close()
+    const requestMethod = response.config.method
+    console.log(response)
+    if (requestMethod === 'patch' || requestMethod === 'delete') {
+      if (requestMethod === 'patch') {
+        if (response.data.ok === 1) {
+          Message.success(`更新${response.data.nModified}条数据`)
+        } else {
+          Message.error('更新失败')
+        }
+      } else if (requestMethod === 'delete') {
+        if (response.data.ok === 1) {
+          Message.success(`删除${response.data.deletedCount}条数据`)
+        } else {
+          Message.error('删除失败')
+        }
+      }
+
+      if (response.data.ok !== 1) {
+        return Promise.reject(response.data)
+      }
+    }
     return Promise.resolve(response.data)
   },
   err => {
@@ -48,8 +69,10 @@ instance.interceptors.response.use(
     }
 
     if (err.response) {
+      Message.error(err.response.data.message)
       return Promise.reject(err.response.data)
     } else {
+      Message.error(err.message)
       return Promise.reject(err)
     }
   }

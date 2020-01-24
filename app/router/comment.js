@@ -1,12 +1,8 @@
 console.log(__filename)
 
-
 module.exports = app => {
-  const { controller, middleware } = app
-  const router = app.router.namespace(
-    '/api',
-     
-  )
+  const { controller, middleware, ApiRouter } = app
+  const router = ApiRouter
   /**
    * comments
    */
@@ -19,7 +15,7 @@ module.exports = app => {
     controller.comment.deleteOne
   )
 
-  router.delete('comment', '/admin/comments', controller.comment.deleteList)
+  router.delete('comment', '/admin/comments', controller.comment.deleteMany)
 
   router.get(
     '/admin/articles/:articleID/comments',
@@ -28,6 +24,7 @@ module.exports = app => {
   )
 
   router.get(
+    'article',
     '/articles/:articleID/comments',
 
     controller.comment.queryList

@@ -19,6 +19,8 @@ class TagController extends Controller {
   async queryList() {
     const { ctx } = this
     return ctx.model.Tag.find()
+      .populate('articleCount')
+      .populate({ path: 'articlePublishedCount', match: { isPublished: true } })
   }
 
   async updateOne() {

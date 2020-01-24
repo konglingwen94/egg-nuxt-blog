@@ -45,7 +45,7 @@ export default {
         return
       }
 
-      authApi
+      return authApi
         .login({ username, password })
         .then(data => {
           localStorage.setItem('adminInfo', JSON.stringify(data.adminInfo))
@@ -54,7 +54,6 @@ export default {
           this.$router.push('/')
         })
         .catch(err => {
-          this.$message.error(err.message)
         })
     }
   }

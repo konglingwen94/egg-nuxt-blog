@@ -12,10 +12,8 @@ module.exports = app => {
         type: String,
         default: '',
       },
-      article: {
+      articleID: {
         type: ObjectId,
-        ref: 'Article',
-         
       },
       nickname: {
         type: String,
@@ -30,6 +28,13 @@ module.exports = app => {
       timestamps: true,
     }
   )
+
+  CommentSchema.virtual('article', {
+    ref: 'Article',
+    localField: 'articleID',
+    foreignField: '_id',
+    justifyOne: true,
+  })
 
   return model('Comment', CommentSchema)
 }

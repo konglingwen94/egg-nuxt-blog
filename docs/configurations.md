@@ -11,8 +11,6 @@ sidebar: auto
 - [官方文档](https://docs.mongodb.com/manual/introduction/)
 - [安装手册](https://docs.mongodb.com/manual/administration/install-on-linux/)
 
- 
-
 ## 服务端环境
 
 项目服务端基于 [nodejs.org](https://nodejs.org/) 进行开发。
@@ -58,11 +56,18 @@ npm run start # 启动运行 API 服务
 npm run stop # 停止运行 API 服务
 ```
 
-#### 5. 执行初始化数据库脚本
+#### 4. 执行初始化数据库脚本
 
 ```bash
-# 仅在第一次配置时执行
-node scripts/init-admin.js 运行环境 管理员用户名 管理员密码 ROOT
+# 仅在第一次配置时执行， 默认创建超级管理员ROOT
+node scripts/init-admin.js  管理员用户名 管理员密码
+```
+
+### Web 客户端部署
+
+```bash
+# 1.执行构建页面
+npm run web:build
 ```
 
 ### 管理后台部署
@@ -71,6 +76,3 @@ node scripts/init-admin.js 运行环境 管理员用户名 管理员密码 ROOT
 # 1. 执行构建页面
 npm run admin:build
 ```
-
-
- 

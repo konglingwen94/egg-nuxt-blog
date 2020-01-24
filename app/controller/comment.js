@@ -2,42 +2,40 @@ const { Controller } = require('egg')
 
 const { ObjectId } = require('mongoose').Types
 const _ = require('lodash')
- 
 
 class CommentController extends Controller {
   async queryList() {
     const { ctx, service } = this
 
     // console.log(__filename, await service.comment.queryList())
-    return service.comment.queryList()
+    return ctx.model.Comment.find().populate('article')
   }
   async createOne() {
     const { ctx, service } = this
 
-    const article = ctx.params.id
 
-    const payload = { ...ctx.state.body, article }
+    const articleID = ctx.params.id
 
-    const result = await service.comment.createOne(payload)
+// ctx.validate({article})
 
-    return result
+    const payload = { ...ctx.state.body, articleID }
+
+    return ctx.model.Comment.create(payload)
   }
   async deleteOne() {
     const { ctx, service } = this
 
     const { id } = ctx.params
 
-    await service.comment.queryByIdAndRemove(id)
+    return ctx.model.Comment.deleteOne({ _id: id })
   }
 
-  async deleteList() {
+  async deleteMany() {
     const { ctx, service } = this
 
     const { idList } = ctx.queries
 
-    const result = await service.comment.deleteMany(idList)
-
-     
+    return ctx.model.Comment.deleteMany({ _id: idList })
   }
   async thumbup() {
     const { ctx, service } = this
