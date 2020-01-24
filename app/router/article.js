@@ -19,7 +19,7 @@ module.exports = app => {
     controller.article.createOne
   )
 
-  router.get('article', '/admin/articles', controller.article.queryList)
+  router.get('article', '/admin/articles', controller.article.queryListByOptions)
 
   router.get('article', '/admin/articles/:id', controller.article.queryOne)
 
@@ -44,13 +44,9 @@ module.exports = app => {
     controller.article.updatePublishStatus
   )
 
-  router.get('/articles', controller.article.queryList)
+  router.get('/articles', controller.article.queryListByOptions)
 
-  router.get('/ownertags-articles', controller.article.queryOwnerTagsList)
-  router.get(
-    '/ownercategories-articles',
-    controller.article.queryOwnerCategoriesList
-  )
+   
 
   router.get('/article-carousels', controller.article.queryCarouselList)
   router.get('/articles/:id/suggestion', controller.article.querySuggestionList)

@@ -1,7 +1,11 @@
 const _ = require('lodash')
+const Inflector = require('inflected')
 const defaultValidationRule = require('../types/request')
 
 module.exports = (opt, app) => {
+
+
+
   const patchValidationRule = _.cloneDeep(defaultValidationRule)
   for (let routerName in patchValidationRule) {
     for (let field in patchValidationRule[routerName]) {
@@ -10,6 +14,7 @@ module.exports = (opt, app) => {
   }
   return async function(ctx, next) {
     const matchMethods = ['POST', 'PATCH']
+
 
     if (!matchMethods.includes(ctx.method) || !ctx.routerName) {
       return next()
@@ -27,6 +32,7 @@ module.exports = (opt, app) => {
       ctx.request.body,
       _.keys(defaultValidationRule[ctx.routerName])
     )
+
 
     return next()
   }

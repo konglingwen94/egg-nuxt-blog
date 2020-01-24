@@ -41,7 +41,11 @@ instance.interceptors.response.use(
     if (requestMethod === 'patch' || requestMethod === 'delete') {
       if (requestMethod === 'patch') {
         if (response.data.ok === 1) {
-          Message.success(`更新${response.data.nModified}条数据`)
+          Message.success(
+            response.data.successMessage
+              ? response.data.successMessage
+              : `更新${response.data.nModified}条数据`
+          )
         } else {
           Message.error('更新失败')
         }

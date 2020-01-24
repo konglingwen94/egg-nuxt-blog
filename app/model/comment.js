@@ -33,7 +33,11 @@ module.exports = app => {
     ref: 'Article',
     localField: 'articleID',
     foreignField: '_id',
-    justifyOne: true,
+    justOne: true,
+  })
+
+  CommentSchema.post('save', function(next) {
+    return this.populate('article').execPopulate(next)
   })
 
   return model('Comment', CommentSchema)

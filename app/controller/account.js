@@ -3,7 +3,7 @@ const _ = require('lodash')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
-class AdminController extends Controller {
+class AccountController extends Controller {
   async login() {
     const { ctx, config, service } = this
 
@@ -11,9 +11,7 @@ class AdminController extends Controller {
 
     const { username, password } = data
 
-     
-
-    const result = await ctx.model.Admin.findOne({ username })
+    const result = await ctx.model.Account.findOne({ username })
 
     if (!result) {
       ctx.throw(404, '没有此用户')
@@ -43,7 +41,7 @@ class AdminController extends Controller {
 
     const payload = ctx.request.body
     const passwordRule = require('../types/request').admin.password
-  
+
     ctx.validate(
       {
         newPassword: passwordRule,
@@ -54,7 +52,7 @@ class AdminController extends Controller {
 
     const { oldPassword, newPassword } = payload
 
-    const { password } = await ctx.model.Admin.findById(id)
+    const { password } = await ctx.model.Account.findById(id)
     const passwordValidation = await bcrypt.compareSync(oldPassword, password)
 
     if (!passwordValidation) {
@@ -62,17 +60,25 @@ class AdminController extends Controller {
     }
 
     const hashPass = await bcrypt.hash(newPassword, 10)
-    return ctx.model.Admin.updateOne(
+    const result = await ctx.model.Account.updateOne(
       { _id: id },
       { $set: { password: hashPass } }
     )
+    return { ...result, successMessage: '密码修改成功' }
   }
   async changeAccount() {
     const { ctx, service } = this
     const { id } = ctx.params
 
-    return ctx.model.Admin.updateOne({ _id: id }, { $set: ctx.request.body })
+    const result = await ctx.model.Account.updateOne(
+      { _id: id },
+      { $set: ctx.request.body }
+    )
+    return {
+      ...result,
+      successMessage: '账户修改成功',
+    }
   }
 }
 
-module.exports = AdminController
+module.exports = AccountController

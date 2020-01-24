@@ -98,15 +98,15 @@ module.exports = app => {
     }
   })
 
-  ArticleSchema.virtual('comments', {
+  ArticleSchema.virtual('commentList', {
     ref: 'Comment', // The model to use
     localField: '_id', // Find people where `localField`
-    foreignField: 'article', // is equal to `foreignField`
+    foreignField: 'articleID', // is equal to `foreignField`
   })
   ArticleSchema.virtual('commentCount', {
     ref: 'Comment', // The model to use
     localField: '_id', // Find people where `localField`
-    foreignField: 'article', // is equal to `foreignField`
+    foreignField: 'articleID', // is equal to `foreignField`
     count: true,
   })
 

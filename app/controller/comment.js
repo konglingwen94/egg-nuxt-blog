@@ -7,16 +7,12 @@ class CommentController extends Controller {
   async queryList() {
     const { ctx, service } = this
 
-    // console.log(__filename, await service.comment.queryList())
     return ctx.model.Comment.find().populate('article')
   }
   async createOne() {
     const { ctx, service } = this
 
-
     const articleID = ctx.params.id
-
-// ctx.validate({article})
 
     const payload = { ...ctx.state.body, articleID }
 
@@ -42,7 +38,7 @@ class CommentController extends Controller {
 
     const { id } = ctx.params
 
-    await service.comment.thumbup(id)
+    return ctx.model.Comment.updateOne({ _id: id }, { $inc: { thumbupCount: 1 } })
   }
 }
 module.exports = CommentController

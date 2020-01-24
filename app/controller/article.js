@@ -23,11 +23,11 @@ class ArticleController extends Controller {
       { categoryIdList }
     )
 
-    return service.article
-      .queryListByOptions({
-        categoryID: { $in: categoryIdList },
-      })
-      .sort('-createdAt')
+    // return service.article
+    //   .queryListByOptions({
+    //     categoryID: { $in: categoryIdList },
+    //   })
+    //   .sort('-createdAt')
   }
   async queryOwnerTagsList() {
     const { ctx, service } = this
@@ -55,10 +55,59 @@ class ArticleController extends Controller {
       })
       .sort('-createdAt')
   }
-  async queryList() {
+  async queryListByOptions() {
     const { ctx, service } = this
 
-    return service.article.queryListByOptions().sort('-createdAt')
+    const { tagID: tagIdList, categoryID: categoryIdList } = ctx.queries
+    const filter = {}
+
+    if (tagIdList) {
+      ctx.validate(
+        {
+          tagIdList: {
+            type: 'array',
+            itemType: 'string',
+            min: 1,
+            rule: { max: 24, min: 24 },
+          },
+        },
+        { tagIdList }
+      )
+
+      filter.tagIdList = { $in: tagIdList }
+    }
+
+    if (categoryIdList) {
+      ctx.validate(
+        {
+          categoryIdList: {
+            type: 'array',
+            itemType: 'string',
+            rule: {
+              max: 24,
+              min: 24,
+            },
+            min: 1,
+          },
+        },
+        { categoryIdList }
+      )
+
+      filter.categoryID = { $in: categoryIdList }
+    }
+
+    if (ctx.state.platformENV === 'web') {
+      filter.isPublished = true
+    }
+
+    console.log(__filename, filter)
+
+    return ctx.model.Article.find(filter)
+      .populate('commentCount')
+      .populate('commentList')
+      .populate('category')
+      .populate('tagList')
+      .sort('-createdAt')
   }
   async queryCarouselList() {
     const { service, ctx, config } = this
@@ -66,10 +115,8 @@ class ArticleController extends Controller {
 
     const { number, sort: sortBy } = aboutusResult.carousel
 
-
-    const data = await service.article
-      .queryListByOptions()
-      .sort({ [sortBy]: -1 }) 
+    const data = await ctx.model.Article.find({ isPublished: true })
+      .sort({ [sortBy]: -1 })
 
       .limit(number)
 
@@ -81,7 +128,7 @@ class ArticleController extends Controller {
 
     const { id } = ctx.params
 
-    return service.article.queryListByOptions({
+    return ctx.model.Article.find({
       tagIdList: { $in: tagIdList },
       _id: { $ne: id },
     })
@@ -91,21 +138,16 @@ class ArticleController extends Controller {
     const { ctx, service } = this
     const { id } = ctx.params
 
-    console.log(
-      '------------',
-      await ctx.model.Article.findById(id)
-        .populate('tagList')
-        .populate('comments')
-        .exec()
-    )
+    
     return ctx.model.Article.findById(id)
       .populate('tagList')
-      .populate('comments')
+      .populate('commentList')
+      .populate('category')
   }
   async createOne() {
     const { ctx, service } = this
 
-    var result = await service.article.create(ctx.state.body)
+    const result = await ctx.model.Article.create(ctx.state.body)
 
     ctx.status = 201
     return result

@@ -13,6 +13,7 @@ class TagController extends Controller {
     const { ctx } = this
     return this.ctx.model.Tag.findById(ctx.params.id)
       .populate('articleCount')
+      .populate({ path: 'articleList', populate: 'tagList' })
       .populate({ path: 'articlePublishedCount', match: { isPublished: true } })
   }
 

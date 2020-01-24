@@ -4,7 +4,7 @@ const { ObjectId } = require('mongoose').Types
 module.exports = class GuestbookController extends Controller {
   async queryList() {
     const { ctx } = this
-    // console.log(__filename,await models.Dialogue.find())
+
     let result
     if (ctx.state.platformENV === 'web') {
       result = this.ctx.model.Guestbook.find({
@@ -57,18 +57,28 @@ module.exports = class GuestbookController extends Controller {
     return guestbookResult
   }
   async deleteOne() {
-    const { ctx } = this
-
     const { id } = ctx.params
 
-    const result = await this.ctx.model.Guestbook.findByIdAndRemove(id)
+    return this.ctx.model.Guestbook.deleteOne({ _id: id })
   }
   async deleteMany() {
     const { ctx } = this
 
     const { idList } = ctx.request.body
 
-    await this.ctx.model.Guestbook.deleteMany({ _id: idList })
+    ctx.validate(
+      {
+        idList: {
+          type: 'array',
+          min: 1,
+          itemType: 'string',
+          rule: { min: 24, max: 24 },
+        },
+      },
+      { idList }
+    )
+
+    return this.ctx.model.Guestbook.deleteMany({ _id: idList })
   }
 
   async diggGuestbook() {
@@ -76,8 +86,11 @@ module.exports = class GuestbookController extends Controller {
 
     const { id } = ctx.params
 
-    await this.ctx.model.Guestbook.findByIdAndUpdate(id, {
-      $inc: { diggCount: 1 },
-    })
+    return this.ctx.model.Guestbook.updateOne(
+      { _id: id },
+      {
+        $inc: { diggCount: 1 },
+      }
+    )
   }
 }

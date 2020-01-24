@@ -5,12 +5,12 @@
       <span>{{archiveInfo.articlePublishedCount}}</span>
     </div>
 
-    <article-list :dataList="dataList"></article-list>
+    <article-list :dataList="archiveInfo.articleList"></article-list>
   </div>
 </template>
 
 <script>
-import ArticleService from '@/services/articles'
+// import ArticleService from '@/services/articles'
 import TagService from '@/services/tags'
 import CategoryService from '@/services/categories'
 export default {
@@ -18,29 +18,20 @@ export default {
 
   async asyncData({ query, params }) {
     const { categoryID, tagID } = query
-    let payload, fetchArchiveData
-    let action
-    if (categoryID) {
-      payload = { categoryID }
-      fetchArchiveData = CategoryService.fetchOne(categoryID)
-      action=ArticleService.fetchOwnerCategoriesList(payload)
-    } else if (tagID) {
-      payload = { tagID }
-      action=ArticleService.fetchOwnerTagsList(payload)
-      fetchArchiveData = TagService.fetchOne(tagID)
-    }
 
-    // const archive
+    const action = categoryID
+      ? CategoryService.fetchOne(categoryID)
+      : tagID
+      ? TagService.fetchOne(tagID)
+      : null
+
     try {
-      var [dataList, archiveInfo] = await Promise.all([
-        action,
-        fetchArchiveData
-      ])
+      var archiveInfo = await action
     } catch (error) {
-      return { dataList: [], archiveInfo: {} }
+      return { archiveInfo: {} }
     }
 
-    return { dataList, archiveInfo }
+    return { archiveInfo }
   },
   data() {
     return {

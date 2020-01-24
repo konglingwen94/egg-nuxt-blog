@@ -97,7 +97,7 @@ module.exports = {
       },
     },
   },
-  admin: {
+  account: {
     username: {
       type: 'string',
       min: 1,

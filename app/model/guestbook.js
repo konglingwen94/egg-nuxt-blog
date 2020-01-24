@@ -2,9 +2,9 @@ module.exports = app => {
   const { Schema, model } = app.mongoose
   const { ObjectId } = Schema.Types
 
-  const DialogueSchema = new Schema(
+  const GuestbookSchema = new Schema(
     {
-      responseTo: { type: ObjectId, ref: 'Dialogue' },
+      responseTo: { type: ObjectId, ref: 'Guestbook' },
 
       nickname: {
         type: String,
@@ -21,24 +21,24 @@ module.exports = app => {
       dialogues: [
         {
           type: ObjectId,
-          ref: 'Dialogue',
+          ref: 'Guestbook',
         },
       ],
     },
     { timestamps: true }
   )
 
-  DialogueSchema.post('findOneAndRemove', doc => {
+  GuestbookSchema.post('findOneAndRemove', doc => {
     return doc.constructor.deleteMany({ _id: doc.dialogues })
   })
 
-  DialogueSchema.pre('find', function() {
+  GuestbookSchema.pre('find', function() {
     // console.log(__filename, 'pre-find')
   })
    
-  DialogueSchema.pre('findOneAndUpdate', function() {
+  GuestbookSchema.pre('findOneAndUpdate', function() {
     // console.log(__filename, 'pre-findOneAndUpdate')
   })
 
-  return model('Dialogue', DialogueSchema)
+  return model('Guestbook', GuestbookSchema)
 }

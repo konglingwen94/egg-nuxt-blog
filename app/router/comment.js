@@ -24,8 +24,7 @@ module.exports = app => {
   )
 
   router.get(
-    'article',
-    '/articles/:articleID/comments',
+    '/articles/:id/comments',
 
     controller.comment.queryList
   )

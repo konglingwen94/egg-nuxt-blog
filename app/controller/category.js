@@ -11,28 +11,34 @@ class CategoryController extends Controller {
   async queryList() {
     const { ctx, service } = this
 
-    return service.category.queryList()
+    return ctx.model.Category.find()
+      .populate('articleCount')
+      .populate({ path: 'articlePublishedCount', match: { isPublished: true } })
   }
 
   async queryOne() {
     const { service, ctx } = this
     const { id } = ctx.params
 
-    return ctx.state.ActiveQueryWithParamId.findOne()
+    return ctx.model.Category.findById(id)
+      .populate({ path: 'articleList', populate: { path: 'tagList' } })
+      .populate('articleCount')
+      .populate({ path: 'articlePublishedCount', match: { isPublished: true } })
   }
   async deleteOne() {
     const { ctx, service } = this
-   
 
-    return ctx.state.ActiveQueryWithParamId.deleteOne()
+    return ctx.model.Category.deleteOne({ _id: ctx.params.id })
   }
 
   async updateOne() {
     const { ctx, service } = this
-    const { id } = ctx.params
-    const payload = ctx.request.body
+    const payload = ctx.state.body
 
-    return ctx.state.ActiveQueryWithParamId.updateOne({}, { $set: payload })
+    return ctx.model.Category.updateOne(
+      { _id: ctx.params.id },
+      { $set: payload }
+    )
   }
 }
 

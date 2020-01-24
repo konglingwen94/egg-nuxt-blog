@@ -9,23 +9,23 @@ module.exports = app => {
    */
 
   router.post(
-    'admin',
+    'account',
     '/admin/auth/login',
 
-    controller.admin.login
+    controller.account.login
   )
 
   router.patch(
-    'admin',
+    'account',
     '/admin/accounts/:id/change-password',
 
-    controller.admin.changePass
+    controller.account.changePass
   )
 
   router.patch(
-    'admin',
+    'account',
     '/admin/accounts/:id',
 
-    controller.admin.changeAccount
+    controller.account.changeAccount
   )
 }

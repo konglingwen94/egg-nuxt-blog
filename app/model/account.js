@@ -1,6 +1,6 @@
 module.exports = app => {
   const { mongoose } = app
-  const AdminSchema = new mongoose.Schema(
+  const AccountSchema = new mongoose.Schema(
     {
       username: {
         type: String,
@@ -28,12 +28,12 @@ module.exports = app => {
     }
   )
 
-  AdminSchema.pre('save', next => {
+  AccountSchema.pre('save', next => {
     if (!this.isNew) {
       this.updatedAt = Date.now()
     }
     next()
   })
 
-  return mongoose.model('Admin', AdminSchema)
+  return mongoose.model('Account', AccountSchema)
 }

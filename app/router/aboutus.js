@@ -1,5 +1,4 @@
 const Inflector = require('inflected')
-global.Inflector=Inflector
 module.exports = app => {
   const { mongoose, controller, middleware } = app
   const router = (app.ApiRouter = app.router.namespace(
@@ -21,6 +20,7 @@ module.exports = app => {
       routerPathArr[routerPathArr.indexOf(':id') - 1]
     )
 
+    console.log(__filename, moduleName)
 
     const result = await ctx.model[_.upperFirst(moduleName)].findById(id)
     if (!result) {

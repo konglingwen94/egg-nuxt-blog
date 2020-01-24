@@ -64,7 +64,7 @@
         </el-form>
 
         <ul class="comment-board">
-          <li class="comment-board-item" v-for="item in data.comments" :key="item.id">
+          <li class="comment-board-item" v-for="item in data.commentList" :key="item.id">
             <div class="icon-user-wrapper">
               <el-avatar icon="el-icon-user-solid" size="medium"></el-avatar>
             </div>
@@ -99,9 +99,9 @@
           ></i>
         </div>
         <el-badge
-          :value="data.comments && data.comments.length"
+          :value="data.commentList && data.commentList.length"
           type="info"
-          :hidden="data.comments && data.comments.length===0"
+          :hidden="data.commentList && data.commentList.length===0"
         >
           <div class="icon-wrap icon-wrap-comment">
             <i @click="$refs.input.focus()" class="el-icon-s-comment"></i>
@@ -247,7 +247,7 @@ export default {
 
       CommentService.createOne(article, payload)
         .then(response => {
-          this.data.comments.unshift(response)
+          this.data.commentList.unshift(response)
           this.commentForm.content = ''
           this.commentForm.nickname = ''
           this.$message.success('评论成功')
