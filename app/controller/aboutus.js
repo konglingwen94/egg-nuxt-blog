@@ -1,4 +1,4 @@
- const _ = require('lodash')
+const _ = require('lodash')
 const { Controller } = require('egg')
 
 class AboutController extends Controller {
@@ -13,38 +13,28 @@ class AboutController extends Controller {
       isPublishedArticleCount
     )
     result._doc.carousel.isPublishedArticleCount = isPublishedArticleCount
-    console.log(result)
+    
     return result
   }
-  async overwriteOne() {
-    const { ctx, config, service } = this
-    const { id } = ctx.params
-    return ctx.model.Aboutus.updateOne({ _id: id }, config.aboutDefaultConfig)
-  }
+   
   async updateOne() {
     const { ctx, service } = this
     const { id } = ctx.params
-    const payload = ctx.request.body
+    const payload = ctx.state.body
 
     const result = await ctx.model.Aboutus.findById(id)
 
-    _.merge(result, payload)
-
-    return result.save()
-  }
-  async createOne() {
-    const { ctx } = this
-
-    const result = await ctx.model.Aboutus.findOne()
-
-    if (result) {
-      ctx.throw('400', '重复的数据')
+    if (!result) {
+      ctx.throw(404, `Invalid ObjectId(${id})`)
     }
-    ctx.status = 201
-    const newDoc = await ctx.model.Aboutus.create(ctx.request.body)
 
-    return newDoc
+    console.log(__filename, id)
+
+    _.merge(result, payload)
+    await result.save() 
+    return { ok: 1, n: 1, nModified: 1 }
   }
+   
 }
 
 module.exports = AboutController

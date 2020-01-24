@@ -20,9 +20,14 @@ module.exports = app => {
       routerPathArr[routerPathArr.indexOf(':id') - 1]
     )
 
-    console.log(__filename, moduleName)
+    // console.log(__filename, moduleName) 
+    const resultModel = ctx.model[_.upperFirst(moduleName)]
 
-    const result = await ctx.model[_.upperFirst(moduleName)].findById(id)
+    if (!resultModel) {
+      return next()
+    }
+
+    const result = await resultModel.findById(id)
     if (!result) {
       ctx.throw(404, `Invalid ObjectId("${id}")`)
     }
@@ -34,8 +39,8 @@ module.exports = app => {
    *
    * aboutus
    */
-  router.put('aboutus', '/admin/aboutus/:id', controller.aboutus.overwriteOne)
-  router.post('aboutus', '/admin/aboutus', controller.aboutus.createOne)
+  // router.put('aboutus', '/admin/aboutus/:id', controller.aboutus.overwriteOne)
+  // router.post('aboutus', '/admin/aboutus', controller.aboutus.createOne)
   router.patch('aboutus', '/admin/aboutus/:id', controller.aboutus.updateOne)
   router.get('/admin/aboutus', controller.aboutus.getOne)
 

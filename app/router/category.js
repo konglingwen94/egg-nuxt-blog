@@ -1,13 +1,8 @@
-console.log(__filename)
 
 module.exports = app => {
   const { middleware, controller } = app
 
-  const router = app.router.namespace(
-    '/api',
-    
-     
-    )
+  const router = app.ApiRouter
     
   /**
    * categories

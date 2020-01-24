@@ -1,23 +1,16 @@
 console.log(__filename)
 
-
-
 module.exports = app => {
-  const { router, controller, middleware } = app
+  const { ApiRouter, controller } = app
 
   /**
    * api router
    *
    *  */
 
-  const apiRouter = router.namespace(
-    '/api',
-    
-  )
-
   /***
    *
    * upload
    */
-  apiRouter.post('/upload', controller.upload.uploadFile)
+  ApiRouter.post('/upload', controller.upload.uploadFile)
 }
