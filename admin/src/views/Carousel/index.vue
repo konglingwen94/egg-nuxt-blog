@@ -63,30 +63,12 @@ export default {
     this.$store.dispatch('getAboutus')
   },
   methods: {
-    async resetConfig() {
-      try {
-        await this.$confirm('您确定要恢复默认设置吗', {
-          type: 'warning'
-        })
-      } catch (error) {
-        return
-      }
-
-      AboutusApi.resetOne(this.id)
-        .then(result => {
-          this.$message.success('重置配置成功')
-          // invokeDeepObject(this.state)
-          _.merge(this.$data, result)
-        })
-        .catch(err => {
-          this.$message.error(err.message)
-        })
-    },
+    
     async submit() {
       this.$store
         .dispatch('updateAboutus', { carousel: this.carousel })
         .then(() => this.$message.success('设置成功'))
-        .catch(err => this.$message.error(err.message))
+        .catch( )
     }
   }
 }

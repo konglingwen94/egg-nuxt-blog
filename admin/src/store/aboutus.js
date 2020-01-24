@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import AboutusApi from '@/api/aboutus'
-// import Message from 'element-ui'
-import vm from '@/main'
+  
+ 
 
 export default {
   state: {
@@ -21,7 +21,7 @@ export default {
         .then(result => {
           commit('setAboutus', result)
         })
-        .catch(err => vm.$message.error(err.message))
+        .catch( )
     },
     updateAboutus({ commit, state }, payload) {
       const action = !state.id
@@ -33,7 +33,7 @@ export default {
           commit('setAboutus', result)
         })
         .catch(error => {
-          vm.$message.error(error.message)
+           
           return Promise.reject(error)
         })
     },

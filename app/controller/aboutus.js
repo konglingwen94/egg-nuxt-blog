@@ -1,5 +1,5 @@
 const _ = require('lodash')
-const { Controller } = require('egg')
+const { Controller } = require('egg') 
 
 class AboutController extends Controller {
   async getOne() {
@@ -24,11 +24,9 @@ class AboutController extends Controller {
 
     const result = await ctx.model.Aboutus.findById(id)
 
-    if (!result) {
-      ctx.throw(404, `Invalid ObjectId(${id})`)
-    }
+    
 
-    console.log(__filename, id)
+     
 
     _.merge(result, payload)
     await result.save() 

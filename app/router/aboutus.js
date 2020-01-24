@@ -1,4 +1,14 @@
 const Inflector = require('inflected')
+
+Inflector.inflections('en', function(inflect) {
+  // inflect.plural(/^(ox)$/i, '$1$2en');
+  // inflect.singular /^(ox)en/i, '$1');
+   
+  inflect.singular('aboutus', 'Aboutus')  
+
+  // inflect.uncountable('equipment', 'snow');
+})
+
 module.exports = app => {
   const { mongoose, controller, middleware } = app
   const router = (app.ApiRouter = app.router.namespace(
@@ -16,12 +26,12 @@ module.exports = app => {
 
     const routerPathArr = ctx.routerPath.split('/')
 
-    const moduleName = Inflector.singularize(
+    const moduleName = Inflector.classify(
       routerPathArr[routerPathArr.indexOf(':id') - 1]
     )
 
-    // console.log(__filename, moduleName) 
-    const resultModel = ctx.model[_.upperFirst(moduleName)]
+    console.log(__filename, moduleName)
+    const resultModel = ctx.model[moduleName]
 
     if (!resultModel) {
       return next()
