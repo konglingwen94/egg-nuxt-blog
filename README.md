@@ -183,8 +183,6 @@ npm run docs:build
  │   ├── guestbook.js   //留言墙
  │   ├── tag.js   //文章标签
  │   └── upload.js   //资源上传
- ├── db   //
- │   └── mongodb.js   //
  ├── extend   //Egg框架功能扩展
  │   ├── context.js   //请求上下文
  │   └── helper.js   //帮助函数
@@ -218,12 +216,6 @@ npm run docs:build
  │   ├── proxyService.js   //代理第三方数据请求
  │   ├── tag.js   // 标签
  │   └── upload.js   //资源上传
- ├── service   //（重构中）
- │   ├── aboutus.js   //
- │   ├── article.js   //
- │   ├── category.js   //
- │   ├── comment.js   //
- │   └── tag.js   //
  ├── types   //字段类型
  │   └── request.js   //请求类型定义
  ├── package.json
@@ -406,5 +398,3 @@ npm run docs:build
 ##### 1. 天气地理定位
 
 由于作者测试的浏览器地理定位 Api 出现误差，不知是否是此 Api 兼容性问题还是电脑硬件问题，希望查看此开源项目的您帮助测试一下此 Api(window.navigation.geolocation.getCurrentPosition())的相关准确性
-
- 
