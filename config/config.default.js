@@ -42,16 +42,14 @@ module.exports = appInfo => {
     responseHandler: {
       match: ['/api'],
     },
-    platformENV: {
-      match: '/api',
-    },
+
     errorHandler: {
       match: ['/api'],
     },
 
     middleware: [
       'errorHandler',
-      'platformENV',
+
       'adminRequired',
       // 'siteTraffic',
       'upload',

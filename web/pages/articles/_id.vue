@@ -25,9 +25,16 @@
       </section>
       <div class="tag-box">
         <i class="el-icon-collection-tag"></i>
-        <el-link class="tag-item" v-for="(item,key) in data.tagList" :key="key">
-          <nuxt-link :to="{name:'articles',query:{tagID:item.id}}">{{item.name}}</nuxt-link>
-        </el-link>
+        <nuxt-link
+          :to="{name:'articles',query:{tagID:item.id}}"
+          v-for="(item,key) in data.tagList"
+          :key="key"
+        >
+          <el-link class="tag-item">
+            {{item.name}}
+            <i class="el-icon-view"></i>
+          </el-link>
+        </nuxt-link>
       </div>
 
       <section class="suggestion-wrapper">
@@ -69,7 +76,7 @@
               <el-avatar icon="el-icon-user-solid" size="medium"></el-avatar>
             </div>
             <div class="comment-text">
-              <el-link type="primary" :underline="false" class="nickname">{{item.nickname}}</el-link>
+              <span class="nickname">{{item.nickname}}</span>
               <div class="comment-detail">{{item.content}}</div>
               <div class="comment-footer">
                 <time>{{new Date(item.createdAt).toLocaleString()}}</time>
@@ -283,8 +290,6 @@ export default {
   h1 {
     .text-overflow-hidden(1);
   }
-
-   
 }
 
 .content-wrapper {
@@ -314,7 +319,9 @@ export default {
       .comment-text {
         line-height: 1.4;
         flex: 1;
-
+        .nickname {
+          color: #409eff;
+        }
         .comment-detail {
           margin: 14px 0;
         }
@@ -343,7 +350,15 @@ export default {
   margin-top: 40px;
   margin-bottom: 30px;
   .tag-item {
-    margin-right: 9px;
+    margin: 0 3px;
+    .el-icon-view {
+      visibility: hidden;
+    }
+    &:hover {
+      .el-icon-view {
+        visibility: visible;
+      }
+    }
   }
 }
 

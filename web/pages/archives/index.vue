@@ -2,16 +2,16 @@
   <div class="archive">
     <div class="category">
       <el-divider content-position="left">
-        <i class="el-icon-collection-tag">
+        <i class="el-icon-folder">
           <span class="icon-inner-text">分类</span>
         </i>
       </el-divider>
 
-      <ul class="category-list">
+      <ul class="archive-list">
         <template v-for="item in categoryList">
-          <li class="category-item" :key="item.id">
+          <li class="archive-item" :key="item.id">
             <el-badge :value="item.articlePublishedCount">
-              <nuxt-link :to="{name:'articles' ,query:{ categoryID:item.id}}">
+              <nuxt-link :to="{name:'articles' ,query:{ categoryID:item.id,}}">
                 <el-tag type="info">{{item.name}}</el-tag>
               </nuxt-link>
             </el-badge>
@@ -25,9 +25,12 @@
           <span class="icon-inner-text">标签</span>
         </i>
       </el-divider>
-      <ul class="category-list">
+      <ul class="archive-list">
         <template v-for="item in tagList">
-          <li class="category-item" :key="item.id">
+          <li
+            :class="[{is_disabled:item.articlePublishedCount===0},'archive-item']"
+            :key="item.id"
+          >
             <el-badge :value="item.articlePublishedCount">
               <nuxt-link :to="{name:'articles',query:{ tagID:item.id}}">
                 <el-tag type="info">{{item.name}}</el-tag>
@@ -70,13 +73,17 @@ export default {
   margin-top: 40px;
 }
 
-.category-list {
+.archive-list {
   margin-top: 44px;
   display: flex;
-  .category-item {
+  .archive-item{
+    &.is_disabled {
+      pointer-events: none;
+      cursor: none;
+    }
     margin-right: 20px;
     cursor: pointer;
-  }
+  } 
 }
 
 .el-tag {

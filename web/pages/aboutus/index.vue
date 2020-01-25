@@ -1,8 +1,11 @@
 <template>
   <div class="about" v-if="1">
-      <!-- <el-divider content-position="left">关于我们</el-divider> -->
     <div class="profile-wrapper">
-      <el-card header="作者介绍">
+    <el-divider content-position="left"><i class="el-icon-user"></i>&nbsp;&nbsp;关于我们</el-divider>
+      <!-- <el-card> -->
+        <!-- <div slot="header">
+          <el-avatar size="mini" icon="el-icon-user"></el-avatar>  
+        </div> -->
         <el-collapse :value="[1,2,3]">
           <el-collapse-item :name="1">
             <template v-slot:title>
@@ -23,11 +26,12 @@
             <div class="profile-item">{{profile.technology.serverSide}}</div>
           </el-collapse-item>
         </el-collapse>
-      </el-card>
+      <!-- </el-card> -->
     </div>
     <div class="platform-wrapper">
-      <!-- <el-divider content-position="left">博客简介</el-divider> -->
-      <el-card header="博客项目介绍">
+      <el-divider content-position="left"><i class="el-icon-eleme"></i>&nbsp;&nbsp;博客简介</el-divider>
+      <!-- <el-card > -->
+          <!-- <el-avatar icon="el-icon-s-platform"></!--> 
         <el-collapse :value="[1,2,3]">
           <el-collapse-item :name="1" title="WEB客户端">
             <div class="platform-item">{{platform.webClient}}</div>
@@ -40,7 +44,7 @@
             <div class="platform-item">{{platform.serverApi}}</div>
           </el-collapse-item>
         </el-collapse>
-      </el-card>
+      <!-- </el-card> -->
     </div>
   </div>
 </template>
@@ -65,8 +69,8 @@ export default {
 </script>
 <style scoped lang="less">
 .profile-wrapper {
-  margin-top: 70px;
-  margin-bottom:60px;
+  margin-top: 40px;
+  margin-bottom: 70px;
 }
 .profile-item,
 .platform-item {

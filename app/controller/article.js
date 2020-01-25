@@ -96,7 +96,7 @@ class ArticleController extends Controller {
       filter.categoryID = { $in: categoryIdList }
     }
 
-    if (ctx.state.platformENV === 'web') {
+    if (!ctx.path.startsWith('/api/admin')) {
       filter.isPublished = true
     }
 
@@ -138,7 +138,6 @@ class ArticleController extends Controller {
     const { ctx, service } = this
     const { id } = ctx.params
 
-    
     return ctx.model.Article.findById(id)
       .populate('tagList')
       .populate('commentList')

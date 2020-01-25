@@ -6,7 +6,7 @@ module.exports = class GuestbookController extends Controller {
     const { ctx } = this
 
     let result
-    if (ctx.state.platformENV === 'web') {
+    if (!ctx.path.startsWith('/api/admin')) {
       result = this.ctx.model.Guestbook.find({
         responseTo: { $exists: 0 },
       }).populate({

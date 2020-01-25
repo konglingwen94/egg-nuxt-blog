@@ -172,7 +172,7 @@ npm run docs:build
  ├── package-lock.json
  ├── package.json
  ├── README.md
- └── vue.config.js
+ ├── vue.config.js
  app  //服务端源文件
  ├── controller   //控制器
  │   ├── aboutus.js   //关于我们
@@ -244,11 +244,12 @@ npm run docs:build
  │   ├── README.md   //指南
  │   └── tag.md   //标签
  ├── configurations.md   //项目配置指南
- └── README.md   //项目概述
- logs   //服务器日志
+ ├── README.md   //项目概述
+ logs/   //服务器日志
+ public/ // 项目打包目录
  run   //服务器运行状态
  scripts   //自定义脚本
- └── init-admin.js   //初始化管理员
+ ├── init-admin.js   //初始化管理员
  web   //客户端源文件目录
  ├── assets   //静态资源
  │   └── css   //样式
