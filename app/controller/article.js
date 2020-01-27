@@ -67,7 +67,7 @@ class ArticleController extends Controller {
       filter.isPublished = true
     }
 
-    console.log(filter)
+    
 
     return ctx.model.Article.find(filter)
       .populate('commentCount')

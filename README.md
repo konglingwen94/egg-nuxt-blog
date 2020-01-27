@@ -108,9 +108,9 @@ npm run docs:build
 ## 目录结构
 
 ```javascript
- admin  //管理后台目录
- ├── src //源文件
- │   ├── api // 请求接口
+ admin/  //管理后台目录
+ ├── src/ //源文件
+ │   ├── api/ // 请求接口
  │   │   ├── aboutus.js   // 关于我们
  │   │   ├── articles.js   // 文章管理
  │   │   ├── auth.js   //  管理员
@@ -119,51 +119,51 @@ npm run docs:build
  │   │   ├── guestbooks.js   // 留言墙
  │   │   ├── request.js   //  Axios请求实例
  │   │   └── tags.js   // 标签
- │   ├── assets   //  静态资源
- │   │   ├── css   //  样式
+ │   ├── assets/   //  静态资源
+ │   │   ├── css/   //  样式
  │   │   │   └── overwrite.css   // 覆盖默认样式
  │   │   └── logo.png   //图片
- │   ├── components   // 组件
+ │   ├── components/   // 组件
  │   │   ├── CellPopover.vue   //鼠标悬浮文字预览浮窗
  │   │   ├── Header.vue   //页面头部
  │   │   ├── Menu.vue   //左侧菜单
  │   │   ├── Panel.vue   //主体内容面板
  │   │   ├── Pell.vue   //富文本编辑器
  │   │   └── Upload.vue   //资源上传
- │   ├── layouts   //页面功能布局
+ │   ├── layouts/   //页面功能布局
  │   │   ├── Basic.vue   //主体布局
  │   │   ├── NotFound.vue   //不存在路由页面展示
  │   │   └── User.vue   //用户登陆
- │   ├── store   //数据状态
+ │   ├── store/   //数据状态
  │   │   ├── aboutus.js   //关于我们数据模块
  │   │   └── index.js   //全局数据模块
- │   ├── utils   //功能文件
+ │   ├── utils/   //功能文件
  │   │   ├── element-ui.js   // 按需引入组件
  │   │   ├── global-registration.js   //注册自定义组件
  │   │   └── helper.js   //帮助函数库
- │   ├── views   //路由页面
- │   │   ├── Article   //文章
+ │   ├── views/   //路由页面
+ │   │   ├── Article/   //文章
  │   │   │   ├── Editor.vue   //文章编辑
  │   │   │   └── List.vue   //列表展示
- │   │   ├── Author   //作者
+ │   │   ├── Author/   //作者
  │   │   │   └── index.vue
- │   │   ├── Carousel   //轮播图
+ │   │   ├── Carousel/   //轮播图
  │   │   │   └── index.vue
- │   │   ├── Category   //分类
+ │   │   ├── Category/   //分类
  │   │   │   └── List.vue
- │   │   ├── Comment   //文章评论
+ │   │   ├── Comment/   //文章评论
  │   │   │   └── List.vue
- │   │   ├── Dashboard   //主面板
+ │   │   ├── Dashboard/   //主面板
  │   │   │   └── index.vue
- │   │   ├── Guestbook   //留言墙
+ │   │   ├── Guestbook/   //留言墙
  │   │   │   └── List.vue
- │   │   ├── Login   //登陆
+ │   │   ├── Login/   //登陆
  │   │   │   └── index.vue
- │   │   ├── Platform   //平台
+ │   │   ├── Platform/   //平台
  │   │   │   └── index.vue
- │   │   ├── Security   //安全
+ │   │   ├── Security/   //安全
  │   │   │   └── index.vue
- │   │   └── Tag   //标签
+ │   │   └── Tag/   //标签
  │   │       └── index.vue
  │   ├── App.vue   //入口组件
  │   ├── main.js   //入口文件
@@ -173,8 +173,8 @@ npm run docs:build
  ├── package.json
  ├── README.md
  ├── vue.config.js
- app  //服务端源文件
- ├── controller   //控制器
+ app/  //服务端源文件
+ ├── controller/   //控制器
  │   ├── aboutus.js   //关于我们
  │   ├── admin.js   //管理员
  │   ├── article.js   //文章
@@ -183,10 +183,10 @@ npm run docs:build
  │   ├── guestbook.js   //留言墙
  │   ├── tag.js   //文章标签
  │   └── upload.js   //资源上传
- ├── extend   //Egg框架功能扩展
+ ├── extend/   //Egg框架功能扩展
  │   ├── context.js   //请求上下文
  │   └── helper.js   //帮助函数
- ├── middleware   //中间件
+ ├── middleware/   //中间件
  │   ├── adminRequired.js   //管理员是否登陆权限验证
  │   ├── apiRouterParameterValidator.js   //参数全局校验
  │   ├── compress.js   //资源压缩
@@ -198,7 +198,7 @@ npm run docs:build
  │   ├── responseHandler.js   //统一数据响应
  │   ├── siteTraffic.js   //文件访问量跟踪（待完善）
  │   └── upload.js   //资源上传
- ├── model   //数据库集合模型
+ ├── model/   //数据库集合模型
  │   ├── aboutus.js   //关于我们
  │   ├── admin.js   //管理员
  │   ├── article.js   //文章
@@ -206,7 +206,7 @@ npm run docs:build
  │   ├── comment.js   //文章评论
  │   ├── guestbook.js   //留言墙
  │   └── tag.js   //标签
- ├── router   //接口路由
+ ├── router/   //接口路由
  │   ├── aboutus.js   //关于我们
  │   ├── admin.js   //管理员
  │   ├── article.js   //文章
@@ -216,18 +216,18 @@ npm run docs:build
  │   ├── proxyService.js   //代理第三方数据请求
  │   ├── tag.js   // 标签
  │   └── upload.js   //资源上传
- ├── types   //字段类型
+ ├── types/   //字段类型
  │   └── request.js   //请求类型定义
  ├── package.json
  ├── README.md
- config   //项目配置
+ config/   //项目配置
  ├── config.default.js   //默认配置
  ├── config.local.js   //本地环境
  ├── config.prod.js   //线上环境
  ├── defaultAboutusData.json   //数据库初始化数据
  ├── plugin.js   //插件
- docs   //文档
- ├── api   //接口
+ docs/   //文档
+ ├── api/   //接口
  │   ├── admin.md   //管理员
  │   ├── article.md   //文章
  │   ├── category.md   //分类
@@ -235,7 +235,7 @@ npm run docs:build
  │   ├── guestbook.md   //留言墙
  │   ├── README.md   //指南
  │   └── tag.md   //标签
- ├── database   //数据库字段定义
+ ├── database/   //数据库字段定义
  │   ├── admin.md   //管理员
  │   ├── article.md   //文章
  │   ├── category.md   //分类
@@ -247,42 +247,44 @@ npm run docs:build
  ├── README.md   //项目概述
  logs/   //服务器日志
  public/ // 项目打包目录
- run   //服务器运行状态
- scripts   //自定义脚本
+ run/   //服务器运行状态
+ scripts/   //自定义脚本
  ├── init-admin.js   //初始化管理员
- web   //客户端源文件目录
- ├── assets   //静态资源
- │   └── css   //样式
+ web/   //客户端源文件目录
+ ├── assets/   //静态资源
+ │   └── css/   //样式
  │       ├── global.less   //全局样式
  │       ├── overwrite.css   //覆盖默认样式
  │       └── variables.css   //全局变量
- ├── components   //自定义组件
+ ├── components/   //自定义组件
  │   ├── ArticleItem.vue   //文章项
  │   ├── ArticleList.vue   //文章列表
  │   ├── Footer.vue   //网站底部
  │   ├── Header.vue   //网站头部
  │   └── Suggestion.vue   //文章相关推荐
- ├── layouts   //网站布局
+ ├── layouts/   //网站布局
  │   ├── Article.vue   //文章布局
  │   └── Public.vue   //公共布局
- ├── middleware   //中间件
- ├── pages   //路由页面
- │   ├── aboutus   //关于我们
+ ├── middleware/   //中间件
+ ├── pages/   //路由页面
+ │   ├── aboutus/   //关于我们
  │   │   └── index.vue   //
- │   ├── archives   //归档
+ │   ├── archives/   //归档
  │   │   └── index.vue
- │   ├── articles
+ │   ├── articles/
  │   │   ├── index.vue   // 文章首页列表
  │   │   └── _id.vue   //文章详情页
+ │   ├── collections/ // 我的收藏
+ │   │   ├── index.vue   
  │   ├── guestbooks   //留言墙
  │   │   └── index.vue   //
  │   └── index.vue   //网站首页
- ├── plugins   //插件
+ ├── plugins/   //插件
  │   ├── element-ui.js   //按需引入第三方库组件
  │   ├── global-components.js   //全局注册自定义组件
  │   ├── init-store.js   //开启数据持久化
  │   └── vue-weather.js  //天气窗口插件
- ├── services   //数据请求
+ ├── services/   //数据请求
  │   ├── aboutus.js   //关于我们
  │   ├── articles.js   //文章
  │   ├── categories.js   //分类
@@ -290,9 +292,9 @@ npm run docs:build
  │   ├── guestbooks.js   //留言墙
  │   ├── request.js   //Axios请求实例
  │   └── tags.js   //标签
- ├── static   //静态资源
+ ├── static/   //静态资源
  │   └── favicon.ico   //
- ├── store   //数据存储
+ ├── store/   //数据存储
  │   ├── article.js   //文章
  │   ├── index.js   //全局
  │   └── weather.js   //天气
