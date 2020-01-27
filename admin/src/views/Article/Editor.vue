@@ -21,7 +21,6 @@
       </el-form-item>
       <el-form-item label="文章内容" required>
         <pell
-      
           @change="content=>Object.assign(form.content,content)"
           :initialMarkdown="form.content"
         ></pell>
@@ -41,6 +40,8 @@
         <el-button type="primary" @click="handleSubmit">确定</el-button>
       </el-form-item>
     </el-form>
+
+     
   </div>
 </template>
 
@@ -82,7 +83,6 @@ export default {
     $route: {
       immediate: true,
       handler(newRoute) {
-        
         invokeDeepObject(this.form, this.fileList)
         if (!this.currentId) {
           return

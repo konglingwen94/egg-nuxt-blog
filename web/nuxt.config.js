@@ -5,9 +5,9 @@ module.exports = {
    ** Headers of the page
    */
 
-  server: { 
+  server: {
     // host: '192.168.2.155',
-    port:3000
+    port: 3000,
   },
   env: {
     baseUrl:
@@ -51,11 +51,9 @@ module.exports = {
    */
   plugins: [
     { src: '@/plugins/global-components.js' },
-    { src: '@/plugins/element-ui', ssr: true },
+    { src: '@/plugins/element-ui',   },
     { src: '@/plugins/init-store', ssr: false },
     { src: '@/plugins/vue-weather.js', ssr: false },
-    { src: '@/plugins/service.js',  },
-    // { src: '@/plugins/vconsole.js', ssr: false },
   ],
   /*
    ** Nuxt.js dev-modules
@@ -67,8 +65,8 @@ module.exports = {
    */
   css: [
     'normalize.css',
-    // 'element-ui/lib/theme-chalk/index.css',
     '@/assets/css/overwrite.css',
+    // 'element-ui/lib/theme-chalk/index.css',
     '@/assets/css/variables.css',
   ],
   styleResources: {

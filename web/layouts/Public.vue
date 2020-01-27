@@ -3,7 +3,7 @@
     <header>
       <Header></Header>
     </header>
-
+    
     <main class="body">
       <nuxt></nuxt>
     </main>

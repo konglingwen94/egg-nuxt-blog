@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import AboutusService from '@/services/aboutus'
 
 export const state = () => ({
   guestbookDiggIdList: [],
@@ -26,12 +27,6 @@ export const mutations = {
 
 export const actions = {
   async nuxtServerInit() {
-    // debugger
-
-console.log(this.app)
-
-
-
     try {
       await Promise.all([
         this.dispatch('fetchAboutusData'),
@@ -45,8 +40,7 @@ console.log(this.app)
 
   fetchAboutusData() {
     // debugger
-    return this.app.service.aboutus
-      .fetchData()
+    return AboutusService.fetchData()
       .then(result => {
         this.commit('setAboutus', result)
       })

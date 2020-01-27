@@ -3,58 +3,7 @@ const { ObjectId } = require('mongoose').Types
 const _ = require('lodash')
 
 class ArticleController extends Controller {
-  async queryOwnerCategoriesList() {
-    const { ctx, service } = this
-
-    const categoryIdList = ctx.queries.categoryID
-
-    ctx.validate(
-      {
-        categoryIdList: {
-          type: 'array',
-          itemType: 'string',
-          min: 1,
-          rule: {
-            min: 24,
-            max: 24,
-          },
-        },
-      },
-      { categoryIdList }
-    )
-
-    // return service.article
-    //   .queryListByOptions({
-    //     categoryID: { $in: categoryIdList },
-    //   })
-    //   .sort('-createdAt')
-  }
-  async queryOwnerTagsList() {
-    const { ctx, service } = this
-
-    const tagIdList = ctx.queries.tagID
-
-    ctx.validate(
-      {
-        tagIdList: {
-          type: 'array',
-          itemType: 'string',
-          min: 1,
-          rule: {
-            min: 24,
-            max: 24,
-          },
-        },
-      },
-      { tagIdList }
-    )
-
-    return service.article
-      .queryListByOptions({
-        tagIdList: { $in: tagIdList },
-      })
-      .sort('-createdAt')
-  }
+  
   async queryListByOptions() {
     const { ctx, service } = this
 
@@ -100,7 +49,7 @@ class ArticleController extends Controller {
       filter.isPublished = true
     }
 
-    console.log(__filename, filter)
+     
 
     return ctx.model.Article.find(filter)
       .populate('commentCount')
@@ -193,7 +142,7 @@ class ArticleController extends Controller {
 
     return ctx.model.Article.updateOne(
       { _id: ctx.params.id },
-      // ctx.params.id,
+       
       {
         $set: { isPublished },
       }

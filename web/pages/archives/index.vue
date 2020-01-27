@@ -11,9 +11,7 @@
         <template v-for="item in categoryList">
           <li class="archive-item" :key="item.id">
             <el-badge :value="item.articlePublishedCount">
-              <nuxt-link :to="{name:'articles' ,query:{ categoryID:item.id,}}">
-                <el-tag type="info">{{item.name}}</el-tag>
-              </nuxt-link>
+              <el-tag type="info" @click="jumpToListByCategory(item)">{{item.name}}</el-tag>
             </el-badge>
           </li>
         </template>
@@ -27,10 +25,7 @@
       </el-divider>
       <ul class="archive-list">
         <template v-for="item in tagList">
-          <li
-            :class="[{is_disabled:item.articlePublishedCount===0},'archive-item']"
-            :key="item.id"
-          >
+          <li :class="[{is_disabled:item.articlePublishedCount===0},'archive-item']" :key="item.id">
             <el-badge :value="item.articlePublishedCount">
               <nuxt-link :to="{name:'articles',query:{ tagID:item.id}}">
                 <el-tag type="info">{{item.name}}</el-tag>
@@ -49,6 +44,18 @@ import TagService from '@/services/tags'
 
 export default {
   layout: 'Public',
+  methods: {
+    jumpToListByCategory(item) {
+      if (!item.articlePublishedCount) return
+
+      this.$router.push({
+        name: 'articles',
+        params: item,
+        query: { categoryID: item.id }
+      })
+    }
+  },
+ 
   async asyncData() {
     try {
       var [categoryList, tagList] = await Promise.all([
@@ -76,14 +83,14 @@ export default {
 .archive-list {
   margin-top: 44px;
   display: flex;
-  .archive-item{
+  .archive-item {
     &.is_disabled {
       pointer-events: none;
       cursor: none;
     }
     margin-right: 20px;
     cursor: pointer;
-  } 
+  }
 }
 
 .el-tag {
@@ -92,3 +99,4 @@ export default {
   zoom: 1.2;
 }
 </style>
+ 

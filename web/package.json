@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "nuxt",
-    "debug":"node --inspect ../node_modules/nuxt/bin/nuxt",
+    "debug":"node --inspect=9999 ../node_modules/nuxt/bin/nuxt",
     "build": "cross-env NODE_ENV=production  nuxt build",
     "build:local": "cross-env NODE_ENV=local nuxt build",
     "start": "nuxt start",

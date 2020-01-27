@@ -1,48 +1,80 @@
 <template>
   <div class="article">
-    <div class="banner" :style="bannerStyle">
-      <h1>{{archiveInfo.name}}</h1>
-      <span>{{archiveInfo.articlePublishedCount}}</span>
+    <div
+      class="banner"
+      v-if="archiveData && archiveData.cover && archiveData.cover.path"
+      :style="bannerStyle"
+    >
+      <h1>{{archiveData.name}}</h1>
+      <span>{{archiveData.articlePublishedCount}}</span>
     </div>
 
-    <article-list :dataList="archiveInfo.articleList"></article-list>
+    <article-list :dataList="dataList"></article-list>
   </div>
 </template>
 
 <script>
- 
 import TagService from '@/services/tags'
 import CategoryService from '@/services/categories'
+import ArticleService from '@/services/articles'
 export default {
   layout: 'Public',
-
-  async asyncData({ query, params }) {
-    const { categoryID, tagID } = query
-
-    const action = categoryID
-      ? CategoryService.fetchOne(categoryID)
-      : tagID
-      ? TagService.fetchOne(tagID)
-      : null
+  asyncData(context) {
+    console.log('validate', context)
+    return context.payload
+  },
+  async validate(context) {
+    const { categoryID, tagID } = context.query
+    let articleAction, archiveAction
+    if (categoryID) {
+      archiveAction = CategoryService.fetchOne(categoryID)
+      articleAction = ArticleService.fetchList({ categoryID })
+    } else if (tagID) {
+      archiveAction = TagService.fetchOne(tagID)
+      articleAction = ArticleService.fetchList({ tagID })
+    } else {
+      articleAction = ArticleService.fetchList()
+    }
 
     try {
-      var archiveInfo = await action
+      var [archiveData, dataList] = await Promise.all([
+        archiveAction,
+        articleAction
+      ])
     } catch (error) {
-      return { archiveInfo: {} }
+      return { archiveData: {}, dataList: [] }
     }
 
-    return { archiveInfo }
-  },
-  data() {
-    return {
-      archiveInfo: { cover: {} }
+    context.payload = { dataList, archiveData }
+
+
+
+    if(dataList.length){
+      return true
     }
+
+    context.redirect(302,'/articles',{flag:'query'})
+
+    debugger
   },
+
+  // beforeDestroy(){
+  //   console.log('before-destroy')
+  // },
+  // destroyed(){
+  //   console.log('destroyed')
+  // },
   computed: {
     bannerStyle() {
-      return {
-        background: `url(${this.archiveInfo.cover.path})no-repeat center/100%`
+      const style = {}
+      if (
+        this.archiveData &&
+        this.archiveData.cover &&
+        this.archiveData.cover.path
+      ) {
+        style.background = `url(${this.archiveData.cover.path})no-repeat center/100%`
       }
+      return style
     }
   }
 }

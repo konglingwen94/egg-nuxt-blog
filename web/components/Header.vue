@@ -13,9 +13,9 @@
       </el-menu>
     </div>
     <div class="weather-container">
-      <no-ssr>
+      <client-only>
       <vue-weather title :enableCredits="false" :forecast="[]" units="ca" :currentDay="currentDay"></vue-weather>
-      </no-ssr>
+      </client-only>
     </div>
   </div>
 </template>

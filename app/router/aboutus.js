@@ -1,12 +1,11 @@
 const Inflector = require('inflected')
 
 Inflector.inflections('en', function(inflect) {
-  // inflect.plural(/^(ox)$/i, '$1$2en');
-  // inflect.singular /^(ox)en/i, '$1');
+ 
    
   inflect.singular('aboutus', 'Aboutus')  
 
-  // inflect.uncountable('equipment', 'snow');
+  
 })
 
 module.exports = app => {
@@ -30,7 +29,7 @@ module.exports = app => {
       routerPathArr[routerPathArr.indexOf(':id') - 1]
     )
 
-    console.log(__filename, moduleName)
+     
     const resultModel = ctx.model[moduleName]
 
     if (!resultModel) {

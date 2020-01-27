@@ -3,7 +3,7 @@
     <el-menu :default-active="$route.path" router background-color="#304156" text-color="#f2f6fc">
       <el-submenu index="/aboutus">
         <template v-slot:title> <i class="el-icon-eleme"></i> 博客管理</template>
-        <el-menu-item index="/carousels">轮播图配置</el-menu-item>
+        <el-menu-item index="/carousels"> <i class="el-icon-more"></i> 轮播图配置</el-menu-item>
         <el-menu-item index="/platform"> <i class="el-icon-s-platform"></i> 平台设置</el-menu-item>
         <el-menu-item index="/author"> <i class="el-icon-user"></i>  作者简介</el-menu-item>
       </el-submenu>
@@ -18,7 +18,7 @@
       <el-menu-item index="/guestbooks"><i class="el-icon-message"></i> 留言墙</el-menu-item>
       <el-submenu index="/settings">
         <template slot="title"><i class="el-icon-setting"></i> 安全</template>
-        <el-menu-item index="/settings/security">账户设置</el-menu-item>
+        <el-menu-item index="/settings/security"> <i class="el-icon-s-custom"></i> 账户设置</el-menu-item>
       </el-submenu>
     </el-menu>
   </div>

@@ -1,50 +1,52 @@
+import Vue from 'vue'
 import {
-  Message,
-  Button,
-  Form,
-  FormItem,
-  Input,
-  Backtop,
-  Icon,
-  Divider,
-  Link,
   Alert,
-  Tag,
-  Badge,
   Avatar,
-  Menu,
-  MenuItem,
+  Backtop,
+  Badge,
+  Button,
+  Calendar,
   Carousel,
   Card,
   CarouselItem,
-  Image,
-  Calendar,
   Collapse,
   CollapseItem,
+  Divider,
+  Form,
+  FormItem,
+  Icon,
+  Image,
+  Input,
+  Link,
+  Message,
+  Menu,
+  MenuItem,
+  Tag,
+  Tooltip,
 } from 'element-ui'
-import Vue from 'vue'
 
 export default () => {
-  Vue.use(Button)
-  Vue.use(Form)
-  Vue.use(FormItem)
-  Vue.use(Input)
-  Vue.use(Backtop)
-  Vue.use(Icon)
-  Vue.use(Divider)
-  Vue.use(Card)
-  Vue.use(CollapseItem)
-  Vue.use(Collapse)
-  Vue.use(Link)
   Vue.use(Alert)
-  Vue.use(Tag)
-  Vue.use(Image)
-  Vue.use(Badge)
   Vue.use(Avatar)
-  Vue.use(Menu)
-  Vue.use(MenuItem)
+  Vue.use(Backtop)
+  Vue.use(Badge)
+  Vue.use(Button)
   Vue.use(Carousel)
   Vue.use(CarouselItem)
   Vue.use(Calendar)
+  Vue.use(Card)
+  Vue.use(CollapseItem)
+  Vue.use(Collapse)
+  Vue.use(Divider)
+  Vue.use(Form)
+  Vue.use(FormItem)
+  Vue.use(Input)
+  Vue.use(Icon)
+  Vue.use(Link)
+  Vue.use(Image)
+  Vue.use(Menu)
+  Vue.use(MenuItem)
+  Vue.use(Tag)
+  Vue.use(Tooltip)
   Vue.prototype.$message = Message
 }
