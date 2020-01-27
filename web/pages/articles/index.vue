@@ -20,7 +20,7 @@ import ArticleService from '@/services/articles'
 export default {
   layout: 'Public',
   asyncData(context) {
-    console.log('validate', context)
+    // console.log('validate', context)
     return context.payload
   },
   async validate(context) {
@@ -53,9 +53,9 @@ export default {
       return true
     }
 
-    context.redirect(302,'/articles',{flag:'query'})
+    context.redirect('/articles')
 
-    debugger
+    // debugger
   },
 
   // beforeDestroy(){

@@ -3,11 +3,10 @@ const { ObjectId } = require('mongoose').Types
 const _ = require('lodash')
 
 class ArticleController extends Controller {
-  
   async queryListByOptions() {
     const { ctx, service } = this
 
-    const { tagID: tagIdList, categoryID: categoryIdList } = ctx.queries
+    const { tagID: tagIdList, categoryID: categoryIdList, idList } = ctx.queries
     const filter = {}
 
     if (tagIdList) {
@@ -45,11 +44,30 @@ class ArticleController extends Controller {
       filter.categoryID = { $in: categoryIdList }
     }
 
+    if (idList) {
+      ctx.validate(
+        {
+          idList: {
+            type: 'array',
+            itemType: 'string',
+            min: 1,
+            rule: {
+              max: 24,
+              min: 24,
+            },
+          },
+        },
+        { idList }
+      )
+
+      filter._id = { $in: idList.map(id => ObjectId(id)) }
+    }
+
     if (!ctx.path.startsWith('/api/admin')) {
       filter.isPublished = true
     }
 
-     
+    console.log(filter)
 
     return ctx.model.Article.find(filter)
       .populate('commentCount')
@@ -142,7 +160,7 @@ class ArticleController extends Controller {
 
     return ctx.model.Article.updateOne(
       { _id: ctx.params.id },
-       
+
       {
         $set: { isPublished },
       }

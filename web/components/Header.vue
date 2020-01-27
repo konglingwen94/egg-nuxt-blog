@@ -10,6 +10,7 @@
         <el-menu-item index="/aboutus">关于</el-menu-item>
         <el-menu-item index="/archives">归档</el-menu-item>
         <el-menu-item index="/guestbooks">留言墙</el-menu-item>
+        <el-menu-item index="/collections">我的收藏</el-menu-item>
       </el-menu>
     </div>
     <div class="weather-container">
