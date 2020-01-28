@@ -2,6 +2,17 @@
 
 Nuxt.js（Web 端） + Egg.js（Api 服务） + Vue.js（管理后台）+ ElementUI（前端组件库）服务器渲染(SSR)搭建的个人博客系统
 
+## 本项目共三个子项目
+
+- admin/ （浏览器管理后台）
+- app/ （服务端接口项目）
+
+* web/ （浏览器客户端）
+
+::: Tips
+
+:::
+
 ## 启动项目
 
 ```bash
@@ -275,7 +286,7 @@ npm run docs:build
  │   │   ├── index.vue   // 文章首页列表
  │   │   └── _id.vue   //文章详情页
  │   ├── collections/ // 我的收藏
- │   │   ├── index.vue   
+ │   │   ├── index.vue
  │   ├── guestbooks   //留言墙
  │   │   └── index.vue   //
  │   └── index.vue   //网站首页
@@ -392,7 +403,7 @@ npm run docs:build
 - [文章评论](/docs/api/comment.md)
 - [留言管理](/docs/api/guestbook.md)
 
-如果我的项目对您有所帮助，您可以点右上角 "Star" 支持一下 感谢～～！
+如果我的项目对您有所帮助，您可以点右上角 "Star" 支持一下 感谢～～！:blush:
 
 ---
 

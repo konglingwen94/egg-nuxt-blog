@@ -1,10 +1,12 @@
+const gravatar = require('gravatar')
+
 module.exports = app => {
   const { Schema, model } = app.mongoose
   const { ObjectId } = Schema.Types
 
   const CommentSchema = new Schema(
     {
-      content: {
+      content: { 
         type: String,
         default: '',
       },
@@ -38,6 +40,10 @@ module.exports = app => {
 
   CommentSchema.post('save', function(next) {
     return this.populate('article').execPopulate(next)
+  })
+
+  CommentSchema.virtual('avatar').get(function() {
+    return gravatar.url(this.email)
   })
 
   return model('Comment', CommentSchema)

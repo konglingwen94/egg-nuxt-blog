@@ -45,35 +45,14 @@
       <!-- 评论 -->
       <section class="comment">
         <h4>评论</h4>
-        <el-form>
-          <el-form-item class="comment-textarea">
-            <el-input
-              ref="input"
-              type="textarea"
-              :cols="30"
-              placeholder="请输入评论内容"
-              :rows="7"
-              v-model="commentForm.content"
-              :autosize="{ minRows: 5, maxRows: 5}"
-              :maxlength="200"
-            ></el-input>
-          </el-form-item>
-          <el-form-item class="comment-nickname">
-            <el-input
-              :maxlength="10"
-              type="text"
-              v-model="commentForm.nickname"
-              placeholder="请输入您的昵称"
-            >
-              <el-button :loading="buttonLoading" @click="handleSave" slot="append" type="button">保存</el-button>
-            </el-input>
-          </el-form-item>
-        </el-form>
 
+        <comment @pass-validate="handleSave" ref="comment" :loading="buttonLoading"></comment>
+
+         
         <ul class="comment-board">
           <li class="comment-board-item" v-for="item in data.commentList" :key="item.id">
             <div class="icon-user-wrapper">
-              <el-avatar icon="el-icon-user-solid" size="medium"></el-avatar>
+              <el-avatar :src="item.avatar" icon="el-icon-user-solid" size="medium"></el-avatar>
             </div>
             <div class="comment-text">
               <span class="nickname">{{item.nickname}}</span>
@@ -153,11 +132,7 @@ export default {
   data() {
     return {
       buttonLoading: false,
-      showSideBar: true,
-      commentForm: {
-        content: '',
-        nickname: ''
-      }
+      
     }
   },
 
@@ -210,7 +185,7 @@ export default {
 
       ArticleService.starOne(id)
         .then(() => {
-          this.$message.success('感谢您的小星星')
+          this.$message.success('收藏成功')
           item.starCount++
           this.$store.commit('article/addStarId', id)
         })
@@ -235,30 +210,18 @@ export default {
         this.$message.error(err.message)
       })
     },
-    handleSave() {
-      const { content, nickname } = this.commentForm
-      if (!content) {
-        this.$message.warning('请输入评论内容!')
-        return
-      }
-
-      if (!nickname) {
-        this.$message.warning('请输入您的邮箱!')
-        return
-      }
-
-      const { id: article } = this.$route.params
-      const payload = { content, nickname }
+    handleSave(payload) {
+       
+      const articleID = this.$route.params.id
 
       this.buttonLoading = true
 
-      CommentService.createOne(article, payload)
+      CommentService.createOne(articleID, payload)
         .then(response => {
           this.data.commentList.unshift(response)
-          this.commentForm.content = ''
-          this.commentForm.nickname = ''
           this.$message.success('评论成功')
           this.buttonLoading = false
+          this.$refs.comment.clearField()
         })
         .catch(err => {
           this.$message.error(err.message)

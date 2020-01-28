@@ -1,6 +1,5 @@
 console.log(__filename)
 
-
 module.exports = app => {
   const { controller, middleware } = app
   const router = app.ApiRouter
@@ -9,13 +8,14 @@ module.exports = app => {
    * guestbooks
    *  */
 
-  router.get('/admin/guestbooks', controller.guestbook.queryList)
+  router.get('/admin/guestbook-messages', controller.guestbook.queryMessageList)
+  router.get('/admin/guestbook', controller.guestbook.queryGuestbookList)
 
   router.delete(
     'guestbook',
     '/admin/guestbooks/:id',
 
-    controller.guestbook.deleteOne
+    controller.guestbook.deleteOneGuestbook
   )
 
   router.delete(
@@ -36,5 +36,6 @@ module.exports = app => {
     controller.guestbook.responseToUser
   )
 
-  router.get('/guestbooks', controller.guestbook.queryList)
+  router.get('/guestbook-messages', controller.guestbook.queryMessageList)
+  router.get('/guestbooks', controller.guestbook.queryGuestbookList)
 }

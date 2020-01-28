@@ -2,7 +2,7 @@ import request from './request'
 
 export default {
   fetchList() {
-    return request.get('/guestbooks')
+    return request.get('/guestbook-messages')
   },
   deleteOne(id) {
     return request.delete(`/guestbooks/${id}`)

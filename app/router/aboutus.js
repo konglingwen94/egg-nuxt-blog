@@ -1,11 +1,7 @@
 const Inflector = require('inflected')
 
 Inflector.inflections('en', function(inflect) {
- 
-   
-  inflect.singular('aboutus', 'Aboutus')  
-
-  
+  inflect.singular('aboutus', 'Aboutus')
 })
 
 module.exports = app => {
@@ -29,8 +25,7 @@ module.exports = app => {
       routerPathArr[routerPathArr.indexOf(':id') - 1]
     )
 
-     
-    const resultModel = ctx.model[moduleName]
+    const resultModel = mongoose.models[moduleName]
 
     if (!resultModel) {
       return next()

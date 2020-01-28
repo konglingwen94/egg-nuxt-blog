@@ -52,6 +52,7 @@
     "egg-scripts": "^2.11.0",
     "egg-validate": "^2.0.2",
     "element-ui": "^2.11.1",
+    "gravatar": "^1.8.0",
     "inflected": "^2.0.4",
     "jsonwebtoken": "^8.5.1",
     "koa-compress": "^3.0.0",

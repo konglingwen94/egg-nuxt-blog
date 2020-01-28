@@ -27,6 +27,9 @@
             v-model="form.content"
           ></el-input>
         </el-form-item>
+        <el-form-item required>
+          <el-input v-model="form.email" clearable placeholder="请输入邮箱"></el-input>
+        </el-form-item>
         <el-form-item>
           <el-input
             clearable
@@ -55,10 +58,10 @@
             <div class>
               <el-badge
                 type="warning"
-                :hidden="!item.dialogues.length"
-                :value="item.dialogues.length"
+                :hidden="item.dialogues &&!item.dialogues.length"
+                :value="item.dialogues &&item.dialogues.length"
               >
-                <el-avatar size="medium" icon="el-icon-user-solid"></el-avatar>
+                <el-avatar :src="item.avatar" size="medium" icon="el-icon-user-solid"></el-avatar>
               </el-badge>
               <span class="nickname">{{item.nickname}}</span>
               <time class="timer">{{new Date(item.createdAt).toLocaleString()}}</time>
@@ -72,14 +75,14 @@
                 </div>
               </dt>
               <dd v-for="response in item.dialogues" :key="response.id">
-                <el-avatar icon="el-icon-user-solid" size="small"></el-avatar>
+                <el-avatar icon="el-icon-user-solid" size="small" :src="response.avatar"></el-avatar>
                 <div class="nickname-wrapper">
                   <span class="nickname" :title="response.nickname">{{response.nickname}}</span>&nbsp;:&nbsp;
                 </div>
                 <div class="content-wrapper">
                   <span>{{response.content}}</span>
                   <span
-                    v-if="response.responseTo && !response.responseTo.dialogues.length"
+                    v-if="response.responseTo && response.responseTo.dialogues&&!response.responseTo.dialogues.length"
                   >//@{{response.responseTo.nickname}} : {{response.responseTo.content}}</span>
                   <div class="bottom-operation">
                     <div class="left">
@@ -112,7 +115,11 @@
     </div>
 
     <div @click="$refs.input.focus()" class="floating-action-guestbook">
-      <el-badge type="info" :value="dataList.length" :hidden="dataList.length===0">
+      <el-badge
+        type="info"
+        :value="dataList && dataList.length"
+        :hidden="dataList && dataList.length===0"
+      >
         <div class="icon-wrapper">
           <i class="el-icon-s-comment"></i>
         </div>
@@ -189,6 +196,7 @@ export default {
       this.guestbookID = ''
       this.index = -1
       this.form.kind = ''
+      this.form.email = ''
     },
     handleResponse(item, index, response) {
       window.scrollTo(0, 0)
@@ -211,7 +219,7 @@ export default {
       this.$refs.input.focus()
     },
     handleSend() {
-      const { nickname, content, responseTo, kind } = this.form
+      const { email, nickname, content, responseTo, kind } = this.form
 
       if (!content) {
         this.$message.warning(
@@ -219,12 +227,18 @@ export default {
         )
         return
       }
+
+      if (!email) {
+        this.$message.warning('请输入邮箱')
+        return
+      }
+
       if (!nickname) {
         this.$message.warning('请输入您的昵称!')
         return
       }
 
-      const payload = { nickname, content }
+      const payload = { nickname, content, email }
 
       payload.responseTo = this.responseTo.id
       if (this.form.kind) {
@@ -252,6 +266,7 @@ export default {
           this.form.nickname = ''
           this.form.placeholder = '欢迎留言!'
           this.form.content = ''
+          this.form.email = ''
           this.action = ''
           this.responseTo = {}
           this.index = -1

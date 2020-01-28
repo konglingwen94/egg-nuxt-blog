@@ -180,8 +180,7 @@ module.exports = {
       min: 1,
     },
     email: {
-      type: 'string?',
-      format: 'email',
+      type: 'email',
     },
     nickname: {
       type: 'string',
@@ -189,15 +188,17 @@ module.exports = {
     },
   },
   guestbook: {
-     
     responseTo: {
       type: 'string',
-      max:24,
-      min:24
+      max: 24,
+      min: 24,
     },
     content: {
       type: 'string',
       min: 1,
+    },
+    email: {
+      type: 'email',
     },
     nickname: {
       type: 'string',
