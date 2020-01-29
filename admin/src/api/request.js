@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Loading, Message } from 'element-ui'
-import router from '@/router.js'
+// import router from '@/router.js'
 
 let loading
 
@@ -37,7 +37,7 @@ instance.interceptors.response.use(
   response => {
     loading.close()
     const requestMethod = response.config.method
-    console.log(response)
+    
     if (requestMethod === 'patch' || requestMethod === 'delete') {
       if (requestMethod === 'patch') {
         if (response.data.ok === 1) {
@@ -66,7 +66,7 @@ instance.interceptors.response.use(
   err => {
     loading.close()
     if (err.response.status === 401) {
-      router.push('/auth/login')
+      // router.push('/auth/login')
       localStorage.removeItem('adminInfo')
       localStorage.removeItem('accessToken')
       return

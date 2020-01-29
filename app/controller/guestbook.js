@@ -58,6 +58,12 @@ class GuestbookController extends Controller {
 
     return guestbookResult
   }
+
+async deleteOneMessage(){
+  const {id}=this.ctx.params
+  return mongoose.models.Message.
+}
+
   async deleteOneGuestbook() {
     const { id } = this.ctx.params
     const GuestbookModel = this.ctx.model.Message.discriminators.Guestbook
@@ -109,6 +115,7 @@ class GuestbookController extends Controller {
       }
     )
   }
+
 }
 
 module.exports = GuestbookController

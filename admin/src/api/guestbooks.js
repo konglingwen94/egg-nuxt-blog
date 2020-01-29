@@ -5,7 +5,7 @@ export default {
     return request.get('/guestbook-messages')
   },
   deleteOne(id) {
-    return request.delete(`/guestbooks/${id}`)
+    return request.delete(`/messages/${id}`)
   },
   deleteOneResponse(id) {
     return request.delete(`/guestbooks/${id}`)

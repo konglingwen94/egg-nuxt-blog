@@ -9,7 +9,7 @@ module.exports = app => {
    *  */
 
   router.get('/admin/guestbook-messages', controller.guestbook.queryMessageList)
-  router.get('/admin/guestbook', controller.guestbook.queryGuestbookList)
+  router.get('/admin/guestbooks', controller.guestbook.queryGuestbookList)
 
   router.delete(
     'guestbook',
