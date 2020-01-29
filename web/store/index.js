@@ -1,9 +1,10 @@
 import _ from 'lodash'
 import AboutusService from '@/services/aboutus'
-
+import defaultAboutusData from '../../config/defaultAboutusData'
+ 
 export const state = () => ({
   guestbookDiggIdList: [],
-  aboutus: {},
+  aboutus: defaultAboutusData,
 })
 
 export const mutations = {

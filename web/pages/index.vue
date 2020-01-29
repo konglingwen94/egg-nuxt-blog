@@ -1,10 +1,10 @@
 <template>
   <div class="home">
     <el-carousel
-      :interval="carousel.configOptions.interval"
-      :loop="carousel.configOptions.loop"
+      :interval="carousel.configOptions && carousel.configOptions.interval"
+      :loop="carousel.configOptions&&carousel.configOptions.loop"
       height="380px"
-      :autoplay="carousel.configOptions.autoplay"
+      :autoplay="carousel.configOptions&&carousel.configOptions.autoplay"
     >
       <el-carousel-item :label="index+1" v-for="(item,index) in carousel.data" :key="item.id">
         <nuxt-link
@@ -35,7 +35,7 @@
 import ArticleService from '@/services/articles'
 export default {
   layout: 'Public',
-  async asyncData({ req ,query}) {
+  async asyncData({ req, query }) {
     console.log(query)
     try {
       var [articleList, carousel = {}] = await Promise.all([

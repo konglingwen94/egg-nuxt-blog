@@ -13,9 +13,9 @@ module.exports = app => {
 
   router.delete(
     'guestbook',
-    '/admin/guestbooks/:id',
+    '/admin/messages/:id',
 
-    controller.guestbook.deleteOneGuestbook
+    controller.guestbook.deleteOneMessage
   )
 
   router.delete(
@@ -25,14 +25,14 @@ module.exports = app => {
     controller.guestbook.deleteMany
   )
 
-  router.post('/guestbooks/:id/digg', controller.guestbook.diggGuestbook)
+  router.post('/messages/:id/digg', controller.guestbook.diggGuestbook)
 
-  router.post('/guestbooks', controller.guestbook.createOne)
+  router.post('/messages', controller.guestbook.createOne)  
 
   // 回复评论
   router.post(
     'guestbook',
-    '/guestbooks/:id/dialogues',
+    '/messages/:id/dialogues',
     controller.guestbook.responseToUser
   )
 

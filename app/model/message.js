@@ -29,32 +29,21 @@ module.exports = app => {
     return gravatar.url(this.email)
   })
 
+  MessageSchema.virtual('dialogues', {
+    ref: 'Message',
+    localField: '_id',
+    foreignField: 'parentID',
+  }) 
+
   const MessageModel = model('Message', MessageSchema)
-
-  const GuestbookSchema = new Schema({
-    dialogues: [{ type: ObjectId, ref: 'Response' }],
-  })
-
-  GuestbookSchema.post('findOneAndDelete', function(guestbookDoc) {
-    console.log(__filename, 'post-findOneAndDelete', arguments, this)
-    if (guestbookDoc && guestbookDoc.dialogues) {
-      return ResponseModel.deleteMany({ _id: guestbookDoc.dialogues })
-    }
-
-    // return doc.constructor.deleteMany({ _id: doc.dialogues })
-  })
-
-  const GuestbookModel = MessageModel.discriminator(
-    'Guestbook',
-    GuestbookSchema
-  )
 
   const ResponseModel = MessageModel.discriminator(
     'Response',
     new Schema({
+      parentID: { type: ObjectId, ref: 'Message' },
       responseTo: {
         type: ObjectId,
-        ref: 'Message',
+        ref: 'Response',
       },
     })
   )

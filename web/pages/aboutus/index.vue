@@ -11,13 +11,13 @@
             <template v-slot:title>
               <span class="collapse-item-title">个人简介</span>
             </template>
-            <div class="profile-item">{{profile.personal.description}}</div>
+            <div class="profile-item">{{profile&&profile.personal.description}}</div>
           </el-collapse-item>
           <el-collapse-item :name="2">
             <template v-slot:title>
               <span class="collapse-item-title">前端技术</span>
             </template>
-            <div class="profile-item">{{profile.technology.frontend}}</div>
+            <div class="profile-item">{{profile&&profile.technology.frontend}}</div>
           </el-collapse-item>
           <el-collapse-item :name="3">
             <template v-slot:title>

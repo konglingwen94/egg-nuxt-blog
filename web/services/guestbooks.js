@@ -5,12 +5,12 @@ export default {
     return request.get('/guestbooks')
   },
   createOne(params) {
-    return request.post('/guestbooks', params)
+    return request.post('/messages', params)
   },
   responseToUser(id, params) {
-    return request.post(`/guestbooks/${id}/dialogues`, params)
+    return request.post(`/messages/${id}/dialogues`, params)
   },
   diggGuestbook(id) {
-    return request.post(`/guestbooks/${id}/digg`)
+    return request.post(`/messages/${id}/digg`)
   },
 }

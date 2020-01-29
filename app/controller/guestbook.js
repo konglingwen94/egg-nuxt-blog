@@ -7,14 +7,16 @@ const _ = require('lodash')
 class GuestbookController extends Controller {
   async queryMessageList() {
     const { ctx } = this
-
     return ctx.model.Message.find()
   }
   async queryGuestbookList() {
     const { ctx } = this
-    return ctx.model.Message.discriminators.Guestbook.find().populate({
+    return ctx.model.Message.find({ parentID: { $exists: false } }).populate({
       path: 'dialogues',
-      populate: 'responseTo',
+      populate: {
+        path: 'responseTo',
+        // match:{}
+      },
     })
   }
   async createOne() {
@@ -25,44 +27,27 @@ class GuestbookController extends Controller {
 
     const payload = _.pick(ctx.request.body, requiredFields)
 
-    return ctx.model.Message.discriminators.Guestbook.create(payload)
+    return ctx.model.Message.create(payload)
   }
 
   async responseToUser() {
     const { ctx } = this
 
-    const guestbookID = ctx.params.id
+    const MessageID = ctx.params.id
 
     const payload = ctx.state.body
 
-    let guestbookResult = await ctx.model.Message.discriminators.Guestbook.findById(
-      guestbookID
-    )
+    // let parentMessage = await ctx.model.Message.findById(MessageID)
 
-    const responseToIds = guestbookResult.dialogues.concat(guestbookResult._id)
+    const doc = await mongoose.models.Response.create(payload)
 
-    if (!responseToIds.includes(ObjectId(payload.responseTo))) {
-      ctx.throw('404', `Invalid ResponseTo:${payload.responseTo}`)
-    }
-
-    const doc = await ctx.model.Message.discriminators.Response.create(payload)
-
-    guestbookResult.dialogues.addToSet(doc.id)
-
-    guestbookResult = (await guestbookResult.save())
-      .populate({
-        path: 'dialogues',
-        populate: 'responseTo',
-      })
-      .execPopulate()
-
-    return guestbookResult
+    return doc
   }
 
-async deleteOneMessage(){
-  const {id}=this.ctx.params
-  return mongoose.models.Message.
-}
+  async deleteOneMessage() {
+    const { id } = this.ctx.params
+    return mongoose.models.Message.deleteOne({ _id: id })
+  }
 
   async deleteOneGuestbook() {
     const { id } = this.ctx.params
@@ -115,7 +100,6 @@ async deleteOneMessage(){
       }
     )
   }
-
 }
 
 module.exports = GuestbookController
