@@ -1,5 +1,5 @@
 <template>
-  <div class="comment" v-show="show">
+  <div class="comment" v-show="visible">
     <div class="comment-wrapper">
       <div class="comment-content">
         <el-form :model="form" ref="form">
@@ -21,7 +21,12 @@
 
             <el-form-item prop="nickname">
               <el-input v-model="form.nickname" placeholder="请输入昵称">
-                <el-button slot="append" :loading="loading" type="primary" @click="submit">确定</el-button>
+                <el-button
+                  slot="append"
+                  :loading="processStatus==='loading'"
+                  type="primary"
+                  @click="submit"
+                >{{editorTitle}}</el-button>
               </el-input>
             </el-form-item>
           </div>
@@ -31,82 +36,49 @@
   </div>
 </template>
 <script>
-const rules = {
-  content: [{ required: true, message: '不能为空', trigger: 'blur' }],
-  email: [
-    { required: true, message: '邮箱不能为空', trigger: 'blur' },
-    { type: 'email', trigger: 'blur', message: '请输入合法的邮箱地址' }
-  ],
-  nickname: [{ required: true, message: '昵称不能为空', trigger: 'blur' }]
-}
+import extendOption from './extendOption.js'
+
 export default {
-  name: 'Comment',
+  extends: extendOption,
   data() {
     return {
-      show: false,
-      rules: Object.freeze(rules),
-      loading: false,
-      form: {
-        content: '',
-        nickname: '',
-        email: ''
-      }
+      loading: false
     }
   },
-  props: {
-    inline: {
-      type: Boolean,
-      default: false
+
+  watch: {
+     
+  },
+
+  computed: {
+    processStatusText() {
+      return mapStatus[this.processStatus]
     },
-    committing: {
-      type: Boolean,
-      default: false
-    }
+     
   },
   methods: {
-    showForm() {
-      this.show = true
-      return this
-    },
-    hideForm() {
-      this.show = false
-      return this
-    },
-    clearField() {
-      this.form.content = ''
-      this.form.email = ''
-      this.form.nickname = ''
-    },
-    focus() {
-      this.$refs.contentInput.focus()
-    },
-    reset() {
-      // this.clearField()
-      this.loading = false
-      this.$refs.form.resetFields()
-    },
-
-    async submit() {
+    validate() {
       const { email, content, nickname } = this.form
 
-      if (!content) {
+      if (!content && this.requiredItemFields.includes('content')) {
         return this.$message.warning('请输入内容')
       }
 
-      if (!email) {
+      if (!email && this.requiredItemFields.includes('email')) {
         return this.$message.warning('请输入邮箱')
       }
 
-      if (!nickname) {
+      if (!nickname && this.requiredItemFields.includes('nickname')) {
         return this.$message.warning('请输入昵称')
       }
-
-      this.$emit('pass-validate', this.form)
+      const payload = { content, nickname, email }
+      this.$emit('success-validate', payload)
+      return { content, email, nickname }
     }
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .bottom {
   display: flex;
   /* justify-content:space-around; */
