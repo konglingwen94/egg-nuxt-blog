@@ -58,6 +58,7 @@
     "koa-compress": "^3.0.0",
     "koa-multer": "^1.0.2",
     "koa2-connect-history-api-fallback": "^0.1.2",
+    "message-tree": "^0.1.1",
     "mongoose": "^5.7.1",
     "normalize.css": "^8.0.1",
     "nuxt": "^2.9.2",

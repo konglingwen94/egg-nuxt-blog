@@ -53,7 +53,7 @@ module.exports = {
     { src: '@/plugins/global-components.js' },
     { src: '@/plugins/element-ui',   },
     { src: '@/plugins/init-store', ssr: false },
-    { src: '@/plugins/vue-weather.js', ssr: false },
+    { src: '@/plugins/lib.js', ssr: false },
   ],
   /*
    ** Nuxt.js dev-modules
