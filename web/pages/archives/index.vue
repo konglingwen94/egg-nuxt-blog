@@ -43,7 +43,7 @@ import CategoryService from '@/services/categories'
 import TagService from '@/services/tags'
 
 export default {
-  layout: 'Public',
+  layout: 'public',
   methods: {
     jumpToListByCategory(item) {
       if (!item.articlePublishedCount) return

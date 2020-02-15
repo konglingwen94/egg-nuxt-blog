@@ -8,7 +8,7 @@
 <script>
 import ArticleService from '@/services/articles'
 export default {
-  layout: 'Public',
+  layout: 'public',
   async created() {
     const idList = this.$store.state.article.starIdList
     // console.log(store)

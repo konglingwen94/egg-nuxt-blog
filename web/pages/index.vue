@@ -34,7 +34,7 @@
 <script>
 import ArticleService from '@/services/articles'
 export default {
-  layout: 'Public',
+  layout: 'public',
   async asyncData({ req, query }) {
     console.log(query)
     try {

@@ -18,7 +18,7 @@ import TagService from '@/services/tags'
 import CategoryService from '@/services/categories'
 import ArticleService from '@/services/articles'
 export default {
-  layout: 'Public',
+  layout: 'public',
   asyncData(context) {
     // console.log('validate', context)
     return context.payload

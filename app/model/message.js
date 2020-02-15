@@ -18,35 +18,19 @@ module.exports = app => {
         type: String,
         default: '',
       },
-      diggCount: {
+      thumbupCount: {
         type: Number,
         default: 0,
       },
+      parentID: ObjectId,
     },
-    { timestamps: true }
+    { timestamps: true }   
   )
   MessageSchema.virtual('avatar').get(function() {
     return gravatar.url(this.email)
   })
 
-  MessageSchema.virtual('dialogues', {
-    ref: 'Message',
-    localField: '_id',
-    foreignField: 'parentID',
-  }) 
-
   const MessageModel = model('Message', MessageSchema)
-
-  const ResponseModel = MessageModel.discriminator(
-    'Response',
-    new Schema({
-      parentID: { type: ObjectId, ref: 'Message' },
-      responseTo: {
-        type: ObjectId,
-        ref: 'Response',
-      },
-    })
-  )
 
   return MessageModel
 }

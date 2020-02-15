@@ -2,7 +2,7 @@ import request from './request'
 
 export default {
   fetchList() {
-    return request.get('/guestbooks')
+    return request.get('/messages')
   },
   createOne(params) {
     return request.post('/messages', params)

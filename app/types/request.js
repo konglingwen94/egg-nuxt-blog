@@ -187,17 +187,13 @@ module.exports = {
       min: 1,
     },
   },
-  guestbook: {
+  message: {
     parentID: {
       type: 'string',
       max: 24,
       min: 24,
     },
-    responseTo: {
-      type: 'string',
-      max: 24,
-      min: 24,
-    },
+    
     content: {
       type: 'string',
       min: 1,

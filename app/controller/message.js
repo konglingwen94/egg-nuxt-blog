@@ -1,29 +1,20 @@
 const { Controller } = require('egg')
 const mongoose = require('mongoose')
 const { ObjectId } = mongoose.Types
-const guestbookRule = require('../types/request').guestbook
+const messageRule = require('../types/request').message
 const _ = require('lodash')
 
-class GuestbookController extends Controller {
-  async queryMessageList() {
+class MessageController extends Controller {
+  async queryList() {
     const { ctx } = this
     return ctx.model.Message.find()
   }
-  async queryGuestbookList() {
-    const { ctx } = this
-    return ctx.model.Message.find({ parentID: { $exists: false } }).populate({
-      path: 'dialogues',
-      populate: {
-        path: 'responseTo',
-        // match:{}
-      },
-    })
-  }
+
   async createOne() {
     const { ctx } = this
 
     const requiredFields = ['email', 'content', 'nickname']
-    ctx.validate(_.pick(guestbookRule, requiredFields), ctx.request.body)
+    ctx.validate(_.pick(messageRule, requiredFields), ctx.request.body)
 
     const payload = _.pick(ctx.request.body, requiredFields)
 
@@ -102,4 +93,4 @@ class GuestbookController extends Controller {
   }
 }
 
-module.exports = GuestbookController
+module.exports = MessageController
