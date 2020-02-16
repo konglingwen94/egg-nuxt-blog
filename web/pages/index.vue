@@ -35,8 +35,24 @@
 import ArticleService from '@/services/articles'
 export default {
   layout: 'public',
+  data(){
+    return {
+      articleList:[],
+      carousel:{}
+    }
+  },
+  async mounted(){
+      var [articleList, carousel = {}] = await Promise.all([
+        // req.service.article.queryList()
+        ArticleService.fetchList(),
+        ArticleService.fetchCarouselList()
+      ])
+
+      console.log('mounted',articleList)
+    // this.articleList=articleList
+    // this.carousel=this.carousel
+  },
   async asyncData({ req, query }) {
-    console.log(query)
     try {
       var [articleList, carousel = {}] = await Promise.all([
         // req.service.article.queryList()

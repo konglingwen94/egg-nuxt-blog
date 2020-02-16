@@ -19,7 +19,7 @@ export default {}
 
 <style lang="less" scoped>
 main {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: auto;
 }
 </style>

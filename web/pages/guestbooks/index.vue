@@ -1,6 +1,6 @@
 <template>
   <div class="message">
-    message
+    
     <client-only>
       <message-tree :data-list="renderData"></message-tree>
     </client-only>

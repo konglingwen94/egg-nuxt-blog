@@ -23,14 +23,14 @@
           <div v-html="data.content && data.content.html"></div>
         </div>
       </section>
-      <div class="tag-box">
+      <div class="tag-box" >
         <i class="el-icon-collection-tag"></i>
         <nuxt-link
           :to="{name:'articles',query:{tagID:item.id}}"
           v-for="(item,key) in data.tagList"
           :key="key"
         >
-          <el-link class="tag-item">
+          <el-link  >
             {{item.name}}
             <i class="el-icon-view"></i>
           </el-link>
@@ -104,13 +104,20 @@ import ArticleService from '@/services/articles'
 import CommentService from '@/services/comments'
 
 export default {
-  layout: 'Article',
+  layout: 'article',
   name: 'ArticleDetail',
   head() {
     const { title } = this.data
 
     return {
       title
+    }
+  },
+  data(){
+    return {
+      data:{
+        // tagList:[{},{}]
+      }
     }
   },
   async asyncData({ params, query }) {

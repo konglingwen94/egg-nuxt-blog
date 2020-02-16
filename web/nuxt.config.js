@@ -51,9 +51,9 @@ module.exports = {
    */
   plugins: [
     { src: '@/plugins/global-components.js' },
-    { src: '@/plugins/element-ui',   },
+    { src: '@/plugins/element-ui', ssr:true  },
     { src: '@/plugins/init-store', ssr: false },
-    { src: '@/plugins/lib.js', ssr: false },
+    { src: '@/plugins/lib.js', ssr: false }, 
   ],
   /*
    ** Nuxt.js dev-modules
