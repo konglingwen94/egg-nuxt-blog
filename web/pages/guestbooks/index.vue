@@ -1,8 +1,22 @@
 <template>
   <div class="message">
-    
+    <message-editor
+      @on-focus="$refs.editor.hide()"
+      @on-submit="submit('comment',$event)"
+      @on-invalid="invalid('comment',$event)"
+      ref="commentEditor"
+    ></message-editor>
     <client-only>
-      <message-tree :data-list="renderData"></message-tree>
+      <message-tree @on-thumbup="thumbup($event.id)" @on-reply="reply" :data-list="renderData">
+        <message-editor
+          @on-focus="$refs.commentEditor.clearValidate()"
+          @on-submit="submit('reply',$event)"
+          @on-invalid="invalid('reply',$event)"
+          type="reply"
+          slot="editor"
+          ref="editor"
+        ></message-editor>
+      </message-tree>
     </client-only>
   </div>
 </template>
@@ -18,15 +32,16 @@ export default {
   },
   computed: {
     renderData() {
-      const rootList = this.dataList.filter(item => !item.parentID)
-      const dataList = this.dataList
+      const dataList = JSON.parse(JSON.stringify(this.dataList))
+
+      const rootList = dataList.filter(item => !item.parentID)
       function findChildren(parentList) {
-        parentList = parentList.map(item => {
+        parentList.forEach(item => {
           item.children = dataList.filter(sub => sub.parentID === item.id)
 
-          findChildren(item.children)
+          findChildren(item.children || [])
 
-          return item
+          // return item
         })
 
         return parentList
@@ -39,6 +54,60 @@ export default {
     MessageService.fetchList().then(response => {
       this.dataList = response
     })
+  },
+  methods: {
+    invalid(type) {
+      this.type = type
+      this.collapseEditor()
+    },
+    collapseEditor() {
+      console.log(this.type)
+      if (this.type === 'comment') {
+        this.$refs.editor.hide()
+        console.log('comment-type')
+      } else {
+        this.$refs.commentEditor.clearValidate()
+      }
+    },
+    reply(payload) {
+      // console.log(payload)
+      this.$refs.editor.show()
+      this.replyParentID = payload.id
+      this.$refs.editor.clearValidate()
+      this.$refs.editor.focus('content')
+    },
+    thumbup(id) {
+      console.log('thumbup', id)
+
+
+      if (this.$store.state.messageIdListWithThumbup.includes(id) || this.thumbupLoading) {
+        return
+      }
+      this.thumbupLoading = true
+
+      MessageService.thumbup(id).then(() => {
+        this.$store.commit('pushDiggId', id)
+        this.dataList.find(item => item.id === id).thumbupCount++
+        this.thumbupLoading=false
+      })
+    },
+    submit(type, payload) {
+      this.type = type
+
+      const action =
+        type === 'comment'
+          ? MessageService.createOne(payload)
+          : MessageService.replyOne(this.replyParentID, payload)
+      // console.log(payload)
+
+      action
+        .then(response => {
+          this.dataList.unshift(response)
+        })
+        .catch(err => {
+          this.$message.error(err.message)
+        })
+    }
   }
 }
 </script>

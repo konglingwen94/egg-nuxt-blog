@@ -18,10 +18,8 @@
             <el-input
               ref="nickname"
               @blur="triggerBlur($event,'nickname')"
-            @focus="triggerFocus($event,'nickname')"
-
+              @focus="triggerFocus($event,'nickname')"
               v-model="form.nickname"
-
               placeholder="请输入昵称"
               clearable
             ></el-input>
@@ -65,8 +63,12 @@ export default {
       rules
     }
   },
-
-  props: {
+  watch: {
+    visible() {
+      this.clearValidate()
+    }
+  },
+   props: {
     type: {
       type: String,
       default: 'comment'
@@ -95,24 +97,20 @@ export default {
       this.form.email = ''
     },
     clearValidate(prop) {
-      if(prop){
-
+      if (prop) {
         this.$refs.form.clearValidate(prop)
-      }else{
-        
+      } else {
         this.$refs.form.clearValidate()
       }
     },
-    triggerFocus(...args){
-      this.$emit('on-focus',...args)
+    triggerFocus(...args) {
+      this.$emit('on-focus', ...args)
     },
-    triggerBlur(e,prop){
+    triggerBlur(e, prop) {
       // console.log(e.target)
-      this.$emit('on-blur',e,prop)
-        this.clearValidate(prop)
-      setTimeout(()=>{
-
-      })
+      this.$emit('on-blur', e, prop)
+      this.clearValidate(prop)
+      setTimeout(() => {})
     },
     focus(prop) {
       this.$nextTick(() => {
@@ -123,6 +121,7 @@ export default {
       try {
         var validation = await this.$refs.form.validate()
       } catch (error) {
+        this.$emit('on-invalid',error)
         return
       }
 
@@ -132,7 +131,7 @@ export default {
       }
 
       this.$emit(
-        'commit-message',
+        'on-submit',
         _.pick(this.form, ['content', 'nickname', 'email'])
       )
     }

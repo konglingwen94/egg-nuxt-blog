@@ -3,7 +3,7 @@ import AboutusService from '@/services/aboutus'
 import defaultAboutusData from '../../config/defaultAboutusData'
  
 export const state = () => ({
-  guestbookDiggIdList: [],
+  messageIdListWithThumbup: [],
   aboutus: defaultAboutusData,
 })
 
@@ -13,15 +13,16 @@ export const mutations = {
   },
 
   pushDiggId(state, id) {
-    if (!state.guestbookDiggIdList.includes(id) && id) {
-      state.guestbookDiggIdList.push(id)
+    console.log('push id',id)
+    if (!state.messageIdListWithThumbup.includes(id) && id) {
+      state.messageIdListWithThumbup.push(id)
     }
   },
   pullDiggId(state, id) {
-    const index = state.guestbookDiggIdList.indexOf(id)
+    const index = state.messageIdListWithThumbup.indexOf(id)
 
     if (index > -1) {
-      state.guestbookDiggIdList.splice(index, 1)
+      state.messageIdListWithThumbup.splice(index, 1)
     }
   },
 }

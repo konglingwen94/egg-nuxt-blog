@@ -154,7 +154,7 @@ export default {
   methods: {
     async onReply(){
 await this.$nextTick()
-console.log(this.$refs.replyEditor)
+// console.log(this.$refs.replyEditor)
       this.$refs.replyEditor.show()
       this.$refs.replyEditor.resetFields()
       this.$refs.replyEditor.clearValidate()
