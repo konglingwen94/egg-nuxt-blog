@@ -1,7 +1,7 @@
 const gravatar = require('gravatar')
 
 module.exports = app => {
-  const { Schema, model } = app.mongoose
+  const { Schema, model ,models} = app.mongoose
   const { ObjectId } = Schema.Types
 
   const MessageSchema = new Schema(
@@ -24,10 +24,26 @@ module.exports = app => {
       },
       parentID: ObjectId,
     },
-    { timestamps: true }   
+    { timestamps: true }
   )
   MessageSchema.virtual('avatar').get(function() {
     return gravatar.url(this.email)
+  })
+
+  MessageSchema.post('findOneAndDelete', async function(payload) {
+ 
+
+    if (!payload || !payload.id) {
+      return
+    }
+
+    const children =await models.Message.find({ parentID: payload.id })
+
+    return Promise.all(
+      children.map(item => {
+        return models.Message.findByIdAndDelete(item.id)
+      })
+    )
   })
 
   const MessageModel = model('Message', MessageSchema)

@@ -15,7 +15,7 @@
         <el-menu-item index="/articles"><i class="el-icon-s-data"></i> 文章列表</el-menu-item>
       </el-submenu>
       <el-menu-item index="/comments"> <i class="el-icon-s-comment"></i> 文章评论</el-menu-item>
-      <el-menu-item index="/guestbooks"><i class="el-icon-message"></i> 留言墙</el-menu-item>
+      <el-menu-item index="/messages"><i class="el-icon-message"></i> 留言墙</el-menu-item>
       <el-submenu index="/settings">
         <template slot="title"><i class="el-icon-setting"></i> 安全</template>
         <el-menu-item index="/settings/security"> <i class="el-icon-s-custom"></i> 账户设置</el-menu-item>

@@ -1,7 +1,7 @@
 const { Controller } = require('egg')
 const mongoose = require('mongoose')
 const { ObjectId } = mongoose.Types
- 
+
 const _ = require('lodash')
 
 class MessageController extends Controller {
@@ -13,7 +13,6 @@ class MessageController extends Controller {
   async createOne() {
     const { ctx } = this
 
-    
     const payload = ctx.state.body
 
     return ctx.model.Message.create(payload)
@@ -28,26 +27,17 @@ class MessageController extends Controller {
 
     // let parentMessage = await ctx.model.Message.findById(MessageID)
 
-    const doc = ctx.model.Message.create({...payload,parentID})
+    const doc = ctx.model.Message.create({ ...payload, parentID })
 
     return doc
   }
 
   async deleteOneMessage() {
     const { id } = this.ctx.params
-    return mongoose.models.Message.deleteOne({ _id: id })
+     
+    return this.ctx.model.Message.findByIdAndDelete(id)
   }
 
-  async deleteOneGuestbook() {
-    const { id } = this.ctx.params
-    const GuestbookModel = this.ctx.model.Message.discriminators.Guestbook
-    const result = await GuestbookModel.findByIdAndDelete(id)
-    if (result) {
-      return { n: 1, ok: 1, deletedCount: 1 }
-    }
-
-    return { ok: 0 }
-  }
   async deleteMany() {
     const { ctx } = this
 
@@ -66,7 +56,7 @@ class MessageController extends Controller {
     )
 
     const result = await Promise.all(
-      idList.map(id => mongoose.models.Guestbook.findByIdAndDelete(id))
+      idList.map(id => ctx.model.Message.findByIdAndDelete(id))
     )
 
     if (result.length) {

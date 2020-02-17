@@ -13,7 +13,7 @@ const ArticleList = () => import('@/views/Article/List.vue')
 const ArticleEditor = () => import('@/views/Article/Editor.vue')
 const Category = () => import('@/views/Category/List')
 const Comment = () => import('@/views/Comment/List')
-const Guestbook = () => import('@/views/Guestbook/List')
+const Message = () => import('@/views/Message/List')
 const Tag = () => import('@/views/Tag')
 // const Aboutus = () => import('@/views/Aboutus')
 const Platform = () => import('@/views/Platform')
@@ -133,9 +133,9 @@ const router = new Router({
           },
         },
         {
-          name: 'guestbooks',
-          path: 'guestbooks',
-          component: Guestbook,
+          name: 'messages',
+          path: 'messages',
+          component: Message,
           meta: {
             title: '留言墙',
           },
