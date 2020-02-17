@@ -1,6 +1,6 @@
 const { Controller } = require('egg')
 const _ = require('lodash')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 class AccountController extends Controller {

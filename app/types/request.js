@@ -188,12 +188,7 @@ module.exports = {
     },
   },
   message: {
-    parentID: {
-      type: 'string',
-      max: 24,
-      min: 24,
-    },
-    
+   
     content: {
       type: 'string',
       min: 1,

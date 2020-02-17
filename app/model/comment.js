@@ -1,8 +1,10 @@
 const gravatar = require('gravatar')
 
 module.exports = app => {
-  const { Schema, model } = app.mongoose
+  const { Schema, model,modelSchemas } = app.mongoose
   const { ObjectId } = Schema.Types
+ 
+// const CommentSchema=modelSchemas.Message.clone()
 
   const CommentSchema = new Schema(
     {
@@ -25,6 +27,7 @@ module.exports = app => {
         type: Number,
         default: 0,
       },
+      parentID:ObjectId
     },
     {
       timestamps: true,

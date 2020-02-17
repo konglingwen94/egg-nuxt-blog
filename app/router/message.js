@@ -26,12 +26,12 @@ module.exports = app => {
 
   router.post('/messages/:id/digg', controller.message.diggGuestbook)
 
-  router.post('/messages', controller.message.createOne)  
+  router.post('message','/messages', controller.message.createOne)  
 
   // 回复评论
   router.post(
     'message',
-    '/messages/:id/dialogues',
+    '/messages/:id/reply',
     controller.message.responseToUser
   )
 

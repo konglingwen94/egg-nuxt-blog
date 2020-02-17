@@ -1,22 +1,20 @@
 const { Controller } = require('egg')
 const mongoose = require('mongoose')
 const { ObjectId } = mongoose.Types
-const messageRule = require('../types/request').message
+ 
 const _ = require('lodash')
 
 class MessageController extends Controller {
   async queryList() {
     const { ctx } = this
-    return ctx.model.Message.find()
+    return ctx.model.Message.find().sort('-createdAt')
   }
 
   async createOne() {
     const { ctx } = this
 
-    const requiredFields = ['email', 'content', 'nickname']
-    ctx.validate(_.pick(messageRule, requiredFields), ctx.request.body)
-
-    const payload = _.pick(ctx.request.body, requiredFields)
+    
+    const payload = ctx.state.body
 
     return ctx.model.Message.create(payload)
   }
@@ -24,13 +22,13 @@ class MessageController extends Controller {
   async responseToUser() {
     const { ctx } = this
 
-    const MessageID = ctx.params.id
+    const parentID = ctx.params.id
 
     const payload = ctx.state.body
 
     // let parentMessage = await ctx.model.Message.findById(MessageID)
 
-    const doc = await mongoose.models.Response.create(payload)
+    const doc = ctx.model.Message.create({...payload,parentID})
 
     return doc
   }
@@ -84,10 +82,10 @@ class MessageController extends Controller {
 
     const { id } = ctx.params
 
-    return mongoose.models.Guestbook.updateOne(
+    return ctx.model.Message.updateOne(
       { _id: id },
       {
-        $inc: { diggCount: 1 },
+        $inc: { thumbupCount: 1 },
       }
     )
   }

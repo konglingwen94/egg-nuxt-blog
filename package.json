@@ -44,7 +44,7 @@
   "homepage": "https://github.com/konglingwen94/egg-nuxt-blog#readme",
   "dependencies": {
     "axios": "^0.19.0",
-    "bcrypt": "^3.0.8",
+    "bcryptjs": "^2.4.3",
     "egg": "^2.23.0",
     "egg-cors": "^2.2.0",
     "egg-mongoose": "^3.2.0",
@@ -63,7 +63,6 @@
     "normalize.css": "^8.0.1",
     "nuxt": "^2.11.0",
     "pell": "^1.0.6",
-    "vue": "^2.6.11",
     "vue-weather-component": "^1.0.0"
   },
   "devDependencies": {
@@ -76,7 +75,6 @@
     "egg-bin": "^4.13.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
-    "vue-template-compiler": "^2.6.11",
     "vuepress": "^1.1.0"
   }
 }
