@@ -23,17 +23,19 @@
           <div v-html="data.content && data.content.html"></div>
         </div>
       </section>
-      <div class="tag-box" >
+      <div class="tag-box">
         <i class="el-icon-collection-tag"></i>
         <nuxt-link
           :to="{name:'articles',query:{tagID:item.id}}"
           v-for="(item,key) in data.tagList"
           :key="key"
         >
-          <el-link  >
-            {{item.name}}
-            <i class="el-icon-view"></i>
-          </el-link>
+          <client-only>
+            <el-link class="stag-item">
+              {{item.name}}
+              <i class="el-icon-view"></i>
+            </el-link>
+          </client-only>
         </nuxt-link>
       </div>
 
@@ -45,31 +47,13 @@
       <!-- 评论 -->
       <section class="comment">
         <h4>评论</h4>
+        <message-editor @on-focus="$refs.replyEditor.hide()" @on-submit="replyHandler"></message-editor>
 
-        <comment @pass-validate="handleSave" ref="comment" :loading="buttonLoading"></comment>
-
-         
-        <ul class="comment-board">
-          <li class="comment-board-item" v-for="item in data.commentList" :key="item.id">
-            <div class="icon-user-wrapper">
-              <el-avatar :src="item.avatar" icon="el-icon-user-solid" size="medium"></el-avatar>
-            </div>
-            <div class="comment-text">
-              <span class="nickname">{{item.nickname}}</span>
-              <div class="comment-detail">{{item.content}}</div>
-              <div class="comment-footer">
-                <time>{{new Date(item.createdAt).toLocaleString()}}</time>
-                <i
-                  @click="handleThumbUp(item.id,item)"
-                  :class="{'is-like':item.thumbupCount>0}"
-                  class="el-icon-thumb el-icon"
-                >
-                  <span class="thumbup-count">{{item.thumbupCount>0?item.thumbupCount:'赞'}}</span>
-                </i>
-              </div>
-            </div>
-          </li>
-        </ul>
+        <client-only>
+          <message-tree :data-list="data.commentList"  @on-reply="onReply" >
+            <message-editor @on-submit="replyHandler" ref="replyEditor" type="reply" slot="editor"></message-editor>
+          </message-tree>
+        </client-only>
       </section>
     </div>
     <div class="floating-action-window">
@@ -113,9 +97,9 @@ export default {
       title
     }
   },
-  data(){
+  data() {
     return {
-      data:{
+      data: {
         // tagList:[{},{}]
       }
     }
@@ -138,8 +122,7 @@ export default {
 
   data() {
     return {
-      buttonLoading: false,
-      
+      buttonLoading: false
     }
   },
 
@@ -169,6 +152,14 @@ export default {
   },
 
   methods: {
+    async onReply(){
+await this.$nextTick()
+console.log(this.$refs.replyEditor)
+      this.$refs.replyEditor.show()
+      this.$refs.replyEditor.resetFields()
+      this.$refs.replyEditor.clearValidate()
+      this.$refs.replyEditor.focus('content')
+    },
     handleMouseLeave(e) {
       if (this.starArticleIdList.includes(this.data.id)) {
         return
@@ -217,8 +208,10 @@ export default {
         this.$message.error(err.message)
       })
     },
+    replyHandler(payload) {
+      CommentService.createOne(payload).then(() => {})
+    },
     handleSave(payload) {
-       
       const articleID = this.$route.params.id
 
       this.buttonLoading = true
@@ -320,6 +313,7 @@ export default {
   margin-top: 40px;
   margin-bottom: 30px;
   .tag-item {
+    color: lightblue;
     margin: 0 3px;
     .el-icon-view {
       visibility: hidden;
@@ -327,6 +321,7 @@ export default {
     &:hover {
       .el-icon-view {
         visibility: visible;
+        text-decoration: underline;
       }
     }
   }

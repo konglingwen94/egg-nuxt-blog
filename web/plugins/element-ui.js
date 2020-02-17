@@ -24,8 +24,10 @@ import {
   Tag,
   Tooltip,
 } from 'element-ui'
+import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
 
 export default () => {
+  Vue.use(CollapseTransition)
   Vue.use(Alert)
   Vue.use(Avatar)
   Vue.use(Backtop)
