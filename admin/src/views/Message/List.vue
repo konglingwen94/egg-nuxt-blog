@@ -1,8 +1,6 @@
 <template>
-  <div class>
-    <panel>
-      <el-button type="danger" @click="deleteMany">批量删除</el-button>
-    </panel>
+  <panel class>
+      <el-button slot="header" type="danger" @click="deleteMany">批量删除</el-button>
 
     <el-table
       default-expand-all
@@ -22,7 +20,7 @@
         </template>
       </el-table-column>
     </el-table>
-  </div>
+  </panel>
 </template>
 <script>
 import MessageApi from '@/api/messages'
@@ -60,6 +58,11 @@ export default {
       this.selection = selection
     },
     async deleteMany() {
+      const idList = this.selection.map(item => item.id)
+      if (!idList.length) {
+        this.$message.error('请选择您要删除的选项')
+        return
+      }
       try {
         await this.$confirm('选项以经删除将无法恢复，是否确定?', '提示', {
           type: 'warning'
@@ -67,11 +70,7 @@ export default {
       } catch (error) {
         return
       }
-      const idList = this.selection.map(item => item.id)
-      if (!idList.length) {
-        this.$message.error('请选择您要删除的选项')
-        return
-      }
+
 
       MessageApi.deleteMany(idList).then(()=>{
         idList.forEach(id=>{

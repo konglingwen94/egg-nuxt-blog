@@ -35,7 +35,13 @@ class MessageController extends Controller {
   async deleteOneMessage() {
     const { id } = this.ctx.params
      
-    return this.ctx.model.Message.findByIdAndDelete(id)
+    const result=await this.ctx.model.Message.findByIdAndDelete(id)
+
+    if(result){
+      return {ok:1,deletedCount:1,n:1}
+    }else{
+      return {ok:0}
+    }
   }
 
   async deleteMany() {
