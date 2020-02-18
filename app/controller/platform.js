@@ -7,7 +7,8 @@ class PlatformController extends Controller {
     return ctx.model.Platform.findByIdAndUpdate(ctx.params.id, { $set: payload })
   }
   async queryOne(){
-    return this.ctx.model.Platform.findById(ctx.params.id)
+    console.log(this.ctx.model)
+    return this.ctx.model.Platform.findOne()
   }
 }
 
