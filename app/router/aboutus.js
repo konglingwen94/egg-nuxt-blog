@@ -48,5 +48,8 @@ module.exports = app => {
   router.patch('aboutus', '/admin/aboutus/:id', controller.aboutus.updateOne)
   router.get('/admin/aboutus', controller.aboutus.getOne)
 
+router.patch('platform','/admin/platforms/:id',controller.platform.updateOne)
+router.get('/admin/platforms/:id',controller.platform.queryOne)
+
   router.get('/aboutus', controller.aboutus.getOne)
 }
