@@ -29,9 +29,10 @@ export const mutations = {
 
 export const actions = {
   async nuxtServerInit() {
+    console.log('nuxt-server-init',this.dispatch)
     try {
       await Promise.all([
-        this.dispatch('fetchAboutusData'),
+        this.dispatch('configuration/fetchData'),
         this.dispatch('weather/fetchWeatherData'),
       ])
     } catch (error) {

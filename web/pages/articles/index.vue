@@ -20,11 +20,11 @@ import ArticleService from '@/services/articles'
 export default {
   layout: 'public',
   asyncData(context) {
-    console.log('asyncData', context.payload)
+   
     return context.payload
   },
   async validate(context) {
-    console.log('validate')
+     
     const { categoryID, tagID } = context.query
     let articleAction, archiveAction
     if (categoryID) {
@@ -54,7 +54,7 @@ export default {
       }
       return true
 
-    context.redirect('/articles')
+    
 
     // debugger
   },

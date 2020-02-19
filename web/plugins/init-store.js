@@ -9,6 +9,6 @@ export default ({ app }) => {
   app.store.replaceState(_.assign({}, app.store.state, store))
 
   window.onbeforeunload = () => {
-    localStorage.store = JSON.stringify(_.omit(app.store.state, 'aboutus'))
+    localStorage.store = JSON.stringify(_.omit(app.store.state, 'configuration'))
   }
 }

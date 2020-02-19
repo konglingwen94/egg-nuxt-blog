@@ -7,7 +7,7 @@ module.exports = {
 
   server: {
     // host: '192.168.2.155',
-    port: 3000,
+    // port: 3000,
   },
   env: {
     baseUrl:
@@ -36,6 +36,14 @@ module.exports = {
   vue: {
     config: {
       silent: true,
+      // productionTip: true,
+      // devtools: true,
+      warnHandler(msg, vm, trace) {
+        // console.warn(msg,trace)
+      },
+      errorHandler(msg, vm, trace) {
+        console.error(msg, trace)
+      },
     },
   },
 
@@ -51,9 +59,9 @@ module.exports = {
    */
   plugins: [
     { src: '@/plugins/global-components.js' },
-    { src: '@/plugins/element-ui', ssr:true  },
+    { src: '@/plugins/element-ui', ssr: true },
+    { src: '@/plugins/lib.js', ssr: false },
     { src: '@/plugins/init-store', ssr: false },
-    { src: '@/plugins/lib.js', ssr: false }, 
   ],
   /*
    ** Nuxt.js dev-modules
@@ -95,11 +103,10 @@ module.exports = {
    ** Build configuration
    */
 
-  buildDir:
-    process.env.NODE_ENV !== 'development'
-      ? resolve(__dirname, '../public/web')
-      : './web/.nuxt',
+   
+  buildDir: resolve(__dirname, '../public/web'),
   build: {
+    // devtools: true,
     babel: {
       plugins: [
         [
