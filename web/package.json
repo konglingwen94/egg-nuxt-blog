@@ -6,10 +6,10 @@
   "private": true,
   "scripts": {
     "dev": "nuxt",
-    "debug":"node --inspect=9999 ../node_modules/nuxt/bin/nuxt",
+    "dev:spa": "nuxt -s",
+    "debug": "nuxt --inspect=9999",
     "build": "cross-env NODE_ENV=production  nuxt build",
-    "build:local": "cross-env NODE_ENV=local nuxt build",
-    "start": "nuxt start",
+    "start": "nuxt start  ../public/web",
     "generate": "nuxt generate"
   },
   "dependencies": {

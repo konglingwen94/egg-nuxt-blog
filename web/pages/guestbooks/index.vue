@@ -1,13 +1,20 @@
 <template>
   <div class="message">
+    <el-divider content-position="left">
+      <i class="el-icon-edit-outline"></i>&nbsp;留言板
+    </el-divider>
     <message-editor
       @on-focus="$refs.editor.hide()"
       @on-submit="submit('comment',$event)"
       @on-invalid="invalid('comment',$event)"
       ref="commentEditor"
     ></message-editor>
+    <el-divider content-position="left">
+      <i class="el-icon-s-comment"></i>&nbsp;
+      留言墙</el-divider>
+    
     <client-only>
-      <message-tree @on-thumbup="thumbup($event.id)" @on-reply="reply" :data-list="renderData">
+      <message-tree @on-thumbup="thumbup($event.id)" @on-reply="reply" :data-list="renderData" :render-layer="options.renderLayer" :default-expand-layer="options.expandLayer">
         <message-editor
           @on-focus="$refs.commentEditor.clearValidate()"
           @on-submit="submit('reply',$event)"
@@ -31,6 +38,9 @@ export default {
     }
   },
   computed: {
+    options(){
+      return this.$store.state.configuration.message
+    },
     renderData() {
       const dataList = JSON.parse(JSON.stringify(this.dataList))
 
@@ -99,7 +109,7 @@ export default {
           ? MessageService.createOne(payload)
           : MessageService.replyOne(this.replyParentID, payload)
       // console.log(payload)
-
+this.collapseEditor()
       action
         .then(response => {
           this.dataList.unshift(response)
