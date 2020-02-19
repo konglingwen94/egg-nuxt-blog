@@ -6,6 +6,10 @@
     "loop": true,
     "autoplay": true
   },
+  "message":{
+    "renderLayer":2,
+    "expandLayer":2
+  },
   "platform": { "webClient": "", "serverUI": "", "serverApi": "" },
   "profile": {
     "personal": {

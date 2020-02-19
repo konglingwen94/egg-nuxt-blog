@@ -78,16 +78,16 @@ class ArticleController extends Controller {
   }
   async queryCarouselList() {
     const { service, ctx, config } = this
-    const aboutusResult = await this.ctx.model.Aboutus.findOne()
+    const platformConfig = await this.ctx.model.Platform.findOne()
 
-    const { number, sort: sortBy } = aboutusResult.carousel
+    const { number, sort: sortBy } = platformConfig.carousel
 
     const data = await ctx.model.Article.find({ isPublished: true })
       .sort({ [sortBy]: -1 })
 
       .limit(number)
 
-    return { data, configOptions: aboutusResult.carousel }
+    return { data, configOptions: platformConfig.carousel }
   }
   async querySuggestionList() {
     const { ctx, service } = this

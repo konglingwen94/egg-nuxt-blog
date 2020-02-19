@@ -1,10 +1,17 @@
 const mongoose = require('mongoose')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const config = require('../config/config.default.js')({ baseDir: '/' })
 
-const AdminModel = require('../app/model/admin.js')({
+const defaultAboutusData = require('../config/defaultAboutusData')
+
+const AdminModel = require('../app/model/account.js')({
   mongoose: require('mongoose'),
 })
+
+const PlatformModel = require('../app/model/aboutus.js')({
+  mongoose: require('mongoose'),
+})
+
 const argv = process.argv.slice(2)
 
 if (argv.length !== 2) {
@@ -47,7 +54,7 @@ const getMongoConfiguration = () => {
 const { mongodbURI, mongooseOptions } = getMongoConfiguration()
 
 const createAdminAccount = () => {
-  AdminModel.findOne({ username })
+ return  AdminModel.findOne({ username })
     .exec()
     .then(account => {
       console.log('Query existing account with username from db', {
@@ -74,7 +81,7 @@ const createAdminAccount = () => {
     })
     .then(() => {
       console.log('Done')
-      process.exit(0)
+      // process.exit(0)
     })
     .catch(err => {
       console.error('Failed to init admin account.', err.message)
@@ -96,4 +103,35 @@ db.on('error', err => {
 db.once('open', () => {
   console.log(`Connected to mongodb with ${mongodbURI} successfully`)
   createAdminAccount()
+    .then(async () => {
+      console.log('-------')
+      try {
+        var result = await PlatformModel.findOne()
+      } catch (error) {
+        return error
+      }
+
+      if (result) {
+        console.log(result)
+        return new Promise(new Error('Platform is initialized.'))
+      }
+      const { carousel, message } = defaultAboutusData
+      try {
+        var platformResult = await PlatformModel.create({
+          carousel,
+          message,
+        })
+      } catch (error) {
+        return error
+      }
+      console.log('Initial platform data successfully with.', platformResult)
+    })
+    .then(()=>{
+      console.log('Done.')
+      process.exit(0)
+    })
+    .catch(err => {
+      console.error('Initial platform data failed.', err.message)
+      process.exit(1)
+    })
 })
