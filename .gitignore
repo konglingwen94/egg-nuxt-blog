@@ -24,6 +24,7 @@ logs
 #demo files
 
 /demo
+test
 # config files
 package-lock.json
 config/config.prod.js

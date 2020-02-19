@@ -36,6 +36,7 @@ module.exports = appInfo => {
     nuxtRender: {
       nuxtConfig: {
         buildDir: resolve(__dirname, '../public/web'),
+        dev:false
       },
       ignore: ['/api', '/admin', '/docs', '/uploads'],
     },
