@@ -187,8 +187,35 @@ module.exports = {
       min: 1,
     },
   },
+  platform: {
+    carousel: {
+      type: 'object?',
+      rule: {
+        number: {
+          type: 'int',
+          min: 1,
+        },
+        sort: {
+          type: 'enum',
+          values: ['pv', 'starCount'],
+        },
+        autoplay: 'boolean',
+        loop: 'boolean',
+        interval: {
+          type: 'int',
+          min: 500,
+        },
+      },
+    },
+    message: {
+      type: 'object?',
+      rule: {
+        renderLayer: 'int',
+        expandLayer: 'int',
+      },
+    },
+  },
   message: {
-   
     content: {
       type: 'string',
       min: 1,

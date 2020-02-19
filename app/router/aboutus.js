@@ -47,9 +47,12 @@ module.exports = app => {
   // router.post('aboutus', '/admin/aboutus', controller.aboutus.createOne)
   router.patch('aboutus', '/admin/aboutus/:id', controller.aboutus.updateOne)
   router.get('/admin/aboutus', controller.aboutus.getOne)
-
-router.patch('platform','/admin/platforms/:id',controller.platform.updateOne)
-router.get('/admin/platform',controller.platform.queryOne)
-
   router.get('/aboutus', controller.aboutus.getOne)
+
+
+  //平台配置信息
+router.patch('platform','/admin/platforms/:id',controller.platform.updateOne)
+
+router.get('/platform',controller.platform.queryOne)
+router.get('/admin/platform',controller.platform.queryOne)
 }
