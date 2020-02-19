@@ -46,29 +46,60 @@
           </el-form-item>
         </el-form>
       </el-card>
+<br><br>
+      <el-card header="评论配置">
+        <el-form>
+          <el-form-item label="渲染层级">
+            <el-input-number v-model="message.renderLayer" :min="1" :max="4"></el-input-number>
+          </el-form-item>
+          <el-form-item label="默认展开层级">
+            <el-input-number v-model="message.expandLayer" :min="1" :max="4"></el-input-number>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submit('message')">保存</el-button>
+          </el-form-item>
+        </el-form>
+      </el-card>
     </div>
   </panel>
 </template>
 
 <script>
+import _ from 'lodash'
+import PlatformApi from '@/api/platform'
 export default {
   name: 'Carousel',
-  computed: {
-    carousel() {
-      return this.$store.state.aboutus.carousel
+  data() {
+    return {
+      carousel: {},
+      message: {}
     }
   },
+  computed: {},
   created() {
-   
-    this.$store.dispatch('getAboutus')
+    PlatformApi.fetchOne()
+      .then(response => {
+        
+        this.id=response.id
+        this.carousel = response.carousel
+        this.message = response.message
+      })
+      .catch(err => {
+        console.error(err)
+        // this.$message.error(err.message)
+      })
   },
   methods: {
-    
-    async submit() {
-      this.$store
-        .dispatch('updateAboutus', { carousel: this.carousel })
-        .then(() => this.$message.success('设置成功'))
-        .catch( )
+     submit(type) {
+      const payload = { [type]: this[type] }
+      PlatformApi.updateOne(this.id, payload)
+        .then(() => {
+          this.$message.success('修改成功')
+        })
+        .catch(err => {
+          console.error(err)
+        })
+
     }
   }
 }
