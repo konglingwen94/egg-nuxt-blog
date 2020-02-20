@@ -13,7 +13,7 @@ export const mutations = {
   },
 
   pushDiggId(state, id) {
-    console.log('push id',id)
+     
     if (!state.messageIdListWithThumbup.includes(id) && id) {
       state.messageIdListWithThumbup.push(id)
     }
@@ -29,7 +29,7 @@ export const mutations = {
 
 export const actions = {
   async nuxtServerInit() {
-    console.log('nuxt-server-init',this.dispatch)
+    
     try {
       await Promise.all([
         this.dispatch('configuration/fetchData'),

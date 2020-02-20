@@ -11,7 +11,7 @@ export const mutations = {
   setData(state, payload) {
     state.carousel = payload.carousel
     state.message = payload.message
-    console.log('state',state)
+    
   },
 }
 

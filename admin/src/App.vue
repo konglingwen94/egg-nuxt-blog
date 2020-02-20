@@ -6,7 +6,7 @@
 <script>
 export default {
   created() {
-    this.$store.dispatch('getAboutus')
+    this.$store.dispatch('getOne')
   }
 }
 </script>

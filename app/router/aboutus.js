@@ -55,4 +55,11 @@ router.patch('platform','/admin/platforms/:id',controller.platform.updateOne)
 
 router.get('/platform',controller.platform.queryOne)
 router.get('/admin/platform',controller.platform.queryOne)
+
+// 网站简介
+
+router.get('/siteintro',controller.siteintro.queryOne)
+router.get('/admin/siteintro',controller.siteintro.queryOne)
+router.patch('/admin/siteintro/:id',controller.siteintro.updateOne)
+
 }

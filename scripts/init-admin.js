@@ -1,14 +1,14 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const config = require('../config/config.default.js')({ baseDir: '/' })
-
+const _ = require('lodash')
 const defaultAboutusData = require('../config/defaultAboutusData')
 
 const AdminModel = require('../app/model/account.js')({
   mongoose: require('mongoose'),
 })
 
-const PlatformModel = require('../app/model/aboutus.js')({
+const BaseModel = require('../app/model/platform.js')({
   mongoose: require('mongoose'),
 })
 
@@ -54,7 +54,7 @@ const getMongoConfiguration = () => {
 const { mongodbURI, mongooseOptions } = getMongoConfiguration()
 
 const createAdminAccount = () => {
- return  AdminModel.findOne({ username })
+  return AdminModel.findOne({ username })
     .exec()
     .then(account => {
       console.log('Query existing account with username from db', {
@@ -76,11 +76,10 @@ const createAdminAccount = () => {
         role: 'ROOT',
         level: 100,
       }
-      console.log(`Initial a account with data:`, adminAccount)
       return AdminModel.create(adminAccount)
     })
-    .then(() => {
-      console.log('Done')
+    .then(adminAccount => {
+      console.log(`Initial a account with data:`, adminAccount)
       // process.exit(0)
     })
     .catch(err => {
@@ -104,34 +103,59 @@ db.once('open', () => {
   console.log(`Connected to mongodb with ${mongodbURI} successfully`)
   createAdminAccount()
     .then(async () => {
-      console.log('-------')
       try {
-        var result = await PlatformModel.findOne()
+        var result = await BaseModel.discriminators.Platform.findOne()
+      } catch (error) {
+        return Promise.reject(error)
+      }
+
+      if (result) {
+        return  Promise.reject(new Error('Platform is initialized.'))
+      }
+      const { carousel, message } = defaultAboutusData
+
+      try {
+        return  BaseModel.discriminators.Platform.create({
+          carousel,
+          message,
+        })
+      } catch (error) {
+        return Promise.reject(error)
+      }
+    })
+    .then((platformResult) => {
+      console.log('Initial platform data successfully with.', platformResult)
+    })
+    .catch(err => {
+      console.error('Initial platform data failed.', err.message)
+      // process.exit(1)
+    })
+    .then(async () => {
+      try {
+        var result = await BaseModel.discriminators.Siteintro.findOne()
       } catch (error) {
         return error
       }
 
       if (result) {
-        console.log(result)
-        return new Promise(new Error('Platform is initialized.'))
+        return Promise.reject(new Error('Siteintro data is initialized'))
       }
-      const { carousel, message } = defaultAboutusData
       try {
-        var platformResult = await PlatformModel.create({
-          carousel,
-          message,
-        })
+        var createdResult = await BaseModel.discriminators.Siteintro.create(
+          _.pick(defaultAboutusData, ['platform', 'profile'])
+        )
       } catch (error) {
-        return error
+        return Promise.reject(error)
       }
-      console.log('Initial platform data successfully with.', platformResult)
+
+      console.log('Init siteintro data successfully with \n', createdResult)
     })
-    .then(()=>{
+    .then(() => {
       console.log('Done.')
       process.exit(0)
     })
     .catch(err => {
-      console.error('Initial platform data failed.', err.message)
+      console.error(err.message)
       process.exit(1)
     })
 })

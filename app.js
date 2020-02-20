@@ -5,7 +5,7 @@ class AppBootHook {
   }
 
   async didLoad() {
-    const { mongoose, config, model } = this.app
+    const { mongoose, config,   } = this.app
     const { url } = this.app.config.mongoose
 
     mongoose.connection.once('close', async () => {
@@ -16,6 +16,7 @@ class AppBootHook {
     
 
     
+    console.log(this.app)
   }
   serverDidReady() {
     console.log('Server did ready')

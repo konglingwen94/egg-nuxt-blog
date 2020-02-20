@@ -24,6 +24,30 @@ module.exports = app => {
       },
     })
   )
+
+
+
+  const SiteintroModel=BaseModel.discriminator('Siteintro',new Schema({
+      profile: {
+        personal: {
+          description: {
+            type: String,
+            default: '',
+          },
+          contact: [{}],
+        },
+        technology: {
+          frontend: { type: String, default: '' },
+          serverSide: { type: String, default: '' },
+        },
+      },
+      platform: {
+        webClient: { type: String, default: '' },
+        serverUI: { type: String, default: '' },
+        serverApi: { type: String, default: '' },
+      },
+    
+  }))
   // const AboutusSchema = new Schema(
   //   {
   //     profile: {
@@ -54,21 +78,8 @@ module.exports = app => {
   //   },
   //   { timestamps: true }
   // )
+ 
 
-  // AboutusSchema.virtual('carousel.max', {
-  //   // ref: 'Article',
-  //   // localField: '_id',
-  //   count: true,
-  // })
-  // AboutusSchema.virtual('carousel.maxNumber').get(async function() {
-  //   const isPublishedArticleCount = await models.Article.countDocuments({
-  //     isPublished: true,
-  //   })
-
-  //   console.log(__filename, arguments, this, isPublishedArticleCount)
-
-  //   return Math.min(this.carousel.number, isPublishedArticleCount)
-  // })
-
-  return PlatformModel
+  // return {Platform:PlatformModel,Siteintro:SiteintroModel}
+  return BaseModel
 }

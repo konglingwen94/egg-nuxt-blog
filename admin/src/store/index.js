@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import aboutus from './aboutus'
+import siteintro from './siteintro'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   modules: {
-    aboutus,
+    siteintro,
   },
   state: {
     tabs: [],

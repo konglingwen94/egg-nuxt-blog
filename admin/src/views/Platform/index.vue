@@ -20,7 +20,7 @@
 export default {
   computed: {
     platform() {
-      return this.$store.state.aboutus.platform
+      return this.$store.state.siteintro.platform
     }
   },
   methods: {
@@ -39,11 +39,11 @@ export default {
       }
 
       this.$store
-        .dispatch('updateAboutus', {
+        .dispatch('updateOne', {
           platform: { webClient, serverUI, serverApi }
         })
         .then(() => {
-          this.$message.success('平台介绍设置成功')
+          this.$message.success('网站介绍设置成功')
         })
     }
   }
