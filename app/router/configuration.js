@@ -16,16 +16,16 @@ module.exports = app => {
   //网站配置
   router.patch(
     'siteConfig',
-    '/admin/configuration/siteConfigs/:id',
+    '/admin/configuration-siteconfigs/:id',
     controller.configuration.updateOneSiteConfig
   )
 
   router.get(
-    '/configuration/siteConfig',
+    '/configuration-siteconfig',
     controller.configuration.queryOneSiteConfig
   )
   router.get(
-    '/admin/configuration/siteConfig',
+    '/admin/configuration-siteconfig',
     controller.configuration.queryOneSiteConfig
   )
   // router.get('/admin/platform',controller.platform.queryOne)
@@ -33,16 +33,16 @@ module.exports = app => {
   // 项目简介
 
   router.get(
-    '/configuration/projectIntro',
+    '/configuration-projectintro',
     controller.configuration.queryOneProjectIntro
   )
   router.get(
-    '/admin/configuration/projectIntro',
+    '/admin/configuration-projectintro',
     controller.configuration.queryOneProjectIntro
   )
   router.patch(
     'projectIntro',
-    '/admin/configuration/projectIntros/:id',
+    '/admin/configuration-projectintros/:id',
     controller.configuration.updateOneProjectIntro
   )
 }

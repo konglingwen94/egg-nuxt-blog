@@ -1,5 +1,10 @@
 const Inflector = require('inflected')
 // global.Inflector = Inflector
+Inflector.inflections('en', function(inflect) {
+    inflect.singular('configuration-siteconfigs', 'SiteConfig')
+    inflect.singular('configuration-projectintros', 'ProjectIntro')
+
+  })
 
 module.exports = app => {
   const { controller, middleware,mongoose  } = app

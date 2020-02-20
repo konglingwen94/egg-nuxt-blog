@@ -76,19 +76,7 @@ class ArticleController extends Controller {
       .populate('tagList')
       .sort('-createdAt')
   }
-  async queryCarouselList() {
-    const { service, ctx, config } = this
-    const platformConfig = await this.ctx.model.Platform.findOne()
-
-    const { number, sort: sortBy } = platformConfig.carousel
-
-    const data = await ctx.model.Article.find({ isPublished: true })
-      .sort({ [sortBy]: -1 })
-
-      .limit(number)
-
-    return { data, configOptions: platformConfig.carousel }
-  }
+  
   async querySuggestionList() {
     const { ctx, service } = this
     let { tagIdList } = ctx.queries

@@ -1,5 +1,5 @@
 module.exports = {
-  aboutus: {
+  projectIntro: {
     profile: {
       type: 'object?',
       rule: {
@@ -55,47 +55,8 @@ module.exports = {
         },
       },
     },
-    carousel: {
-      type: 'object?',
-      rule: {
-        number: {
-          type: 'int',
-          min: 1,
-        },
-        sort: {
-          type: 'enum',
-          values: ['pv', 'starCount'],
-        },
-        autoplay: 'boolean',
-        loop: 'boolean',
-        interval: {
-          type: 'int',
-          min: 500,
-        },
-      },
-    },
-    contact: {
-      type: 'object?',
-      rule: {
-        qq: {
-          type: 'string',
-          min: 5,
-        },
-        wechat: {
-          type: 'string',
-          min: 1,
-        },
-        github: {
-          type: 'string',
-          min: 1,
-        },
-        phone: {
-          type: 'string',
-          min: 11,
-          max: 11,
-        },
-      },
-    },
+   
+   
   },
   account: {
     username: {
@@ -187,7 +148,7 @@ module.exports = {
       min: 1,
     },
   },
-  platform: {
+  siteConfig: {
     carousel: {
       type: 'object?',
       rule: {
