@@ -19,19 +19,19 @@ module.exports = app => {
       throw error
     }
 
-    const routerPathArr = ctx.routerPath.split('/')
+    const routerPaths = ctx.routerPath.split('/')
 
-    const moduleName = Inflector.classify(
-      routerPathArr[routerPathArr.indexOf(':id') - 1]
+    const modelName = Inflector.classify(
+      routerPaths[routerPaths.indexOf(':id') - 1]
     )
 
-    const resultModel = mongoose.models[moduleName]
+    const targetModel = mongoose.models[modelName]
 
-    if (!resultModel) {
+    if (!targetModel) {
       return next()
     }
 
-    const result = await resultModel.findById(id)
+    const result = await targetModel.findById(id)
     if (!result) {
       ctx.throw(404, `Invalid ObjectId("${id}")`)
     }
