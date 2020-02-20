@@ -1,4 +1,3 @@
-console.log(__filename)
 
 module.exports = app => {
   const { controller, middleware } = app
@@ -50,7 +49,6 @@ module.exports = app => {
 
   router.get('/articles', controller.article.queryListByOptions)
 
-  router.get('/article-carousels', controller.article.queryCarouselList)
   router.get('/articles/:id/suggestion', controller.article.querySuggestionList)
 
   router.get('/articles/:id', controller.article.queryOne)
