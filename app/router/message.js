@@ -1,8 +1,6 @@
- 
-
 module.exports = app => {
   const { controller, middleware } = app
-  const router = app.ApiRouter
+  const router = app.proxyRouter
 
   /**
    * messages
@@ -26,7 +24,7 @@ module.exports = app => {
 
   router.post('/messages/:id/digg', controller.message.diggGuestbook)
 
-  router.post('message','/messages', controller.message.createOne)  
+  router.post('message', '/messages', controller.message.createOne)
 
   // 回复评论
   router.post(

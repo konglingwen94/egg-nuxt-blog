@@ -6,12 +6,12 @@ Inflector.inflections('en', function(inflect) {
 
 module.exports = app => {
   const { mongoose, controller, middleware } = app
-  const router = (app.ApiRouter = app.router.namespace(
+  const router = (app.proxyRouter = app.router.namespace(
     '/api',
     middleware.requestParameterValidator()
   ))
 
-  app.router.param('id', async (id, ctx, next) => {
+  router.param('id', async (id, ctx, next) => {
     ctx.validate({ id: { type: 'string', max: 24, min: 24 } }, { id })
     try {
       mongoose.Types.ObjectId(id)

@@ -1,9 +1,8 @@
-
 module.exports = app => {
   const { middleware, controller } = app
 
-  const router = app.ApiRouter
-    
+  const router = app.proxyRouter
+
   /**
    * categories
    */
@@ -34,6 +33,4 @@ module.exports = app => {
   router.get('/categories', controller.category.queryList)
 
   router.get('/categories/:id', controller.category.queryOne)
-   
-   
 }

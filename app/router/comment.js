@@ -1,8 +1,8 @@
 console.log(__filename)
 
 module.exports = app => {
-  const { controller, middleware, ApiRouter } = app
-  const router = ApiRouter
+  const { controller, middleware, proxyRouter } = app
+  const router = proxyRouter
   /**
    * comments
    */

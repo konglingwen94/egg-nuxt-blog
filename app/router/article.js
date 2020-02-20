@@ -3,7 +3,7 @@ console.log(__filename)
 module.exports = app => {
   const { controller, middleware } = app
 
-  const router = app.ApiRouter
+  const router = app.proxyRouter
 
   /***
    *
@@ -19,7 +19,11 @@ module.exports = app => {
     controller.article.createOne
   )
 
-  router.get('article', '/admin/articles', controller.article.queryListByOptions)
+  router.get(
+    'article',
+    '/admin/articles',
+    controller.article.queryListByOptions
+  )
 
   router.get('article', '/admin/articles/:id', controller.article.queryOne)
 
@@ -45,8 +49,6 @@ module.exports = app => {
   )
 
   router.get('/articles', controller.article.queryListByOptions)
-
-   
 
   router.get('/article-carousels', controller.article.queryCarouselList)
   router.get('/articles/:id/suggestion', controller.article.querySuggestionList)

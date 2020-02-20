@@ -39,7 +39,7 @@ const weatherInfo = {
   ],
 }
 
-class UploadController extends Controller {
+class ProxyController extends Controller {
   async fetchWeatherData() {
     const { ctx } = this
     const { data } = await axios.get(
@@ -86,15 +86,6 @@ class UploadController extends Controller {
 
     return result
   }
-
-  async uploadFile() {
-    const { ctx } = this
-    const name = ctx.req.file.filename
-    return {
-      name,
-      path: `/uploads/${name}`,
-    }
-  }
 }
 
-module.exports = UploadController
+module.exports = ProxyController

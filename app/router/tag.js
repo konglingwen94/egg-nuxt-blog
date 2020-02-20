@@ -2,7 +2,7 @@ console.log(__filename)
 
 module.exports = app => {
   const { controller, middleware } = app
-  const router = app.ApiRouter
+  const router = app.proxyRouter
   /**
    * tags
    *  */
