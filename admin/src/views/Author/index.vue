@@ -79,7 +79,7 @@ export default {
   },
   computed: {
     profile() {
-      return this.$store.state.configuration.projectIntro.profile
+      return this.$store.state.configuration.profile
     }
   },
   methods: {
@@ -105,8 +105,7 @@ export default {
     },
     submitPersonal() {
       const {
-        personal: { description, contact },
-        technology
+        personal: { description, contact }
       } = this.profile
 
       if (!description) {
@@ -130,14 +129,13 @@ export default {
 
       const payload = { personal: { description, contact } }
 
-      this.$store.dispatch('updateProjectIntro', { profile: payload }).then(() => {
+      this.$store.dispatch('updateProfile', payload).then(() => {
         this.$message.success('修改个人介绍成功')
       })
     },
     async submitTechnology() {
       const {
-        technology: { serverSide, frontend },
-        personal
+        technology: { serverSide, frontend }
       } = this.profile
       console.log(frontend, serverSide)
       if (!frontend) {
@@ -155,7 +153,7 @@ export default {
         // personal
       }
 
-      this.$store.dispatch('updateProjectIntro', { profile: payload }).then(() => {
+      this.$store.dispatch('updateProfile', payload).then(() => {
         this.$message.success('设置技术简介成功')
       })
     }

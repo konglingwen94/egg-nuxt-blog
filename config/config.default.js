@@ -23,12 +23,12 @@ module.exports = appInfo => {
     adminRequired: {
       match(ctx) {
         const excludeRequestPaths = ['/api/admin/auth/login']
-
+        const includeMethods = ['PATCH', 'POST', 'DELETE']
+        const prefixNamespaces = '/admin'
         return (
-          ctx.state.platformENV === 'admin' &&
+          ctx.path.startsWith(prefixNamespaces) &&
           !excludeRequestPaths.includes(ctx.path) &&
-          ctx.method !== 'GET' &&
-          !ctx.headers['postman-token']
+          includeMethods.includes(ctx.method)
         )
       },
     },
@@ -36,7 +36,7 @@ module.exports = appInfo => {
     nuxtRender: {
       nuxtConfig: {
         buildDir: resolve(__dirname, '../public/web'),
-        dev:false
+        dev: false,
       },
       ignore: ['/api', '/admin', '/docs', '/uploads'],
     },

@@ -3,7 +3,7 @@ module.exports = app => {
   const ConfigurationModel = model('Configuration', new Schema({}, { timestamps: true }))
 
   const SiteConfigModel = ConfigurationModel.discriminator(
-    'SiteConfig',
+    'Siteconfig',
     new Schema({
       carousel: {
         number: { type: Number, default: 1 },
@@ -27,20 +27,7 @@ module.exports = app => {
 
 
 
-  const ProjectIntro=ConfigurationModel.discriminator('ProjectIntro',new Schema({
-      profile: {
-        personal: {
-          description: {
-            type: String,
-            default: '',
-          },
-          contact: [{}],
-        },
-        technology: {
-          frontend: { type: String, default: '' },
-          serverSide: { type: String, default: '' },
-        },
-      },
+  const ProjectIntro=ConfigurationModel.discriminator('Projectintro',new Schema({
       platform: {
         webClient: { type: String, default: '' },
         serverUI: { type: String, default: '' },
@@ -48,6 +35,20 @@ module.exports = app => {
       },
     
   }))
+
+  ConfigurationModel.discriminator('Profile',new Schema( {
+    personal: {
+      description: {
+        type: String,
+        default: '',
+      },
+      contact: [{}],
+    },
+    technology: {
+      frontend: { type: String, default: '' },
+      serverSide: { type: String, default: '' },
+    },
+  },))
   // const AboutusSchema = new Schema(
   //   {
   //     profile: {

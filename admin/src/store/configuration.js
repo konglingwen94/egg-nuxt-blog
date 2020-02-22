@@ -4,12 +4,15 @@ import ConfigurationApi from '@/api/configurations'
 export default {
   state: {
     projectIntro: {
-      profile: {},
       platform: {},
     },
     siteConfig: {
       carousel: {},
       message: {},
+    },
+    profile: {
+      personal: {},
+      technology: {},
     },
   },
   mutations: {
@@ -18,6 +21,9 @@ export default {
     },
     setProjectIntro(state, payload) {
       _.assign(state.projectIntro, payload)
+    },
+    setProfile(state, payload) {
+      _.assign(state.profile, payload)
     },
   },
   actions: {
@@ -48,11 +54,11 @@ export default {
         .catch()
     },
     updateProjectIntro({ commit, state }, payload) {
-      const clonedProjectIntro = _.cloneDeep(
-        _.pick(state.projectIntro, ['profile', 'platform'])
-      )
-      _.assign(clonedProjectIntro, payload)
-      payload = clonedProjectIntro
+      // const clonedProjectIntro = _.cloneDeep(
+      //   _.pick(state.projectIntro, ['profile', 'platform'])
+      // )
+      // _.assign(clonedProjectIntro, payload)
+      // payload = clonedProjectIntro
       // payload = _.pick({ ...state.projectIntro, ...payload },['platform','profile'])
       console.log('payload', payload)
       return ConfigurationApi.updateOneProjectIntro(
@@ -65,6 +71,18 @@ export default {
         .catch(error => {
           return Promise.reject(error)
         })
+    },
+    fetchProfile({ commit }) {
+      return ConfigurationApi.fetchOneProfile()
+        .then(response => {
+          commit('setProfile', response)
+        })
+        .catch(err => {})
+    },
+    updateProfile({ commit, state }, payload) {
+      return ConfigurationApi.updateOneProfile(state.profile.id, payload).then(()=>{
+        commit('setProfile',payload)
+      }).catch(err=>{})
     },
   },
 }

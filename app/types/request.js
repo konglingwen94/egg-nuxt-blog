@@ -1,43 +1,40 @@
 module.exports = {
-  projectIntro: {
-    profile: {
+  profile: {
+    personal: {
       type: 'object?',
       rule: {
-        personal: {
-          type: 'object?',
+        contact: {
+          type: 'array',
+          itemType: 'object',
           rule: {
-            contact: {
-              type: 'array',
-              itemType: 'object',
-              rule: {
-                label: {
-                  type: 'string',
-                  value: 'string',
-                },
-              },
-              min: 1,
-            },
-            description: {
+            label: {
               type: 'string',
-              min: 1,
+              value: 'string',
             },
           },
+          min: 1,
         },
-        technology: {
-          type: 'object?',
-          rule: {
-            frontend: {
-              type: 'string',
-              min: 1,
-            },
-            serverSide: {
-              type: 'string',
-              min: 1,
-            },
-          },
+        description: {
+          type: 'string',
+          min: 1,
         },
       },
     },
+    technology: {
+      type: 'object?',
+      rule: {
+        frontend: {
+          type: 'string',
+          min: 1,
+        },
+        serverSide: {
+          type: 'string',
+          min: 1,
+        },
+      },
+    },
+  },
+  projectIntro: {
     platform: {
       type: 'object?',
       rule: {
@@ -55,8 +52,6 @@ module.exports = {
         },
       },
     },
-   
-   
   },
   account: {
     username: {

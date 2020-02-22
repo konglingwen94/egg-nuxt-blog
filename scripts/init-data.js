@@ -104,18 +104,18 @@ db.once('open', () => {
   createAdminAccount()
     .then(async () => {
       try {
-        var result = await ConfigurationModel.discriminators.SiteConfig.findOne()
+        var result = await ConfigurationModel.discriminators.Siteconfig.findOne()
       } catch (error) {
         return Promise.reject(error)
       }
 
       if (result) {
-        return  Promise.reject(new Error('SiteConfig is initialized.'))
+        return Promise.reject(new Error('Siteconfig is initialized.'))
       }
       const { carousel, message } = defaultConfiguration
 
       try {
-        return  ConfigurationModel.discriminators.SiteConfig.create({
+        return ConfigurationModel.discriminators.Siteconfig.create({
           carousel,
           message,
         })
@@ -123,8 +123,11 @@ db.once('open', () => {
         return Promise.reject(error)
       }
     })
-    .then((platformResult) => {
-      console.log('Initial configuration data successfully with.', platformResult)
+    .then(platformResult => {
+      console.log(
+        'Initial configuration data successfully with.',
+        platformResult
+      )
     })
     .catch(err => {
       console.error('Initial configuration data failed.', err.message)
@@ -132,16 +135,16 @@ db.once('open', () => {
     })
     .then(async () => {
       try {
-        var result = await ConfigurationModel.discriminators.ProjectIntro.findOne()
+        var result = await ConfigurationModel.discriminators.Projectintro.findOne()
       } catch (error) {
         return error
       }
 
       if (result) {
-        return Promise.reject(new Error('ProjectIntro data is initialized'))
+        return Promise.reject(new Error('Projectintro data is initialized'))
       }
       try {
-        var createdResult = await ConfigurationModel.discriminators.ProjectIntro.create(
+        var createdResult = await ConfigurationModel.discriminators.Projectintro.create(
           _.pick(defaultConfiguration, ['platform', 'profile'])
         )
       } catch (error) {
@@ -150,6 +153,28 @@ db.once('open', () => {
 
       console.log('Init projectIntro data successfully with \n', createdResult)
     })
+    .then(async () => {
+      try {
+        var resultProfile = await ConfigurationModel.discriminators.Profile.findOne()
+      } catch (error) {
+        return Promise.reject(error)
+      }
+
+      if (resultProfile) {
+        return Promise.reject(new Error('Profile is initialized'))
+      }
+
+      try {
+        var createdProfile = await ConfigurationModel.discriminators.Profile.create(
+          defaultConfiguration.profile
+        )
+      } catch (error) {
+        return Promise.reject(error)
+      }
+
+      console.log(`Initial profile data successfully with.`, createdProfile)
+    })
+
     .then(() => {
       console.log('Done.')
       process.exit(0)

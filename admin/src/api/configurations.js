@@ -13,5 +13,10 @@ export default {
   updateOneProjectIntro(id,payload){
     return request.patch(`/configuration-projectintros/${id}`,payload)
   },
-  
+  fetchOneProfile(){
+    return request.get('/configuration-profile')
+  },
+  updateOneProfile(id,payload){
+    return request.patch(`/configuration-profiles/${id}`,payload)
+  }
 }

@@ -2,31 +2,30 @@ const _ = require('lodash')
 const { Controller } = require('egg')
 
 class ConfigurationController extends Controller {
-  queryOneSiteConfig() {
+  async queryOneConfiguration() {
     const { ctx } = this
-    console.log(__filename,ctx)
-    return ctx.model.Configuration.discriminators.SiteConfig.findOne()
+    return ctx.state.ConfigurationModel.findOne()
   }
-  updateOneSiteConfig() {
+  async updateOneConfiguration() {
     const { ctx } = this
-    return ctx.state.targetModel.updateOne(
+    return ctx.state.ConfigurationModel.updateOne(
       { _id: ctx.params.id },
       { $set: ctx.state.body }
     )
   }
 
-  queryOneProjectIntro() {
-    const { ctx } = this
-    return ctx.model.Configuration.discriminators.ProjectIntro.findOne()
-  }
+  // async queryOneProjectIntro() {
+  //   const { ctx } = this
+  //   return ctx.model.Configuration.discriminators.Projectintro.findOne()
+  // }
 
-  updateOneProjectIntro() {
+  // updateOneProjectIntro() {
     
-    return this.ctx.model.Configuration.discriminators.ProjectIntro.updateOne(
-      { _id: this.ctx.params.id },
-      { $set:this. ctx.state.body }
-    )
-  }
+  //   return this.ctx.model.Configuration.discriminators.Projectintro.updateOne(
+  //     { _id: this.ctx.params.id },
+  //     { $set:this. ctx.state.body }
+  //   )
+  // }
 
   
 }

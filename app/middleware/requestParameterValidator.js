@@ -27,7 +27,7 @@ module.exports = (opt, app) => {
       ctx.request.body,
       _.keys(defaultValidationRule[ctx.routerName])
     )
-
+ 
     return next()
   }
 }
