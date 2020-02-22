@@ -4,11 +4,11 @@ const { Controller } = require('egg')
 class ConfigurationController extends Controller {
   async queryOneConfiguration() {
     const { ctx } = this
-    return ctx.state.ConfigurationModel.findOne()
+    return ctx.model.Configuration.discriminators[ctx.state.configurationModelName].findOne()
   }
   async updateOneConfiguration() {
     const { ctx } = this
-    return ctx.state.ConfigurationModel.updateOne(
+    return ctx.model.Configuration.discriminators[ctx.state.configurationModelName].updateOne(
       { _id: ctx.params.id },
       { $set: ctx.state.body }
     )
