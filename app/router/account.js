@@ -1,5 +1,5 @@
 const Inflector = require('inflected')
-// global.Inflector = Inflector
+global.Inflector = Inflector
 Inflector.inflections('en', function(inflect) {
     inflect.singular('configuration-siteconfigs', 'SiteConfig')
     inflect.singular('configuration-projectintros', 'ProjectIntro')
@@ -13,7 +13,7 @@ module.exports = app => {
     middleware.requestParameterValidator()
   ))
 
-  router.param('id', async (id, ctx, next) => {
+  app.proxyRouter.param('id', async (id, ctx, next) => {
     ctx.validate({ id: { type: 'string', max: 24, min: 24 } }, { id })
     try {
       mongoose.Types.ObjectId(id)
@@ -26,7 +26,7 @@ module.exports = app => {
     const modelName = Inflector.classify(
       routerPaths[routerPaths.indexOf(':id') - 1]
     )
-
+console.log('modelName',modelName)
     const targetModel = mongoose.models[modelName]
 
     if (!targetModel) {

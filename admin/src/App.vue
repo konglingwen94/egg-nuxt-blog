@@ -6,7 +6,9 @@
 <script>
 export default {
   created() {
-    this.$store.dispatch('getOne')
+
+    this.$store.dispatch('fetchSiteConfig').catch(err => {})
+    this.$store.dispatch('fetchProjectIntro').catch(err => {})
   }
 }
 </script>

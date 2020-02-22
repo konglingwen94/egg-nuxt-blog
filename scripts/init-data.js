@@ -2,13 +2,13 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const config = require('../config/config.default.js')({ baseDir: '/' })
 const _ = require('lodash')
-const defaultAboutusData = require('../config/defaultAboutusData')
+const defaultConfiguration = require('../config/defaultConfiguration')
 
 const AdminModel = require('../app/model/account.js')({
   mongoose: require('mongoose'),
 })
 
-const BaseModel = require('../app/model/platform.js')({
+const ConfigurationModel = require('../app/model/configuration.js')({
   mongoose: require('mongoose'),
 })
 
@@ -104,18 +104,18 @@ db.once('open', () => {
   createAdminAccount()
     .then(async () => {
       try {
-        var result = await BaseModel.discriminators.Platform.findOne()
+        var result = await ConfigurationModel.discriminators.SiteConfig.findOne()
       } catch (error) {
         return Promise.reject(error)
       }
 
       if (result) {
-        return  Promise.reject(new Error('Platform is initialized.'))
+        return  Promise.reject(new Error('SiteConfig is initialized.'))
       }
-      const { carousel, message } = defaultAboutusData
+      const { carousel, message } = defaultConfiguration
 
       try {
-        return  BaseModel.discriminators.Platform.create({
+        return  ConfigurationModel.discriminators.SiteConfig.create({
           carousel,
           message,
         })
@@ -124,31 +124,31 @@ db.once('open', () => {
       }
     })
     .then((platformResult) => {
-      console.log('Initial platform data successfully with.', platformResult)
+      console.log('Initial configuration data successfully with.', platformResult)
     })
     .catch(err => {
-      console.error('Initial platform data failed.', err.message)
+      console.error('Initial configuration data failed.', err.message)
       // process.exit(1)
     })
     .then(async () => {
       try {
-        var result = await BaseModel.discriminators.Siteintro.findOne()
+        var result = await ConfigurationModel.discriminators.ProjectIntro.findOne()
       } catch (error) {
         return error
       }
 
       if (result) {
-        return Promise.reject(new Error('Siteintro data is initialized'))
+        return Promise.reject(new Error('ProjectIntro data is initialized'))
       }
       try {
-        var createdResult = await BaseModel.discriminators.Siteintro.create(
-          _.pick(defaultAboutusData, ['platform', 'profile'])
+        var createdResult = await ConfigurationModel.discriminators.ProjectIntro.create(
+          _.pick(defaultConfiguration, ['platform', 'profile'])
         )
       } catch (error) {
         return Promise.reject(error)
       }
 
-      console.log('Init siteintro data successfully with \n', createdResult)
+      console.log('Init projectIntro data successfully with \n', createdResult)
     })
     .then(() => {
       console.log('Done.')

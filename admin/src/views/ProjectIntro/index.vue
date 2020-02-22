@@ -17,10 +17,12 @@
   </div>
 </template>
 <script>
+
 export default {
+  name:'project-intro',
   computed: {
     platform() {
-      return this.$store.state.siteintro.platform
+      return this.$store.state.configuration.projectIntro.platform
     }
   },
   methods: {
@@ -39,11 +41,11 @@ export default {
       }
 
       this.$store
-        .dispatch('updateOne', {
+        .dispatch('updateProjectIntro', {
           platform: { webClient, serverUI, serverApi }
         })
         .then(() => {
-          this.$message.success('网站介绍设置成功')
+          this.$message.success('项目简介设置成功')
         })
     }
   }

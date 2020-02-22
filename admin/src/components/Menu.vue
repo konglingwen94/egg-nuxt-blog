@@ -1,10 +1,10 @@
 <template>
   <div class="menu-container">
     <el-menu :default-active="$route.path" router background-color="#304156" text-color="#f2f6fc">
-      <el-submenu index="/aboutus">
+      <el-submenu>
         <template v-slot:title> <i class="el-icon-eleme"></i> 博客管理</template>
-        <el-menu-item index="/carousels"> <i class="el-icon-more"></i> 轮播图配置</el-menu-item>
-        <el-menu-item index="/platform"> <i class="el-icon-s-platform"></i> 平台设置</el-menu-item>
+        <el-menu-item index="/configuration/site-config"> <i class="el-icon-more"></i> 网站设置</el-menu-item>
+        <el-menu-item index="/configuration/project-intro"> <i class="el-icon-s-platform"></i> 项目介绍</el-menu-item>
         <el-menu-item index="/author"> <i class="el-icon-user"></i>  作者简介</el-menu-item>
       </el-submenu>
       <el-menu-item index="/categories"><i class="el-icon-folder"></i> 分类管理</el-menu-item>

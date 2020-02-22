@@ -46,7 +46,8 @@
           </el-form-item>
         </el-form>
       </el-card>
-<br><br>
+      <br />
+      <br />
       <el-card header="评论配置">
         <el-form>
           <el-form-item label="渲染层级">
@@ -65,41 +66,28 @@
 </template>
 
 <script>
-import _ from 'lodash'
-import PlatformApi from '@/api/platform'
+ 
 export default {
-  name: 'Carousel',
-  data() {
-    return {
-      carousel: {},
-      message: {}
+  name: 'SiteConfig',
+  
+  computed: {
+    siteConfig() {
+      return this.$store.state.configuration.siteConfig
+    },
+    message() {
+      return this.siteConfig.message
+    },
+    carousel() {
+      return this.siteConfig.carousel
     }
   },
-  computed: {},
-  created() {
-    PlatformApi.fetchOne()
-      .then(response => {
-        
-        this.id=response.id
-        this.carousel = response.carousel
-        this.message = response.message
-      })
-      .catch(err => {
-        console.error(err)
-        // this.$message.error(err.message)
-      })
-  },
+   
   methods: {
-     submit(type) {
+    submit(type) {
       const payload = { [type]: this[type] }
-      PlatformApi.updateOne(this.id, payload)
-        .then(() => {
-          this.$message.success('修改成功')
-        })
-        .catch(err => {
-          console.error(err)
-        })
+this.$store.dispatch('updateSiteConfig',payload).catch(err=>{})
 
+      
     }
   }
 }

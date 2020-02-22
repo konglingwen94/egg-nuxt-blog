@@ -6,7 +6,7 @@ const UserLayout = () => import('@/layouts/User')
 const NotFound = () => import('@/layouts/NotFound')
 
 const Dashboard = () => import('@/views/Dashboard')
-const Carousel = () => import('@/views/Carousel')
+const SiteConfig = () => import('@/views/SiteConfig')
 const Login = () => import('@/views/Login')
 const Security = () => import('@/views/Security')
 const ArticleList = () => import('@/views/Article/List.vue')
@@ -16,7 +16,7 @@ const Comment = () => import('@/views/Comment/List')
 const Message = () => import('@/views/Message/List')
 const Tag = () => import('@/views/Tag')
 // const Aboutus = () => import('@/views/Aboutus')
-const Platform = () => import('@/views/Platform')
+const ProjectIntro = () => import('@/views/ProjectIntro')
 const Author = () => import('@/views/Author')
 
 Vue.use(Router)
@@ -58,11 +58,11 @@ const router = new Router({
         },
 
         {
-          name: 'platform',
-          path: 'platform',
-          component: Platform,
+          name: 'project-intro',
+          path: '/configuration/project-intro',
+          component: ProjectIntro,
           meta: {
-            activedMenuItem: 'platform',
+            activedMenuItem: 'project-intro',
           },
         },
         {
@@ -149,11 +149,11 @@ const router = new Router({
           },
         },
         {
-          name: 'carousels',
-          path: 'carousels',
-          component: Carousel,
+          name: 'site-config',
+          path: 'configuration/site-config',
+          component: SiteConfig,
           meta: {
-            title: '轮播图',
+            title: '网站设置',
           },
         },
       ],

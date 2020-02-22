@@ -79,7 +79,7 @@ export default {
   },
   computed: {
     profile() {
-      return this.$store.state.aboutus.profile
+      return this.$store.state.configuration.projectIntro.profile
     }
   },
   methods: {
@@ -130,7 +130,7 @@ export default {
 
       const payload = { personal: { description, contact } }
 
-      this.$store.dispatch('updateAboutus', { profile: payload }).then(() => {
+      this.$store.dispatch('updateProjectIntro', { profile: payload }).then(() => {
         this.$message.success('修改个人介绍成功')
       })
     },
@@ -155,7 +155,7 @@ export default {
         // personal
       }
 
-      this.$store.dispatch('updateAboutus', { profile: payload }).then(() => {
+      this.$store.dispatch('updateProjectIntro', { profile: payload }).then(() => {
         this.$message.success('设置技术简介成功')
       })
     }

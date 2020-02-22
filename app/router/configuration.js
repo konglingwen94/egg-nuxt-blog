@@ -6,6 +6,9 @@
 module.exports = app => {
   const { controller, middleware } = app
   const router=app.proxyRouter
+  router.use(ctx=>{
+    console.log(__filename,ctx.path)
+  })
 
   /***
    *
