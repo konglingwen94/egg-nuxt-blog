@@ -2,6 +2,10 @@ const { resolve } = require('path')
 
 module.exports = appInfo => {
   const config = {
+    adminSecret: {
+      secretKey: 'konglingwen',
+      expiresIn: '100h',
+    },
     keys: appInfo.name,
     static: {
       prefix: '',
@@ -65,9 +69,8 @@ module.exports = appInfo => {
         enable: false,
       },
     },
-    adminSecret: {
-      secretKey: 'konglingwen',
-      expiresIn: '100h',
+    validate:{
+      convert:true
     },
     mongodb: {
       database: 'my-blog',

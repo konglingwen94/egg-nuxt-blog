@@ -5,7 +5,7 @@ module.exports = {
   },
   validate: {
     enable: true,
-    package: 'egg-validate',
+    package: 'egg-validate',  
   },
 
   routerPlus: {

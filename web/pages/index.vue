@@ -1,12 +1,12 @@
 <template>
   <div class="home">
-    <!-- <el-carousel
-      :interval="carousel.configOptions && carousel.configOptions.interval"
-      :loop="carousel.configOptions&&carousel.configOptions.loop"
+    <el-carousel
+      :interval="carouselOptions.interval"
+      :loop="carouselOptions.loop"
       height="380px"
-      :autoplay="carousel.configOptions&&carousel.configOptions.autoplay"
+      :autoplay="carouselOptions.autoplay"
     >
-      <el-carousel-item :label="index+1" v-for="(item,index) in carousel.data" :key="item.id">
+      <el-carousel-item :label="index+1" v-for="(item,index) in carousel" :key="item.id">
         <nuxt-link
           :to="{name:'articles-id',params:{id:item.id,},query:{tagIdList:item.tagIdList}}"
           class="carousel-content"
@@ -26,7 +26,7 @@
           </div>
         </nuxt-link>
       </el-carousel-item>
-    </el-carousel> -->
+    </el-carousel>
     <article-list :dataList="articleList"></article-list>
   </div>
 </template>
@@ -42,18 +42,23 @@ export default {
     }
   },
    
-  async asyncData({ req, query }) {
+  async asyncData({ req, query,store }) {
     try {
-      var [articleList, carousel = {}] = await Promise.all([
+      var [articleList, carousel = []] = await Promise.all([
         // req.service.article.queryList()
         ArticleService.fetchList(),
-        ArticleService.fetchCarouselList()
+        ArticleService.fetchList({number:store.state.configuration.siteConfig.carousel.number})
       ])
     } catch (error) {
-      return { articleList: [], carousel: {} }
+      return { articleList: [], carousel: [] }
     }
 
     return { articleList, carousel }
+  },
+  computed:{
+     carouselOptions(){
+return this.$store.state.configuration.siteConfig.carousel
+     }
   },
   head() {
     return {

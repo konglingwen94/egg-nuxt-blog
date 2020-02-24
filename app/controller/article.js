@@ -6,7 +6,14 @@ class ArticleController extends Controller {
   async queryListByOptions() {
     const { ctx, service } = this
 
-    const { tagID: tagIdList, categoryID: categoryIdList, idList } = ctx.queries
+    const {
+      tagID: tagIdList,
+      categoryID: categoryIdList,
+      idList,
+     
+    } = ctx.queries
+    const { sort: sortBy,
+      number,}=ctx.query
     const filter = {}
 
     if (tagIdList) {
@@ -49,12 +56,8 @@ class ArticleController extends Controller {
         {
           idList: {
             type: 'array',
-            itemType: 'string',
+            itemType: 'objectId',
             min: 1,
-            rule: {
-              max: 24,
-              min: 24,
-            },
           },
         },
         { idList }
@@ -67,16 +70,54 @@ class ArticleController extends Controller {
       filter.isPublished = true
     }
 
-    
-
-    return ctx.model.Article.find(filter)
+    console.log(ctx.model.Article.find(filter))
+    const result = ctx.model.Article.find(filter)
       .populate('commentCount')
       .populate('commentList')
       .populate('category')
       .populate('tagList')
       .sort('-createdAt')
+    console.log(result.getOptions())
+
+    const options = { sort: {} }
+
+    if (sortBy) {
+      ctx.validate(
+        {
+          sortBy: {
+            type: 'emum',
+            values: ['pv', 'startCount'],
+          },
+        },
+        { sortBy }
+      )
+      options.sort = { sortBy: sortBy, createdAt: -1 }
+    } else {
+      options.sort = { createdAt: -1 }
+    }
+
+    if (number) {
+      ctx.validate(
+        {
+          number: {
+            type: 'integer',
+            min: 1,
+            convertType(value) {
+              return parseInt(value)
+            },
+          },
+        },
+        { number }
+      )
+
+      options.limit = parseInt(number)
+    }
+
+    result.setOptions(options)
+    console.log(result.getOptions())
+    return result
   }
-  
+
   async querySuggestionList() {
     const { ctx, service } = this
     let { tagIdList } = ctx.queries

@@ -76,7 +76,7 @@ module.exports = {
     },
   },
   article: {
-    categoryID: { type: 'string', min: 24, max: 24 },
+    categoryID: { type: 'objectId'},
     tagIdList: {
       type: 'array?',
 

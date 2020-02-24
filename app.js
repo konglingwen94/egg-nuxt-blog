@@ -16,9 +16,21 @@ class AppBootHook {
     
 
     
-    console.log(this.app)
+    
   }
   serverDidReady() {
+
+    const {validator,mongoose}=this.app
+    validator.addRule('objectId', (rule, value) => {
+      try {
+        // JSON.parse(value);
+        mongoose.Types.ObjectId(value)
+
+      } catch (err) {
+        return err.message
+      }
+    });
+    
     console.log('Server did ready')
   }
 }
