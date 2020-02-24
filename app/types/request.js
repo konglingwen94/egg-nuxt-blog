@@ -76,14 +76,11 @@ module.exports = {
     },
   },
   article: {
-    categoryID: { type: 'objectId'},
-    tagIdList: {
-      type: 'array?',
-
-      itemType: 'string',
-    },
+    categoryID: 'objectId',
+    tagIdList: 'objectIdList',
     title: {
       type: 'string',
+      min:1
     },
     content: {
       type: 'object',

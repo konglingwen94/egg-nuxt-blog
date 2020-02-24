@@ -2,7 +2,7 @@ const _ = require('lodash')
 module.exports = app => {
   const { Schema, model, modelSchemas, models, Types } = app.mongoose
   const { Comment: CommentModel } = models
-  // console.log(__filename,models.Comment)
+   
   const { ObjectId } = Schema.Types
 
   const ArticleSchema = new Schema(
@@ -80,12 +80,7 @@ module.exports = app => {
         tagIdList.map(item => item.toString()),
         storageTagIdList
       )
-      // console.log(tagIdList, mongooseArrayTagIdList)
-      // tagIdList.forEach((tagObjectId, index) => {
-      //   if (!mongooseArrayTagIdList.includes(tagObjectId)) {
-      //     props.value.push(tagObjectId)
-      //   }
-      // })
+    
 
       return !props.value.length
     },

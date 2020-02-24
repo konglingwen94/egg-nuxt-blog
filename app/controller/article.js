@@ -3,28 +3,45 @@ const { ObjectId } = require('mongoose').Types
 const _ = require('lodash')
 
 class ArticleController extends Controller {
+  async queryListByQuery() {
+    const { ctx } = this
+
+    let { tags, categories } = ctx.query
+
+    if (tags) {
+      const tagIdList = tags.split()
+      ctx.validate(
+        {
+          tagIdList: {
+            type: 'array',
+            itemType: 'objectId',
+          },
+        },
+        { tagIdList }
+      )
+
+      filter.tagIdList = { $in: tagIdList }
+    }
+
+    if (categories) {
+      const categoryIdList = categories.split()
+      ctx.validate({ categoryIdList: { type: 'array' } })
+    }
+
+    const tagIdList = tags.split(',')
+    const categoryIdList = categories.split(',')
+  }
   async queryListByOptions() {
     const { ctx, service } = this
 
-    const {
-      tagID: tagIdList,
-      categoryID: categoryIdList,
-      idList,
-     
-    } = ctx.queries
-    const { sort: sortBy,
-      number,}=ctx.query
+    const { tagID: tagIdList, categoryID: categoryIdList, idList } = ctx.queries
+    const { sort: sortBy, number } = ctx.query
     const filter = {}
 
     if (tagIdList) {
       ctx.validate(
         {
-          tagIdList: {
-            type: 'array',
-            itemType: 'string',
-            min: 1,
-            rule: { max: 24, min: 24 },
-          },
+          tagIdList: 'objectIdList',
         },
         { tagIdList }
       )
@@ -35,15 +52,7 @@ class ArticleController extends Controller {
     if (categoryIdList) {
       ctx.validate(
         {
-          categoryIdList: {
-            type: 'array',
-            itemType: 'string',
-            rule: {
-              max: 24,
-              min: 24,
-            },
-            min: 1,
-          },
+          categoryIdList: 'objectIdList',
         },
         { categoryIdList }
       )
@@ -54,11 +63,7 @@ class ArticleController extends Controller {
     if (idList) {
       ctx.validate(
         {
-          idList: {
-            type: 'array',
-            itemType: 'objectId',
-            min: 1,
-          },
+          idList: 'objectIdList',
         },
         { idList }
       )
@@ -70,32 +75,23 @@ class ArticleController extends Controller {
       filter.isPublished = true
     }
 
-    console.log(ctx.model.Article.find(filter))
-    const result = ctx.model.Article.find(filter)
-      .populate('commentCount')
-      .populate('commentList')
-      .populate('category')
-      .populate('tagList')
-      .sort('-createdAt')
-    console.log(result.getOptions())
-
     const options = { sort: {} }
 
     if (sortBy) {
       ctx.validate(
         {
           sortBy: {
-            type: 'emum',
+            type: 'enum',
             values: ['pv', 'startCount'],
           },
         },
         { sortBy }
       )
-      options.sort = { sortBy: sortBy, createdAt: -1 }
+      options.sort = { [sortBy]: -1, createdAt: -1 }
     } else {
       options.sort = { createdAt: -1 }
     }
-
+    console.log(options)
     if (number) {
       ctx.validate(
         {
@@ -113,8 +109,14 @@ class ArticleController extends Controller {
       options.limit = parseInt(number)
     }
 
-    result.setOptions(options)
+    const result = ctx.model.Article.find(filter, null, options)
+      .populate('commentCount')
+      .populate('commentList')
+      .populate('category')
+      .populate('tagList')
+    // .sort('-createdAt')
     console.log(result.getOptions())
+
     return result
   }
 

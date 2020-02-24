@@ -43,11 +43,13 @@ export default {
   },
    
   async asyncData({ req, query,store }) {
+    const {number,sort}=store.state.configuration.siteConfig.carousel
     try {
       var [articleList, carousel = []] = await Promise.all([
         // req.service.article.queryList()
         ArticleService.fetchList(),
-        ArticleService.fetchList({number:store.state.configuration.siteConfig.carousel.number})
+        
+        ArticleService.fetchList({number,sort})
       ])
     } catch (error) {
       return { articleList: [], carousel: [] }
