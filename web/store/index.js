@@ -1,19 +1,11 @@
 import _ from 'lodash'
-import AboutusService from '@/services/aboutus'
-import defaultAboutusData from '../../config/defaultAboutusData'
- 
+
 export const state = () => ({
   messageIdListWithThumbup: [],
-  aboutus: defaultAboutusData,
 })
 
 export const mutations = {
-  setAboutus(state, payload) {
-    _.merge(state.aboutus, payload)
-  },
-
   pushDiggId(state, id) {
-     
     if (!state.messageIdListWithThumbup.includes(id) && id) {
       state.messageIdListWithThumbup.push(id)
     }
@@ -28,25 +20,19 @@ export const mutations = {
 }
 
 export const actions = {
-  async nuxtServerInit() {
-    
+  async nuxtServerInit({dispatch}) {
     try {
-      await Promise.all([
-        this.dispatch('configuration/fetchData'),
-        this.dispatch('weather/fetchWeatherData'),
-      ])
+      // return await Promise.all([
+        await dispatch('configuration/fetchSiteConfig')
+        await dispatch('configuration/fetchProfile')
+        await dispatch('configuration/fetchProjectIntro')
+        await dispatch('weather/fetchWeatherData')
+      // ])
     } catch (error) {
       console.error(error)
       // .catch(err => Promise.reject(err))
     }
-  },
 
-  fetchAboutusData() {
-    // debugger
-    return AboutusService.fetchData()
-      .then(result => {
-        this.commit('setAboutus', result)
-      })
-      .catch(error => Promise.reject(error))
+    
   },
 }

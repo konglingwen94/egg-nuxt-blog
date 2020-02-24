@@ -19,9 +19,9 @@ export default {
     contact() {
       // console.log(this.$store.state.aboutus)
       return (
-        (this.$store.state.aboutus.profile &&
-          this.$store.state.aboutus.profile.personal &&
-          this.$store.state.aboutus.profile.personal.contact) ||
+        (this.$store.state.configuration.profile &&
+          this.$store.state.configuration.profile.personal &&
+          this.$store.state.configuration.profile.personal.contact) ||
         {}
       )
     }

@@ -39,7 +39,7 @@ export default {
   },
   computed: {
     options(){
-      return this.$store.state.configuration.message
+      return this.$store.state.configuration.siteConfig.message
     },
     renderData() {
       const dataList = JSON.parse(JSON.stringify(this.dataList))

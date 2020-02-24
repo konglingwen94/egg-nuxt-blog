@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <el-carousel
+    <!-- <el-carousel
       :interval="carousel.configOptions && carousel.configOptions.interval"
       :loop="carousel.configOptions&&carousel.configOptions.loop"
       height="380px"
@@ -26,7 +26,7 @@
           </div>
         </nuxt-link>
       </el-carousel-item>
-    </el-carousel>
+    </el-carousel> -->
     <article-list :dataList="articleList"></article-list>
   </div>
 </template>

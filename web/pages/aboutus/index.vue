@@ -60,10 +60,10 @@ export default {
   layout: 'public',
   computed: {
     profile() {
-      return this.$store.state.aboutus.profile
+      return this.$store.state.configuration.profile
     },
     platform() {
-      return this.$store.state.aboutus.platform
+      return this.$store.state.configuration.projectIntro.platform
     }
   },
   data() {
