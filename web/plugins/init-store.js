@@ -6,9 +6,11 @@ export default ({ app }) => {
     store = {}
   }
 
-  app.store.replaceState(_.assign({}, app.store.state, store))
+  app.store.replaceState(_.assign({}, store, app.store.state))
 
   window.onbeforeunload = () => {
-    localStorage.store = JSON.stringify(_.omit(app.store.state, 'configuration'))
+    localStorage.store = JSON.stringify(
+      _.pick(app.store.state, ['message','article'])
+    )
   }
 }

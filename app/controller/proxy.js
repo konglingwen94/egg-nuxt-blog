@@ -68,6 +68,7 @@ class ProxyController extends Controller {
       icon,
     }
 
+     
     return response
   }
   async fetchLocationCity() {

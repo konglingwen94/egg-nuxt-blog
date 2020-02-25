@@ -1,6 +1,7 @@
 import Vue from 'vue'
 
 export const state = () => ({
+  persistence:true,
   diggCommentIdList: [],
   starIdList: [],
 })

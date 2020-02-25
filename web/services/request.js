@@ -1,6 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
-console.log('process.server',process.server)
+ 
 const instance = axios.create({
   baseURL: process.server?'http://localhost:7001/api':'/api',
 })

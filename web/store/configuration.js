@@ -24,7 +24,7 @@ export const mutations = {
     state.profile = payload
   },
   setProjectIntro(state, payload) {
-    console.log(payload)
+    
     state.projectIntro = payload
   },
 }
@@ -34,7 +34,7 @@ export const actions = {
     return ConfigurationService.fetchSiteConfig()
       .then(response => {
         commit('setSiteConfig', response)
-        console.log('setSiteConfig',response)
+        
       })
       .catch(err => {
         return Promise.reject(err)
@@ -45,7 +45,7 @@ export const actions = {
     
     return ConfigurationService.fetchProjectIntro()
       .then(response => {
-        console.log('response',response)
+        
        
         commit('setProjectIntro', response)
       })

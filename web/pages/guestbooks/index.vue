@@ -71,10 +71,10 @@ export default {
       this.collapseEditor()
     },
     collapseEditor() {
-      console.log(this.type)
+      
       if (this.type === 'comment') {
         this.$refs.editor.hide()
-        console.log('comment-type')
+        
       } else {
         this.$refs.commentEditor.clearValidate()
       }
@@ -87,16 +87,16 @@ export default {
       this.$refs.editor.focus('content')
     },
     thumbup(id) {
-      console.log('thumbup', id)
+      
 
 
-      if (this.$store.state.messageIdListWithThumbup.includes(id) || this.thumbupLoading) {
+      if (this.$store.state.message.diggedIdList.includes(id) || this.thumbupLoading) {
         return
       }
       this.thumbupLoading = true
 
       MessageService.thumbup(id).then(() => {
-        this.$store.commit('pushDiggId', id)
+        this.$store.commit('message/pushDiggId', id)
         this.dataList.find(item => item.id === id).thumbupCount++
         this.thumbupLoading=false
       })

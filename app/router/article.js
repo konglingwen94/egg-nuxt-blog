@@ -49,7 +49,7 @@ module.exports = app => {
 
   router.get('/articles', controller.article.queryListByOptions)
 
-  router.get('/articles/:id/suggestion', controller.article.querySuggestionList)
+  router.get('/articles/:id/suggestion', controller.article.queryListByTagList)
 
   router.get('/articles/:id', controller.article.queryOne)
 

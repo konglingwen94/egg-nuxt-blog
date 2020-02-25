@@ -3,42 +3,14 @@ const { ObjectId } = require('mongoose').Types
 const _ = require('lodash')
 
 class ArticleController extends Controller {
-  async queryListByQuery() {
+  async queryListByOptions() {
     const { ctx } = this
 
-    let { tags, categories } = ctx.query
-
-    if (tags) {
-      const tagIdList = tags.split()
-      ctx.validate(
-        {
-          tagIdList: {
-            type: 'array',
-            itemType: 'objectId',
-          },
-        },
-        { tagIdList }
-      )
-
-      filter.tagIdList = { $in: tagIdList }
-    }
-
-    if (categories) {
-      const categoryIdList = categories.split()
-      ctx.validate({ categoryIdList: { type: 'array' } })
-    }
-
-    const tagIdList = tags.split(',')
-    const categoryIdList = categories.split(',')
-  }
-  async queryListByOptions() {
-    const { ctx, service } = this
-
-    const { tagID: tagIdList, categoryID: categoryIdList, idList } = ctx.queries
-    const { sort: sortBy, number } = ctx.query
-    const filter = {}
-
-    if (tagIdList) {
+    const { tagID, categoryID, number, sort: orderBy } = ctx.query
+    const sortOpts = {}
+    const filter={}
+    if (tagID) {
+      const tagIdList = tagID.split()
       ctx.validate(
         {
           tagIdList: 'objectIdList',
@@ -49,81 +21,46 @@ class ArticleController extends Controller {
       filter.tagIdList = { $in: tagIdList }
     }
 
-    if (categoryIdList) {
-      ctx.validate(
-        {
-          categoryIdList: 'objectIdList',
-        },
-        { categoryIdList }
-      )
+    if (categoryID) {
+      // const categoryIdList = categories.split()
+      ctx.validate({ categoryID: 'objectId' }, { categoryID })
 
-      filter.categoryID = { $in: categoryIdList }
+      filter.categoryID = categoryID
     }
 
-    if (idList) {
+    if (number) {
       ctx.validate(
-        {
-          idList: 'objectIdList',
-        },
-        { idList }
+        { number: { type: 'integer', min: 1, convertType(value){return parseInt(value)} } },
+        { number }
+      )
+    }
+    if (orderBy) {
+      ctx.validate(
+        { orderBy: { type: 'enum', values: ['pv', 'starCount'] } },
+        { orderBy }
       )
 
-      filter._id = { $in: idList.map(id => ObjectId(id)) }
+      sortOpts[orderBy] = -1
     }
 
     if (!ctx.path.startsWith('/api/admin')) {
       filter.isPublished = true
     }
 
-    const options = { sort: {} }
-
-    if (sortBy) {
-      ctx.validate(
-        {
-          sortBy: {
-            type: 'enum',
-            values: ['pv', 'startCount'],
-          },
-        },
-        { sortBy }
-      )
-      options.sort = { [sortBy]: -1, createdAt: -1 }
-    } else {
-      options.sort = { createdAt: -1 }
-    }
-    console.log(options)
-    if (number) {
-      ctx.validate(
-        {
-          number: {
-            type: 'integer',
-            min: 1,
-            convertType(value) {
-              return parseInt(value)
-            },
-          },
-        },
-        { number }
-      )
-
-      options.limit = parseInt(number)
-    }
-
-    const result = ctx.model.Article.find(filter, null, options)
+    return ctx.model.Article.find(filter)
+      .sort({ ...sortOpts, createdAt: -1 })
+      .limit(parseInt(number) || 0)
       .populate('commentCount')
       .populate('commentList')
-      .populate('category')
       .populate('tagList')
-    // .sort('-createdAt')
-    console.log(result.getOptions())
-
-    return result
+      .populate('category')
   }
+  
 
-  async querySuggestionList() {
+  async queryListByTagList() {
     const { ctx, service } = this
     let { tagIdList } = ctx.queries
-
+// console.log(this)
     const { id } = ctx.params
 
     return ctx.model.Article.find({
@@ -142,15 +79,15 @@ class ArticleController extends Controller {
       .populate('category')
   }
   async createOne() {
-    const { ctx, service } = this
+    const { ctx,   } = this
 
-    const result = await ctx.model.Article.create(ctx.state.body)
+    const result =   ctx.model.Article.create(ctx.state.body)
 
     ctx.status = 201
     return result
   }
   async updateOne() {
-    const { ctx, service } = this
+    const { ctx,   } = this
 
     return ctx.model.Article.updateOne(
       { _id: ctx.params.id },
@@ -160,18 +97,13 @@ class ArticleController extends Controller {
     )
   }
   async deleteMany() {
-    const { ctx, service } = this
+    const { ctx,   } = this
 
     const { idList } = ctx.queries
 
     ctx.validate(
       {
-        idList: {
-          type: 'array',
-          min: 1,
-          itemType: 'string',
-          rule: { min: 24, max: 24 },
-        },
+        idList: 'objectIdList',
       },
       { idList }
     )

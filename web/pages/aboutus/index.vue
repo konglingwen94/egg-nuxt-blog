@@ -66,9 +66,7 @@ export default {
       return this.$store.state.configuration.projectIntro.platform
     }
   },
-  data() {
-    return {}
-  }
+  
 }
 </script>
 <style scoped lang="less">
