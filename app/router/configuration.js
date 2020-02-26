@@ -1,5 +1,5 @@
 module.exports = app => {
-  const { controller, middleware } = app
+  const { controller, } = app
   const router = app.proxyRouter
 
   router.get(

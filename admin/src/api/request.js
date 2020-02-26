@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Loading, Message } from 'element-ui'
-// import router from '@/router.js'
+import router from '@/router.js'
 
 let loading
 
@@ -38,35 +38,16 @@ instance.interceptors.response.use(
     loading.close()
     const requestMethod = response.config.method
     
-    if (requestMethod === 'patch' || requestMethod === 'delete') {
-      if (requestMethod === 'patch') {
-        if (response.data.ok === 1) {
-          Message.success(
-            response.data.successMessage
-              ? response.data.successMessage
-              : `更新${response.data.nModified}条数据`
-          )
-        } else {
-          Message.error('更新失败')
-        }
-      } else if (requestMethod === 'delete') {
-        if (response.data.ok === 1) {
-          Message.success(`删除${response.data.deletedCount}条数据`)
-        } else {
-          Message.error('删除失败')
-        }
-      }
-
-      if (response.data.ok !== 1) {
-        return Promise.reject(response.data)
-      }
+    if (response.data.ok !== 1) {
+      return Promise.reject(response.data)
     }
+     
     return Promise.resolve(response.data)
   },
   err => {
     loading.close()
     if (err.response.status === 401) {
-      // router.push('/auth/login')
+      router.push('/auth/login')
       localStorage.removeItem('adminInfo')
       localStorage.removeItem('accessToken')
       return
