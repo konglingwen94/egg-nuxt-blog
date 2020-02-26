@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Loading, Message } from 'element-ui'
+import { Loading,   } from 'element-ui'
 import router from '@/router.js'
 
 let loading
@@ -36,11 +36,9 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   response => {
     loading.close()
-    const requestMethod = response.config.method
     
-    if (response.data.ok !== 1) {
-      return Promise.reject(response.data)
-    }
+    
+    
      
     return Promise.resolve(response.data)
   },

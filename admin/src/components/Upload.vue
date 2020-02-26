@@ -6,18 +6,23 @@
       list-type="picture"
       :on-success="handleUploadSuccess"
       :on-error="handleUploadError"
-      :on-remove="()=>$emit('remove')"
-      v-bind="$attrs"
-      v-on="$listeners"
+      :on-remove="handleRemove"
+      :file-list="fileList"
+      
     >
       <el-button type="primary" size="small">点击上传</el-button>
     </el-upload>
   </div>
 </template>
 <script>
+import request from '@/api/request'
 export default {
   name: 'Upload',
-
+props:{
+  fileList:{
+    type:Array
+  }
+},
   data() {
     return {
       // fileList: [],
@@ -27,13 +32,19 @@ export default {
   methods: {
     handleUploadSuccess(response, file, fileList) {
       if (fileList.length > 1) {
-        fileList.shift()
+        const unlinkFile=fileList.shift()
+      request.delete(`${unlinkFile.response.path}`)
       }
-
+// console.log(file)
       this.$emit('success', response)
     },
     handleUploadError(err) {
       this.$message.error(err.message)
+    },
+    handleRemove(file){
+      
+      request.delete(`${file.response.path}`)
+      this.$emit('remove',file && file.response)
     }
   }
 }

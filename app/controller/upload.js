@@ -6,11 +6,15 @@ module.exports = class UploadController extends Controller {
   async deleteFile(){
     const {ctx}=this
     const {baseDir,upload}=this.app.config
-
-    console.log(path.resolve(baseDir,upload.dir))
-    console.log(this.app.config)
-    require('fs').unlinkSync(path.resolve(baseDir,upload.dir,ctx.params.filename))
-    return path.resolve(baseDir,upload.dir)
+try {
+  const result=fs.unlinkSync(path.resolve(baseDir,upload.dir,ctx.params.filename))
+  
+} catch (error) {
+  throw error
+}
+    
+    // console.log(result)
+    return {ok:1,n:1}
   }
   async uploadFile() {
     const { ctx } = this

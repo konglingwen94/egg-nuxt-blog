@@ -28,7 +28,7 @@
 
       <el-form-item label="缩略图">
         <upload
-          @remove="form.cover={name:'',path:''}"
+          @remove="onUploadRemove"
           @success="response=>Object.assign(form.cover,response)"
           :file-list="fileList"
         ></upload>
@@ -92,6 +92,10 @@ export default {
     }
   },
   methods: {
+    onUploadRemove(){
+      this.form.cover={name:'',path:''}
+      
+    },
     handleSubmit() {
       const {
         isPublished,

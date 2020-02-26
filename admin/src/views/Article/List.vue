@@ -122,7 +122,14 @@ export default {
         this.dataList = response
       })
       .catch(err => {
-        this.$message.error(err.message)
+        console.error(err)
+        try{
+          this.$message.error(err.message)
+
+        }catch(err){
+
+        }
+
       })
   },
   methods: {
