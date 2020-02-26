@@ -1,47 +1,9 @@
-const Inflector = require('inflected')
-global.Inflector = Inflector
-Inflector.inflections('en', function(inflect) {
-    inflect.singular('configuration-siteconfigs', 'SiteConfig')
-    inflect.singular('configuration-projectintros', 'ProjectIntro')
-
-  })
 
 module.exports = app => {
-  const { controller, middleware,mongoose  } = app
-  const router = (app.proxyRouter = app.router.namespace(
-    '/api',
-    middleware.requestParameterValidator()
-  ))
-
-  app.proxyRouter.param('id', async (id, ctx, next) => {
-    ctx.validate({ id: { type: 'string', max: 24, min: 24 } }, { id })
-    try {
-      mongoose.Types.ObjectId(id)
-    } catch (error) {
-      throw error
-    }
-
-    const routerPaths = ctx.routerPath.split('/')
-
-    const modelName = Inflector.classify(
-      routerPaths[routerPaths.indexOf(':id') - 1]
-    )
-console.log('modelName',modelName)
-    const targetModel = mongoose.models[modelName]
-
-    if (!targetModel) {
-      return next()
-    }
-
-    ctx.state.targetModel=targetModel
-    const result = await targetModel.findById(id)
-    if (!result) {
-      ctx.throw(404, `Invalid ObjectId("${id}")`)
-    }
-
-    return next()
-  })
-
+  const { controller, middleware,   } = app
+const router=app.proxyRouter
+// console.log(app.proxyRouter)
+// process.exit(0)
   /**
    *
    * admin

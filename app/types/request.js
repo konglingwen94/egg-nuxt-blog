@@ -1,58 +1,89 @@
 module.exports = {
-  profile: {
-    personal: {
-      type: 'object?',
-      rule: {
-        contact: {
-          type: 'array',
-          itemType: 'object',
-          rule: {
-            label: {
-              type: 'string',
-              value: 'string',
+  configuration: {
+    profile: {
+      personal: {
+        type: 'object?',
+        rule: {
+          contact: {
+            type: 'array',
+            itemType: 'object',
+            rule: {
+              label: {
+                type: 'string',
+                value: 'string',
+              },
             },
+            min: 1,
           },
-          min: 1,
+          description: {
+            type: 'string',
+            min: 1,
+          },
         },
-        description: {
-          type: 'string',
-          min: 1,
+      },
+      technology: {
+        type: 'object?',
+        rule: {
+          frontend: {
+            type: 'string',
+            min: 1,
+          },
+          serverSide: {
+            type: 'string',
+            min: 1,
+          },
         },
       },
     },
-    technology: {
-      type: 'object?',
-      rule: {
-        frontend: {
-          type: 'string',
-          min: 1,
+    projectIntro: {
+      platform: {
+        type: 'object?',
+        rule: {
+          webClient: {
+            type: 'string',
+            min: 1,
+          },
+          serverUI: {
+            type: 'string',
+            min: 1,
+          },
+          serverApi: {
+            type: 'string',
+            min: 1,
+          },
         },
-        serverSide: {
-          type: 'string',
-          min: 1,
+      },
+    },
+    siteConfig: {
+      carousel: {
+        type: 'object?',
+        rule: {
+          number: {
+            type: 'int',
+            min: 1,
+          },
+          sort: {
+            type: 'enum',
+            values: ['pv', 'starCount'],
+          },
+          autoplay: 'boolean',
+          loop: 'boolean',
+          interval: {
+            type: 'int',
+            min: 500,
+          },
+        },
+      },
+      message: {
+        type: 'object?',
+        rule: {
+          renderLayer: 'int',
+          expandLayer: 'int',
         },
       },
     },
   },
-  projectIntro: {
-    platform: {
-      type: 'object?',
-      rule: {
-        webClient: {
-          type: 'string',
-          min: 1,
-        },
-        serverUI: {
-          type: 'string',
-          min: 1,
-        },
-        serverApi: {
-          type: 'string',
-          min: 1,
-        },
-      },
-    },
-  },
+
   account: {
     username: {
       type: 'string',
@@ -80,7 +111,7 @@ module.exports = {
     tagIdList: 'objectIdList',
     title: {
       type: 'string',
-      min:1
+      min: 1,
     },
     content: {
       type: 'object',
@@ -140,34 +171,7 @@ module.exports = {
       min: 1,
     },
   },
-  siteConfig: {
-    carousel: {
-      type: 'object?',
-      rule: {
-        number: {
-          type: 'int',
-          min: 1,
-        },
-        sort: {
-          type: 'enum',
-          values: ['pv', 'starCount'],
-        },
-        autoplay: 'boolean',
-        loop: 'boolean',
-        interval: {
-          type: 'int',
-          min: 500,
-        },
-      },
-    },
-    message: {
-      type: 'object?',
-      rule: {
-        renderLayer: 'int',
-        expandLayer: 'int',
-      },
-    },
-  },
+
   message: {
     content: {
       type: 'string',

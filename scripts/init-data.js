@@ -104,21 +104,18 @@ db.once('open', () => {
   createAdminAccount()
     .then(async () => {
       try {
-        var result = await ConfigurationModel.discriminators.Siteconfig.findOne()
+        var result = await ConfigurationModel.findOne()
       } catch (error) {
         return Promise.reject(error)
       }
 
       if (result) {
-        return Promise.reject(new Error('Siteconfig is initialized.'))
+        return Promise.reject(new Error('Configuration data is initialized.'))
       }
-      const { carousel, message } = defaultConfiguration
+      // const { carousel, message } = defaultConfiguration
 
       try {
-        return ConfigurationModel.discriminators.Siteconfig.create({
-          carousel,
-          message,
-        })
+        return ConfigurationModel.create(defaultConfiguration)
       } catch (error) {
         return Promise.reject(error)
       }
@@ -133,48 +130,7 @@ db.once('open', () => {
       console.error('Initial configuration data failed.', err.message)
       // process.exit(1)
     })
-    .then(async () => {
-      try {
-        var result = await ConfigurationModel.discriminators.Projectintro.findOne()
-      } catch (error) {
-        return error
-      }
-
-      if (result) {
-        return Promise.reject(new Error('Projectintro data is initialized'))
-      }
-      try {
-        var createdResult = await ConfigurationModel.discriminators.Projectintro.create(
-          _.pick(defaultConfiguration, ['platform', 'profile'])
-        )
-      } catch (error) {
-        return Promise.reject(error)
-      }
-
-      console.log('Init projectIntro data successfully with \n', createdResult)
-    })
-    .then(async () => {
-      try {
-        var resultProfile = await ConfigurationModel.discriminators.Profile.findOne()
-      } catch (error) {
-        return Promise.reject(error)
-      }
-
-      if (resultProfile) {
-        return Promise.reject(new Error('Profile is initialized'))
-      }
-
-      try {
-        var createdProfile = await ConfigurationModel.discriminators.Profile.create(
-          defaultConfiguration.profile
-        )
-      } catch (error) {
-        return Promise.reject(error)
-      }
-
-      console.log(`Initial profile data successfully with.`, createdProfile)
-    })
-
+     
     .then(() => {
       console.log('Done.')
       process.exit(0)

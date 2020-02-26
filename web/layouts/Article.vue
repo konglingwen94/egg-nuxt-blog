@@ -1,4 +1,4 @@
-<template>
+<template functional>
   <div class="container">
     <header>
       <Header></Header>
@@ -14,16 +14,10 @@
     <el-backtop :right="10"></el-backtop>
   </div>
 </template>
-<script>
-export default {
-  mounted() {}
-}
-</script>
-
-<style lang="less" scoped>
-.container {
-  // max-width: 1200px;
-  // margin: auto;
-}
-
-</style>
+ 
+ <script>
+ export default {
+   name:'article-layout'
+ }
+ </script>
+ 

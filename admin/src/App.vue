@@ -7,9 +7,9 @@
 export default {
   created() {
 
-    this.$store.dispatch('fetchSiteConfig').catch(err => {})
-    this.$store.dispatch('fetchProjectIntro').catch(err => {})
-    this.$store.dispatch('fetchProfile').catch(err => {})
+    this.$store.dispatch('initData').catch(err => {})
+    // this.$store.dispatch('fetchProjectIntro').catch(err => {})
+    // this.$store.dispatch('fetchProfile').catch(err => {})
   }
 }
 </script>

@@ -1,6 +1,12 @@
 import _ from 'lodash'
 import ConfigurationApi from '@/api/configurations'
 
+const mapKindToMutationTypes = {
+  Projectintro: 'setProjectIntro',
+  Siteconfig: 'setSiteConfig',
+  Profile: 'setProfile',
+}
+
 export default {
   state: {
     projectIntro: {
@@ -30,59 +36,35 @@ export default {
     // fetchConfiguration({dispatch}){
     //   dispatch('configuration/fetchSiteConfig')
     // },
-    fetchSiteConfig({ commit }) {
-      return ConfigurationApi.fetchOneSiteConfig()
-        .then(result => {
-          commit('setSiteConfig', result)
+
+    initData({ commit }) {
+      ConfigurationApi.fetchAllConfigurations().then(response => {
+        response.forEach(item => {
+          commit(mapKindToMutationTypes[item.kind], item)
         })
-        .catch()
+      })
     },
     updateSiteConfig({ commit, state }, payload) {
-      return ConfigurationApi.updateOneSiteConfig(state.siteConfig.id, payload)
-        .then(result => {
+      return ConfigurationApi.updateSiteConfig(state.siteConfig.id, payload)
+        .then(() => {
           commit('setSiteConfig', payload)
         })
-        .catch(error => {
-          return Promise.reject(error)
-        })
-    },
-    fetchProjectIntro({ commit }) {
-      return ConfigurationApi.fetchOneProjectIntro()
-        .then(result => {
-          commit('setProjectIntro', result)
-        })
-        .catch()
+        .catch(error => Promise.reject(error))
     },
     updateProjectIntro({ commit, state }, payload) {
-      // const clonedProjectIntro = _.cloneDeep(
-      //   _.pick(state.projectIntro, ['profile', 'platform'])
-      // )
-      // _.assign(clonedProjectIntro, payload)
-      // payload = clonedProjectIntro
-      // payload = _.pick({ ...state.projectIntro, ...payload },['platform','profile'])
-      console.log('payload', payload)
-      return ConfigurationApi.updateOneProjectIntro(
-        state.projectIntro.id,
-        payload
-      )
-        .then(result => {
+      return ConfigurationApi.updateProjectIntro(state.projectIntro.id, payload)
+        .then(() => {
           commit('setProjectIntro', payload)
         })
-        .catch(error => {
-          return Promise.reject(error)
-        })
-    },
-    fetchProfile({ commit }) {
-      return ConfigurationApi.fetchOneProfile()
-        .then(response => {
-          commit('setProfile', response)
-        })
-        .catch(err => {})
+        .catch(error => Promise.reject(error))
     },
     updateProfile({ commit, state }, payload) {
-      return ConfigurationApi.updateOneProfile(state.profile.id, payload).then(()=>{
-        commit('setProfile',payload)
-      }).catch(err=>{})
+      return ConfigurationApi.updateProfile(state.profile.id, payload)
+        .then(() => {
+          commit('setProfile', payload)
+        })
+        .catch(error => Promise.reject(error))
     },
+ 
   },
 }

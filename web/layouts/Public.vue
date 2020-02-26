@@ -1,4 +1,4 @@
-<template>
+<template functional>
   <div>
     <header>
       <Header></Header>

@@ -3,8 +3,13 @@ class AppBootHook {
     this.app = app
     app.config.coreMiddleware.unshift('history', 'docs', 'compress')
   }
-
+  
   async didLoad() {
+
+
+ 
+
+
     const { mongoose, config } = this.app
     const { url } = this.app.config.mongoose
 
@@ -17,7 +22,6 @@ class AppBootHook {
     const { validator, mongoose } = this.app
     validator.addRule('objectId', (rule, value) => {
       try {
-         
         mongoose.Types.ObjectId(value)
       } catch (err) {
         return err.message
@@ -25,7 +29,6 @@ class AppBootHook {
     })
 
     validator.addRule('objectIdList', (rule, value) => {
-      
       try {
         var validationResult = validator.validate(
           {
@@ -42,16 +45,14 @@ class AppBootHook {
       }
 
       if (validationResult) {
-         
-       
         return validationResult.map((item, index) => {
-          item.field=`[${index}]`
-          
+          item.field = `[${index}]`
+
           return item
         })
       }
     })
-    
+
     console.log('Server did ready')
     global.app = this.app
   }

@@ -1,22 +1,16 @@
 import request from './request'
 
 export default {
-  fetchOneSiteConfig() {
-    return request.get('/configuration-siteconfig')
+  fetchAllConfigurations(payload){
+    return request.get('/configurations',{params:payload})
   },
-  updateOneSiteConfig(id, params) {
-    return request.patch(`/configuration-siteconfigs/${id}`, params)
+  updateSiteConfig(id,payload){
+    return request.patch(`/configurations/${id}/site-config`,payload)
   },
-  fetchOneProjectIntro(){
-    return request.get('/configuration-projectintro')
+  updateProjectIntro(id,payload){
+    return request.patch(`/configurations/${id}/project-intro`,payload)
   },
-  updateOneProjectIntro(id,payload){
-    return request.patch(`/configuration-projectintros/${id}`,payload)
-  },
-  fetchOneProfile(){
-    return request.get('/configuration-profile')
-  },
-  updateOneProfile(id,payload){
-    return request.patch(`/configuration-profiles/${id}`,payload)
+  updateProfile(id,payload){
+    return request.patch(`/configurations/${id}/profile`,payload)
   }
 }

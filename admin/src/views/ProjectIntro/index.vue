@@ -23,6 +23,9 @@ export default {
   computed: {
     platform() {
       return this.$store.state.configuration.projectIntro.platform
+    },
+    projectIntro(){
+      return this.$store.state.configuration.projectIntro
     }
   },
   methods: {
@@ -41,8 +44,9 @@ export default {
       }
 
       this.$store
-        .dispatch('updateProjectIntro', {
-          platform: { webClient, serverUI, serverApi }
+        .dispatch('updateProjectIntro',  {
+          platform: { webClient, serverUI, serverApi },
+          
         })
         .then(() => {
           this.$message.success('项目简介设置成功')

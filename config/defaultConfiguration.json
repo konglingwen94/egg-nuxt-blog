@@ -1,17 +1,24 @@
-{
-  "carousel": {
-    "number": 4,
-    "sort": "pv",
-    "interval": 3000,
-    "loop": true,
-    "autoplay": true
+[
+  {
+    "carousel": {
+      "number": 4,
+      "sort": "pv",
+      "interval": 3000,
+      "loop": true,
+      "autoplay": true
+    },
+    "message": {
+      "renderLayer": 2,
+      "expandLayer": 2
+    },
+    "kind": "Siteconfig"
   },
-  "message":{
-    "renderLayer":2,
-    "expandLayer":2
+  {
+    "kind": "Projectintro",
+    "platform": { "webClient": "", "serverUI": "", "serverApi": "" }
   },
-  "platform": { "webClient": "", "serverUI": "", "serverApi": "" },
-  "profile": {
+  {
+    "kind": "Profile",
     "personal": {
       "description": "",
       "contact": [
@@ -20,4 +27,4 @@
     },
     "technology": { "frontend": "", "serverSide": "" }
   }
-}
+]

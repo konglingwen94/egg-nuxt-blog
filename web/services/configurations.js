@@ -1,6 +1,10 @@
 import request from './request'
 
 export default {
+  fetchList() {
+    return request.get('/configurations')
+  },
+
   fetchSiteConfig() {
     return request.get('/configuration-siteconfig')
   },

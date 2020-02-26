@@ -1,33 +1,38 @@
-const _ = require('lodash')
+// const _ = require('lodash')
 const { Controller } = require('egg')
+// const configurationRule = require('../types/request').configuration
 
 class ConfigurationController extends Controller {
-  async queryOneConfiguration() {
+   
+  async updateSiteConfig() {
     const { ctx } = this
-    return ctx.model.Configuration.discriminators[ctx.state.configurationModelName].findOne()
+
+    return ctx.model.Configuration.discriminators.Siteconfig.updateOne(
+      { _id: ctx.params.id },
+      { $set: ctx.state.body }
+    )
   }
-  async updateOneConfiguration() {
+  async updateProjectIntro() {
     const { ctx } = this
-    return ctx.model.Configuration.discriminators[ctx.state.configurationModelName].updateOne(
+
+    return ctx.model.Configuration.discriminators.Projectintro.updateOne(
+      { _id: ctx.params.id },
+      { $set: ctx.state.body }
+    )
+  }
+  async updateProfile() {
+    const { ctx } = this
+
+    return ctx.model.Configuration.discriminators.Profile.updateOne(
       { _id: ctx.params.id },
       { $set: ctx.state.body }
     )
   }
 
-  // async queryOneProjectIntro() {
-  //   const { ctx } = this
-  //   return ctx.model.Configuration.discriminators.Projectintro.findOne()
-  // }
-
-  // updateOneProjectIntro() {
-    
-  //   return this.ctx.model.Configuration.discriminators.Projectintro.updateOne(
-  //     { _id: this.ctx.params.id },
-  //     { $set:this. ctx.state.body }
-  //   )
-  // }
-
-  
+  async queryConfigurations() {
+    const { ctx } = this
+    return ctx.model.Configuration.find()
+  }
 }
 
 module.exports = ConfigurationController

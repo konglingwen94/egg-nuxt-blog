@@ -1,6 +1,9 @@
 module.exports = app => {
-  const { Schema,  model } = app.mongoose
-  const ConfigurationModel = model('Configuration', new Schema({}, { timestamps: true }))
+  const { Schema, model } = app.mongoose
+  const ConfigurationModel = model(
+    'Configuration',
+    new Schema({}, { timestamps: true,discriminatorKey:'kind' })
+  )
 
   const SiteConfigModel = ConfigurationModel.discriminator(
     'Siteconfig',
@@ -25,30 +28,33 @@ module.exports = app => {
     })
   )
 
-
-
-  const ProjectIntro=ConfigurationModel.discriminator('Projectintro',new Schema({
+  const ProjectIntro = ConfigurationModel.discriminator(
+    'Projectintro',
+    new Schema({
       platform: {
         webClient: { type: String, default: '' },
         serverUI: { type: String, default: '' },
         serverApi: { type: String, default: '' },
       },
-    
-  }))
+    })
+  )
 
-  ConfigurationModel.discriminator('Profile',new Schema( {
-    personal: {
-      description: {
-        type: String,
-        default: '',
+  ConfigurationModel.discriminator(
+    'Profile',
+    new Schema({
+      personal: {
+        description: {
+          type: String,
+          default: '',
+        },
+        contact: [{}],
       },
-      contact: [{}],
-    },
-    technology: {
-      frontend: { type: String, default: '' },
-      serverSide: { type: String, default: '' },
-    },
-  },))
+      technology: {
+        frontend: { type: String, default: '' },
+        serverSide: { type: String, default: '' },
+      },
+    })
+  )
   // const AboutusSchema = new Schema(
   //   {
   //     profile: {
