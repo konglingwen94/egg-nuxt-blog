@@ -3,6 +3,8 @@ import Vue from 'vue'
 import {
   Aside,
   Button,
+  Breadcrumb,
+  BreadcrumbItem,
   Card,
   Checkbox,
   CheckboxGroup,
@@ -45,6 +47,8 @@ import {
 export default () => {
   Vue.use(Aside)
   Vue.use(Button)
+  Vue.use(Breadcrumb)
+  Vue.use(BreadcrumbItem)
   Vue.use(Card)
   Vue.use(Checkbox)
   Vue.use(CheckboxGroup)

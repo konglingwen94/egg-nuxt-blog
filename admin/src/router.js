@@ -62,7 +62,7 @@ const router = new Router({
           path: '/configuration/project-intro',
           component: ProjectIntro,
           meta: {
-            activedMenuItem: 'project-intro',
+            activedMenuItem: '/configuration/project-intro',
           },
         },
         {

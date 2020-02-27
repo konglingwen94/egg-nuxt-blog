@@ -14,23 +14,11 @@ registerElementUI()
 registerGlobalComponents(Vue)
 
 Vue.config.productionTip = false
+Vue.config.devtools = true
 
-Vue.config.errorHandler = (error, vm) => {
-  console.error(error)
-}
+ 
 
-Vue.config.warnHandler = (warn, vm) => {
-  console.warn(warn)
-}
-
-window.addEventListener(
-  'error',
-  e => {
-    console.error(e)
-  },
-  true
-)
-
+ 
 export default new Vue({
   router,
   store,

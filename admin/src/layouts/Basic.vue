@@ -15,23 +15,8 @@
 </template>
 
 <style lang="less" scoped>
-@media screen and (min-width: 600px) {
-  /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
-  .el-aside {
-    width: 200px !important;
-  }
-}
-@media screen and (max-width: 800px) {
-  /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
-  .el-aside {
-    width: 120px !important;
-  }
-}
-
-
-.el-aside {
-  min-height: 100vh;
-  background-color: #304156;
+.el-header {
+  box-shadow: 0 9px 13px -5px #ccc;
 }
 </style>
 

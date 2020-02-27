@@ -1,9 +1,20 @@
 <template>
-  <header class="headerbar">
-    <div class>
-      <el-page-header @back="$router.back()" :content="$route.meta.title"></el-page-header>
+  <div class="headerbar">
+    <div class="headerbar-breadcrumb">
+      <div class="collapse-button">
+        <i class="el-icon-s-fold"></i>
+      </div>&nbsp;&nbsp;
+
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>
+          <a href="/">活动管理</a>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+        <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+      </el-breadcrumb>
     </div>
-    <div class="headerbar__menu">
+    <div class="headerbar-menu">
       <el-menu mode="horizontal" router>
         <el-submenu index="username">
           <template slot="title">
@@ -14,7 +25,7 @@
         </el-submenu>
       </el-menu>
     </div>
-  </header>
+  </div>
 </template>
 
 <script>
@@ -44,23 +55,13 @@ export default {
 
 <style lang="less">
 .headerbar {
-  .el-badge__content.is-fixed {
-    // top: 20px;
-  }
-  .el-page-header {
-    margin-top: 20px;
-  }
-}
-
-.headerbar {
   display: flex;
   justify-content: space-between;
-  // margin: 0 -20px;
-  // overflow: hidden;
-  background-color: #fff;
+  align-items: center;
 
-  &__menu {
-    // float: right;
+  &-breadcrumb {
+    display: flex;
+    align-items: center;
   }
 }
 </style>
