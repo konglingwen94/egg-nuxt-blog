@@ -27,10 +27,15 @@ export default {
     }
   },
   created() {
-    const unwatch = this.$watch('initialMarkdown', function(value) {
-      this.editor.content.innerHTML = value.html
-      typeof unwatch === 'function' && unwatch()
-    })
+    const unwatch = this.$watch(
+      'initialMarkdown',
+      function(value) {
+        console.log('initialMarkdown',value.html)
+        this.editor.content.innerHTML = value.html
+        typeof unwatch === 'function' && unwatch()
+      },
+      { deep: true }
+    )
   },
 
   mounted() {
@@ -67,6 +72,9 @@ export default {
     })
   },
   methods: {
+    clearContent(){
+this.editor.content.innerHTML=''
+    },
     onSuccess(file) {
       pell.exec('insertImage', file.path)
     }
@@ -74,7 +82,6 @@ export default {
 }
 </script>
 <style lang="less">
- 
 .pell {
   border: 1px solid rgba(10, 10, 10, 0.1);
   box-sizing: border-box;

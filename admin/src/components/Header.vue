@@ -1,17 +1,22 @@
 <template>
   <div class="headerbar">
     <div class="headerbar-breadcrumb">
-      <div class="collapse-button">
-        <i class="el-icon-s-fold"></i>
+      <div class="collapse-button" @click="$store.commit('reverseMenuCollapsed')">
+        <i :class="$store.state.menuCollapsed?'el-icon-s-unfold':'el-icon-s-fold'"></i>
       </div>&nbsp;&nbsp;
-
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>
+        <!-- <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item> -->
+
+        <el-breadcrumb-item
+          :to="item.path"
+          v-for="(item,index) in breadcrumbList"
+          :key="index"
+        >{{item.meta.title}}</el-breadcrumb-item>
+        <!-- <el-breadcrumb-item>
           <a href="/">活动管理</a>
         </el-breadcrumb-item>
         <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-        <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+        <el-breadcrumb-item>活动详情</el-breadcrumb-item>-->
       </el-breadcrumb>
     </div>
     <div class="headerbar-menu">
@@ -40,6 +45,18 @@ export default {
 
         return nickname || '你好'
       }
+      // breadcrumbList:[]
+    }
+  },
+  computed: {
+    breadcrumbList() {
+      console.log(this.$route.matched)
+      return this.$route.matched.filter(item => item.path)
+    }
+  },
+  watch: {
+    $route() {
+      // console.log(this.$route.matched)
     }
   },
   methods: {

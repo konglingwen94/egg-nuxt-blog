@@ -21,6 +21,7 @@
       </el-form-item>
       <el-form-item label="文章内容" required>
         <pell
+          ref="markdown"
           @change="content=>Object.assign(form.content,content)"
           :initialMarkdown="form.content"
         ></pell>
@@ -40,8 +41,6 @@
         <el-button type="primary" @click="handleSubmit">确定</el-button>
       </el-form-item>
     </el-form>
-
-     
   </div>
 </template>
 
@@ -49,9 +48,10 @@
 import ArticleApi from '@/api/articles'
 import CategoryApi from '@/api/categories'
 import TagApi from '@/api/tags'
-import { invokeDeepObject } from '@/utils/helper'
+ 
 
 export default {
+  name: 'article-editor',
   data() {
     return {
       form: {
@@ -79,22 +79,27 @@ export default {
       return this.$route.params.id
     }
   },
-  watch: {
-    $route: {
-      immediate: true,
-      handler(newRoute) {
-        invokeDeepObject(this.form, this.fileList)
-        if (!this.currentId) {
-          return
-        }
-        this.mapDataToForm()
-      }
+
+  beforeRouteLeave(from, to, next) {
+    this.form = {
+      title: '',
+      content: {
+        html: '',
+        text: ''
+      },
+      cover: { name: '', path: '' },
+      categoryID: '',
+      tagIdList: [],
+      isPublished: false
     }
+    this.fileList=[]
+    this.$refs.markdown.clearContent()
+    next()
   },
+
   methods: {
-    onUploadRemove(){
-      this.form.cover={name:'',path:''}
-      
+    onUploadRemove() {
+      this.form.cover = { name: '', path: '' }
     },
     handleSubmit() {
       const {
@@ -149,7 +154,12 @@ export default {
           this.$message.error(err.message)
         })
     },
-    mapDataToForm() {
+     
+  },
+
+  created() {
+    
+    if (this.action === 'edit') {
       ArticleApi.fetchOne(this.currentId)
         .then(response => {
           _.assign(this.form, _.pick(response, _.keys(this.form)))
@@ -165,10 +175,8 @@ export default {
         .catch(err => {
           this.$message.error(err.message)
         })
-    }
-  },
-
-  created() {
+    
+    } 
     CategoryApi.fetchList()
       .then(response => {
         this.categoryList = response

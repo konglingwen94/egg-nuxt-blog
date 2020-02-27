@@ -9,16 +9,14 @@ const store = new Vuex.Store({
     configuration,
   },
   state: {
-    tabs: [],
+    menuCollapsed: false,
   },
   getters: {
-    activeTab(state) {
-      return 'list'
-    },
+    
   },
   mutations: {
-    setTabs(state, tabs) {
-      state.tabs = tabs
+    reverseMenuCollapsed(state) {
+      state.menuCollapsed = !state.menuCollapsed
     },
   },
 })

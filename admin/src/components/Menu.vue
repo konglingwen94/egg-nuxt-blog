@@ -1,60 +1,43 @@
 <template>
-  <div class="menu-container">
-    <el-menu :default-active="$route.path" router background-color="#304156" text-color="#f2f6fc">
-      <el-submenu>
-        <template v-slot:title>
-          <i class="el-icon-eleme"></i> 博客管理
-        </template>
-        <el-menu-item index="/configuration/site-config">
-          <i class="el-icon-more"></i> 网站设置
+  <div class>
+    <el-menu :collapse="$store.state.menuCollapsed" router>
+      <template v-for="(item,index) in menuList">
+        <el-submenu v-if="item.children" :key="index" :index="`${item.path}`">
+          <span slot="title">
+            <i :class="item.meta.icon"></i>
+            &nbsp;{{item.meta.title}}
+          </span>
+          <template v-for="(subItem,key) in item.children">
+            <el-menu-item
+              :key="key"
+              :index="`/${item.path}/${subItem.path}`"
+              v-if="!subItem.meta.notMenu"
+            >
+              <i :class="subItem.meta.icon"></i>
+              <span slot="title">{{subItem.meta.title}}</span>
+            </el-menu-item>
+          </template>
+        </el-submenu>
+        <el-menu-item :key="index" v-else :index="`/${item.path}`">
+          <template v-if="!item.meta.notMenu">
+            <i :class="item.meta.icon"></i>
+            &nbsp;
+            <span slot="title">{{item.meta.title}}</span>
+          </template>
         </el-menu-item>
-        <el-menu-item index="/configuration/project-intro">
-          <i class="el-icon-s-platform"></i> 项目介绍
-        </el-menu-item>
-        <el-menu-item index="/author">
-          <i class="el-icon-user"></i> 作者简介
-        </el-menu-item>
-      </el-submenu>
-      <el-menu-item index="/categories">
-        <i class="el-icon-folder"></i> 分类管理
-      </el-menu-item>
-      <el-menu-item index="/tags">
-        <i class="el-icon-collection-tag"></i> 标签管理
-      </el-menu-item>
-      <el-submenu index="/articles">
-        <template slot="title">
-          <i class="el-icon-document"></i> 文章管理
-        </template>
-        <el-menu-item index="/articles/new">
-          <i class="el-icon-document-add"></i>添加文章
-        </el-menu-item>
-        <el-menu-item index="/articles">
-          <i class="el-icon-s-data"></i> 文章列表
-        </el-menu-item>
-      </el-submenu>
-      <el-menu-item index="/comments">
-        <i class="el-icon-s-comment"></i> 文章评论
-      </el-menu-item>
-      <el-menu-item index="/messages">
-        <i class="el-icon-message"></i> 留言墙
-      </el-menu-item>
-      <el-submenu index="/settings">
-        <template slot="title">
-          <i class="el-icon-setting"></i> 安全
-        </template>
-        <el-menu-item index="/settings/security">
-          <i class="el-icon-s-custom"></i> 账户设置
-        </el-menu-item>
-      </el-submenu>
+      </template>
     </el-menu>
   </div>
 </template>
+ 
 <script>
+import { basicRoutes } from '@/router.js'
 export default {
   name: 'Menu',
   data() {
     return {
-      defaultActive: '/articles'
+      defaultActive: '/articles',
+      menuList: Object.freeze(basicRoutes)
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside>
+    <el-aside :width="$store.state.menuCollapsed?'auto':'200px'">
       <Menu></Menu>
     </el-aside>
     <el-container>
