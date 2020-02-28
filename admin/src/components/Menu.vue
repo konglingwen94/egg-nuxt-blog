@@ -3,18 +3,20 @@
     <el-menu :collapse="$store.state.menuCollapsed" router>
       <template v-for="(item,index) in menuList">
         <el-submenu v-if="item.children" :key="index" :index="`${item.path}`">
-          <span slot="title">
-            <i :class="item.meta.icon"></i>
-            &nbsp;{{item.meta.title}}
-          </span>
+           
+          <template slot="title">
+             <i :class="item.meta.icon"></i>
+            &nbsp;
+           <span slot="title"> {{item.meta.title}}</span>
+          </template>
           <template v-for="(subItem,key) in item.children">
             <el-menu-item
               :key="key"
               :index="`/${item.path}/${subItem.path}`"
               v-if="!subItem.meta.notMenu"
             >
-              <i :class="subItem.meta.icon"></i>
-              <span slot="title">{{subItem.meta.title}}</span>
+              <i :class="subItem.meta.icon"></i>&nbsp;{{subItem.meta.title}}
+              <!-- <span slot="title"></span> -->
             </el-menu-item>
           </template>
         </el-submenu>

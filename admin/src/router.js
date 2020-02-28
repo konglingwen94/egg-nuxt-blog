@@ -35,8 +35,8 @@ export const basicRoutes = [
     path: 'dashboard',
     component: Dashboard,
     meta: {
-      icon: 'el-icon-eleme',
-      title: '仪表盘',
+      icon: 'el-icon-s-home',
+      title: '首页',
     },
   },
   {
@@ -45,7 +45,7 @@ export const basicRoutes = [
     component,
     meta: {
       title: '项目配置',
-      icon: 'el-icon-home',
+      icon: 'el-icon-s-operation',
     },
     children: [
       {
@@ -72,22 +72,14 @@ export const basicRoutes = [
         path: 'site-config',
         component: SiteConfig,
         meta: {
-          icon: 'el-icon-platform',
+          icon: 'el-icon-s-platform',
           title: '网站设置',
         },
       },
     ],
   },
 
-  {
-    name: 'security',
-    path: 'settings/security',
-    component: Security,
-    meta: {
-      title: '账户设置',
-      icon: 'el-icon-setting',
-    },
-  },
+  
   {
     name: 'article',
     path: 'articles',
@@ -103,7 +95,7 @@ export const basicRoutes = [
         component: ArticleList,
         meta: {
           title: '文章列表',
-          icon: 'el-icon-document',
+          icon: 'el-icon-s-data',
         },
       },
       {
@@ -142,17 +134,26 @@ export const basicRoutes = [
     path: 'categories',
     component: Category,
     meta: {
-      title: '文章分类列表',
-      icon: 'categories',
+      title: '分类管理',
+      icon: 'el-icon-folder',
     },
   },
-
+  {
+    name: 'tags',
+    path: 'tags',
+    component: Tag,
+    meta: {
+      title: '标签管理',
+      icon:'el-icon-collection-tag'
+    },
+  },
   {
     name: 'comments',
     path: 'comments',
     component: Comment,
     meta: {
-      title: '全部评论',
+      title: '文章评论',
+      icon:'el-icon-s-comment'
     },
   },
   {
@@ -163,15 +164,16 @@ export const basicRoutes = [
       title: '留言墙',
       icon: 'el-icon-message',
     },
-  },
-  {
-    name: 'tags',
-    path: 'tags',
-    component: Tag,
+  },{
+    name: 'security',
+    path: 'settings/security',
+    component: Security,
     meta: {
-      title: '标签列表',
+      title: '账户设置',
+      icon: 'el-icon-setting',
     },
   },
+  
 ]
 
 Vue.use(Router)
