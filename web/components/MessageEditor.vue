@@ -107,12 +107,12 @@ export default {
       this.$emit('on-focus', ...args)
     },
     triggerBlur(e, prop) {
-      // console.log(e.target)
+      
       this.$emit('on-blur', e, prop)
       this.clearValidate(prop)
       setTimeout(() => {})
     },
-    focus(prop) {
+    focus(prop='content') {
       this.$nextTick(() => {
         this.$refs[prop].focus()
       })

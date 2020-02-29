@@ -14,7 +14,9 @@
   </div>
 </template>
 <script>
-export default {}
+export default {
+  name:'article-layout'
+}
 </script>
 
 <style lang="less" scoped>

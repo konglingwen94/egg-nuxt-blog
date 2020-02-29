@@ -13,6 +13,7 @@
     "web:dev": "cd web && npm run dev",
     "web:debug": "cd web && npm run debug",
     "web:build": "cd web && npm run build",
+    "web:build:generate": "cd web && npm run generate",
     "web:start": "cd web && npm run start",
     "web:dev:spa": "cd web && npm run dev:spa",
     "docs:dev": "vuepress dev docs",

@@ -33,6 +33,7 @@ module.exports = {
   /*
    ** Customize the vue-config
    */
+
   vue: {
     config: {
       silent: true,
@@ -47,6 +48,11 @@ module.exports = {
     },
   },
 
+  transition: {
+    // duration: 400,
+    // name: 'page',
+    // mode:'out-in'
+  },
   /*
    ** Customize the progress-bar color
    */
@@ -74,8 +80,8 @@ module.exports = {
   css: [
     'normalize.css',
     '@/assets/css/overwrite.css',
-    // 'element-ui/lib/theme-chalk/index.css',
     '@/assets/css/variables.css',
+    '@/assets/css/page-transition.css',
   ],
   styleResources: {
     less: 'assets/css/*.less',
@@ -103,9 +109,17 @@ module.exports = {
    ** Build configuration
    */
 
-   
+  generate: {
+    dir: resolve(__dirname, '../public/web-static'),
+    // routes: [
+    //   '/users/1',
+    //   '/users/2',
+    //   '/users/3'
+    // ]
+  },
   buildDir: resolve(__dirname, '../public/web'),
   build: {
+    // publicPath:'/web-static',
     // devtools: true,
     babel: {
       plugins: [

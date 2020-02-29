@@ -30,12 +30,7 @@
           v-for="(item,key) in data.tagList"
           :key="key"
         >
-          <client-only>
-            <el-link class="stag-item">
-              {{item.name}}
-              <i class="el-icon-view"></i>
-            </el-link>
-          </client-only>
+          <span class="tag-item">{{item.name}}</span>
         </nuxt-link>
       </div>
 
@@ -47,10 +42,14 @@
       <!-- 评论 -->
       <section class="comment">
         <h4>评论</h4>
-        <message-editor @on-focus="$refs.replyEditor.hide()" @on-submit="replyHandler"></message-editor>
+        <message-editor
+          ref="messageEditor"
+          @on-focus="$refs.replyEditor.hide()"
+          @on-submit="replyHandler"
+        ></message-editor>
 
         <client-only>
-          <message-tree :data-list="data.commentList"  @on-reply="onReply" >
+          <message-tree :data-list="data.commentList" @on-reply="onReply">
             <message-editor @on-submit="replyHandler" ref="replyEditor" type="reply" slot="editor"></message-editor>
           </message-tree>
         </client-only>
@@ -74,7 +73,7 @@
           :hidden="data.commentList && data.commentList.length===0"
         >
           <div class="icon-wrap icon-wrap-comment">
-            <i @click="$refs.input.focus()" class="el-icon-s-comment"></i>
+            <i @click="$refs.messageEditor.focus()" class="el-icon-s-comment"></i>
           </div>
         </el-badge>
       </el-badge>
@@ -97,13 +96,7 @@ export default {
       title
     }
   },
-  data() {
-    return {
-      data: {
-        // tagList:[{},{}]
-      }
-    }
-  },
+
   async asyncData({ params, query }) {
     const { id } = params
     const { tagIdList } = query
@@ -135,9 +128,8 @@ export default {
     },
     bannerStyle() {
       return {
-        background: `url(${this.data.cover.path})no-repeat center/100%`,
-        height: '440px',
-        // color: 'red',
+        background: `  url(${this.data.cover.path})no-repeat center/100%`,
+        height: '340px',
 
         textAlign: 'center'
       }
@@ -152,9 +144,9 @@ export default {
   },
 
   methods: {
-    async onReply(){
-await this.$nextTick()
-// console.log(this.$refs.replyEditor)
+    async onReply() {
+      await this.$nextTick()
+
       this.$refs.replyEditor.show()
       this.$refs.replyEditor.resetFields()
       this.$refs.replyEditor.clearValidate()
@@ -236,7 +228,7 @@ await this.$nextTick()
 .main {
   max-width: 1100px;
   margin: auto;
-  padding-top: 100px;
+  padding-top: 40px;
 }
 
 .banner {
@@ -245,6 +237,16 @@ await this.$nextTick()
   align-items: center;
   padding: 30px;
   color: white;
+  position: relative;
+  &:before {
+    content: '';
+    background: rgba(0, 0, 0, 0.1);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
   .el-tag {
     margin-right: 7px;
     border-radius: 13px;
@@ -313,16 +315,13 @@ await this.$nextTick()
   margin-top: 40px;
   margin-bottom: 30px;
   .tag-item {
-    color: lightblue;
-    margin: 0 3px;
-    .el-icon-view {
-      visibility: hidden;
-    }
+    color: #409eff;
+    font-size: 14px;
+    margin: 0 4px;
     &:hover {
-      .el-icon-view {
-        visibility: visible;
-        text-decoration: underline;
-      }
+    padding-bottom: 3px;
+    border-bottom:1px solid;
+    color:#66b1ff;
     }
   }
 }

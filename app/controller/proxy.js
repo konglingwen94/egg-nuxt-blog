@@ -42,6 +42,7 @@ const weatherInfo = {
 class ProxyController extends Controller {
   async fetchWeatherData() {
     const { ctx } = this
+    
     const { data } = await axios.get(
       'http://apis.juhe.cn/simpleWeather/query',
       {
@@ -58,11 +59,11 @@ class ProxyController extends Controller {
     const icon = _.findKey(weatherInfo, value => {
       return value.includes(result.realtime.info)
     })
-    const { temperature, aqi, power, info } = result.realtime
+    const { temperature, aqi, power, info, } = result.realtime
     const response = {
       temp: temperature,
       windSpeed: power,
-      currentSummary: `${info} (实时)`,
+      currentSummary: info,
       city: result.city,
       hourlySummary: aqi ? `空气质量指数: ${aqi}` : '',
       icon,
@@ -79,10 +80,10 @@ class ProxyController extends Controller {
         key: '22ad0021e0166b97299de3a575d399e6',
       },
     })
-    const { error_code, result } = data
-
+    const { error_code, result,reason } = data
+ 
     if (error_code !== 0) {
-      return { message: '查询失败' }
+      return { message: reason }
     }
 
     return result

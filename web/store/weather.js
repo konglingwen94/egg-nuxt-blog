@@ -1,5 +1,5 @@
 import request from '@/services/request'
-
+import axios from 'axios'
 export const state = () => ({
   currentDay: {
     icon: 'fog',
@@ -12,40 +12,26 @@ export const state = () => ({
 
 export const mutations = {
   setCurrentDay(state, payload) {
-    console.log('result', payload)
     Object.assign(state.currentDay, payload)
+    state.currentDay.currentSummary+=` ( ${payload.city} )`
   },
 }
 
 export const actions = {
   fetchWeatherData({ commit }) {
-    // if (process.server) {
-    //   return
-    // }
-    // let coords
-
-    // const getCurrentPosition = new Promise((resolve, reject) => {
-    //   navigator.geolocation.getCurrentPosition(result => {
-    //     resolve(result.coords)
-    //   })
-    // })
-
-    // getCurrentPosition.then(coords => {
-    //   request.get('/location-city', {
-    //     params: { lng: coords.longitude, lat: coords.latitude },
-    //   })
-    // })
- 
-    return request
-      .get('/weather', {
-        params: {
-          city: '郑州',
-        },
-      })
-      .then(result => {
-       
-        commit('setCurrentDay', result)
+    // console.log('data')
     
+    return axios.get('https://www.mxnzp.com/api/ip/self').then(({data}) => {
+      
+        return request.get('/weather', {
+          params: { city: data.city || '郑州'},
+        })
+      })
+
+      .then(result => {
+        commit('setCurrentDay', result)
+      }).catch(err=>{
+        console.error(err)
       })
   },
 }

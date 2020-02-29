@@ -15,7 +15,14 @@
     </div>
     <div class="weather-container">
       <client-only>
-      <vue-weather title :enableCredits="false" :forecast="[]" units="ca" :currentDay="currentDay"></vue-weather>
+        <vue-weather
+        class="weather"
+          title
+          :enableCredits="false"
+          :forecast="[]"
+          units="ca"
+          :currentDay="currentDay"
+        ></vue-weather>
       </client-only>
     </div>
   </div>
@@ -33,11 +40,13 @@ export default {
 
 <style lang='less' scoped>
 .header {
-  height: 160px;
-  padding: 20px;
-  padding-top: 40px;
+  height: 120px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  padding-left: 200px;
+  // padding-left: 100px;
+  // padding-right:40px;
 }
 .header-content {
   display: flex;
@@ -50,10 +59,10 @@ export default {
   }
 }
 .weather-container {
-  height: 200px;
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  .weather{
+  font-size: 12px !important;
+
+  }
   /deep/ #header {
     display: none;
   }

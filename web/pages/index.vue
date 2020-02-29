@@ -11,7 +11,14 @@
           :to="{name:'articles-id',params:{id:item.id,},query:{tagIdList:item.tagIdList}}"
           class="carousel-content"
         >
-          <img v-if="item.cover.path" :src="item.cover.path" />
+        <img :src="item.cover.path" alt="">
+          <!-- <el-image fit="cover" :src="item.cover.path" > -->
+            <!-- <div  class="image-slot"> -->
+              <!-- <img slot="error" src="@/assets/imgs/default.jpg" width="100%" class="slot-error"  alt=""> -->
+              <!-- <img1  slot="error"src="@/assets/imgs/default.jpg" alt="" ></img> -->
+              <!-- <i class="el-icon-picture-outline"></i> -->
+            <!-- </div> -->
+          <!-- </el-image> -->
           <div class="description">
             <h1>{{item.title}}</h1>
             <div class="pv">
@@ -35,21 +42,21 @@
 import ArticleService from '@/services/articles'
 export default {
   layout: 'public',
-  data(){
+  data() {
     return {
-      articleList:[],
-      carousel:{}
+      articleList: [],
+      carousel: {}
     }
   },
-   
-  async asyncData({ req, query,store }) {
-    const {number,sort}=store.state.configuration.siteConfig.carousel
+
+  async asyncData({ req, query, store }) {
+    const { number, sort } = store.state.configuration.siteConfig.carousel
     try {
       var [articleList, carousel = []] = await Promise.all([
         // req.service.article.queryList()
         ArticleService.fetchList(),
-        
-        ArticleService.fetchList({number,sort})
+
+        ArticleService.fetchList({ number, sort })
       ])
     } catch (error) {
       return { articleList: [], carousel: [] }
@@ -57,10 +64,10 @@ export default {
 
     return { articleList, carousel }
   },
-  computed:{
-     carouselOptions(){
-return this.$store.state.configuration.siteConfig.carousel
-     }
+  computed: {
+    carouselOptions() {
+      return this.$store.state.configuration.siteConfig.carousel
+    }
   },
   head() {
     return {
@@ -95,14 +102,18 @@ return this.$store.state.configuration.siteConfig.carousel
     align-items: center;
     height: 100%;
     background-color: lightblue;
-    img {
+    .el-image {
       // object-position: center -250px;
       // margin-left: -30px;
       // margin-right:40px;
       width: 50%;
       height: 100%;
-      object-fit: cover;
+      // object-fit: cover;
       border-radius: 5px;
+      .slot-error{
+        object-fit:cover;
+        height:100%;
+      }
     }
 
     div.description {
