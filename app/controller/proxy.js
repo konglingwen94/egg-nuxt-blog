@@ -2,7 +2,7 @@ const { Controller } = require('egg')
 const axios = require('axios')
 const _ = require('lodash')
 // clear-day, clear-night, cloudy, fog, partly-cloudy-day, partly-cloudy-night, rain, sleet, snow, wind
-const weatherInfo = {
+const defineWeather = {
   'clear-day': ['晴'],
 
   'partly-cloudy-day': ['阴'],
@@ -56,7 +56,7 @@ class ProxyController extends Controller {
       return { message: data.reason }
     }
 
-    const icon = _.findKey(weatherInfo, value => {
+    const matchedWeather = _.findKey(defineWeather, value => {
       return value.includes(result.realtime.info)
     })
     const { temperature, aqi, power, info, } = result.realtime
@@ -66,27 +66,11 @@ class ProxyController extends Controller {
       currentSummary: info,
       city: result.city,
       hourlySummary: aqi ? `空气质量指数: ${aqi}` : '',
-      icon,
+      icon:matchedWeather,
     }
 
      
     return response
-  }
-  async fetchLocationCity() {
-    const { ctx } = this
-    const { data } = await axios.get('http://apis.juhe.cn/geo', {
-      params: {
-        ...ctx.query,
-        key: '22ad0021e0166b97299de3a575d399e6',
-      },
-    })
-    const { error_code, result,reason } = data
- 
-    if (error_code !== 0) {
-      return { message: reason }
-    }
-
-    return result
   }
 }
 

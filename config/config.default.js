@@ -59,7 +59,6 @@ module.exports = appInfo => {
       // 'siteTraffic',
       'upload',
       'responseHandler',
-      'nuxtRender',
     ],
     cors: {
       origin: '*',

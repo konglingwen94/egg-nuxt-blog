@@ -48,11 +48,7 @@ module.exports = {
     },
   },
 
-  transition: {
-    // duration: 400,
-    // name: 'page',
-    // mode:'out-in'
-  },
+   
   /*
    ** Customize the progress-bar color
    */
@@ -79,8 +75,8 @@ module.exports = {
    */
   css: [
     'normalize.css',
-    '@/assets/css/overwrite.css',
-    '@/assets/css/variables.css',
+    '@/assets/css/reset.css',
+    '@/assets/css/global.css',
     '@/assets/css/page-transition.css',
   ],
   styleResources: {

@@ -1,4 +1,3 @@
-@r: red;
 
 .text-overflow-hidden (@line-num:3) {
   line-height: 1.5;
@@ -22,6 +21,9 @@
   text-overflow: clip;
   width: @width;
 }
-time{
-  letter-spacing:2px;
+
+.nowrap-line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
