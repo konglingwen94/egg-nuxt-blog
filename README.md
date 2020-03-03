@@ -2,16 +2,17 @@
 
 Nuxt.js（Web 端） + Egg.js（Api 服务） + Vue.js（管理后台）+ ElementUI（前端组件库）服务器渲染(SSR)搭建的个人博客系统
 
+## 线上展示
+
+[点我查看](https://konglingwen94.github.io)
+
 ## 本项目共三个子项目
 
 - admin/ （浏览器管理后台）
-- app/ （服务端接口项目）
 
-* web/ （浏览器客户端）
+* app/ （服务端接口项目）
 
-::: Tips
-
-:::
+- web/ （浏览器客户端）
 
 ## 启动项目
 
@@ -92,7 +93,7 @@ npm run stop # 停止运行 API 服务
 
 ```bash
 # 仅在第一次配置时执行 默认创建超级管理员 ROOT
-node scripts/init-admin.js  管理员用户名 管理员密码
+node scripts/init-data.js  管理员用户名 管理员密码
 ```
 
 ### 客户端部署
@@ -109,7 +110,7 @@ npm run web:build
 npm run admin:build
 ```
 
-### 服务端 Api 文档部署
+### Api 文档部署
 
 ```bash
 # 执行构建页面
@@ -127,7 +128,7 @@ npm run docs:build
  │   │   ├── auth.js   //  管理员
  │   │   ├── categories.js   // 分类
  │   │   ├── comments.js   //  文章评论
- │   │   ├── guestbooks.js   // 留言墙
+ │   │   ├── messages.js   // 留言墙
  │   │   ├── request.js   //  Axios请求实例
  │   │   └── tags.js   // 标签
  │   ├── assets/   //  静态资源
@@ -235,9 +236,9 @@ npm run docs:build
  ├── config.default.js   //默认配置
  ├── config.local.js   //本地环境
  ├── config.prod.js   //线上环境
- ├── defaultAboutusData.json   //数据库初始化数据
+ ├── defaultConfiguration.json   //数据库初始化数据
  ├── plugin.js   //插件
- docs/   //文档
+ documentations/   //文档
  ├── api/   //接口
  │   ├── admin.md   //管理员
  │   ├── article.md   //文章
@@ -260,13 +261,14 @@ npm run docs:build
  public/ // 项目打包目录
  run/   //服务器运行状态
  scripts/   //自定义脚本
- ├── init-admin.js   //初始化管理员
+ ├── init-data.js   //初始化管理员
  web/   //客户端源文件目录
  ├── assets/   //静态资源
  │   └── css/   //样式
- │       ├── global.less   //全局样式
- │       ├── overwrite.css   //覆盖默认样式
- │       └── variables.css   //全局变量
+ │       ├── global.css   //全局样式
+ │       ├── mixin.less   //定义混合样式类
+ │       ├── reset.css   //覆盖默认样式
+ │       └── page-transition.css   //页面过渡动画
  ├── components/   //自定义组件
  │   ├── ArticleItem.vue   //文章项
  │   ├── ArticleList.vue   //文章列表
@@ -280,40 +282,39 @@ npm run docs:build
  ├── pages/   //路由页面
  │   ├── aboutus/   //关于我们
  │   │   └── index.vue   //
- │   ├── archives/   //归档
+ │   ├── folders/   //文章分类
  │   │   └── index.vue
  │   ├── articles/
  │   │   ├── index.vue   // 文章首页列表
  │   │   └── _id.vue   //文章详情页
- │   ├── collections/ // 我的收藏
- │   │   ├── index.vue
- │   ├── guestbooks   //留言墙
+ │   ├── messages   //留言墙
  │   │   └── index.vue   //
  │   └── index.vue   //网站首页
  ├── plugins/   //插件
- │   ├── element-ui.js   //按需引入第三方库组件
+ │   ├── element-ui.js   //UI组件库
  │   ├── global-components.js   //全局注册自定义组件
  │   ├── init-store.js   //开启数据持久化
- │   └── vue-weather.js  //天气窗口插件
+ │   └── lib.js  //第三方组件库
  ├── services/   //数据请求
  │   ├── aboutus.js   //关于我们
  │   ├── articles.js   //文章
  │   ├── categories.js   //分类
  │   ├── comments.js   //文章评论
- │   ├── guestbooks.js   //留言墙
+ │   ├── messages.js   //留言墙
  │   ├── request.js   //Axios请求实例
  │   └── tags.js   //标签
  ├── static/   //静态资源
  │   └── favicon.ico   //
  ├── store/   //数据存储
  │   ├── article.js   //文章
- │   ├── index.js   //全局
+ │   ├── configuration.js   //配置
+ │   ├── index.js   //模块入口
+ │   ├── messages.js   //留言
  │   └── weather.js   //天气
- ├── jsconfig.json   //
- ├── nuxt.config.js   //
- ├── package-lock.json   //
- ├── package.json   //
- ├── README.md   //
+ ├── nuxt.config.js
+ ├── package-lock.json
+ ├── package.json
+ ├── README.md
  app.js   //服务器启动入口文件
  package-lock.json   //
  package.json   //项目信息
@@ -346,7 +347,7 @@ npm run docs:build
 ### Web 客户端
 
 - [x] 首页展示
-  - [x] 根据网站访问地理位置自动展示当前城市天气（目前展示本地郑州,此功能待完善。查看原因请[点击](#1-天气地理定位)）
+  - [x] 根据网站访问地理位置自动展示当前城市天气
   - [x] 首页按文章相关排序展示轮播图
   - [x] 点击文章标题查看文章内容
 - [x] 文章详情页面交互
@@ -395,20 +396,12 @@ npm run docs:build
 
 ### 服务端 Api（点击查看接口详情）
 
-- [管理员](/docs/api/admin.md)
-- [关于我们](/docs/api/aboutus.md)
-- [文章分类](/docs/api/category.md)
-- [文章标签](/docs/api/tag.md)
-- [文章管理](/docs/api/article.md)
-- [文章评论](/docs/api/comment.md)
-- [留言管理](/docs/api/guestbook.md)
+- [管理员](/docs/api/admin.html)
+- [关于我们](/docs/api/aboutus.html)
+- [文章分类](/docs/api/category.html)
+- [文章标签](/docs/api/tag.html)
+- [文章管理](/docs/api/article.html)
+- [文章评论](/docs/api/comment.html)
+- [留言管理](/docs/api/guestbook.html)
 
 如果我的项目对您有所帮助，您可以点右上角 "Star" 支持一下 感谢～～！:blush:
-
----
-
-### 项目相关问题
-
-##### 1. 天气地理定位
-
-由于作者测试的浏览器地理定位 Api 出现误差，不知是否是此 Api 兼容性问题还是电脑硬件问题，希望查看此开源项目的您帮助测试一下此 Api(window.navigation.geolocation.getCurrentPosition())的相关准确性

@@ -4,7 +4,7 @@ const _ = require('lodash')
 
 const config = {
   dest: path.resolve(__dirname, '../../docs'),
-  base: '/documentations/',
+  base: '/egg-nuxt-blog/',
   title: '博客',
   themeConfig: {
      
