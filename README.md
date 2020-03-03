@@ -396,12 +396,12 @@ npm run docs:build
 
 ### 服务端 Api（点击查看接口详情）
 
-- [管理员](/egg-nuxt-blog/docs/api/admin.html)
-- [关于我们](/egg-nuxt-blog/docs/api/aboutus.html)
-- [文章分类](/egg-nuxt-blog/docs/api/category.html)
-- [文章标签](/egg-nuxt-blog/docs/api/tag.html)
-- [文章管理](/egg-nuxt-blog/docs/api/article.html)
-- [文章评论](/egg-nuxt-blog/docs/api/comment.html)
-- [留言管理](/egg-nuxt-blog/docs/api/guestbook.html)
+- [管理员](https://konglingwen94.github.io/egg-nuxt-blog/api/admin.html)
+- [关于我们](https://konglingwen94.github.io/egg-nuxt-blog/api/aboutus.html)
+- [文章分类](https://konglingwen94.github.io/egg-nuxt-blog/api/category.html)
+- [文章标签](https://konglingwen94.github.io/egg-nuxt-blog/api/tag.html)
+- [文章管理](https://konglingwen94.github.io/egg-nuxt-blog/api/article.html)
+- [文章评论](https://konglingwen94.github.io/egg-nuxt-blog/api/comment.html)
+- [留言管理](https://konglingwen94.github.io/egg-nuxt-blog/api/guestbook.html)
 
 如果我的项目对您有所帮助，您可以点右上角 "Star" 支持一下 感谢～～！:blush:
