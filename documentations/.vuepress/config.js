@@ -3,8 +3,8 @@ const fs = require('fs')
 const _ = require('lodash')
 
 const config = {
-  dest: path.resolve(__dirname, '../../public/docs'),
-  base: '/docs/',
+  dest: path.resolve(__dirname, '../../docs'),
+  base: '/documentations/',
   title: '博客',
   themeConfig: {
      
