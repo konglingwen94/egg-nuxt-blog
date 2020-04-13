@@ -5,7 +5,7 @@ Nuxt.js（Web 端） + Egg.js（Api 服务） + Vue.js（管理后台）+ Elemen
 ## 线上查看
 
 [博客](https://konglingwen94.github.io)
-[文档](https://konglingwen94.github.io/egg-nuxt-blog)
+[文档](https://konglingwen94.github.io/egg-nuxt-blog/public/docs/index.html)
 
 ## 本项目共三个子项目
 
