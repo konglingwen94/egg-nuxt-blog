@@ -17,14 +17,14 @@ const router=app.proxyRouter
   )
 
   router.patch(
-    'account',
+    // 'account',
     '/admin/accounts/:id/change-password',
 
     controller.account.changePass
   )
 
   router.patch(
-    'account',
+    // 'account',
     '/admin/accounts/:id',
 
     controller.account.changeAccount
