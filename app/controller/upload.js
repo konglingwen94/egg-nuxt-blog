@@ -18,6 +18,11 @@ try {
   }
   async uploadFile() {
     const { ctx } = this
+    if(!ctx.req.file){
+      return {
+        message:'Not file'
+      }
+    }
     const name = ctx.req.file.filename
     return {
       name,
