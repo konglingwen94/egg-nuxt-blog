@@ -2,18 +2,13 @@
 
 Nuxt.js（Web 端） + Egg.js（Api 服务） + Vue.js（管理后台）+ ElementUI（前端组件库）服务器渲染(SSR)搭建的个人博客系统
 
-## 线上查看
-
-[博客](https://konglingwen94.github.io)
-[文档](https://konglingwen94.github.io/egg-nuxt-blog/public/docs/index.html)
-
 ## 本项目共三个子项目
 
-- admin/ （浏览器管理后台）
+- admin/ （浏览器管理后台）（<http://123.56.124.33:7001/admin>）
 
-* app/ （服务端接口项目）
+* app/ （服务端接口项目）(https://konglingwen94.github.io/egg-nuxt-blog)
 
-- web/ （浏览器客户端）
+- web/ （浏览器客户端）（http://123.56.124.33:7001）
 
 ## 启动项目
 
