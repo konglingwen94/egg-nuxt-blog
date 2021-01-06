@@ -1,15 +1,15 @@
 <template>
   <div class="container">
-    <div class="header">header</div>
+    <h1 class="header">博客管理后台</h1>
     <div class="body">
       <router-view></router-view>
     </div>
-    <div class="footer">footer</div>
+    <!-- <div class="footer">footer</div> -->
   </div>
 </template>
 <style lang="less" scoped>
 .header {
-  margin: 49px;
+  margin-top: 300px;
   text-align: center;
 }
 
