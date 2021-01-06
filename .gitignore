@@ -4,7 +4,7 @@
 
 # boundle files
 
-# public
+public
 
 # uploads
 # public/uploads
@@ -14,7 +14,6 @@
 
 # chore files
 node_modules
-app/public
 .nuxt
 /run 
 
