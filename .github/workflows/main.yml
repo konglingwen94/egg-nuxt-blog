@@ -26,6 +26,7 @@ jobs:
           script: |
             cd /var/www/egg-nuxt-blog
             npm install
-
+            npm run web:build
+            npm run admin:build
             npm stop
             npm start
