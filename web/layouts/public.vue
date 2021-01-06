@@ -8,7 +8,7 @@
       <nuxt></nuxt>
     </main>
     <footer>
-      <Footer></Footer>
+      <!-- <Footer></Footer> -->
     </footer>
     <el-backtop :right="20"></el-backtop>
   </div>
