@@ -2,10 +2,10 @@
   <div class="container">
     <el-form label-width="auto">
       <el-form-item label="用户名">
-        <el-input ref="userInput" v-model="form.username"></el-input>
+        <el-input placeholder="请输入用户名" ref="userInput" v-model="form.username"></el-input>
       </el-form-item>
       <el-form-item label="密码">
-        <el-input v-model="form.password"></el-input>
+        <el-input type="password" v-model="form.password" placeholder="请输入密码"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitHandler">确定</el-button>
@@ -19,8 +19,8 @@ import authApi from '@/api/auth'
 export default {
   data: () => ({
     form: {
-      username: '',
-      password: ''
+      username: 'root',
+      password: '123456'
     }
   }),
   mounted() {
