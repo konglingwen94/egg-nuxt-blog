@@ -54,11 +54,11 @@ module.exports = appInfo => {
 
     middleware: [
       'errorHandler',
-
       'adminRequired',
       // 'siteTraffic',
       'upload',
       'responseHandler',
+      'nuxtRender',
     ],
     cors: {
       origin: '*',
