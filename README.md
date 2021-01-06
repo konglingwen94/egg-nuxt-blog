@@ -6,9 +6,9 @@ Nuxt.js（Web 端） + Egg.js（Api 服务） + Vue.js（管理后台）+ Elemen
 
 - admin/ （浏览器管理后台）（<http://123.56.124.33:7001/admin>）
 
-* app/ （服务端接口项目）(https://konglingwen94.github.io/egg-nuxt-blog)
+* app/ （服务端接口项目）(<https://konglingwen94.github.io/egg-nuxt-blog/index>)
 
-- web/ （浏览器客户端）（http://123.56.124.33:7001）
+- web/ （浏览器客户端）（<http://123.56.124.33:7001>）
 
 ## 启动项目
 
